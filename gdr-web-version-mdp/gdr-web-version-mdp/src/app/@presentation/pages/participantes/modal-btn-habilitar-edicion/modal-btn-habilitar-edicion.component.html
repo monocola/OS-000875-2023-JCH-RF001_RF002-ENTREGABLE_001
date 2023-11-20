@@ -1,0 +1,53 @@
+<div class='d-flex w-100 header-modal'>
+    <div class="">
+        <p class="parrafo">
+            {{title}}
+        </p>
+      </div>
+
+    <span class='flex-spacer'></span>
+    <nb-icon class='mr-2 btnClose' nbSuffix icon='close'  (click)='dismiss(false)'></nb-icon>
+    </div>
+
+  <mat-divider class='divider-modal'></mat-divider>  
+  
+  <div class="py-3 px-2 bodyModal">
+    <div class="flex-v-center">
+      <img [src]="data?.rutaImagen || rutaImagen" alt="Logo pregunta eliminar" />
+    </div>
+  
+  
+    <div class="fw-400 flex-v-center my-3" style="text-align: center;">
+      {{ data?.bodyText || 'Se habilitará la edición de las siguientes metas seleccionadas ¿Está realmente seguro de realizar la siguiente acción?' }}
+    </div>
+  
+    <div class="flex-v-center mt-4">
+     
+      <button
+        nbButton
+        shape="round"
+        status="primary"
+        class="py-2 px-5 mr-3"
+       
+        style='color: white; background-color: #0DACBC; border-color: #0DACBC;'
+        size="large"
+        (click)='dismiss(true)'
+      >
+      Aceptar
+      </button>
+  
+      <button
+      nbButton
+      outline
+      shape="round"
+      status="primary"
+      class="py-2 px-5"
+      style='color: white; background-color: #ADB5BD; border-color: #ADB5BD;'
+      size="large"
+      (click)='dismiss(false)'
+    >
+      Cancelar
+    </button>
+    </div>
+  </div>
+  

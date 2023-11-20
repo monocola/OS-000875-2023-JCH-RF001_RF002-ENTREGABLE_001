@@ -1,0 +1,68 @@
+<div class="body">
+  <div class="d-flex pb-3">
+    <div class="flex-v-center-left">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/pages/organigrama']"
+      >
+        <nb-icon nbSuffix class="back__arrow" icon="back"></nb-icon>
+      </button>
+      <h3 class="pl-2 titlePage">Configuración de estructura organizacional</h3>
+    </div>
+    <span class="flex-spacer"></span>
+    <div class="flex-v-center-left">
+      <div style="width: 250px">
+        <nb-select
+          placeholder="---Seleccione una opción---"
+          fullWidth
+          [size]="'large'"
+          shape="semi-round"
+          [formControl]="control"
+          (selectedChange)="changeCombo()"
+        >
+          <nb-option value="1"> Órgano </nb-option>
+          <nb-option value="2"> Unidad orgánica </nb-option>
+        </nb-select>
+      </div>
+      <button
+        nbButton
+        shape="round"
+        size="medium"
+        status="primary"
+        class="px-5 ml-3"
+        (click)="newStructure()"
+        [disabled]="createMode"
+      >
+        Crear
+      </button>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h5 class="mt-3 px-3">
+    <span *ngIf="control.value == 1">Órgano</span>
+    <span *ngIf="control.value == 2">Unidad orgánica</span>
+  </h5>
+
+  <ng-container *ngIf="control.value == 1">
+    <serv-talento-organo
+      [createMode]="createMode"
+      (closeOrgano)="handleClose($event)"
+      (editOrganoEmmiter)="this.createMode = true"
+      [editDataFromGraph]="editData"
+    >
+    </serv-talento-organo>
+  </ng-container>
+
+  <ng-container *ngIf="control.value == 2">
+    <serv-talento-unidad-organica
+      [createMode]="createMode"
+      (closeOrgano)="handleClose($event)"
+      (editUnidadOrganoEmmiter)="this.createMode = true"
+      [editDataFromGraph]="editData"
+    >
+    </serv-talento-unidad-organica>
+  </ng-container>
+</div>

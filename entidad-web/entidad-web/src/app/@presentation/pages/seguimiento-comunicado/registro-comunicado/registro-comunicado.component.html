@@ -1,0 +1,315 @@
+<div class="body">
+  <div class="d-flex">
+    <img
+      *ngIf="this.g.estado.value != 'Observado'"
+      style="margin-left: 20px"
+      width="40px"
+      height="35px"
+      alt="imagen formulario"
+      src="assets/images/icons/formulario.png"
+    />
+    <img
+      *ngIf="this.g.estado.value == 'Observado'"
+      style="margin-left: 20px"
+      width="40px"
+      height="35px"
+      alt="imagen formulario"
+      src="assets/images/icons/observado.png"
+    />
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="router.navigateByUrl('pages/seguimientoconvocatoria/comunicado')"
+    >
+      <nb-icon nbSuffix icon="back"></nb-icon>
+    </button>
+    <h3 class="titlePage">
+      {{
+        this.g.codProgEstado.value == const.EST_COMUNI_OBSERVADO
+          ? 'Comunicado observado'
+          : 'Comunicado'
+      }}
+    </h3>
+    <br />
+
+    <span class="flex-spacer"></span>
+
+    <div class="alerta" *ngIf="this.g.estado.value == 'Observado'">
+      <div
+        class="alerta"
+        *ngIf="this.g.codProgEstado.value == const.EST_COMUNI_OBSERVADO"
+      >
+        <div class="img-alerta">
+          <mat-icon style="color: red">warning</mat-icon>
+        </div>
+        <div class="text-alerta">El comunicado no corresponde al proceso</div>
+      </div>
+      <div>
+        <button
+          nbButton
+          class="px-5"
+          shape="round"
+          size="medium"
+          status="primary"
+          *ngIf="false"
+          fullWidth
+        >
+          Crear comunicado
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        (this.g.codProgEstado.value == const.EST_COMUNI_APROBADO &&
+        (this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD)) || (this.publicar &&
+        (this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD))
+      "
+      class="butonMostrar"
+    >
+      <button
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+        (click)="openModalPublicar()"
+      >
+        <em class="ent-web-enviar iconStyle"></em>
+        Publicar
+      </button>
+    </div>
+
+    <div
+      *ngIf="
+        this.g.codProgEstado.value == const.EST_COMUNI_POR_REVISAR &&
+        (this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD)
+      "
+      class="butonMostrar"
+    >
+      <button
+        style="margin-right: 13px"
+        nbButton
+        outline
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+        (click)="openModalObservar()"
+      >
+        <em class="ent-web-observacion iconStyle"></em>
+        Observar
+      </button>
+ 
+      <button
+        *ngIf="
+          this.g.codProgEstado.value == const.EST_COMUNI_POR_REVISAR &&
+          (this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD)
+        "
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+        (click)="openModalAprobar()"
+      >
+        <em class="ent-web-check iconStyle"></em>
+        Aprobar
+      </button>
+    </div>
+  </div>
+  <p style="margin-left: 15px">
+    {{ this.h.nomConvocatoria.value }} &nbsp; Etapa:
+    {{ this.h.desEtapa.value }}
+  </p>
+  <mat-divider></mat-divider>
+  <div class="contenedor">
+    <div
+      class="lateral"
+      [style.height.px]="this.tamStyle"
+      style="background-color: #dcf1f3"
+    >
+      <div
+        *ngIf="
+          textObservacion != '' &&
+          textObservacion != null &&
+          this.g.codProgEstado.value != const.EST_COMUNI_APROBADO
+        "
+        style="display: flex; align-items: center; position: relative"
+      >
+        <div class="messageAlert">
+          <div class="img-alerta">
+            <mat-icon style="color: red">warning</mat-icon>
+          </div>
+          <div class="text-alerta">{{ textObservacion }}</div>
+        </div>
+        <div class="lineIcon">
+          <em
+            *ngIf="this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD"
+            (click)="openModalObservar()"
+            style="color: #61b3d5; cursor: pointer"
+            class="ent-web-edit iconStyle"
+          ></em>
+          <em
+            *ngIf="this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD"
+            (click)="openDeleteObservar()"
+            style="color: #eb5757; cursor: pointer"
+            class="ent-web-eliminar iconStyle"
+          ></em>
+          <em
+            *ngIf="this.rol == const.R_COORDINADOR || this.rol == const.R_SUPER_ADMIN_ENTIDAD"
+            (click)="openSendObservar()"
+            style="color: #30dc36; cursor: pointer"
+            class="ent-web-user-checked iconStyle"
+          ></em>
+        </div>
+      </div>
+      <form [formGroup]="this.Form">
+        <div style="text-align: center; margin-top: 20px">
+          <h6>{{ title }}</h6>
+        </div>
+        <div class="mb-3 col-md-12">
+          <select-field
+            [label]="'Tipo de comunicado'"
+            [control]="f.comunicado"
+            [valueToShow]="'descripcion'"
+            [value]="'maeDetalleId'"
+            [items]="comunicados"
+            (selectedChange)="editCambios()"
+          ></select-field>
+        </div>
+        <div class="mb-3 col-md-12">
+          <select-field
+            [label]="'Perfiles'"
+            [control]="f.perfil"
+            [items]="perfiles"
+            [value]="'id'"
+            [valueToShow]="'descripcion'"
+            (selectedChange)="editCambios()"
+          >
+          </select-field>
+        </div>
+
+        <div class="mb-12 col-md-12 mdcss">
+          <div>
+            <label>Subir documento</label>
+            <div
+              [ngClass]="{
+                item_card_input_img: uploadfile === true,
+                item_card_input_img_error: uploadfile === false
+              }"
+              style="background-color: white"
+            >
+              <div
+                style="
+                  width: 70%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  justify-content: center;
+                "
+              >
+                <div class="filename">
+                  {{ fileName }}
+                </div>
+              </div>
+              <div
+                style="
+                  width: 30%;
+                  display: flex;
+                  align-items: flex-end;
+                  justify-content: flex-end;
+                "
+              >
+                <button
+                  matRipple
+                  title="Subir"
+                  class="btn-card-black"
+                  (click)="fileUpload.click()"
+                  [disabled]="!editable"
+                >
+                  <em class="ent-web-subir"></em>
+                </button>
+                <input
+                  type="file"
+                  class="file-input"
+                  accept="application/pdf"
+                  (change)="onFileSelected($event)"
+                  #fileUpload
+                />
+              </div>
+            </div>
+          </div>
+          <div class="invalid-text mx-2" *ngIf="!uploadfile">
+            Tiene que cargar un documento
+          </div>
+        </div>
+      </form>
+      <div class="row mt-3" *ngIf="editable">
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          style="width: 150px; margin-left: 50px"
+          outline
+          (click)="this.cancelar()"
+        >
+          Cancelar
+        </button>
+        <button
+          nbButton
+          style="width: 150px; margin-left: 20px"
+          shape="round"
+          size="medium"
+          status="primary"
+          *ngIf="!this.aprobacion && !this.publicar"
+          (click)="this.saveOrUpdate()"
+        >
+          Guardar
+        </button>
+        <button
+          nbButton
+          style="width: 150px; margin-left: 20px"
+          shape="round"
+          size="medium"
+          *ngIf="this.aprobacion && !this.publicar"
+          status="primary"
+          (click)="enviar()"
+        >
+          <em class="ent-web-enviar"></em>
+          &nbsp;&nbsp; Enviar a aprobación
+        </button>
+      </div>
+    </div>
+    <div class="principal">
+      <div class="flex-v-center flex-column py-5" *ngIf="this.pathpdf == ''">
+        <img
+          class="imagenBase"
+          src="assets/images/MComunicado.png"
+          alt="base"
+        />
+        <h1 class="fs-13">
+          <span>Aquí puedes visualizar </span>
+          <span style="color: rgb(108, 163, 185); font-size: 150%">
+            el contenido
+          </span>
+          <span> de tu comunicado</span>
+          <br />
+        </h1>
+        <span class="fs-13">
+          <strong>aún no haz subido ningún comunicado</strong>
+        </span>
+      </div>
+
+      <div *ngIf="this.pathpdf != ''">
+        <embed
+          [src]="PDFURL()"
+          type="application/pdf"
+          width="100%"
+          height="{{ this.tamStyle + 'px' }}"
+        />
+      </div>
+    </div>
+  </div>
+</div>

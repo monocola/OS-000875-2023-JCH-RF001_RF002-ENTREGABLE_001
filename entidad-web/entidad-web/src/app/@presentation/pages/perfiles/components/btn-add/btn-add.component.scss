@@ -1,0 +1,23 @@
+@import '_colors';
+
+.btnAddFunction {
+    background: none;
+    border: none;
+    color: $primary-color;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    &:hover > span {
+        text-decoration: underline;
+    }
+}
+
+.btnAddFunction:disabled {
+    color: #a7dbf1 !important;
+    cursor: auto;
+    &:hover > span {
+        text-decoration: none;
+    }
+}

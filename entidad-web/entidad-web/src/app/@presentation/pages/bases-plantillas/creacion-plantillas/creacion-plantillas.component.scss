@@ -1,0 +1,35 @@
+@import '_colors';
+
+.body {
+  min-height: calc(100vh - 11rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.btnBack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #119fca;
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.imgCreation {
+  opacity: 0;
+  transform: translateX(1000px);
+}
+
+.formCreation {
+  width: 16.875rem;
+  transform: translateY(1000px);
+  opacity: 0;
+}
+
+.labelForm {
+  transform: translateY(-1000px);
+}

@@ -1,0 +1,168 @@
+<div class="col-10 row m-0 p-0 align-items-center">
+  <div class="col p-0">
+    <nb-form-field>
+      <nb-icon nbSuffix icon="buscar"></nb-icon>
+      <input
+        [formControl]="inputValue"
+        nbInput
+        fullWidth
+        shape="semi-round"
+        type="text"
+        focusInputOnValueChange="false"
+        fieldSize="small"
+        [placeholder]="placeholder"
+        [nbAutocomplete]="auto"
+      />
+      <nb-autocomplete
+        #auto
+        (selectedChange)="selectConocimientoChange($event)"
+      >
+        <nb-option-group
+          *ngFor="let group of filteredGroups$ | async; trackBy: trackByFn"
+          [title]="group.descripcionCategoria"
+        >
+          <nb-option *ngFor="let option of group.hijos" [value]="option">
+            {{ option }}
+          </nb-option>
+        </nb-option-group>
+      </nb-autocomplete>
+    </nb-form-field>
+  </div>
+  <div class="p-0 pl-3" *ngIf="showHour">
+    <input
+      type="text"
+      fieldSize="small"
+      style="width: 4rem;"
+      nbInput
+      [formControl]="hourValue"
+      maxlength="maxlenghtisHM"
+      matInput='maxisHM'
+      required
+      class="text-center"
+      min="1"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+      (keyup)="this.setMaxValue()"
+    /> <!-- maxlength="3", max="100"-->
+    <span class="mx-3 fs-14">(horas acumuladas)</span>
+  </div>
+  <div class="p-0 pl-3" *ngIf="isOffice">
+    <nb-select [formControl]="hourValue">
+      <nb-option [value]="COD_PEF_OFI_BAS">Básico</nb-option>
+      <nb-option [value]="COD_PEF_OFI_INT">Intermedio</nb-option>
+      <nb-option [value]="COD_PEF_OFI_AVA">Avanzado</nb-option>
+    </nb-select>
+    <span class="mx-3 fs-14">(Nivel del office)</span>
+  </div>
+  <div class="p-0 pl-3" *ngIf="isIdioma">
+    <nb-select [formControl]="hourValue">
+      <nb-option [value]="COD_PEF_IDI_BAS">Básico</nb-option>
+      <nb-option [value]="COD_PEF_IDI_INT">Intermedio</nb-option>
+      <nb-option [value]="COD_PEF_IDI_AVA">Avanzado</nb-option>
+    </nb-select>
+    <span class="mx-3 fs-14">(Nivel del idioma)</span>
+  </div>
+  <div class="p-0 pl-3">
+    <button
+      class="effect-icon"
+      nbButton
+      size="small"
+      ghost
+      status="success"
+      (click)="selectedConocimiento()"
+      [disabled]="disabledDoneButtom()"
+    >
+      <nb-icon class="fs-18" icon="mas_rounded"></nb-icon>
+    </button>
+  </div>
+</div>
+<div class="col-12 p-0 row m-0 mt-2">
+  <ng-container *ngFor="let item of control.value; let i = index">
+    <div *ngIf="item.estado" class="col-6 row m-0 pl-0">
+      <nb-card class="p-0 col-12 my-1 box-conocimientos">
+        <nb-card-body class="p-1 row m-0">
+          <div class="col row p-0 m-0">
+            <div
+              class="fs-14 p-0 m-0 row"
+              [class.col-9]="showHour"
+              [class.col-12]="!showHour"
+            >
+              <div class="col-12 fs-10 text-secondary">
+                {{ item.descripcionCategoria }}
+              </div>
+              <div class="col-12">
+                {{ item.descripcion || item.descrConocimiento }}
+              </div>
+            </div>
+            <div
+              class="col-3 fs-14 p-0 m-0 row align-self-center"
+              *ngIf="showHour"
+            >
+              <div class="col-12">{{ item.horas }} horas acum.</div>
+            </div>
+            <div class="col-5 fs-14 p-0 m-0 row align-self-center"
+              *ngIf="isOffice"
+            >
+              <div class="col-12">
+                <div *ngIf="item.nivelDominioId === COD_PEF_OFI_BAS"
+                >Nivel: Básico</div
+                >
+                <div *ngIf="item.nivelDominioId === COD_PEF_OFI_INT"
+                >Nivel: Intermedio</div
+                >
+                <div *ngIf="item.nivelDominioId === COD_PEF_OFI_AVA"
+                >Nivel: Avanzado</div
+                >
+                <div
+                  *ngIf="
+                    item.nivelDominioId !== COD_PEF_OFI_BAS &&
+                    item.nivelDominioId !== COD_PEF_OFI_INT &&
+                    item.nivelDominioId !== COD_PEF_OFI_AVA
+                  "
+                >
+                  Nivel: No especificado
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-5 fs-14 p-0 m-0 row align-self-center"
+              *ngIf="isIdioma"
+            >
+              <div class="col-12">
+                <div *ngIf="item.nivelDominioId === COD_PEF_IDI_BAS"
+                  >Nivel: Básico</div
+                >
+                <div *ngIf="item.nivelDominioId === COD_PEF_IDI_INT"
+                  >Nivel: Intermedio</div
+                >
+                <div *ngIf="item.nivelDominioId === COD_PEF_IDI_AVA"
+                  >Nivel: Avanzado</div
+                >
+                <div
+                  *ngIf="
+                    item.nivelDominioId !== COD_PEF_IDI_BAS &&
+                    item.nivelDominioId !== COD_PEF_IDI_INT &&
+                    item.nivelDominioId !== COD_PEF_IDI_AVA
+                  "
+                >
+                  Nivel: No especificado
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="align-self-center">
+            <button
+              nbButton
+              class="effect-icon"
+              size="small"
+              ghost
+              status="danger"
+              (click)="deleteItemConocimiento(i, item)"
+            >
+              <nb-icon class="fs-18" icon="close"></nb-icon>
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,15 @@
+.btn-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  & > button {
+    width: 45% !important;
+  }
+}
+.mat-icon {
+  font-size: 18px;
+  width: 12px;
+  height: 12px;
+  line-height: 12px;
+  color: #024487 !important;
+}

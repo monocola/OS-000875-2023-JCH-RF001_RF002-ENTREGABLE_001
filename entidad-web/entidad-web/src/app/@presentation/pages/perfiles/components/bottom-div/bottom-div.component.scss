@@ -1,0 +1,22 @@
+@import '_colors';
+
+.divbottom {
+  z-index: 0;
+  transition: 0.2s;
+  -webkit-box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  -moz-box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  height: 5rem;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.cancelButton {
+  color: $primary-color;
+  border: none;
+  background: none;
+}

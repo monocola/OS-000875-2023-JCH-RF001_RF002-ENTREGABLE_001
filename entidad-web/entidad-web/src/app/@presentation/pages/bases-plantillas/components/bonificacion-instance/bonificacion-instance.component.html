@@ -1,0 +1,112 @@
+<form [formGroup]="form" class="bonificacion_title py-3">
+  <div class="row">
+    <div class="col-8 mb-3">
+      <input-field
+        [control]="f.titulo"
+        [label]="'Ingresa el título de la bonificación'"
+        [maxlength]="100"
+        [banKeyType]="5"
+        [minlength]="0"
+      >
+      </input-field>
+    </div>
+    <div class="col-4 mb-3">
+      <select-field
+        [label]="'Bonificaciones'"
+        [control]="f.tipoBonificacion"
+        [items]="returnTiposBonificacion()"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+  </div>
+
+  <div>
+    <label>Registra contenido del informe</label>
+    <quill-editor
+      [styles]="editorStyle"
+      placeholder=""
+      formControlName="contenido"
+      required
+      (onContentChanged)="getValueLength($event)"
+    >
+    </quill-editor>
+    <div class="flex-v-center">
+      <span
+        class="invalid-text"
+        *ngIf="f.contenido.touched && f.contenido.invalid"
+      >
+        El contenido del informe es obligatorio
+      </span>
+      <div class="flex-spacer"></div>
+      <span class="text-right mt-1 fs-12"> {{ textSize }} / 5000</span>
+    </div>
+
+    <div class="text-right mt-3">
+      <button
+        nbButton
+        shape="round"
+        status="primary"
+        class="px-4"
+        size="small"
+        (click)="addBonificacion()"
+      >
+        Bonificación
+      </button>
+    </div>
+
+    <table
+      class="table mat-elevation-z4 mt-2"
+      aria-describedby="Tabla por bonificacion"
+    >
+      <thead class="header_table">
+        <tr class="fs-14">
+          <th scope="col" style="width: 10%" class="text-center">NIVEL</th>
+          <th scope="col" style="width: 35%">DESCRIPCIÓN</th>
+          <th scope="col" style="width: 25%">APLICA SOBRE</th>
+          <th scope="col" style="width: 15%">% DE BON.</th>
+          <th scope="col" style="width: 15%" class="text-center">ACCIÓN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="fs-14"
+          *ngFor="let item of f.bonificaciones.value; let i = index"
+        >
+          <td class="w20 text-center">{{ item?.niveles?.descripcion }}</td>
+          <td>{{ item.descripcion }}</td>
+          <td>{{ item.aplicaSobre?.descripcion || 'NO APLICA' }}</td>
+          <td>{{ item.porcentaje }}%</td>
+          <td class="text-center">
+            <button
+              class="btn_edit"
+              matRipple
+              (click)="this.editBonificacion(item, i)"
+            >
+              <em class="ent-web-edit fs-20"></em>
+            </button>
+            <button
+              class="btn_delete"
+              matRipple
+              (click)="this.deleteDetailBonificacion(i)"
+            >
+              <em class="ent-web-eliminar fs-20"></em>
+            </button>
+          </td>
+        </tr>
+        <tr class="fs-14" *ngIf="f.bonificaciones.value.length === 0">
+          <td colspan="6">
+            <span> Aún no se ha ingresado información </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <span
+      class="invalid-text"
+      *ngIf="f.bonificaciones.value.length === 0 && f.bonificaciones.touched"
+    >
+      Complete los datos faltantes haciendo click en
+      <strong>Bonificación</strong>
+    </span>
+  </div>
+</form>

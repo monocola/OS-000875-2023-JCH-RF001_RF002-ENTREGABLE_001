@@ -1,0 +1,59 @@
+<div class="d-flex pb-3">
+  <strong>{{ filename }}</strong>
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 documentIcon btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  >
+  </nb-icon>
+</div>
+
+<!---------------------------------------------------------------------->
+<!------ PDF Viewer ------>
+<!---------------------------------------------------------------------->
+
+<ng-container *ngIf="this.extensionFile == 'pdf'">
+  <ngx-extended-pdf-viewer
+    [base64Src]="this.data.base64String"
+    backgroundColor="#ffffff"
+    [height]="'80vh'"
+    [useBrowserLocale]="true"
+    [handTool]="false"
+    [showHandToolButton]="true"
+  ></ngx-extended-pdf-viewer>
+</ng-container>
+
+<!---------------------------------------------------------------------->
+<!------ IMG Viewer ------>
+<!---------------------------------------------------------------------->
+
+<div style="width: 90vw">
+  <ng-container *ngIf="this.extensionFile != 'pdf'">
+    <div class="body flex-v-center">
+      <div class="backgroundImg text-center">
+        <img
+          alt="Imagen entidad"
+          [src]="sanitizer.bypassSecurityTrustResourceUrl(this.base64String)"
+        />
+      </div>
+    </div>
+  </ng-container>
+</div>
+<!---------------------------------------------------------------------->
+<!------ Descargar ------>
+<!---------------------------------------------------------------------->
+
+<div class="d-flex w-100 mt-2">
+  <span class="flex-spacer"></span>
+  <button
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="downloadFile()"
+  >
+    Descargar
+  </button>
+</div>

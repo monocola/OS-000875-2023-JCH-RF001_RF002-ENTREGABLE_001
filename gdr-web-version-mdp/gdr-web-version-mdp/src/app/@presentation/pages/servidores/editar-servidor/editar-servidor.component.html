@@ -1,0 +1,531 @@
+<div class="body">
+  <div class="d-flex">
+    <a routerLink="../" class="back-arrow pt-1 mr-1">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.41 7.41L14 6L8 12L14 18L15.41 16.59L10.83 12L15.41 7.41Z"
+          fill="#024487"
+        />
+      </svg>
+    </a>
+    <h3 class="titlePage">Editar Servidor Civil</h3>
+    <span class="flex-spacer"></span>
+  </div>
+
+  <div class="m-1 p-1"></div>
+
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Datos Personales">
+      <div class="container-fluid p-4" [formGroup]="registerForm">
+        <div class="row">
+          <div class="col-md-2 col-sm-4">
+            <label>Apellido Paterno</label>
+            <input
+              trim="blur"
+              placeholder="Ingresar"
+              nbInput
+              shape="semi-round"
+              fullWidth
+              [status]="
+                f.apellidoPaterno.invalid && f.apellidoPaterno.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              formControlName="apellidoPaterno"
+            />
+
+            <div
+              *ngIf="f.apellidoPaterno.invalid && f.apellidoPaterno.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.apellidoPaterno.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <label>Apellido Materno</label>
+            <input
+              trim="blur"
+              placeholder="Ingresar"
+              nbInput
+              shape="semi-round"
+              fullWidth
+              [status]="
+                f.apellidoMaterno.invalid && f.apellidoMaterno.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              formControlName="apellidoMaterno"
+            />
+
+            <div
+              *ngIf="f.apellidoMaterno.invalid && f.apellidoMaterno.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.apellidoMaterno.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-8">
+            <label>Nombres</label>
+            <input
+              trim="blur"
+              placeholder="Ingresar"
+              nbInput
+              shape="semi-round"
+              fullWidth
+              [status]="
+                f.nombres.invalid && f.nombres.touched ? 'danger' : 'basic'
+              "
+              formControlName="nombres"
+            />
+
+            <div
+              *ngIf="f.nombres.invalid && f.nombres.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.nombres.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <label>Género</label>
+            <nb-select
+              formControlName="genero"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+              [status]="
+                f.genero.invalid && f.genero.touched ? 'danger' : 'basic'
+              "
+            >
+              <nb-option value="">Seleccione</nb-option>
+              <nb-option *ngFor="let g of generos" [value]="g.codigoTexto">{{
+                g.valorTexto
+              }}</nb-option>
+            </nb-select>
+
+            <div
+              *ngIf="f.genero.invalid && f.genero.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.genero.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <label>Fecha de Nacimiento</label>
+
+            <nb-form-field>
+              <input
+                id="fechaNacimiento"
+                #fechaNacimiento
+                formControlName="fechaNacimiento"
+                nbInput
+                placeholder="dd/mm/aaaa"
+                [nbDatepicker]="formpickerNacimiento"
+                fieldSize="large"
+                shape="semi-round"
+                [status]="
+                  f.fechaNacimiento.invalid && f.fechaNacimiento.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+
+              <nb-icon
+                style="cursor: pointer"
+                nbSuffix
+                class="mr-2"
+                icon="calendar-outline"
+                (click)="fechaNacimiento.click()"
+              >
+                <span class="material-icons gray00">face</span>
+              </nb-icon>
+              <nb-datepicker #formpickerNacimiento></nb-datepicker>
+            </nb-form-field>
+
+            <div
+              *ngIf="f.fechaNacimiento.invalid && f.fechaNacimiento.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.fechaNacimiento.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-md-2 col-sm-4">
+            <label>Tipo Doc. Identidad</label>
+            <nb-select
+              formControlName="tipoDocumentoIdentidad"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+              [status]="
+                f.tipoDocumentoIdentidad.invalid &&
+                f.tipoDocumentoIdentidad.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            >
+              <nb-option value="">Seleccione</nb-option>
+              <nb-option
+                *ngFor="let td of tiposDocumento"
+                [value]="td.valorTexto"
+                >{{ td.valorTexto }}</nb-option
+              >
+            </nb-select>
+
+            <div
+              *ngIf="
+                f.tipoDocumentoIdentidad.invalid &&
+                f.tipoDocumentoIdentidad.touched
+              "
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.tipoDocumentoIdentidad.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <label>N° Doc. Identidad</label>
+            <input
+              trim="blur"
+              placeholder="Ingresar"
+              nbInput
+              shape="semi-round"
+              fullWidth
+              [status]="
+                f.numeroDocumentoIdentidad.invalid &&
+                f.numeroDocumentoIdentidad.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              formControlName="numeroDocumentoIdentidad"
+            />
+
+            <div
+              *ngIf="
+                f.numeroDocumentoIdentidad.invalid &&
+                f.numeroDocumentoIdentidad.touched
+              "
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.numeroDocumentoIdentidad.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-8">
+            <label>Correo electrónico institucional</label>
+            <input
+              trim="blur"
+              placeholder="Ingresar"
+              nbInput
+              shape="semi-round"
+              fullWidth
+              [status]="
+                f.correo.invalid && f.correo.touched ? 'danger' : 'basic'
+              "
+              formControlName="correo"
+            />
+
+            <div
+              *ngIf="f.correo.invalid && f.correo.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.correo.errors.required">
+                El campo es obligatorio
+              </span>
+              <span *ngIf="f.correo.errors.email">
+                Debe ingresar un correo electrónico válido
+              </span>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-4">
+            <label>Sindicato</label>
+            <nb-select
+              formControlName="sindicato"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+              [status]="
+                f.sindicato.invalid && f.sindicato.touched ? 'danger' : 'basic'
+              "
+            >
+              <nb-option value="">Seleccione</nb-option>
+              <nb-option *ngFor="let s of sindicatos" [value]="s.codigoTexto">{{
+                s.valorTexto
+              }}</nb-option>
+            </nb-select>
+
+            <div
+              *ngIf="f.sindicato.invalid && f.sindicato.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.sindicato.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col text-center">
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              class="pl-5 pr-5"
+              (click)="actualizar()"
+            >
+              Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Puesto">
+      <div class="container-fluid pl-1" [formGroup]="registerFormPuesto">
+        <div class="panel-tab p-4 mb-4">
+          <div class="row">
+            <label class="col-12 label-header">Agregar puesto</label>
+          </div>
+          <div class="row mt-2">
+            <div class="col-sm-6">
+              <label>Órgano / UO / Sub UO</label>
+              <nb-select
+                formControlName="organo"
+                placeholder="Seleccione"
+                fullWidth="true"
+                [size]="'large'"
+                shape="semi-round"
+                [status]="
+                  fp.organo.invalid && fp.organo.touched ? 'danger' : 'basic'
+                "
+                (selectedChange)="onSelectionChangeUO($event)"
+              >
+                <nb-option value="">Seleccione</nb-option>
+                <nb-option *ngFor="let uo of unidadesOrganicas" [value]="uo.id"
+                  >{{ uo.sigla }} - {{ uo.descripcion }}</nb-option
+                >
+              </nb-select>
+
+              <div
+                *ngIf="fp.organo.invalid && fp.organo.touched"
+                class="invalid-text flex-column"
+              >
+                <span *ngIf="fp.organo.errors.required">
+                  El campo es obligatorio
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Puesto</label>
+              <input
+                trim="blur"
+                placeholder="Ingresar"
+                nbInput
+                shape="semi-round"
+                fullWidth
+                [status]="
+                  fp.puesto.invalid && fp.puesto.touched ? 'danger' : 'basic'
+                "
+                formControlName="puesto"
+                [nbAutocomplete]="autoPuesto"
+                (input)="onChangePuesto($event)"
+              />
+              <nb-autocomplete
+                #autoPuesto
+                (selectedChange)="onSelectionChangePuesto($event)"
+              >
+                <nb-option
+                  *ngFor="let p of listaPuestosFiltrados"
+                  [value]="p.id"
+                >
+                  {{ p.descripcion }}
+                </nb-option>
+              </nb-autocomplete>
+
+              <div
+                *ngIf="fp.puesto.invalid && fp.puesto.touched"
+                class="invalid-text flex-column"
+              >
+                <span *ngIf="fp.puesto.errors.required">
+                  El campo es obligatorio
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha de inicio</label>
+              <nb-form-field>
+                <input
+                  #fechaInicio
+                  formControlName="fechaInicio"
+                  nbInput
+                  placeholder="dd/mm/aaaa"
+                  [nbDatepicker]="formpicker"
+                  fieldSize="large"
+                  shape="semi-round"
+                  [status]="
+                    fp.fechaInicio.invalid && fp.fechaInicio.touched
+                      ? 'danger'
+                      : 'basic'
+                  "
+                />
+
+                <nb-icon
+                  style="cursor: pointer"
+                  nbSuffix
+                  class="mr-2"
+                  icon="calendar-outline"
+                  (click)="fechaInicio.click()"
+                >
+                  <span class="material-icons gray00">face</span>
+                </nb-icon>
+                <nb-datepicker #formpicker></nb-datepicker>
+              </nb-form-field>
+
+              <div
+                *ngIf="fp.fechaInicio.invalid && fp.fechaInicio.touched"
+                class="invalid-text flex-column"
+              >
+                <span *ngIf="fp.fechaInicio.errors.required">
+                  El campo es obligatorio
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-sm-6">
+              <label>Tipo de Asignación</label>
+              <nb-select
+                formControlName="tipoAsignacion"
+                placeholder="Seleccione"
+                fullWidth="true"
+                [size]="'large'"
+                shape="semi-round"
+                [status]="
+                  fp.tipoAsignacion.invalid && fp.tipoAsignacion.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+                (selectedChange)="onSelectionChangeTipoAsignacion($event)"
+              >
+                <nb-option value="">Seleccione</nb-option>
+                <nb-option
+                  *ngFor="let ta of tiposAsignacion"
+                  [value]="ta.codigoNumero"
+                  >{{ ta.valorTexto }}</nb-option
+                >
+              </nb-select>
+
+              <div
+                *ngIf="fp.tipoAsignacion.invalid && fp.tipoAsignacion.touched"
+                class="invalid-text flex-column"
+              >
+                <span *ngIf="fp.tipoAsignacion.errors.required">
+                  El campo es obligatorio
+                </span>
+              </div>
+            </div>
+            <div
+              class="col-sm-3"
+              *ngIf="fp.tipoAsignacion.value == TIPO_ASIGNACION_ENCARGADO"
+            >
+              <label>Persona asignada</label>
+              <nb-select
+                formControlName="personaAsignada"
+                placeholder="Seleccione"
+                fullWidth="true"
+                [size]="'large'"
+                shape="semi-round"
+                [status]="
+                  fp.personaAsignada.invalid && fp.personaAsignada.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              >
+                <nb-option value="">Seleccione</nb-option>
+                <nb-option
+                  *ngFor="let e of listaEncargados"
+                  [value]="e.detalleuoId"
+                >
+                  {{ e.apellidoPaterno }} {{ e.apellidoMaterno }}
+                  {{ e.nombres }}
+                </nb-option>
+              </nb-select>
+
+              <div
+                *ngIf="fp.personaAsignada.invalid && fp.personaAsignada.touched"
+                class="invalid-text flex-column"
+              >
+                <span *ngIf="fp.personaAsignada.errors.required">
+                  El campo es obligatorio
+                </span>
+              </div>
+            </div>
+            <div
+              class="col text-right d-flex align-items-end justify-content-end"
+            >
+              <button
+                nbButton
+                shape="round"
+                size="medium"
+                status="primary"
+                class="pl-5 pr-5"
+                (click)="agregarPuesto()"
+              >
+                Grabar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="col-12 label-header">Estado de Puestos</label>
+        </div>
+        <div>
+          <serv-talento-table
+            holderText="Estado de puestos"
+            [tableData]="this.listaPuestosTablas"
+            [tableColumns]="columnasTablaPuestos"
+            [isFilterable]="false"
+            [isPageable]="false"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            [acciones]="true"
+            [title]="'Estado de Puestos'"
+            [btnEditEnabled]="true"
+            (editAction)="editPuesto($event)"
+            [editTitle]="'Editar puesto'"
+            [btnDeleteEnabled]="false"
+            (deleteAction)="removePuesto($event)"
+            [deleteTitle]="'Eliminar puesto'"
+            [showDownloadButton]="false"
+            [dataExport]="getDataExport()"
+          ></serv-talento-table>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

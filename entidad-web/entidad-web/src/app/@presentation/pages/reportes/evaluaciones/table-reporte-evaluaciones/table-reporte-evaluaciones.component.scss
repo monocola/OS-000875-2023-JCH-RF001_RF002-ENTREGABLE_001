@@ -1,0 +1,35 @@
+@import '../../../../@common-components/material-table/material-table.component.scss';
+@import 'colors';
+
+.statusConvocatoria {
+  width: 95%;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}
+
+
+.statusCalifica {
+  background-color: #51B7F0;
+  color: #fff;
+}
+
+.statusNoCalifica {
+  background-color: #BDBDBD;
+  color: #fff;
+}
+
+.statusDescalificado {
+  background-color: #BDBDBD;
+  color: #fff;
+}
+
+.custom-color {
+  color: #BDBDBD;
+}

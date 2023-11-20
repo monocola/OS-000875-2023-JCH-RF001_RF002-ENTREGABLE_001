@@ -1,0 +1,85 @@
+@import '../../@theme/styles/themes';
+@import '_colors';
+
+@include nb-install-component() {
+  .tooltip-info {
+    color: $primary_color;
+  }
+}
+
+*:focus {
+  outline: none;
+}
+
+.btnOrganigrama {
+  border-color: black !important;
+  color: black !important;
+  font-weight: 400 !important;
+}
+
+::ng-deep .nb-theme-default .nb-tree-grid-header-row {
+  background-color: #3b3a3c;
+  color: white;
+  font-weight: 400 !important;
+}
+
+::ng-deep .nb-theme-default .nb-tree-grid-header-cell,
+::ng-deep .nb-theme-default .nb-tree-grid-cell,
+::ng-deep .nb-theme-default .nb-tree-grid-footer-cell {
+  border: 0 solid !important;
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+::ng-deep .nb-theme-default .nb-tree-grid-row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  &:last-child {
+    border-bottom: 0 solid black;
+  }
+}
+
+::ng-deep .nb-theme-default .nb-tree-grid-header-cell {
+  padding: 0.8rem 1.25rem !important;
+  &:first-child {
+    border-top-left-radius: 0.5rem !important;
+  }
+  &:last-child {
+    border-top-right-radius: 0.5rem !important;
+  }
+}
+
+.nb-theme-default .nb-tree-grid-header-cell,
+.nb-theme-default .nb-tree-grid-cell,
+.nb-theme-default .nb-tree-grid-footer-cell .card {
+  border-radius: 0.5rem;
+}
+
+::ng-deep .nb-theme-default .status-primary .toggle {
+  background-color: #9a9a9a;
+  border: none;
+}
+
+.activo {
+  color: rgb(13, 136, 188) !important;
+}
+
+.inactivo {
+  color: $red !important;
+}
+
+.btnEdit {
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  margin: 0 0.125rem;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  color: $primary_color;
+  font-size: 1.375rem;
+  &:enabled:hover {
+    transform: scale(1.25);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}

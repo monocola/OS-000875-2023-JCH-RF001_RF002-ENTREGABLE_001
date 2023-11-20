@@ -1,0 +1,94 @@
+@import "../../@theme/styles/themes";
+@import "_colors";
+@include nb-install-component() {
+  .separator {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 2rem !important;
+    height: 1px;
+    background-color: #e5e5e5;
+  }
+  a {
+    color: $primary_color;
+    font-size: 0.875rem;
+  }
+  .tooltip-info {
+    color: $primary_color;
+  }
+  .box-image {
+    background-color: #bac1c1;
+    padding: 1.7rem 1rem 1rem;
+  }
+}
+
+.btn-login {
+  background-color: #0dacbc;
+  color: white;
+  font-weight: bold;
+  border-radius: 1rem;
+  border: #0dacbc;
+  height: 100%;
+}
+
+.material-icons.gray00 {
+  color: #afb5b5;
+}
+
+.btnClearImage {
+  background-color: white;
+  position: absolute;
+  right: 0;
+  top: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.divLogoImg {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  & > img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 300px !important;
+  }
+}
+
+.btnUploadLogo {
+  background-color: $primary_color;
+  border-radius: 2.125rem;
+  padding: 0.375rem 1.125rem;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s;
+  color: white !important;
+  & > .documentIcon {
+    font-size: 1.75rem !important;
+  }
+  &:hover {
+    background-color: #259acc;
+  }
+}
+
+.documentIcon {
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.back__arrow {
+  font-size: 2rem;
+  color: #024487;
+}
+
+.btn_back {
+  border: none;
+  background: transparent;
+  margin-top: -10px;
+}

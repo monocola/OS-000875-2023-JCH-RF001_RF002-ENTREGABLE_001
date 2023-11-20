@@ -1,0 +1,19 @@
+@import '_colors';
+
+* {
+    outline: none !important;
+}
+
+h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.back__arrow {
+    color: $primary_color;
+}
+
+.subtitle {
+    font-weight: 500;
+    color: $primary_color;
+}

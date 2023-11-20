@@ -1,0 +1,139 @@
+<div class="d-flex w-100 header-modal mb-3">
+   <span class="h2">{{data.createMode ? 'Programar reunión':'Editar reunión'}}</span>
+   <button (click)="Closedate()" id="autoclick" style="border:none; background-color: white; width: 1px; height: 1px;"></button>
+   <span class="flex-spacer"></span>
+   <nb-icon class="mr-2 btnClose" nbSuffix icon="close" (click)="cerrar()"></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+<br>
+<div>
+   <form [formGroup]="formReunion">
+      <p>Ingrese los siguientes campos</p>
+      <div class="row">
+         <div class="col-md-6 col-lg-6">
+            <label for='fecha'>Fecha</label>
+            <nb-form-field>
+               <input
+                  #fecha
+                  id='fecha'
+                  formControlName="fecha"
+                  nbInput
+                  placeholder="dd/mm/aaaa"
+                  [nbDatepicker]="dateTimePicker1"
+                  fieldSize="large"
+                  shape="semi-round"
+                  autocomplete="off"
+                  >
+               <nb-icon (click)="fecha.click()" style="cursor: pointer;" nbSuffix class="mr-2" icon="calendar-outline">
+               </nb-icon>
+               <nb-datepicker #dateTimePicker1></nb-datepicker>
+            </nb-form-field>
+            <div *ngIf="f.fecha.invalid && f.fecha.touched" class="invalid-text flex-column">
+               <span *ngIf="f.fecha.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-6">
+            <label for='hora'>Hora</label>
+            <nb-form-field>
+               <input #hora1 id='hora' formControlName="hora" nbInput  placeholder="--:--"
+                  [nbTimepicker]="timepicker" fieldSize="large" shape="semi-round"
+                  autocomplete="off">
+               <nb-icon (click)="hora1.click()" style="cursor: pointer;" nbSuffix class="mr-2" icon="clock-outline">
+               </nb-icon>
+               <nb-timepicker
+               #timepicker="nbTimepicker"
+               [currentTimeButtonText]="' '"
+               singleColumn
+               [step]="15"></nb-timepicker>
+            </nb-form-field>
+
+            <div *ngIf="f.hora.invalid && f.hora.touched" class="invalid-text flex-column">
+               <span *ngIf="f.hora.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-6">
+            <label for='duracion'>Duración</label>
+            <nb-form-field>
+               <nb-select
+            placeholder="Seleccione"
+            fullWidth
+            formControlName="duracion"
+            [size]="'large'"
+            shape="semi-round"
+            [status]="
+              f.duracion.invalid && f.duracion.touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option
+              *ngFor="let item of zonaHorariaReu" [value]="item.codigoNumero"
+            >
+              {{ item.codigoTexto }}
+            </nb-option>
+          </nb-select>
+            </nb-form-field>
+
+            <div *ngIf="f.duracion.invalid && f.duracion.touched" class="invalid-text flex-column">
+               <span *ngIf="f.duracion.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-6">
+            <label for='agendar'>Agendar</label>
+            <nb-select
+            placeholder="Selecciona"
+            fullWidth
+            formControlName="tipoAgendamientoId"
+            [size]="'large'"
+            shape="semi-round"
+            [status]="
+              f.tipoAgendamientoId.invalid && f.tipoAgendamientoId.touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option
+              [value]="item.parametroId"
+              *ngFor="let item of typeDocuments"
+            >
+              {{ item.descripcion }}
+            </nb-option>
+          </nb-select>
+          <span
+            *ngIf="f.tipoAgendamientoId.invalid && f.tipoAgendamientoId.touched"
+            class="invalid-text"
+          >
+            <span *ngIf="f.tipoAgendamientoId.errors.required">
+              El campo es obligatorio
+            </span>
+          </span>
+         </div>
+      </div>
+
+      <div class="row mt-4">
+         <div class="col text-center">
+            <button *ngIf="data.createMode" nbButton shape="round" size="medium" status="info" class="pl-5 pr-5" (click)="registrar()">
+              Guardar
+            </button>
+
+            <button *ngIf="!data.createMode && !data.reprogramarMode" nbButton shape="round" size="medium" status="info" class="pl-5 pr-5" (click)="registrar()">
+               Programar
+            </button>
+
+            <button *ngIf="data.reprogramarMode && !data.createMode" nbButton shape="round" size="medium" status="info" class="pl-5 pr-5" (click)="registrar()">
+               Reprogramar
+            </button>
+            <button *ngIf="!data.createMode" nbButton shape="round" size="medium" status="info" outline
+               class="ml-3 pl-5 pr-5 btnCancelar" (click)="cancelar()">
+               Cancelar reunión
+            </button>
+         </div>
+      </div>
+   </form>
+</div>

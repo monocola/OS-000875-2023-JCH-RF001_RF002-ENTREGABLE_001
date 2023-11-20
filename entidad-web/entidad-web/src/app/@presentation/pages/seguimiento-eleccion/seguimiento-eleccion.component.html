@@ -1,0 +1,267 @@
+<div class="bg-white p-0">
+  <div class="row m-0 p-0 justify-content-center">
+    <div class="col-11 m-0 row p-0 pt-3 pb-4">
+      <div class="col m-0 p-0 row">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="router.navigateByUrl('pages/seguimientoconvocatoria')"
+        >
+          <nb-icon nbSuffix icon="back"></nb-icon>
+        </button>
+        <div class="col text-primary fs-26 p-0 align-self-center row m-0">
+          Seguimiento | Elección
+          <div class="pl-4">
+            <nb-icon
+              icon="info"
+              status="primary"
+              nbPopover="Hint Mode"
+              [nbPopoverTrigger]="popHint"
+              [nbPopoverPlacement]="pospopRigth"
+              [nbPopover]="iconPopInfo"
+            ></nb-icon>
+          </div>
+        </div>
+
+        <ng-template #iconPopInfo>
+          <div class="row m-0 px-3 py-2 boxPopInfo">
+            <img
+              class="toolimg mr-2"
+              src="assets/images/icons/info-tooltip.svg"
+              alt="info-tooltip"
+            />
+            <div class="col m-0 p-0 row">
+              <div class="col-12 row p-0 m-0 progress-bar-tooltip">
+                <div
+                  class="p-0 m-0 progress-tootlip"
+                  [class.progress-tootlip-total]="progressPorcent >= 100"
+                  [style.width]="
+                    (progressPorcent <= 100 ? progressPorcent : 100) + '%'
+                  "
+                ></div>
+                <div
+                  class="p-0 m-0 res-tooltip"
+                  [class.col]="progressPorcent <= 100"
+                  *ngIf="progressPorcent <= 100"
+                ></div>
+              </div>
+              <div class="row col-12 m-0 p-0">
+                <div class="col pl-0 fs-11 text-left">
+                  Inicio {{ fechaInicio.format('DD/MM/YYYY') }}
+                </div>
+                <div class="col pr-0 fs-11 text-right">
+                  Fin {{ fechaFin.format('DD/MM/YYYY') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <div>
+        Convocatoria:
+        <span class="text-primary font-weight-bold fs-18">{{
+          convocatoria
+        }}</span>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row m-0 p-0 justify-content-center">
+    <div class="col-11 row p-0 m-0">
+      <form [formGroup]="filterForm" class="p-0 m-0 mt-3 col-12">
+        <div class="col subtitle">Filtros de Busqueda</div>
+
+        <div class="row m-0 mt-3 align-items-end p-0">
+          <div class="col-3">
+            <select-field
+              [label]="'Perfil de puesto'"
+              [control]="f.perfil"
+              [items]="perfiles"
+              [value]="'id'"
+              [valueToShow]="'descripcion'"
+            >
+            </select-field>
+          </div>
+
+          <div class="col-3" *ngIf="showCompleateFilter">
+            <label>Fecha/Período de convocatoria</label>
+            <nb-form-field>
+              <input
+                [formControl]="f.periodo"
+                nbInput
+                readonly
+                [ngxMatDatetimePicker]="pickerFecIni"
+                placeholder="Buscar fecha"
+                [nbDatepicker]="formpicker"
+                fieldSize="large"
+                shape="semi-round"
+                [disabled]="false"
+              />
+
+              <nb-icon nbSuffix class="mr-2" icon="calendario"> </nb-icon>
+              <nb-rangepicker #formpicker></nb-rangepicker>
+            </nb-form-field>
+          </div>
+          <div class="col-3" *ngIf="showCompleateFilter">
+            <select-field
+              [label]="'Validación REDAM'"
+              [control]="f.redam"
+              [items]="opcionesRedam"
+              [value]="'value'"
+              [valueToShow]="'description'"
+            >
+            </select-field>
+          </div>
+          <div class="col-3" *ngIf="showCompleateFilter">
+            <select-field
+              [label]="'Estado'"
+              [control]="f.estado"
+              [items]="estados"
+              [value]="'value'"
+              [valueToShow]="'description'"
+            >
+            </select-field>
+          </div>
+          <div class="col-4 row m-0 mt-3 align-content-end">
+            <div class="col-6 pl-0">
+              <button
+                nbButton
+                fullWidth
+                outline
+                shape="semi-round"
+                status="primary"
+                (click)="limpiar()"
+              >
+                Limpiar
+              </button>
+            </div>
+            <div class="col-6 pl-0">
+              <button
+                nbButton
+                fullWidth
+                shape="semi-round"
+                status="primary"
+                (click)="buscar()"
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="w-100 row m-0 mt-5 justify-content-center">
+    <div class="flex-v-center flex-column mt-5" *ngIf="!showCompleateFilter">
+      <img
+        width="70px"
+        alt="imagen bandeja"
+        src="assets/images/icons/bandeja.png"
+        class="my-3"
+      />
+      <span class="text-primary fs-18 font-weight-bold">Bandeja elección</span>
+      <span class="fs-13 mt-2"
+        >Aqui podrás visualizar a todos los finalistas ordenados por Perfil o
+        grupo.</span
+      >
+      <span class="fs-13 mt-2"
+        >Tambien podrás realizar la validación de REDAM</span
+      >
+      <span class="fs-13 mt-2">Aún no has buscado ningun perfil.</span>
+    </div>
+    <div class="col-11 row" *ngIf="showCompleateFilter">
+      <div class="row p-0 m-0 border-buttom-opt">
+        <div class="row p-0 m-0">
+          <div class="col row text-center m-0 p-0">
+            <div class="col-12 fs-10 p-0 m-0">Vacantes</div>
+            <div class="col-12 p-0 m-0">
+              <nb-icon class="fs-22" icon="evaluacin"></nb-icon>
+            </div>
+          </div>
+          <div
+            class="text-primary font-weight-bold fs-26 mr-2 align-self-center"
+          >
+            {{ vacantes }}
+          </div>
+        </div>
+        <div class="separator"></div>
+        <div class="row p-0 m-0">
+          <div class="col row text-center m-0 p-0">
+            <div class="col-12 fs-10 p-0 m-0">Califica</div>
+            <div class="col-12 p-0 m-0">
+              <nb-icon
+                class="fs-20"
+                icon="person-done"
+                status="success"
+              ></nb-icon>
+            </div>
+          </div>
+          <div
+            class="text-primary font-weight-bold fs-26 mr-2 align-self-center"
+          >
+            {{ califica }}
+          </div>
+        </div>
+        <div class="separator"></div>
+        <div class="col row p-0 m-0">
+          <div class="row text-center m-0 p-0">
+            <div class="col-12 fs-10 p-0 m-0">No califica</div>
+            <div class="col-12 p-0 m-0">
+              <nb-icon class="fs-22" icon="person-not" status="basic"></nb-icon>
+            </div>
+          </div>
+          <div
+            class="text-black-50 font-weight-bold fs-26 mr-2 align-self-center"
+          >
+            {{ nocalifica }}
+          </div>
+        </div>
+      </div>
+      <div class="col row m-0 p-0 justify-content-end align-items-center">
+        <div class="col-4">
+          <button
+            *ngIf="!envio"
+            shape="round"
+            nbButton
+            status="primary"
+            fullWidth
+            (click)="enviarContratoConvenio()"
+          >
+            <nb-icon icon="enviar"></nb-icon>Enviar a contrato o convenio
+          </button>
+          <button
+            *ngIf="envio"
+            shape="round"
+            nbButton
+            status="primary"
+            fullWidth
+            (click)="GoToContratosOrConvenios()"
+          >
+            <nb-icon icon="bandera"></nb-icon>Ir a contratos/convenio
+          </button>
+        </div>
+      </div>
+    </div>
+    <serv-talento-table-eleccion
+      *ngIf="showCompleateFilter"
+      class="col-11 mt-5"
+      [tableColumns]="columns"
+      [title]="'Listado de convocatorias'"
+      [tableData]="data"
+      [tamanio]="total"
+      [pageIndex]="page"
+      [defaultPageSize]="size"
+      (pageEvent)="getPaginado($event)"
+      (sort)="sortData($event)"
+      (procesoAction)="verNotas($event)"
+      (comunicadoAction)="action($event)"
+      (cronogramaAction)="action($event)"
+      (aprobarAction)="dataRedam($event)"
+      (applyFilter)="keyup($event)"
+      [dataExport]="getDataExport()"
+    >
+    </serv-talento-table-eleccion>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="d-flex w-100 header-modal">
+  Registrar Servidor Civil
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+<div>
+  <div class="row">
+    <label class="col-12">Ingrese el siguiente dato de cese</label>
+  </div>
+
+  <div class="row">
+    <form [formGroup]="registerForm">
+      <div class="col-md-3 col-sm-6">
+        <label>Fecha de cese</label>
+
+        <nb-form-field>
+          <input
+            id="fechaCese"
+            #fechaCese
+            formControlName="fechaCese"
+            nbInput
+            placeholder="dd/mm/aaaa"
+            [nbDatepicker]="formpickerCese"
+            fieldSize="large"
+            shape="semi-round"
+          />
+
+          <nb-icon
+            style="cursor: pointer"
+            nbSuffix
+            class="mr-2"
+            icon="calendar-outline"
+            (click)="fechaCese.click()"
+          >
+            <span class="material-icons gray00">face</span>
+          </nb-icon>
+          <nb-datepicker #formpickerCese></nb-datepicker>
+        </nb-form-field>
+        <span class="invalid-text"></span>
+      </div>
+    </form>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col text-center">
+      <button
+        nbButton
+        shape="round"
+        size="medium"
+        status="primary"
+        class="pl-5 pr-5"
+      >
+        Aplicar
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+@import '_colors';
+
+.table {
+  border-radius: 10px;
+}
+
+.btn_edit {
+  background-color: white !important;
+  color: $primary-color;
+  border: none;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.25);
+    filter: saturate(2);
+  }
+}
+
+.btn_delete {
+  background-color: white !important;
+  color: $red;
+  border: none;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.25);
+    filter: saturate(2);
+  }
+}
+
+thead > tr > th {
+  &:first-child {
+    border-top-left-radius: 10px !important;
+  }
+  &:last-child {
+    border-top-right-radius: 10px !important;
+  }
+}
+
+.header_table {
+  background-color: #3b3a3c !important;
+  color: white;
+}

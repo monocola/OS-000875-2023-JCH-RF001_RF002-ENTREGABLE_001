@@ -1,0 +1,54 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: entidad-env
+  name: entidad-env
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    app: entidad-env
+  template:
+    metadata:
+      labels:
+        app: entidad-env
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/entidad-env/entidad-env:latest
+        imagePullPolicy: IfNotPresent
+        name: entidad-env
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 250m
+            memory: 768Mi
+        envFrom:
+        - configMapRef:
+            name: entidad-env
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: entidad-env
+              key: DB_PASSWORD
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - entidad-env
+      from:
+        kind: ImageStreamTag
+        name: entidad-env:latest
+        namespace: entidad-env

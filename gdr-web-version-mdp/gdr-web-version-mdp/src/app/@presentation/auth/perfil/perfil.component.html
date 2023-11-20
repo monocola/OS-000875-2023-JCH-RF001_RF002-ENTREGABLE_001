@@ -1,0 +1,52 @@
+  <div class="titulo">
+    <div>
+      <h4 class="tituloPage">Perfil de usuario</h4>
+    </div>
+    <div>
+      <nb-action
+        class="control-item p-0 justify-content-end"
+        icon="close"
+        (click)="dismiss(false)"
+      ></nb-action>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <h3 class='m-1 p-1 texto1'>Seleccione un perfil del usuario</h3>
+  </div>
+  <mat-dialog-content >
+
+    <div class='padre' *ngIf='lstRoles.length >= 3'>
+      <div class='hijo' *ngFor="let roles of lstRoles let i = index">
+        <img
+          name='{{roles.nombreRol}}' id='{{roles.rolId}}'
+          class="imagen pb-2 mb-1"
+          src='{{roles.icono}}'
+          [ngClass]='{marca: roles.cuadro, marcaOff: !roles.cuadro}'
+          alt="" (click)='seteaValor($event.target)'>
+        <h6>{{roles.nombreRol}}</h6>
+      </div>
+    </div>
+    <div class='padre' *ngIf='lstRoles.length == 2'>
+      <div class='hijo2' *ngFor="let rol of lstRoles let i = index">
+        <img
+          name='{{rol.nombreRol}}' id='{{rol.rolId}}'
+          class="imagen pb-2 mb-1"
+          src='{{rol.icono}}'
+          [ngClass]='{marca: rol.cuadro, marcaOff: !rol.cuadro}'
+          alt="" (click)='seteaValor($event.target)'>
+        <h6>{{rol.nombreRol}}</h6>
+      </div>
+    </div>
+    <div class="col-md-12 row m-0">
+      <div class='col-md-4 offset-md-4'>
+        <button
+          [disabled]="!checked"
+          class="boton mb-4 mt-0"
+          size="medium"
+          (click)="getMenu()"
+        >Ingresar
+        </button>
+      </div>
+    </div>
+  </mat-dialog-content>

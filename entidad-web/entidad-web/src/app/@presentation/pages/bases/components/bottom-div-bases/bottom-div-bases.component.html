@@ -1,0 +1,58 @@
+<div class="divbottom px-5" [ngStyle]="{ width: bodySize }">
+  <button
+    type="button"
+    class="cancelButton mr-3"
+    (click)="previousStep.emit()"
+    *ngIf="this.indexStepper > 0"
+  >
+    Retroceder
+  </button>
+
+  <div class="flex-spacer"></div>
+
+  <button
+    type="button"
+    nbButton
+    outline
+    shape="round"
+    status="primary"
+    class="px-4 mr-3"
+    (click)="observarClick.emit()"
+    *ngIf="showObservarButton"
+  >
+    Observar
+  </button>
+
+  <button
+    type="button"
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="nextStep.emit()"
+    *ngIf="this.indexStepper < numberOfSteps - 1"
+  >
+    Siguiente
+  </button>
+
+  <button
+    type="button"
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    [disabled]="getValidateActiveSave()"
+    (click)="createProfile.emit()"
+    *ngIf="this.indexStepper === numberOfSteps - 1 && showEndButton"
+  >
+    {{
+      createMode
+        ? 'Finalizar registro'
+        : showObservarButton
+        ? getObservacionesValue().length > 0
+          ? 'Guardar observaciones'
+          : 'Guardar'
+        : 'Guardar cambios'
+    }}
+  </button>
+</div>

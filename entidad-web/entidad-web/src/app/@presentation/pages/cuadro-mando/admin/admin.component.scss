@@ -1,0 +1,148 @@
+@import 'colors';
+
+tr.mat-header-row {
+  border: 1px solid #e7e7e7;
+  font-weight: bold;
+  height: 30px !important;
+}
+
+.fondo1 {
+  margin: 0 auto;
+  text-align: left;
+  color: red;
+}
+.fondo2 {
+  color: blue;
+}
+
+.btnVer {
+  color: $primary_color;
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.separator {
+  margin-top: 5px;
+  height: 31px;
+  width: 1px;
+  background-color: #146080;
+}
+.border-buttom-opt {
+  border-bottom: 1px solid #146080 !important;
+  border-top: 1px solid #146080 !important;
+  border-left: 1px solid #146080 !important;
+  border-right: 1px solid #146080 !important;
+}
+
+.cabecera {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 25%;
+  height: 30px;
+}
+
+.cabeceraDetalle {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 15%;
+  height: 30px;
+}
+
+.contenedor {
+  text-align: left;
+  width: 100%;
+  margin: auto;
+}
+
+.lateral {
+  width: 65%; /* Este será el ancho que tendrá tu columna */
+  float: left; /* Aquí determinas de lado quieres quede esta "columna" */
+}
+
+.principal {
+  width: 35%;
+  float: right;
+}
+
+.barritas {
+  margin-top: 30px;
+  height: 400px;
+}
+
+.barras2 {
+  width: 50%;
+}
+
+.donut {
+  width: 30%;
+  align-items: flex-start;
+}
+
+.caja {
+  width: 30%;
+}
+
+.barraConvocatoria {
+  width: 40%;
+}
+
+.mat-column-nombre {
+  width: 250px;
+  max-width: 450px;
+}
+
+.mat-column-color {
+  width: 50px;
+  max-width: 100px;
+}
+
+.mat-column-usuario {
+  width: 150px;
+  max-width: 250px;
+}
+.example-first-footer-row {
+  font-weight: bold;
+}
+
+.filtros {
+  visibility: visible;
+}
+@media print {
+  button {
+    display: none !important;
+  }
+  /* select-field {
+    display: none !important;
+  }
+  nb-form-field {
+    display: none !important;
+  } */
+
+  label {
+    display: none !important;
+  }
+  .filtros {
+    visibility: hidden;
+  }
+
+  .caja {
+    visibility: hidden;
+  }
+
+  .barras2 {
+    width: 30%;
+  }
+}

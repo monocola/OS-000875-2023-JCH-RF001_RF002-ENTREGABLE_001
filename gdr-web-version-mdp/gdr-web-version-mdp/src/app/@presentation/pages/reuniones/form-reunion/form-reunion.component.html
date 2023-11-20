@@ -1,0 +1,182 @@
+<div class="d-flex w-100 header-modal mb-3">
+   <span class="h2">{{data.createMode ? 'Nueva reunión':'Reprogramar reunión'}}</span>
+   <button (click)="Closedate()" id="autoclick" style="border:none; background-color: white; width: 1px; height: 1px;"></button>
+   <!-- <span class="h2">{{data.createMode ? 'Programar reunión':'Editar reunión'}}</span> -->
+   <span class="flex-spacer"></span>
+   <nb-icon class="mr-2 btnClose" nbSuffix icon="close" (click)="cerrar()"></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+<br>
+<div>
+   <form [formGroup]="formReunion">
+      <p>Ingrese los siguientes campos</p>
+      <div class="row">
+         <div class="col-md-6 col-lg-6">
+            <label for='fecha'>Fecha</label>
+            <nb-form-field>
+               <input
+                  #fecha
+                  id='fecha'
+                  formControlName="fecha"
+                  nbInput
+                  placeholder="dd/mm/aaaa"
+                  [nbDatepicker]="dateTimePicker1"
+                  fieldSize="large"
+                  shape="semi-round"
+                  autocomplete="off"
+                  >
+               <nb-icon (click)="fecha.click()" style="cursor: pointer;" nbSuffix class="mr-2" icon="calendar-outline">
+               </nb-icon>
+               <nb-datepicker #dateTimePicker1></nb-datepicker>
+            </nb-form-field>
+            <div *ngIf="f.fecha.invalid && f.fecha.touched" class="invalid-text flex-column">
+               <span *ngIf="f.fecha.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-6">
+            <label for='hora'>Hora</label>
+            <nb-form-field>
+               <input #hora1 id='hora' formControlName="hora" nbInput  placeholder="--:--"
+                  [nbTimepicker]="timepicker" fieldSize="large" shape="semi-round"
+                  autocomplete="off">
+               <nb-icon (click)="hora1.click()" style="cursor: pointer;" nbSuffix class="mr-2" icon="clock-outline">
+               </nb-icon>
+               
+               <nb-timepicker
+               #timepicker="nbTimepicker"
+               [currentTimeButtonText]="' '"
+               singleColumn
+               
+               [step]="15"></nb-timepicker>
+            </nb-form-field>
+
+            <div *ngIf="f.hora.invalid && f.hora.touched" class="invalid-text flex-column">
+               <span *ngIf="f.hora.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-6">
+            <label for='duracion'>Duración</label>
+            <nb-form-field>
+               <nb-select
+            placeholder="Seleccione"
+            fullWidth
+            formControlName="duracion"
+            [size]="'large'"
+            shape="semi-round"
+            [status]="
+              f.duracion.invalid && f.duracion.touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option
+              *ngFor="let item of zonaHorariaReu" [value]="item.codigoNumero"
+            >
+              {{ item.codigoTexto }}
+            </nb-option>
+          </nb-select>
+            </nb-form-field>
+
+            <div *ngIf="f.duracion.invalid && f.duracion.touched" class="invalid-text flex-column">
+               <span *ngIf="f.duracion.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+         <div class="col-md-6 col-lg-6">
+            <label for='agendar'>Agendar</label>
+            <nb-select
+            placeholder="Selecciona"
+            fullWidth
+            formControlName="tipoAgendamientoId"
+            [size]="'large'"
+            shape="semi-round"
+            [status]="
+              f.tipoAgendamientoId.invalid && f.tipoAgendamientoId.touched
+                ? 'danger'
+                : 'basic'
+            "
+          >
+            <nb-option
+              *ngFor="let item of typeDocuments" [value]="item.parametroId"
+            >
+              {{ item.descripcion }}
+            </nb-option>
+          </nb-select>
+          <span
+            *ngIf="f.tipoAgendamientoId.invalid && f.tipoAgendamientoId.touched"
+            class="invalid-text"
+          >
+            <span *ngIf="f.tipoAgendamientoId.errors.required">
+              El campo es obligatorio
+            </span>
+          </span>
+         </div>
+      </div>
+
+      <!-- <div class="mt-4">
+         <button class="btn btn-outline-primary  pl-5 pr-5 mr-2" (click)="registrar()">
+            <span class="mr-2">Guardar y Agendar</span> <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+               xmlns="http://www.w3.org/2000/svg">
+               <path
+                  d="M16.4751 14.3422L15.5523 9.90583L16.4751 5.46943C16.5511 5.1068 16.454 4.65292 16.1646 4.31126C16.0016 4.11882 15.7927 3.97674 15.5608 3.89477V1.4087C15.5608 0.63356 14.9302 0.00292969 14.155 0.00292969H2.87761C2.10247 0.00292969 1.47184 0.63356 1.47184 1.4087V3.88409C0.779761 4.11051 0.392487 4.83089 0.526222 5.46946L1.4491 9.90587C1.4491 9.90587 0.523817 14.3545 0.522755 14.3607C0.454684 14.7691 0.569114 15.1845 0.836773 15.5004C1.1044 15.8164 1.49536 15.9976 1.90941 15.9976H15.0919C15.506 15.9976 15.8969 15.8164 16.1646 15.5004C16.4322 15.1845 16.5466 14.7691 16.4786 14.3607C16.4776 14.3545 16.4764 14.3484 16.4751 14.3422ZM2.87758 0.940113H14.155C14.4134 0.940113 14.6236 1.15032 14.6236 1.4087V3.81414H2.40899V1.4087C2.40899 1.15032 2.6192 0.940113 2.87758 0.940113ZM15.4495 14.8946C15.359 15.0015 15.232 15.0604 15.092 15.0604H1.90941C1.76936 15.0604 1.64237 15.0015 1.55187 14.8946C1.46303 14.7898 1.42557 14.6579 1.44597 14.5224L2.30887 10.3744H3.80208C4.06087 10.3744 4.27067 10.1646 4.27067 9.90583C4.27067 9.64705 4.06087 9.43724 3.80208 9.43724H2.30887L1.44597 5.28927C1.42557 5.15385 1.46303 5.02192 1.55187 4.91705C1.64237 4.81018 1.76936 4.75133 1.90941 4.75133H15.0919C15.232 4.75133 15.359 4.81018 15.4495 4.91705C15.5383 5.02189 15.5758 5.15381 15.5554 5.28927L14.6925 9.43727H13.1993C12.9405 9.43727 12.7307 9.64708 12.7307 9.90587C12.7307 10.1647 12.9405 10.3745 13.1993 10.3745H14.6925L15.5554 14.5225C15.5758 14.6579 15.5383 14.7898 15.4495 14.8946Z"
+                  fill="#0E71EB" />
+               <path
+                  d="M3.81478 2.81462C4.07358 2.81462 4.28337 2.60483 4.28337 2.34603C4.28337 2.08724 4.07358 1.87744 3.81478 1.87744C3.55599 1.87744 3.34619 2.08724 3.34619 2.34603C3.34619 2.60483 3.55599 2.81462 3.81478 2.81462Z"
+                  fill="#0E71EB" />
+               <path
+                  d="M13.2179 2.81462C13.4767 2.81462 13.6865 2.60483 13.6865 2.34603C13.6865 2.08724 13.4767 1.87744 13.2179 1.87744C12.9591 1.87744 12.7493 2.08724 12.7493 2.34603C12.7493 2.60483 12.9591 2.81462 13.2179 2.81462Z"
+                  fill="#0E71EB" />
+               <path
+                  d="M8.53192 8.49986C8.53192 7.46633 7.69107 6.62549 6.65755 6.62549C5.86447 6.62549 5.15415 7.12766 4.88995 7.8751C4.8037 8.11911 4.9316 8.3868 5.17561 8.47305C5.41965 8.5593 5.68734 8.43141 5.77359 8.1874C5.90571 7.81374 6.26093 7.56264 6.65758 7.56264C7.17434 7.56264 7.59476 7.98306 7.59476 8.49982C7.59476 9.01659 7.17434 9.43701 6.65758 9.43701H6.07527C5.81649 9.43701 5.60668 9.64681 5.60668 9.9056C5.60668 10.1644 5.81649 10.3742 6.07527 10.3742H6.65758C7.17434 10.3742 7.59476 10.7946 7.59476 11.3114C7.59476 11.8281 7.17434 12.2486 6.65758 12.2486C6.26093 12.2486 5.90571 11.9975 5.77359 11.6238C5.68734 11.3798 5.41971 11.2519 5.17561 11.3381C4.9316 11.4244 4.80373 11.6921 4.88995 11.9361C5.15415 12.6835 5.86447 13.1857 6.65755 13.1857C7.69107 13.1857 8.53192 12.3449 8.53192 11.3113C8.53192 10.7521 8.28572 10.2493 7.89607 9.90557C8.28572 9.5619 8.53192 9.05907 8.53192 8.49986Z"
+                  fill="#0E71EB" />
+               <path
+                  d="M11.5333 6.68092C11.3809 6.59939 11.1961 6.60835 11.0523 6.70416L9.64653 7.64135C9.43117 7.78492 9.373 8.07586 9.51658 8.29116C9.66018 8.50652 9.95114 8.56466 10.1664 8.42114L10.8436 7.96964V12.7172C10.8436 12.976 11.0535 13.1858 11.3122 13.1858C11.571 13.1858 11.7808 12.976 11.7808 12.7172V7.09406C11.7808 6.92128 11.6857 6.76249 11.5333 6.68092Z"
+                  fill="#0E71EB" />
+            </svg>
+         </button>
+         <button class="btn btn-outline-primary  pl-5 pr-5" (click)="registrar()">
+            <span class="mr-2">Guardar y Agendar</span> <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+               xmlns="http://www.w3.org/2000/svg">
+               <g clip-path="url(#clip0_993:8215)">
+                  <path
+                     d="M16 3.50019H9.5V1.00019C9.5 0.851186 9.434 0.710185 9.319 0.615185C9.205 0.520185 9.052 0.479185 8.908 0.509185L0.908 2.00919C0.671 2.05319 0.5 2.25919 0.5 2.50019V13.5002C0.5 13.7402 0.671 13.9472 0.908 13.9912L8.908 15.4912C8.938 15.4972 8.969 15.5002 9 15.5002C9.116 15.5002 9.229 15.4602 9.319 15.3852C9.434 15.2902 9.5 15.1482 9.5 15.0002V12.5002H16C16.276 12.5002 16.5 12.2762 16.5 12.0002V4.00019C16.5 3.72419 16.276 3.50019 16 3.50019ZM5 11.5002C3.622 11.5002 2.5 10.1542 2.5 8.50019C2.5 6.84619 3.622 5.50019 5 5.50019C6.378 5.50019 7.5 6.84619 7.5 8.50019C7.5 10.1542 6.378 11.5002 5 11.5002ZM9.5 4.50019H14.543L11.471 6.88919L9.5 5.63619V4.50019ZM15.5 11.5002H9.5V6.82119L11.231 7.92219C11.313 7.97419 11.407 8.00019 11.5 8.00019C11.608 8.00019 11.717 7.96519 11.807 7.89519L15.5 5.02219V11.5002Z"
+                     fill="#1071C1" />
+                  <path
+                     d="M5 10.5005C5.82843 10.5005 6.5 9.60506 6.5 8.50049C6.5 7.39592 5.82843 6.50049 5 6.50049C4.17157 6.50049 3.5 7.39592 3.5 8.50049C3.5 9.60506 4.17157 10.5005 5 10.5005Z"
+                     fill="#1071C1" />
+               </g>
+               <defs>
+                  <clipPath id="clip0_993:8215">
+                     <rect width="16" height="16" fill="white" transform="translate(0.5)" />
+                  </clipPath>
+               </defs>
+            </svg>
+         </button>
+      </div> -->
+
+      <div class="row mt-4">
+         <div class="col text-center">
+            <button *ngIf="data.createMode" nbButton shape="round" size="medium" status="info" class="pl-5 pr-5" (click)="registrar()">
+              Guardar
+            </button>
+
+            <button *ngIf="!data.createMode && !data.reprogramarMode" nbButton shape="round" size="medium" status="info" class="pl-5 pr-5" (click)="registrar()">
+               Programar
+            </button>
+
+            <button *ngIf="data.reprogramarMode && !data.createMode" nbButton shape="round" size="medium" status="info" class="pl-5 pr-5" (click)="registrar()">
+               Reprogramar
+            </button>
+            <button *ngIf="!data.createMode" nbButton shape="round" size="medium" status="info" outline
+               class="ml-3 pl-5 pr-5 btnCancelar" (click)="cancelar()">
+               Cancelar reunión
+            </button>
+         </div>
+      </div>
+   </form>
+</div>

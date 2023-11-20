@@ -1,0 +1,114 @@
+<div class="px-5">
+  <mat-form-field class="w-40">
+    <input
+      class="inputPuesto"
+      matInput
+      type="text"
+      placeholder="Ingrese nombre del puesto"
+      [formControl]="f.nombrePerfil"
+      oninput="this.value = this.value.replace(/[^0-9a-zA-Z-_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+    />
+    <mat-icon matSuffix>edit</mat-icon>
+    <mat-error *ngIf="f.nombrePerfil.invalid && f.nombrePerfil.touched">
+      <span class="invalid-text m-0">El campo es obligatorio</span>
+    </mat-error>
+  </mat-form-field>
+
+  <div [ngClass]="{ 'mt-3': f.nombrePerfil.invalid && f.nombrePerfil.touched }">
+    <label>Mision del puesto</label>
+    <nb-form-field>
+      <textarea
+        trim="blur"
+        nbInput
+        placeholder="Redacta de forma breve la misión del puesto"
+        [status]="f.mision.invalid && f.mision.touched ? 'danger' : 'basic'"
+        fullWidth
+        shape="semi-round"
+        maxlength="500"
+        [formControl]="f.mision"
+        aria-label="Mision Ley 276"
+        oninput="this.value = this.value.replace(/[^0-9a-zA-Z-()_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+      ></textarea>
+    </nb-form-field>
+    <div *ngIf="f.mision.invalid && f.mision.touched" class="invalid-text m-0">
+      <span *ngIf="f.mision.errors?.required"> El campo es obligatorio </span>
+    </div>
+  </div>
+
+  <h6 class="mt-3">Identificación del puesto</h6>
+
+  <form
+    [formGroup]="helperService.identificacionForm"
+    class="row"
+    aria-label="Form Identificacion Ley276"
+  >
+    <div class="mb-3 col-md-3">
+      <autocomplete
+        [label]="'Órgano'"
+        [placeholder]="'Busca un órgano'"
+        [control]="f?.organo"
+        [fieldToShow]="'descripcion'"
+        [items]="helperService.organos"
+        aria-label="Ley 276"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <autocomplete
+        [label]="'Unidad orgánica'"
+        [placeholder]="'Busca una unidad orgánica'"
+        [control]="f?.unidadOrganica"
+        [fieldToShow]="'unidadOrganica'"
+        [items]="helperService.unidadesOrganicas"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <input-field
+        [control]="f.puestoEstructural"
+        [label]="'Puesto estructural'"
+        [placeholder]="'Ingrese puesto estructural'"
+        [maxlength]="150"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <input-field
+        [label]="'Dependencia jerárquica'"
+        [placeholder]="'Ingrese dependencia jerárquica'"
+        [control]="f.depJerarquica"
+        [maxlength]="150"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'Dependencia funcional (opcional)'"
+        [control]="f.depFuncional"
+        [maxlength]="150"
+        [banKeyType]="4"
+        [placeholder]="'Ingrese dependencia funcional'"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'N° de posiciones a su cargo'"
+        [control]="f.numPosicionesACargo"
+        [maxlength]="4"
+        [minlength]="1"
+        [banKeyType]="2"
+        (keyup)="validateCodPosicionACargo(f.numPosicionesACargo)"
+        (blur)="validateCodPosicionACargo(f.numPosicionesACargo)"
+      >
+      </input-field>
+    </div>
+  </form>
+</div>

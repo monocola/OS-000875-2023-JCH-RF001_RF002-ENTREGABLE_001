@@ -1,0 +1,50 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+<div class="py-2 mx-2 body container-fluid divMargin">
+  <img alt="img" [src]="url" width="300" height="200" /> <br />
+
+  <input-field
+    [control]="f.link"
+    [label]="'Link de imagen'"
+    [placeholder]=""
+    [maxlength]="500"
+    [minlength]="0"
+  >
+  </input-field>
+</div>
+<div style="position: relative">
+  <div style="align-self: center">
+    <div class="flex-v-center">
+      <div class="col-4">
+        <button
+          nbButton
+          outline
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="onNoClick()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-4">
+        <button
+          nbButton
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="guardarLink()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

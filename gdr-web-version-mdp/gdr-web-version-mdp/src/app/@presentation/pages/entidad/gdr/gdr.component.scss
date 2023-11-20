@@ -1,0 +1,173 @@
+h5 {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+    color: #000000 !important;
+  }
+
+  ::ng-deep gme-web-entidad div div div div nb-card nb-card-body div apx-chart div div svg div.apexcharts-legend.apexcharts-align-center.position-right {
+
+    width: 165px !important;
+
+  }
+
+  .titlePage {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .totalservidores {
+    background-color: #00bfa7;
+  }
+
+  .encargados {
+    background-color: #249EAF;
+  }
+
+  .carrerasespeciales {
+    background-color: #f3994b;
+  }
+
+  .sindicalizados {
+    background-color: #70cf95;
+  }
+
+  .totaljefes {
+    background-color: #2c99fe;
+  }
+
+  .modalidad {
+    background-color: #0d3475;
+  }
+
+  .icontotalservidores {
+    color: #00bfa7 !important;
+  }
+
+  .iconencargados {
+    color: #249EAF !important;
+  }
+
+  .iconcarrerasespeciales {
+    color: #f3994b !important;
+  }
+
+  .iconsindicalizados {
+    color: #70cf95 !important;
+  }
+
+  .icontotaljefes {
+    color: #2c99fe !important;
+  }
+
+  .iconmodalidad {
+    color: #0d3475 !important;
+  }
+  span, .regimen, .organo, .carreras, .sindicalizadoss, .segmento{
+    color: #8191A4;
+  }
+
+
+  nb-card {
+    border-radius: 1.25rem !important;
+  }
+
+  :host ::ng-deep .carousel-arrow {
+    top: 36% !important;
+  }
+
+  :host
+    ::ng-deep
+    div.carousel-container
+    div.carousel-cells
+    div.carousel-cell
+    nb-card
+    nb-card-body
+    div.row
+    div.col-sm-4
+    .nb-theme-default
+    nb-icon {
+    font-size: 2rem !important;
+  }
+
+  :host ::ng-deep div div div div nb-card nb-card-body {
+    overflow: hidden !important;
+  }
+
+  .nb-theme-default nb-card-body {
+    overflow: hidden !important;
+  }
+
+  :host ::ng-deep nb-icon {
+    font-size: 2rem !important;
+  }
+
+  :host ::ng-deep .columx2 {
+    width: 100%;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc !important;
+    margin: 18px;
+    border-radius: 3px;
+  }
+
+  :host ::ng-deep .card-header-ps {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+  }
+
+  :host ::ng-deep .btn-outline-primary:hover {
+    background-color: #249eaf !important;
+  }
+
+  :host ::ng-deep .columx2 img {
+    width: 100%;
+    margin: auto;
+  }
+
+  :host ::ng-deep .btnEditar {
+    border-radius: 1.25rem !important;
+  }
+
+  :host ::ng-deep .contenedor-columnas {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 1px;
+  }
+
+  :host {
+    display: contents;
+    max-height: 25rem;
+  }
+
+  .card-row {
+    margin: 0;
+    display: flex;
+  }
+
+  .card-col {
+    flex: 1 0 calc(50% - 1rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
+
+  .material-icons.gray00 {
+    color: #0dacbc;
+  }
+
+  .card-col-small {
+    border: 1px solid rgba(13, 172, 188, 0.43);
+    border-radius: 20px;
+  }
+
+  .box {
+    border: 0 solid #0dacbc;
+    width: 25vw;
+    height: 50vh;
+    font-size: 10vh;
+  }

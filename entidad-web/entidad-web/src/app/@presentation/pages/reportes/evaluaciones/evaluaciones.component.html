@@ -1,0 +1,309 @@
+<div class="body">
+
+  <div class="body-margin mb-5 mt-2">
+
+    <div class="filtro">
+      <form [formGroup]="filterForm" autocomplete="off">
+        <div class="subtitle">Filtros de búsqueda</div>
+        <div class="row mt-3" style="background-color: #F4FCFF; padding-top: 1em;">
+
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Código de conv./bases</label>
+              <input
+                formControlName="convocatoria"
+                fullWidth
+                nbInput
+                type="search"
+                placeholder="Buscar"
+                shape="semi-round"
+                maxlength="120"
+                class="cursor-pointer"
+                autocomplete="off"
+                [nbAutocomplete]="conv"
+                fieldSize="large"
+                (input)="onInputChangeAutocomplete($event, 'convocatoria')" />
+
+              <nb-icon nbSuffix icon="buscar" class='pt-3 cursor-pointer'></nb-icon>
+            </nb-form-field>
+            <nb-autocomplete #conv (selectedChange)="onConvocatoriaACSelect($event)">
+              <nb-option *ngFor="let item of convocatorias_autocomplete$" [key]="item.idConvocatoria" [value]="item.codigoConvocatoria">
+                {{ item.codigoConvocatoria }}
+              </nb-option>
+            </nb-autocomplete>
+          </div>
+
+
+          <div class="col-md-3 mb-3">
+            <label>Periodo</label>
+             <nb-form-field>
+              <input
+                formControlName="periodo"
+                nbInput
+                placeholder="Periodo"
+                [nbDatepicker]="formpicker"
+                fieldSize="large"
+                shape="semi-round"
+                [status]="rangePickerStatus"
+                (ngModelChange)="validRangeDateFormat($event)"
+              />
+              <nb-icon
+                style="cursor: pointer"
+                nbSuffix
+                class="mr-2"
+                icon="calendario"
+              >
+              </nb-icon>
+              <nb-rangepicker #formpicker></nb-rangepicker>
+            </nb-form-field>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Evaluaciones</label>
+              <nb-select formControlName="evaluaciones" placeholder="Seleccione" fullWidth shape="rectangle"
+                         size="large" (selectedChange)="onChangeEvaluacion($event)" >
+
+                <nb-option *ngFor="let item of lstComboEvaluaciones" [value]="item.id" >
+                  {{item.descripcion}}
+                </nb-option>
+                <nb-option value="">Todos</nb-option>
+
+              </nb-select>
+            </nb-form-field>
+          </div>
+
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Perfil</label>
+              <nb-select formControlName="perfiles" placeholder="Seleccione" fullWidth shape="rectangle"
+                         size="large" (selectedChange)="onChangePerfiles($event)" >
+
+                <nb-option *ngFor="let item of lstComboPerfiles" [value]="item.perfilId" >
+                  {{item.nombrePuesto}}
+                </nb-option>
+                <nb-option value="">Todos</nb-option>
+
+              </nb-select>
+            </nb-form-field>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Nombres/Apellidos</label>
+              <input
+                formControlName='postulantes'
+                fullWidth
+                nbInput
+                type="search"
+                placeholder="Buscar"
+                shape="semi-round"
+                maxlength="120"
+                autocomplete="off"
+                [nbAutocomplete]="postul"
+                fieldSize="large"
+                (input)="onInputChangeAutocomplete($event, 'postulantes')" />
+                <nb-icon nbSuffix icon="buscar" class='pt-3'></nb-icon>
+            </nb-form-field>
+            <nb-autocomplete #postul>
+              <nb-option *ngFor="let item of postulantes_autocomplete$" [value]="item.nombreCompleto">
+                {{ item.nombreCompleto }}
+              </nb-option>
+            </nb-autocomplete>
+          </div>
+
+
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Tipo documento</label>
+              <nb-select formControlName="tipoDocumento" name="tipoDocumento" placeholder="Seleccione" fullWidth shape="rectangle" size="large" >
+                <nb-option *ngFor="let documents of lstComboTipoDocumentos" [value]="documents.codigoNumero">{{ documents.valorTexto }}</nb-option >
+
+                <nb-option value="">Todos</nb-option>
+              </nb-select>
+             </nb-form-field>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>N° Documento</label>
+              <input type="text" fieldSize='large' formControlName='numeroDocumento' nbInput placeholder="Ingrese número">
+            </nb-form-field>
+          </div>
+
+
+        </div>
+
+
+        <div class="row mt-3">
+
+          <div class="col-md-2 mb-3">
+            <nb-form-field>
+              <label>REDERECI</label>
+              <nb-select formControlName="redereci" placeholder="Elegir" fullWidth shape="rectangle"
+                         size="large">
+                <nb-option value="1">Si</nb-option>
+                <nb-option value="2">No</nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <nb-form-field>
+              <label>REDAM</label>
+              <nb-select formControlName="redam" placeholder="Elegir" fullWidth shape="rectangle"
+                         size="large">
+                <nb-option value="1">Si</nb-option>
+                <nb-option value="0">No</nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div>
+
+          <div class="col-md-2 mb-3">
+            <nb-form-field>
+              <label>RNSSC</label>
+              <nb-select formControlName="rnssc" placeholder="Elegir" fullWidth shape="rectangle"
+                          size="large">
+                <nb-option value="1">Si tiene</nb-option>
+                <nb-option value="0">No tiene</nb-option>
+                <nb-option value="2">Aún no se valida</nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div>
+
+          <!-- <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Departamento</label>
+              <nb-select formControlName="departamento" placeholder="Seleccione" fullWidth shape="rectangle"
+                         size="large">
+                <nb-option *ngFor="let item of lstDepartamentos" [value]="item.ubigeoId">{{
+                  item.nombre
+                  }}</nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div> -->
+
+          <div class="col-md-3 mb-3">
+            <nb-form-field>
+              <label>Estado</label>
+              <nb-select formControlName="estado" placeholder="Elegir" fullWidth shape="rectangle"
+                         size="large">
+                <nb-option *ngFor="let item of lstComboEstadosEvaluacionC" [value]="item.id">{{item.descripcion}}</nb-option>
+                <nb-option value="">Todos</nb-option>
+
+              </nb-select>
+            </nb-form-field>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="w-100 h-100 btn_area">
+              <button nbButton shape="round" size="medium" status="primary" outline (click)="limpiar()">
+                Limpiar
+              </button>
+              <button nbButton shape="round" size="medium" status="primary" (click)="buscar()">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="table bg-gray m-0 justify-content-center p-0 px-4 pb-4">
+  <div class="row p-0 m-0">
+    <div class="col-10 m-0 p-0 pl-3">
+       <div class="row list__calificado py-2">
+        <div class="list_form--aligncenter">
+          <div class="fs-12">Periodo</div>
+          <nb-icon nbPrefix icon="calendario" class='pt-0'></nb-icon>
+        </div>
+        <div class="list_form--point pl-2 fs-15 fw-500 align-self-center fs-14" style='color: #0B80B6'>
+          <span *ngIf="dataHeader?.periodoInicio">
+           {{'de ' + dataHeader.periodoInicio}}
+          </span><br>
+          <span *ngIf="dataHeader?.periodoInicio">
+            {{' a ' + dataHeader.periodoFin}}
+          </span>
+        </div>
+        <!-- <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Departamento</div>
+          <nb-icon nbPrefix icon="location" class='pt-0'></nb-icon>
+        </div>
+        <div class="list_form--point pl-2 fs-15 fw-500 align-self-center" style='color: #0B80B6'>
+          {{ dataHeader?.depName }}
+        </div> -->
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Cant. Conv.</div>
+          <nb-icon nbPrefix icon="puesto" class='pt-0'></nb-icon>
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center" style='color: #0B80B6'>
+          {{ dataHeader?.cantConv }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Cant. postulantes</div>
+          <img src="assets/images/icons/users.svg" alt="validacion-negativa" />
+        </div>
+        <div class="pl-2 fs-20 fw-500 align-self-center" style='color: #0B80B6'>
+          {{ dataHeader?.cantPostulante}}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Califican</div>
+          <nb-icon nbPrefix icon="person-done" class='pt-0' style='color: #00b167'></nb-icon>
+        </div>
+        <div class="pl-2 fs-20 fw-500 align-self-center" style='color: #0B80B6'>
+          {{ dataHeader?.califican }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">No califican</div>
+          <nb-icon nbPrefix icon="clean" class='pt-0' style='color: red'></nb-icon>
+        </div>
+        <div class="pl-2 fs-20 fw-500 align-self-center" style='color: #0B80B6'>
+          {{ dataHeader?.noCalifican }}
+        </div>
+
+      </div>
+    </div>
+    <div class="col-2"></div>
+
+
+  </div>
+  <div class="row mb-4 mt-4 container-table">
+    <div class="col-12">
+      <ng-container>
+        <serv-talento-table-reporte-evaluaciones
+          [tableColumns]="this.columns"
+          [title]="'Listado de Evaluaciones'"
+          [tableData]="this.data"
+          [pageIndex]="this.page"
+          [paginationSizes]="[20, 50, 100]"
+          [defaultPageSize]="this.size"
+          [dataExport]="getDataExport()"
+          (pageEvent)="getPaginado($event)"
+          (sort)="sortData($event)"
+          (openDetalleEvalPostulante)='openDetalleEvalPostulante($event)'
+          (procesoAction)="verMensaje($event)"
+        >
+        </serv-talento-table-reporte-evaluaciones>
+      </ng-container>
+    </div>
+  </div>
+
+</div>

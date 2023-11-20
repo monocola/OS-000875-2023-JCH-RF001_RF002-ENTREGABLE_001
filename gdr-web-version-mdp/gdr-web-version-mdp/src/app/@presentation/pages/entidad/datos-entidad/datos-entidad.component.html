@@ -1,0 +1,81 @@
+<div>
+  <div class="row">
+    <div class="col-12">
+      <nb-card class='card-col-small m-1 p-1'>
+        <nb-card-body class='m-0 p-0'>
+          <div class="row" style="margin-right: 1px;">
+            <div class="col-2 contenedor-columnas">
+              <div class="columx2">
+                <div class="columna">
+                  <div class="img-container">
+                    <img [src]="this.imgEntidad" class="rounded-circle" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-8">
+
+              <div class="card-header-ps">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                  <h6>{{entity.razonSocial}}</h6>
+                </div>
+              </div>
+              <div class="">
+                <table class="align-middle text-truncate mb-0 table table-borderless">
+                  <tbody>
+                    <tr>
+                      <td class="text-left text-muted" style="width: 80px; color: #8191A4 !important;"> Nombre abreviado </td>
+                      <td class="text-left" style="width: 80px;">
+                        {{entity.sigla}}
+                      </td>
+                      <td class="text-left text-muted" style="width: 80px; color: #8191A4 !important;">R.U.C</td>
+                      <td class="text-left" style="width: 80px;">
+                        {{entity.numeroDocumento}}
+                      </td>
+                      <td class="text-left text-muted"  style="width: 80px; color: #8191A4 !important;">Nivel de gobierno</td>
+                      <td class="text-left"> {{entity.nivelGobierno}} </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left text-muted" style="width: 80px; color: #8191A4 !important;">Tipo de entidad</td>
+                      <td class="text-left"> {{entity.tipoEntidadPub}} </td>
+                      <td class="text-left text-muted" style="width: 80px; color: #8191A4 !important;">
+                        Sector
+                      </td>
+                      <td class="text-left">
+                        {{entity.sector}}
+                      </td>
+                      <td class="text-left text-muted"  style="width: 80px; color: #8191A4 !important;">
+                        Nº de sindicatos
+                      </td>
+                      <td class="text-left">
+                        {{entity.nroSindicatos}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-2">
+              <table class="align-middle text-truncate mb-0 table table-borderless">
+                <tbody>
+                  <tr>
+                    <td class="text-left text-muted" style="width: 80px;">
+                      <!--<button class="mb-2 mr-2 btn-transition btn btn-outline-primary btnEditar" style="border-color: #0DACBC; color:#0DACBC;"
+                        (click)='editar(true)'>Editar
+                        <em class="ent-web-edit"></em>
+                      </button>-->
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-left text-muted" style="width: 80px;"> </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

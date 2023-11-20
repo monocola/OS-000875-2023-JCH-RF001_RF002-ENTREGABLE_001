@@ -1,0 +1,188 @@
+<form [formGroup]="frm">
+  <nb-card class="col-md-12 m-0 p-0" style="width: 650px; border: #2aa1c0">
+    <nb-card-header class="m-0 p-0">
+      <div class="col-md-12 row h-100 p-0 m-0 mb-3">
+        <h5 class="titleGDR">Apertura de ciclo</h5>
+        <span class="flex-spacer"></span>
+        <nb-actions
+          size="small"
+          style="place-content: flex-end"
+          class="col-md-12 position-absolute"
+        >
+          <nb-action
+            class="control-item p-0 justify-content-end"
+            icon="close"
+            (click)="dismiss(false)"
+          ></nb-action>
+        </nb-actions>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="mt-4 mb-0 p-0">
+      Ingrese los siguientes datos.
+      <div class="row col-md-12 mt-4 m-0 p-0">
+        <div class="mb-3 col-md-4">
+          <label for="anio">Año</label>
+          <nb-form-field>
+            <input
+              id="anio"
+              formControlName="anio"
+              nbInput
+              placeholder="Ingresar"
+              fieldSize="large"
+              shape="semi-round"
+              maxlength="4"
+              #anio
+              [value]="this.anio.value.toUpperCase()"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              [status]="f.anio.invalid && f.anio.touched ? 'danger' : 'basic'"
+            />
+          </nb-form-field>
+          <div
+            *ngIf="f.anio.invalid && f.anio.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.anio.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.anio.errors.pattern"> Solo se aceptan números </span>
+            <span *ngIf="f.anio.errors.minlength">
+              El número de año es muy corto
+            </span>
+            <span *ngIf="f.anio.errors.maxlength">
+              El número de año es muy largo
+            </span>
+          </div>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label for="fechaIni">Inicio de ciclo</label>
+          <nb-form-field>
+            <input
+              id="fechaIni"
+              #fechaIni
+              formControlName="fechaIni"
+              nbInput
+              class="pointer"
+              placeholder="dd/mm/aaaa"
+              [nbDatepicker]="dateTimePicker1"
+              fieldSize="large"
+              shape="semi-round"
+              [status]="
+                f.fechaIni.invalid && f.fechaIni.touched ? 'danger' : 'basic'
+              "
+            />
+            <nb-icon
+              style="cursor: pointer"
+              nbSuffix
+              class="mr-2 pointer"
+              (click)="fechaIni.click()"
+              icon="calendar-outline"
+            >
+            </nb-icon>
+            <nb-datepicker #dateTimePicker1></nb-datepicker>
+          </nb-form-field>
+          <div
+            *ngIf="f.fechaIni.invalid && f.fechaIni.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.fechaIni.errors.required">
+              El campo es obligatorio
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-4">
+          <label for="fechaFin">Fin de ciclo</label>
+          <nb-form-field>
+            <input
+              id="fechaFin"
+              #fechaFin
+              formControlName="fechaFin"
+              nbInput
+              class="pointer"
+              placeholder="dd/mm/aaaa"
+              [nbDatepicker]="dateTimePicker2"
+              fieldSize="large"
+              shape="semi-round"
+              [status]="
+                f.fechaFin.invalid && f.fechaFin.touched ? 'danger' : 'basic'
+              "
+            />
+            <nb-icon
+              style="cursor: pointer"
+              nbSuffix
+              class="mr-2 pointer"
+              icon="calendar-outline"
+              (click)="fechaFin.click()"
+            >
+            </nb-icon>
+            <nb-datepicker #dateTimePicker2></nb-datepicker>
+          </nb-form-field>
+          <div
+            *ngIf="f.fechaFin.invalid && f.fechaFin.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.fechaFin.errors.required">
+              El campo es obligatorio
+            </span>
+          </div>
+        </div>
+
+        <!--     <div class="col-md-12 m-0 mb-3 row">
+        <autocomplete
+          class='col-md-12 m-0 p-0'
+          [label]="'Puesto titular administrativo'"
+          [placeholder]="'Buscar'"
+          [control]="f?.puestoTitular"
+          [fieldToShow]="'descripcion'"
+          [items]="puestoTitular"
+          [requiredField]="true"
+        >
+        </autocomplete>
+      </div>
+
+      <div class="col-md-12 m-0 mb-3 row">
+        <autocomplete
+          class='col-md-12 m-0 p-0'
+          [label]="'Puesto jefe ORH'"
+          [placeholder]="'Buscar'"
+          [control]="f?.puestoJefe"
+          [fieldToShow]="'descripcion'"
+          [items]="puestoJefe"
+          [requiredField]="true"
+        >
+        </autocomplete>
+      </div>
+
+      <div class="col-md-12 m-0 mb-3 row">
+        <autocomplete
+          class='col-md-12 m-0 p-0'
+          [label]="'Puesto gestor GDR'"
+          [placeholder]="'Buscar'"
+          [control]="f?.puestoGestor"
+          [fieldToShow]="'descripcion'"
+          [items]="puestoGestor"
+          [requiredField]="true"
+        >
+        </autocomplete>
+      </div> -->
+      </div>
+
+      <div class="col-md-12 mt-4 mb-0 row">
+        <div class="col-md-4 offset-md-4">
+          <button
+            nbButton
+            class="btn-login px-5"
+            shape="round"
+            size="medium"
+            style="background-color: #0dacbc; color: #f1f1f1"
+            fullWidth
+            [disabled]="frm.invalid && frm.touched ? 'danger' : 'basic'"
+            (click)="addCiclo()"
+          >
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</form>

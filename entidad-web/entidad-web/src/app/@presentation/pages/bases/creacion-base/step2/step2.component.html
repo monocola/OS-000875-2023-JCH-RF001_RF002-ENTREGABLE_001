@@ -1,0 +1,254 @@
+<form [formGroup]="registerForm" class="px-5">
+  <ng-container *ngIf="helperService.observaciones[1].description">
+    <serv-talento-observacion-base-div
+      [observacion]="helperService.observaciones[1]"
+      (editEmitter)="helperService.editObservacion()"
+      (deleteEmitter)="helperService.deleteObservacion()"
+      (resolverEmitter)="helperService.resolverObservacion()"
+      [showButtons]="helperService.estadoBase !== const.ETA_BASE_OBSERVADO"
+      [onlyShow]="
+        helperService.estadoBase == const.ETA_BASE_OBSERVADO &&
+        (authRepository.isCoordinador() || authRepository.isSuperAdminEntidad())
+      "
+    ></serv-talento-observacion-base-div>
+  </ng-container>
+
+  <h6 class="d-flex">Datos de/las vacante/s</h6>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <autocomplete
+        [label]="'Elige un perfil para añadirlo'"
+        [placeholder]="'Busca por código o nombre del perfil'"
+        [control]="f?.perfil"
+        [fieldToShow]="'nombrePuesto'"
+        [items]="this.helperService.perfiles"
+      >
+      </autocomplete>
+    </div>
+
+    <div
+      [ngClass]="{
+        'col-md-3 mb-3':
+          helperService.jerarquiaSelected.regimen.codProg == const.MD_DL1041,
+        'col-md-2 mb-3':
+          helperService.jerarquiaSelected.regimen.codProg != const.MD_DL1041
+      }"
+    >
+      <input-field
+        [label]="
+          helperService.jerarquiaSelected.regimen.codProg == const.MD_DL1041
+            ? 'Jornada de práctica (Semanal)'
+            : 'Jornada de trabajo'
+        "
+        [control]="f.jornada"
+        [maxlength]="80"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-2 mb-3">
+      <input-field
+        [label]="'Vacante/s'"
+        [control]="f.vacantes"
+        [maxlength]="3"
+        [minlength]="1"
+        [banKeyType]="2"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-2 mb-3">
+      <input-field
+        [label]="
+          helperService.jerarquiaSelected.regimen.codProg == const.MD_DL1041
+            ? 'Subvención'
+            : 'Remuneración'
+        "
+        [control]="f.remuneracion"
+        [maxlength]="5"
+        [banKeyType]="2"
+        [prefixContent]="'S/'"
+      >
+      </input-field>
+    </div>
+
+    <div
+      class="col-md-2 mb-3"
+      *ngIf="
+        this.helperService.jerarquiaSelected.regimen.codProg !== const.MD_DL1041
+      "
+    >
+      <mat-checkbox
+        formControlName="contratoIndeterminado"
+        class="mt-4 pt-3"
+        color="primary"
+      >
+        <span class="fs-14"> Contrato indeterminado</span>
+      </mat-checkbox>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <select-field
+        [label]="
+          helperService.jerarquiaSelected.regimen.codProg == const.MD_DL1041
+            ? 'Dur. del convenio (En meses)'
+            : 'Dur. del contrato (En meses)'
+        "
+        [control]="f.duracionContrato"
+        [items]="helperService.mesesContrato"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <select-field
+        [label]="'Prestación del servicio'"
+        [control]="f.condicion"
+        [items]="helperService.condicionesTrabajo"
+        [valueToShow]="'descripcion'"
+        [value]="'maeDetalleId'"
+      >
+      </select-field>
+    </div>
+
+    <div
+      class="col-md-3 mb-3"
+      *ngIf="
+        this.helperService.jerarquiaSelected.regimen.codProg ===
+          const.MD_DL30057 ||
+        this.helperService.jerarquiaSelected.regimen.codProg === const.MD_DL728
+      "
+    >
+      <select-field
+        [label]="'Modalidad de contratación'"
+        [control]="f.modalidadContrato"
+        [items]="helperService.modalidadesContrato"
+        [valueToShow]="'descripcion'"
+        [value]="'maeDetalleId'"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-md-3 mb-3 d-flex flex-column">
+      <label>Horario</label>
+      <button
+        class="mt-1"
+        nbButton
+        outline
+        status="primary"
+        shape="semi-round"
+        (click)="openModalHorario()"
+      >
+        {{
+          this.f.horarios.value.length === 0
+            ? 'Agregar horario/s'
+            : 'Ver horario/s ingresados (' + f.horarios.value.length + ')'
+        }}
+      </button>
+      <span
+        class="invalid-text mt-1"
+        *ngIf="f.horarios.touched && f.horarios.value.length === 0"
+        >Tiene que agregar horarios</span
+      >
+    </div>
+
+    <div class="col-md-3 mb-3 d-flex flex-column"></div>
+
+    <div class="col-md-12 mb-3">
+      <select-field
+        [label]="'Lugar de trabajo'"
+        [control]="f.sede"
+        [items]="this.helperService.sedes"
+        [valueToShow]="'valueToShow'"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-md-12 mb-3">
+      <textarea-field
+        [control]="f.condicionesEscenciales"
+        [maxlength]="500"
+        [label]="'Condiciones esenciales del contrato'"
+        [placeholder]="'Ingrese una breve descripción'"
+      >
+      </textarea-field>
+    </div>
+
+    <div class="col-md-12 mb-3">
+      <textarea-field
+        [control]="f.observaciones"
+        [maxlength]="500"
+        [label]="'Observaciones/notas adicionales(opcional)'"
+        [placeholder]="'Ingrese una breve descripción'"
+      >
+      </textarea-field>
+    </div>
+
+    <div class="col-md-8"></div>
+
+    <div class="col-md-4 mb-3" *ngIf="!this.helperService.disableAllFields">
+      <div class="w-100 h-100 btn_area">
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          outline
+          (click)="clear()"
+        >
+          Limpiar
+        </button>
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          (click)="save()"
+        >
+          {{ this.editMode ? 'Guardar cambios' : 'Crear vacante' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<hr />
+
+<section class="px-5">
+  <div
+    class="flex-v-center flex-column py-5"
+    *ngIf="this.helperService.form2.controls.vacantes.value.length === 0"
+  >
+    <img
+      width="70px"
+      alt="imagen bandeja"
+      src="assets/images/icons/bandeja.png"
+      class="my-3"
+    />
+    <span class="fs-13">No tienes vacantes creadas</span>
+    <span class="fs-13">
+      Para crearlas, llena el <strong>formulario</strong> de la parte de arriba
+      y presiona el botón <strong>"Crear perfil"</strong>
+    </span>
+  </div>
+
+  <ng-container
+    *ngIf="this.helperService.form2.controls.vacantes.value.length > 0"
+  >
+    <serv-talento-table-vacantes-perfil
+      [title]="'Listado de vacantes'"
+      [tableData]="this.helperService.form2.controls.vacantes.value"
+      [tableColumns]="vacantesColumns"
+      (sort)="sortData($event)"
+      [dataExport]="getDataExport()"
+      (editEmmiter)="editVacante($event)"
+      (deleteEmmiter)="removeVacante($event)"
+      (copyEmmiter)="copiarVacante($event)"
+      (perfilEmitter)="openPerfilPDF($event)"
+      [showCopy]="!this.helperService.disableAllFields"
+      [showDelete]="!this.helperService.disableAllFields"
+    >
+    </serv-talento-table-vacantes-perfil>
+  </ng-container>
+</section>

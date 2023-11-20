@@ -1,0 +1,117 @@
+<div class="body">
+  <div class="d-flex">
+    <button mat-icon-button color="primary" (click)="router.navigateByUrl('pages/seguimientoconvocatoria')">
+      <nb-icon nbSuffix icon="back"></nb-icon>
+    </button>
+    <h3 class="titlePage">Etapa de reclutamiento</h3>
+    <nb-icon [nbPopover]="templateRef" icon="info" nbPopoverPlacement="right" nbPopoverTrigger="hint"
+      class="popoverTrigger fs-20 ml-2">
+    </nb-icon>
+    <ng-template #templateRef>
+      <serv-talento-tooltip-info-reclutamiento [fechaInicio]="diaInicio" [fechaFin]="diaFinal" [porcentaje]="totalDias">
+      </serv-talento-tooltip-info-reclutamiento>
+    </ng-template>
+    <span class="flex-spacer"></span>
+    <span style="margin-top: 2px;">Convocatoria: </span>
+    <h6 class="titlePage pl-1">{{ nombreConvocatoria }}</h6>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="container-fluid">
+    <form [formGroup]="filterForm" class="mt-3">
+      <div class="subtitle">Filtros de busqueda</div>
+
+      <div class="row m-0 mt-3 align-items-end">
+        <div class="mb-3 col-md-3">
+          <select-field [label]="'Perfil de puesto'" [control]="f.perfil" [items]="perfiles" [value]="'id'"
+            [valueToShow]="'descripcion'">
+          </select-field>
+        </div>
+        <div class="mb-3 col-md-3" *ngIf="showSelect == true">
+          <label>Fecha/Período de convocatoria</label>
+          <nb-form-field>
+            <input
+              [formControl]="f.periodo"
+              nbInput
+              [ngxMatDatetimePicker]="pickerFecIni"
+              placeholder="Buscar fecha"
+              [nbDatepicker]="formpicker"
+              fieldSize="large"
+              shape="semi-round"
+              [disabled]="false"
+              [status]="rangePickerStatus"
+              (ngModelChange)="validRangeDateFormat($event)"
+            />
+
+            <nb-icon nbSuffix class="mr-2" icon="calendario"> </nb-icon>
+            <nb-rangepicker #formpicker></nb-rangepicker>
+          </nb-form-field>
+        </div>
+        <div class="mb-3 col-md-2" *ngIf="showSelect == true">
+          <select-field [label]="'Estado'" [control]="f.estado" [items]="estadosReclutamiento" [value]="'id'"
+            [valueToShow]="'descripcion'">
+          </select-field>
+        </div>
+        <div class="mb-3 col-md-3" *ngIf="showSelect == true">
+          <select-field [label]="'Validación RNSSC'" [control]="f.rnssc" [items]="rnssc" [value]="'maeDetalleId'"
+            [valueToShow]="'descripcion'">
+          </select-field>
+        </div>
+        <div class="mb-3 col-md-3" *ngIf="showSelect == true">
+          <select-field [label]="'Validación REQ.MIN'" [control]="f.reqmin" [items]="reqmin" [value]="'maeDetalleId'"
+            [valueToShow]="'descripcion'">
+          </select-field>
+        </div>
+        <div class="mb-6 col-md-6">
+          <div class="w-100 h-100 btn_area" [class.change]="showSelect == false">
+            <div class="col pl-0">
+              <button nbButton fullWidth outline shape="round" status="primary" (click)="limpiar()">
+                Limpiar
+              </button>
+            </div>
+            <div class="col pl-0">
+              <button nbButton fullWidth shape="round" status="primary" (click)="getBuscar()">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+<div class="padding-body">
+  <div class="flex-v-center flex-column mt-5" *ngIf="showSelect == false">
+    <img src="assets/images/icons/bandeja.png" style="height: 50px; width: 55px;" alt="Logo" />
+    <h6 class="titlePage">Reclutamiento</h6>
+    <p>
+      Aqui podrás visualizar a todos los postulantes ordenados por Perfil y
+      grupos.
+    </p>
+    <p>Tambien podrás realizar validaciones de Req. Mínimo y RNSSC</p>
+    <p>Aún no as buscado ningun perfil</p>
+  </div>
+  <ng-container *ngIf="showSelect == true">
+    <div class="row justify-content-end px-5">
+      <button nbButton class="w-10" shape="round" status="primary" (click)="validarRnssc()">Validar RNSSC</button>
+    </div>
+    <serv-talento-table-seguimiento
+      [tableColumns]="this.columns"
+      [title]="'Listado de Convocatorias'"
+      [tableData]="this.data"
+      [tamanio]="this.total"
+      [pageIndex]="this.page"
+      [paginationSizes]="[20, 50, 100]"
+      [defaultPageSize]="20"
+      [dataExport]="getDataExport()"
+      (pageEvent)="getPaginado($event)"
+      (sort)="sortData($event)"
+      (openConvocatoriaPostulante)="openConvocatoriaPostulante($event)"
+
+      (procesoAction)="verMensaje($event)"
+    >
+    </serv-talento-table-seguimiento>
+  </ng-container>
+</div>

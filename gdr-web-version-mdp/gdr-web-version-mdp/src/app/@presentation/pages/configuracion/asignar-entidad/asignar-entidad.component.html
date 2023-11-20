@@ -1,0 +1,84 @@
+<form [formGroup]="frm">
+  <nb-card class="col-md-12 m-0 p-0" style="width: 590px; max-height:590px; border: #282929;">
+    <nb-card-header class='m-0 p-0'>
+      <div class="col-md-12 row h-100 p-0 m-0 mb-3">
+        <h5>Asignar Entidades</h5>
+        <span class="flex-spacer"></span>
+        <nb-actions size="small" style="place-content: flex-end;" class="col-md-12 position-absolute">
+          <nb-action class="control-item p-0 justify-content-end" icon="close" (click)="dismiss(false)"></nb-action>
+        </nb-actions>
+      </div>
+    </nb-card-header>
+    <nb-card-body class='mt-6 mb-0 p-0'>
+      <br>
+      <p>Ingrese los siguientes datos.</p>
+
+      <div class='row col-md-12 mt-4 m-0 p-0'>
+        <div class="mb-3 col-md-6">
+          <label>Nivel de Gobierno</label>
+          <nb-select formControlName="nivel" placeholder="Seleccione" fullWidth="true" shape="semi-round">
+            <nb-option>Seleccione</nb-option>
+            <nb-option *ngFor="let cboNivel of nivel" [value]="cboNivel.parametroId">
+              {{cboNivel.valorTexto}}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <div class="mb-3 col-md-6">
+          <label>Sector</label>
+          <nb-select formControlName="sector" placeholder="Seleccione" fullWidth="true" shape="semi-round">
+            <nb-option>Seleccione</nb-option>
+            <nb-option *ngFor="let cboSector of sector" [value]="cboSector.parametroId">{{cboSector.valorTexto}}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <div class="mb-3 col-md-6">
+          <label>Tipo de Entidad</label>
+          <nb-select formControlName="tipoEntidad" placeholder="Seleccione" fullWidth="true" shape="semi-round">
+            <nb-option>Seleccione</nb-option>
+            <nb-option *ngFor="let cboTipo of tipoEntidad" [value]="cboTipo.parametroId">{{cboTipo.valorTexto}}
+            </nb-option>
+          </nb-select>
+        </div>
+ 
+        <div class="col-md-6">
+          <label>Entidad</label>
+          <input placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+            [status]="f.entidad.invalid && f.entidad.touched ? 'danger' : 'basic' " class="text-uppercase"
+            formControlName="entidad" [nbAutocomplete]="autoEntidad" (input)="onChangeEntidad($event)" />
+          <nb-autocomplete #autoEntidad (selectedChange)="onSelectionChangeEntidad($event)">
+            <nb-option *ngFor="let p of listaEntidadesFiltradas" [value]="p.entidadId">
+              {{ p.sigla + ' - ' + p.descripcionEntidad }}
+            </nb-option>
+          </nb-autocomplete>
+        </div>
+
+      </div>
+      <div class="col-12 row m-0 p-0 justify-content-end">
+
+        <button nbButton shape="round" size="medium" status="success" (click)='search()'
+          class="py-2.5 px-5 mr-3 text-right ">
+          Buscar
+        </button>
+      </div>
+
+      <ng-container>
+        <serv-talento-table class='col-12' holderText="Buscar por ..." [tableData]="lstUsuarioRector" #table
+          [selectsRows]='true' keyValueSelect='flagAsociado' [tableColumns]="this.tableColumns" [isFilterable]="true"
+          [isPageable]="true" [paginationSizes]="[10]" [defaultPageSize]="5" [acciones]="false" [showTitle]='false'
+          [showDownloadButton]='false'>
+        </serv-talento-table>
+      </ng-container>
+
+        <div class=' col-md-4 offset-md-4'>
+          <button nbButton class="btn-login px-5" shape="round" size="medium"
+                  style='background-color: #0DACBC; color: #f1f1f1;' fullWidth
+                  [disabled]="frm.invalid && frm.touched ? 'danger' : 'basic'" (click)='activar()'>
+            Aceptar
+          </button>
+      </div>
+
+    </nb-card-body>
+  </nb-card>
+</form>

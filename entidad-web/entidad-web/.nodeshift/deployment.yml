@@ -1,0 +1,48 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - env: null
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 2
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        volumeMounts:
+        - name: common-configvolume
+          mountPath: /opt/app-root/output/assets/config/common.config.json
+          subPath: common.config.json
+        - name: entidad-configvolume
+          mountPath: /opt/app-root/output/assets/config/entidad-web.config.json
+          subPath: entidad-web.config.json           
+      volumes:
+        - name: common-configvolume
+          configMap:
+            name: common-configmap
+        - name: entidad-configvolume
+          configMap:
+            name: entidad-configmap            
+                        

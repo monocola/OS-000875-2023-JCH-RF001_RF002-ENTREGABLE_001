@@ -1,0 +1,189 @@
+<nb-card class="parent-card">
+  <nb-card-body class="body-card col-md-12">
+    <div class="row justify-content-center">
+      <div class="col-9 text-center">
+        <h3 class="titleGDR">¡Bienvenido!</h3>
+        <h6 class="titleGDR">Gestión de Maestras de Entidad</h6>
+        <br />
+      </div>
+
+      <form class="row w-100 pt-1" [formGroup]="loginForm">
+        <div class="form-control-group w-100">
+          <label for="mail"><h6 class="m-0 p-0">Usuario</h6></label>
+          <nb-form-field class="w-100">
+            <nb-icon nbPrefix icon="usuario"></nb-icon>
+            <input
+              id="mail"
+              type="text"
+              nbInput
+              fullWidth
+              placeholder="Ingresa tu número de documento"
+              formControlName="documentNumber"
+              shape="semi-round"
+              fieldSize="large"
+              minlength="8"
+              maxlength="12"
+              #document
+              [value]="this.document.value.toUpperCase()"
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+              [status]="
+                f.documentNumber.invalid && f.documentNumber.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+          </nb-form-field>
+          <div
+            *ngIf="f.documentNumber.invalid && f.documentNumber.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.documentNumber.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.documentNumber.errors.pattern">
+              Solo se aceptan números y letras
+            </span>
+            <span *ngIf="f.documentNumber.errors.minlength">
+              El texto introducido es muy corto
+            </span>
+            <span *ngIf="f.documentNumber.errors.maxlength">
+              El texto introducido es muy largo
+            </span>
+          </div>
+        </div>
+
+        <div class="form-control-group w-100">
+          <label for="pass"><h6 class="m-0 p-0">Contraseña</h6></label>
+          <nb-form-field class="w-100">
+            <nb-icon nbPrefix icon="padlock"></nb-icon>
+            <input
+              id="pass"
+              [type]="showPassword ? 'text' : 'password'"
+              nbInput
+              fullWidth
+              placeholder="Ingresa tu contraseña"
+              formControlName="password"
+              (keydown.enter)="login3()"
+              shape="semi-round"
+              fieldSize="large"
+              maxlength="20"
+              [status]="
+                f.password.invalid && f.password.touched ? 'danger' : 'basic'
+              "
+            />
+            <button
+              type="button"
+              nbSuffix
+              nbButton
+              ghost
+              (click)="toggleShowPassword()"
+            >
+              <nb-icon
+                [icon]="showPassword ? 'eyes-open' : 'eyes-close'"
+                [attr.aria-label]="
+                  showPassword ? 'hide password' : 'show password'
+                "
+              >
+              </nb-icon>
+            </button>
+          </nb-form-field>
+          <div
+            *ngIf="f.password.invalid && f.password.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.password.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.password.errors.pattern">
+              Solo se aceptan números y letras
+            </span>
+            <span *ngIf="f.password.errors.minlength">
+              El texto introducido es muy corto
+            </span>
+            <span *ngIf="f.password.errors.maxlength">
+              El texto introducido es muy largo
+            </span>
+          </div>
+        </div>
+
+
+
+        <div class="row w-100 m-0 my-4" [style.place-content]="'center'">
+          <div class="captchaContent">
+            <input
+              type="text"
+              id="captchaLogin"
+              placeholder="Ingrese el código"
+              maxlength="5"
+              autocomplete="off"
+              nbInput
+              shape="semi-round"
+              fieldSize="large"
+              formControlName="inputCaptcha"
+              class="ml-3 captchaLogin"
+              oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')"
+              [status]="
+                f.inputCaptcha?.invalid && f.inputCaptcha?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              (keyup.enter)="login3()"
+            />
+          </div>
+          <div
+            *ngIf="f.inputCaptcha.invalid && f.inputCaptcha.touched"
+            class="invalid-text text-center w-100"
+          >
+            <span *ngIf="f.inputCaptcha.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.inputCaptcha.errors.minlength">
+              El texto debe tener 5 caracteres
+            </span>
+          </div>
+        </div>
+
+        <div class="row w-100 m-0 mt-2">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <button
+              class="btn btn-login"
+              nbButton
+              shape="round"
+              style="background-color: #0dacbc; color: #f1f1f1"
+              (click)="login3()"
+              fullWidth
+              [disabled]="!this.loginForm.valid"
+            >
+              Ingresar
+            </button>
+          </div>
+        </div>
+        <div class="row w-100 m-0 mt-4 p-0 col-md-12">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 p-0">
+            <a [routerLink]="'/auth/forgot-password'">
+              <p style="font-size: 1rem; font-weight: bold;" class="titleGDR">
+                ¿Olvidaste tu contraseña?
+              </p></a
+            >
+          </div>
+        </div>
+        <div class="row w-100 m-0 mt-4 p-0 col-md-12">
+          <div class="col-md-3"></div>
+          <div class="col-md-6 p-0">
+            <a style="cursor: pointer;" (click)="registrarEntidad()">
+              <p
+                style="font-size: 1rem; font-weight: bold"
+                class="registroEntidad"
+              >
+                Registrar entidad
+                <img src="./assets/images/icons/business.png" alt="" />
+              </p>
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>

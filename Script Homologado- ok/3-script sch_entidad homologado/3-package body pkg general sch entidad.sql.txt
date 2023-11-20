@@ -1,0 +1,421 @@
+CREATE OR REPLACE PACKAGE BODY SCH_ENTIDAD.PKG_GENERAL AS
+
+PROCEDURE SP_BUSCAR_PARAMETRO(V_PARAMETRO_ID     IN SCH_MAESTRA.TBL_PARAMETRO.PARAMETRO_ID%TYPE DEFAULT NULL
+                             ,V_TIPO_PARAMETRO   IN SCH_MAESTRA.TBL_PARAMETRO.TIPO_PARAMETRO%TYPE DEFAULT NULL
+                            -- ,V_CODIGO_TEXTO     IN SCH_MAESTRA.TBL_PARAMETRO.CODIGO_TEXTO%TYPE DEFAULT NULL
+                             ,CUR_TEST           OUT cursor_test
+)
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+
+ OPEN CUR_TEST FOR
+    SELECT PARA.PARAMETRO_ID  as "parametroId",
+           PARA.TIPO_PARAMETRO AS "tipoParametro",
+           PARA.CODIGO_NUMERO  AS "codigoNumero",
+           PARA.CODIGO_TEXTO AS "codigoTexto",
+           PARA.VALOR_TEXTO AS "valorTexto",
+           PARA.ORDEN AS "orden",
+           PARA.DESCRIPCION AS "descripcion"
+    FROM SCH_MAESTRA.TBL_PARAMETRO PARA
+    WHERE 1=1
+    AND PARA.PARAMETRO_ID = NVL(V_PARAMETRO_ID,PARA.PARAMETRO_ID)
+    AND PARA.TIPO_PARAMETRO = NVL(V_TIPO_PARAMETRO,PARA.TIPO_PARAMETRO)
+  --  AND PARA.CODIGO_TEXTO = NVL(V_CODIGO_TEXTO,PARA.CODIGO_TEXTO)
+    AND PARA.ESTADO_REGISTRO = '1' ORDER BY PARA.Orden ASC;
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_PARAMETRO>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_PARAMETRO;
+
+
+PROCEDURE SP_BUSCAR_EMAIL( V_CORREO    IN SCH_PERSONA.TBL_CORREO.CORREO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          )
+
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+  OPEN CUR_TEST FOR
+      SELECT  COR.PERSONA_ID as "personaId"
+             ,COR.CORREO_ID as "correoId"
+             ,COR.TIPO_CORREO as "tipoCorreo"
+             ,COR.CORREO as "correo"
+      FROM SCH_PERSONA.TBL_CORREO COR
+      WHERE 1=1
+      AND COR.CORREO = V_CORREO
+      AND COR.ESTADO_REGISTRO = '1';
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_EMAIL>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_EMAIL;
+
+PROCEDURE SP_VALIDAR_ROL_USUARIO( V_USUARIO_ID IN SCH_SEGURIDAD.TBL_USUARIO_ROL.USUARIO_ID%TYPE DEFAULT NULL
+                                 ,V_ROL_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                                 ,CUR_TEST        OUT cursor_test
+                                )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+    OPEN CUR_TEST FOR
+    select usr.usuario_rol_id as usuarioRolId
+     from sch_seguridad.tbl_usuario_rol usr
+      WHERE USR.USUARIO_ID =V_USUARIO_ID  AND USR.ROL_ID = V_ROL_ID;
+
+
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_VALIDAR_ROL_USUARIO>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_VALIDAR_ROL_USUARIO;
+
+PROCEDURE SP_BUSCAR_ROL_CUENTA(V_ENTIDAD   IN SCH_ENTIDAD.TBL_ENTIDAD.ENTIDAD_ID%TYPE DEFAULT NULL
+                              ,V_ROL_ID    IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                              ,CUR_TEST    OUT cursor_test
+                              )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+    OPEN CUR_TEST FOR
+       SELECT CU.CUENTA_ENTIDAD_ID AS "cuentaEntidadId",
+       NVL(TO_CHAR(USU.FECHA_INICIO_VIGENCIA,'YYYY-MM-DD HH24:MI:SS') ,TO_CHAR(USU.FECHA_CREACION,'YYYY-MM-DD HH24:MI:SS')) as "fechaInicioVigencia",
+       USUROL.usuario_rol_id as "usuarioRolId",
+       DOCU.TIPO_DOCUMENTO AS "tipoDocumento",
+       DOCU.NUMERO_DOCUMENTO AS "numeroDocumento"
+       FROM SCH_ENTIDAD.TBL_CUENTA_ENTIDAD CU
+       INNER JOIN SCH_PERSONA.TBL_DOCUMENTO DOCU ON DOCU.PERSONA_ID = CU.PERSONA_ID AND DOCU.ESTADO_REGISTRO = '1'
+       INNER JOIN SCH_SEGURIDAD.TBL_USUARIO USU ON USU.USUARIO = DOCU.NUMERO_DOCUMENTO AND USU.ESTADO_REGISTRO = '1'
+       INNER JOIN SCH_SEGURIDAD.TBL_USUARIO_ROL USUROL ON USUROL.USUARIO_ID = USU.USUARIO_ID AND USUROL.ESTADO_REGISTRO = '1'
+       WHERE USUROL.ROL_ID = V_ROL_ID AND CU.ESTADO_REGISTRO = '1'
+       AND CU.ENTIDAD_ID = V_ENTIDAD;
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_ROL_CUENTA>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_ROL_CUENTA;
+
+
+PROCEDURE SP_BUSCAR_CUENTA_CLIENTE(V_ENTIDAD   IN SCH_ENTIDAD.TBL_ENTIDAD.ENTIDAD_ID%TYPE DEFAULT NULL
+                              ,CUR_TEST    OUT cursor_test
+                              )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+    OPEN CUR_TEST FOR
+       SELECT
+       CU.CUENTA_ENTIDAD_ID AS "cuentaEntidadId",
+       DOCU.PERSONA_ID AS "personaId",
+       DOCU.TIPO_DOCUMENTO AS "tipoDocumento",
+       DOCU.NUMERO_DOCUMENTO AS "numeroDocumento"
+       FROM SCH_ENTIDAD.TBL_CUENTA_ENTIDAD CU
+       INNER JOIN SCH_PERSONA.TBL_DOCUMENTO DOCU ON DOCU.PERSONA_ID = CU.PERSONA_ID AND DOCU.ESTADO_REGISTRO = '1'
+       WHERE CU.ESTADO_REGISTRO = '1'
+       AND CU.ENTIDAD_ID = V_ENTIDAD;
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_CUENTA_CLIENTE>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_CUENTA_CLIENTE;
+
+PROCEDURE SP_BUSCAR_PAISES(CUR_TEST OUT cursor_test)
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+
+    OPEN CUR_TEST FOR
+       SELECT pais.PAIS_ID AS "paisId",
+        pais.NACIONALIDAD AS "nacionalidad" ,
+        pais.NOMBRE_PAIS AS "nombrePais"
+        FROM SCH_MAESTRA.TBL_PAIS pais
+        WHERE pais.ESTADO_REGISTRO ='1'
+        ORDER BY NOMBRE_PAIS ASC;
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_PAISES>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_PAISES;
+
+PROCEDURE SP_VALIDA_ROL_USUARIO_ENTIDAD( V_USUARIO_ID IN SCH_SEGURIDAD.TBL_USUARIO_ROL.USUARIO_ID%TYPE DEFAULT NULL
+                                 ,V_ROL_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                                 ,V_ENTIDAD_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ENTIDAD_ID%TYPE DEFAULT NULL
+                                 ,CUR_TEST        OUT cursor_test
+                                )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+    OPEN CUR_TEST FOR
+    select usr.usuario_rol_id as "usuarioRolId",
+        usr.usuario_id as "usuarioId",
+        usr.rol_id as "rolId",
+        usr.fecha_inicio_vigencia as "fechaInicioVigencia",
+        usr.fecha_fin_vigencia as "fechaFinVigencia",
+        usr.estado_registro as "estado",
+        usr.entidad_id as "entidadId"
+     from sch_seguridad.tbl_usuario_rol usr
+			WHERE USR.USUARIO_ID =  nvl(V_USUARIO_ID, usr.usuario_id) 
+                AND USR.ROL_ID = V_ROL_ID
+                AND USR.ENTIDAD_ID = V_ENTIDAD_ID;
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_VALIDA_ROL_USUARIO_ENTIDAD>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_VALIDA_ROL_USUARIO_ENTIDAD;
+
+
+PROCEDURE SP_VALIDA_ROL_ENTIDAD( V_ROL_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                                 ,V_ENTIDAD_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ENTIDAD_ID%TYPE DEFAULT NULL
+                                 ,CUR_TEST        OUT cursor_test
+                                )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+    OPEN CUR_TEST FOR
+    select usr.usuario_rol_id as "usuarioRolId",
+        usr.usuario_id as "usuarioId",
+        usr.rol_id as "rolId",
+        usr.fecha_inicio_vigencia as "fechaInicioVigencia",
+        usr.fecha_fin_vigencia as "fechaFinVigencia",
+        usr.estado_registro as "estado",
+        usr.entidad_id as "entidadId"
+     from sch_seguridad.tbl_usuario_rol usr
+			WHERE USR.ROL_ID = V_ROL_ID
+                AND USR.ENTIDAD_ID = V_ENTIDAD_ID
+                AND usr.ESTADO_REGISTRO = 1;
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_VALIDA_ROL_USUARIO_ENTIDAD>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_VALIDA_ROL_ENTIDAD;
+
+
+PROCEDURE SP_BUSCAR_TELEFONO( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                             ,V_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.NUMERO_TELEFONO%TYPE 
+                             --,V_TIPO_TELEFONO IN SCH_PERSONA.TBL_TELEFONO.TIPO_TELEFONO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+  OPEN CUR_TEST FOR
+      SELECT  PT.PERSONA_ID as "personaId"
+             ,PT.TELEFONO_ID as "telefonoId"        
+             ,PT.TIPO_TELEFONO as "tipoTelefono"
+             ,PT.NUMERO_TELEFONO as "telefono"
+      FROM SCH_PERSONA.TBL_TELEFONO PT 
+      WHERE 1=1
+      AND PT.PERSONA_ID = V_PERSONA_ID
+      AND PT.NUMERO_TELEFONO = V_TELEFONO
+      --AND PT.TIPO_TELEFONO = V_TIPO_TELEFONO
+      AND PT.ESTADO_REGISTRO = '1';  
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_TELEFONO>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_TELEFONO;
+
+PROCEDURE SP_BUSCAR_TELEFONO_ID( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                             ,V_TELEFONO_ID    IN SCH_PERSONA.TBL_TELEFONO.TELEFONO_ID%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+  OPEN CUR_TEST FOR
+      SELECT  PT.PERSONA_ID as "personaId"
+             ,PT.TELEFONO_ID as "telefonoId"        
+             ,PT.TIPO_TELEFONO as "tipoTelefono"
+             ,PT.NUMERO_TELEFONO as "telefono"
+      FROM SCH_PERSONA.TBL_TELEFONO PT 
+      WHERE 1=1
+      AND PT.PERSONA_ID = V_PERSONA_ID
+      AND PT.TELEFONO_ID = V_TELEFONO_ID
+      AND PT.ESTADO_REGISTRO = '1';  
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_BUSCAR_TELEFONO_ID>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCAR_TELEFONO_ID; 
+
+PROCEDURE SP_VALIDA_USUARIO_PERSONA_ID( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                                    ,V_ROL_ID   IN SCH_SEGURIDAD.TBL_ROL.ROL_ID%TYPE
+                                    ,V_ENTIDAD_ID   IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ENTIDAD_ID%TYPE
+                             ,CUR_TEST       OUT cursor_test
+                          )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+BEGIN
+  OPEN CUR_TEST FOR
+      SELECT PERS.PERSONA_ID, 
+            USU.USUARIO_ID, 
+            USR.ROL_ID, 
+            USR.USUARIO_ROL_ID, 
+            USR.ESTADO_REGISTRO,
+            USR.ENTIDAD_ID
+        FROM SCH_PERSONA.TBL_PERSONA_NATURAL PERS, 
+            SCH_SEGURIDAD.TBL_USUARIO USU,
+            SCH_SEGURIDAD.TBL_USUARIO_ROL USR
+        WHERE PERS.PERSONA_ID = USU.PERSONA_ID
+            AND PERS.PERSONA_ID = V_PERSONA_ID --307 
+            AND PERS.ESTADO_REGISTRO = '1'
+            AND USU.USUARIO_ID = USR.USUARIO_ID
+            AND USU.ESTADO_REGISTRO = '1'
+            AND USR.ROL_ID = V_ROL_ID --43 
+            AND USR.ENTIDAD_ID  = V_ENTIDAD_ID --61
+            AND USR.ESTADO_REGISTRO = '1';
+    EXCEPTION
+ WHEN OTHERS THEN
+   VL_NRO_ERROR := SQLCODE;
+   VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+   raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_VALIDA_USUARIO_PERSONA_ID>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_VALIDA_USUARIO_PERSONA_ID; 
+
+PROCEDURE SP_VALIDA_UPD_TELEFONO_PERSONA( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                             ,V_TELEFONO_ID    IN SCH_PERSONA.TBL_TELEFONO.TELEFONO_ID%TYPE
+                             ,V_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.NUMERO_TELEFONO%TYPE 
+                             ,V_TIPO_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.TIPO_TELEFONO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+  EXCEP_EXISTE_TELF EXCEPTION;
+BEGIN
+    /* DESACTIVAR TELEFONOS */
+    IF V_TELEFONO_ID IS NULL THEN            
+        RAISE EXCEP_EXISTE_TELF;        
+    END IF;
+    
+    IF (V_TELEFONO IS NULL) THEN
+        UPDATE SCH_PERSONA.TBL_TELEFONO TT
+            SET TT.ESTADO_REGISTRO = '0'
+                WHERE TT.PERSONA_ID = V_PERSONA_ID
+                    AND TT.TIPO_TELEFONO = V_TIPO_TELEFONO;
+    END IF;
+    
+    IF (V_TELEFONO_ID IS NOT NULL) THEN
+        IF (V_TELEFONO IS NOT NULL) THEN
+        --UPDATE
+            UPDATE SCH_PERSONA.TBL_TELEFONO TT
+            SET TT.TIPO_TELEFONO = V_TIPO_TELEFONO,
+                TT.NUMERO_TELEFONO = V_TELEFONO,
+                TT.ESTADO_REGISTRO = '1'
+                WHERE TT.PERSONA_ID = V_PERSONA_ID
+                    AND TT.TELEFONO_ID = V_TELEFONO_ID;
+        /*ELSE
+        --DESACTIVAR
+            UPDATE SCH_PERSONA.TBL_TELEFONO TT
+                SET TT.ESTADO_REGISTRO = '0'
+                    WHERE TT.PERSONA_ID = V_PERSONA_ID
+                        AND TT.TELEFONO_ID = V_TELEFONO_ID;*/
+        END IF;
+    END IF;
+          
+    
+  
+    COMMIT;
+      OPEN CUR_TEST FOR
+        SELECT 1 AS "codigo",
+               'Telefono actualizado satisfactoriamente!' AS "mensaje"
+          FROM DUAL;
+      
+    EXCEPTION
+        WHEN EXCEP_EXISTE_TELF THEN 
+            OPEN CUR_TEST FOR
+            SELECT 0 AS "codigo",
+               'No existe TelefonoID.' AS "mensaje"
+            FROM DUAL;
+            ROLLBACK;
+        WHEN OTHERS THEN
+            VL_NRO_ERROR := SQLCODE;
+            VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+    
+            OPEN CUR_TEST FOR
+            SELECT 0 AS "codigo",
+                   'Error en desactivar TelefonoID!' AS "mensaje"
+              FROM DUAL;
+              
+            ROLLBACK;
+       --raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_UPDATE_TELEFONO_PERSONA>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_VALIDA_UPD_TELEFONO_PERSONA; 
+
+PROCEDURE SP_BUSCANDO_TELEFONO( V_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.NUMERO_TELEFONO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          )
+IS
+  VL_NRO_ERROR      NUMBER;
+  VL_DES_ERROR      VARCHAR(3000);
+  EXCEP_EXISTE_TELF EXCEPTION;
+BEGIN
+    
+    IF V_TELEFONO IS NULL THEN            
+        RAISE EXCEP_EXISTE_TELF;        
+    END IF;
+    
+    IF (V_TELEFONO IS NOT NULL) THEN
+        OPEN CUR_TEST FOR
+            SELECT  PT.PERSONA_ID as "personaId"
+                 ,PT.TELEFONO_ID as "telefonoId"        
+                 ,PT.TIPO_TELEFONO as "tipoTelefono"
+                 ,PT.NUMERO_TELEFONO as "telefono"
+              FROM SCH_PERSONA.TBL_TELEFONO PT 
+                  WHERE 1=1
+                      AND PT.NUMERO_TELEFONO = V_TELEFONO;  
+    END IF;
+      
+    EXCEPTION
+        WHEN EXCEP_EXISTE_TELF THEN 
+            OPEN CUR_TEST FOR
+            SELECT 0 AS "codigo",
+               'No existe Telefono.' AS "mensaje"
+            FROM DUAL;
+            ROLLBACK;
+        WHEN OTHERS THEN
+            VL_NRO_ERROR := SQLCODE;
+            VL_DES_ERROR := SUBSTR(SQLERRM(VL_NRO_ERROR), 1, 512);
+    
+            OPEN CUR_TEST FOR
+            SELECT 0 AS "codigo",
+                   'Error en desactivar Telefono!' AS "mensaje"
+              FROM DUAL;
+              
+            ROLLBACK;
+       --raise_application_error(-20000, 'ERROR: AL EJECUTAR EL PROCEDIMIENTO <<SP_UPDATE_TELEFONO_PERSONA>>.'||VL_NRO_ERROR||', '||VL_DES_ERROR);
+
+END SP_BUSCANDO_TELEFONO; 
+                          
+END PKG_GENERAL;

@@ -1,0 +1,11 @@
+@import 'colors';
+@import '../../../../../@common-components/material-table/material-table.component.scss';
+
+.nombrePerfil {
+  color: $primary-color;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    filter: saturate(2);
+  }
+}

@@ -1,0 +1,201 @@
+<script src="../implementacion/asignar-entidad/asignar-entidad.component.ts"></script>
+<div class="body">
+  <div class="m-1 p-1">
+    <div class="d-flex">
+      <h5 class="titlePage m-0 p-0">Cronograma {{ cicloDefaultDesc }}</h5>
+      <span class="flex-spacer"></span>
+    </div>
+    <div class="mb-1 pb-1">
+      <div class="titleCiclo mx-1 px-1 flex-v-center-right">
+        Ciclo {{ cicloDefaultDesc }}
+      </div>
+    </div>
+
+    <div class="m-1 p-0"></div>
+    <mat-tab-group
+      mat-align-tabs="end"
+      (selectedIndexChange)="onTabChanged($event)"
+    >
+      <mat-tab label="Registro individual">
+        <div class="m-0 p-1">
+          <div class="bg-card m-1" [formGroup]="frm">
+            <div class="row mt-1">
+              <div class="mb-3 col-md-5">
+                <label class="font-weight-bold">Etapa</label>
+                <nb-select
+                  formControlName="etapa"
+                  placeholder="Seleccione"
+                  fullWidth="true"
+                  [size]="'large'"
+                  shape="semi-round"
+                >
+                  <nb-option value=""> Seleccione </nb-option>
+                  <nb-option
+                    *ngFor="let cboEtapa of etapa"
+                    [value]="cboEtapa.codigoNumero"
+                  >
+                    {{ cboEtapa.valorTexto }}
+                  </nb-option>
+                </nb-select>
+              </div>
+              <div class="mb-3 offset-1"></div>
+              <div class="mb-3 col-md-6">
+                <div class="w-100 h-100 btn-area col-md-12 m-0 p-0">
+                  <button
+                    nbButton
+                    shape="round"
+                    size="medium"
+                    status="primary"
+                    style="color: #0dacbc; background-color: white"
+                    (click)="clear()"
+                    class="py-2.5 px-5 mr-3"
+                  >
+                    Limpiar
+                  </button>
+                  <button
+                    nbButton
+                    shape="round"
+                    size="medium"
+                    style="color: white; background-color: #0dacbc"
+                    (click)="getCronogramas()"
+                    class="py-2.5 px-5 mr-3"
+                  >
+                    Buscar
+                  </button>
+                  <button
+                    nbButton
+                    shape="round"
+                    *ngIf="flagHabilitar"
+                    size="medium"
+                    style="color: white; background-color: #068264"
+                    (click)="openModalRegister()"
+                    onlyWrite
+                  >
+                    <nb-icon icon="suma" pack="entweb"></nb-icon>
+                    Registrar Actividad
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="m-2 p-2"></div>
+          <div class="mt-2 mb-3 offset-10" *ngIf="flagHabilitar">
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="info"
+              outline
+              onlyWrite
+              (click)="uploadResolution()"
+            >
+              <nb-icon icon="subir" pack="entweb"></nb-icon>
+              Subir Resolución
+            </button>
+          </div>
+          <div class="m-2 p-2"></div>
+          <ng-container *ngIf="this.lstCronograma.length > 0">
+            <!--*ngIf="
+            this.lstServCiviles.length > 0 || (this.lstServCiviles.length === 0 && this.searchMode)"
+            >-->
+            <!-- <div class="subtitle">Lista de Servidores Civiles</div> -->
+            <serv-talento-table
+              [holderText]="this.holderText"
+              [tableData]="this.lstCronograma"
+              [tableColumns]="ordersTableColumns"
+              [isFilterable]="true"
+              [isPageable]="true"
+              [paginationSizes]="[10, 20, 50, 100]"
+              [defaultPageSize]="10"
+              [acciones]="flagHabilitar"
+              [title]="'Lista de servidores'"
+              [btnEditEnabled]="true"
+              (editAction)="editCronograma($event)"
+              [editTitle]="'Editar sevidor'"
+              [btnDeleteEnabled]="true"
+              (deleteAction)="removeCronograma($event)"
+              [deleteTitle]="'Inactivar sevidor'"
+              [showDownloadButton]="false"
+            >
+            </serv-talento-table>
+          </ng-container>
+          <div class="m-2 p-2"></div>
+          <div class="row col-md-12">
+            <div class="col-md-3"></div>
+            <div class="m-2 p-2" style="align-content: end">
+              <button
+                nbButton
+                shape="round"
+                size="medium"
+                style="
+                  color: #024487;
+                  background-color: white;
+                  border-color: #024487;
+                "
+                [routerLink]="['historial']"
+                class="mr-2"
+              >
+                Historial de modificaciones
+              </button>
+            </div>
+            <div class="m-2 p-2">
+              <button
+                nbButton
+                shape="round"
+                size="medium"
+                outline
+                status="info"
+                (click)="downloadCronograma()"
+              >
+                <nb-icon icon="descargar" pack="entweb"></nb-icon>
+                Descargar cronograma
+              </button>
+            </div>
+            <div class="m-2 p-2">
+              <button
+                *ngIf="!flagHabilitar"
+                nbButton
+                shape="round"
+                size="medium"
+                style="
+                  color: #068264;
+                  background-color: white;
+                  border-color: #068264;
+                "
+                (click)="hablitarEdicion()"
+              >
+                Habilitar edición
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Resoluciones">
+        <ng-container>
+          <!--*ngIf="
+            this.lstServCiviles.length > 0 || (this.lstServCiviles.length === 0 && this.searchMode)"
+            >-->
+          <!-- <div class="subtitle">Lista de Servidores Civiles</div> -->
+          <serv-talento-table
+            [holderText]="this.holderText2"
+            [tableData]="this.lstResolucion"
+            [tableColumns]="ordersTableColumns2"
+            [isFilterable]="true"
+            [isPageable]="true"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            [acciones]="true"
+            [title]="'Lista de resoluciones'"
+            [btnViewEnabled]="true"
+            [viewTitle]="'Ver PDF'"
+            (viewAction)="actionShowPDF($event)"
+            (deleteAction)="removeCronograma($event)"
+            [deleteTitle]="'Inactivar sevidor'"
+            [showDownloadButton]="false"
+          >
+          </serv-talento-table>
+        </ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

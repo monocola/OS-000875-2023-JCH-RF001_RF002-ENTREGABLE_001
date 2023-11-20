@@ -1,0 +1,55 @@
+@import '../../../@common-components/material-table/material-table.component.scss';
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}
+
+.statusInProcess {
+  background-color: #6fcf97;
+  color: #000;
+}
+
+.statusPassed {
+  background-color: #2d9cdb;
+  color: white;
+}
+
+.statusPassing {
+  background-color: #a7dbf1;
+}
+
+.statusObserved {
+  background-color: #f2994a;
+  color: white;
+}
+
+.statusInactivo {
+  background-color: #BDBDBD;
+  color: white;
+}
+
+.statusRevisado {
+  background-color: #A5DCF0;
+  color: #000;
+}
+
+.statusPorRevisar {
+  background-color: #A5DCF0;
+  color: #000;
+}
+
+.statusPorPublicar {
+  background-color: #2B9CE0;
+  color: #fff;
+}
+
+.statusPublicado {
+  background-color: #F2C94D;
+  color: #fff;
+}
+
+.statusFinished {
+  background-color: #51b7f0;
+  color: white;
+}

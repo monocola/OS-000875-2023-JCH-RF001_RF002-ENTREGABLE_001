@@ -1,0 +1,55 @@
+<div class='d-flex w-100 header-modal'>
+  Asignar Mando Medio
+  <span class='flex-spacer'></span>
+  <nb-icon class='mr-2 btnClose' nbSuffix icon='close' (click)='cerrar()'></nb-icon>
+</div> 
+<mat-divider class='divider-modal'></mat-divider>
+<div class="bodyRegisterForm">
+  <div class='row mt-4'>
+    <div class='col-12'>
+      <form [formGroup]="form">
+        <nb-form-field class='mb-4'>
+          <label>Seleccione nuevo mando medio</label>
+          <nb-select
+            [status]="form.get('mandoMedio').invalid && form.get('mandoMedio').touched ? 'danger' : 'basic' "
+            formControlName="mandoMedio"
+            placeholder="Seleccione" shape="semi-round" [fullWidth]="true"
+            (selectedChange)="onMandoMedioChange($event)">
+            <nb-option *ngFor='let m of sinMandosMedio' [value]='m'>{{m.apellidosNombres}}</nb-option>
+          </nb-select>
+          <div class="text-danger" *ngIf="form.get('mandoMedio').invalid && form.get('mandoMedio').touched">
+            <small>El campo es obligatorio</small>
+          </div>
+        </nb-form-field>
+        <nb-form-field class='mb-4'>
+          <label>Agregar evaluados</label>
+          <nb-select
+            [status]="form.get('evaluados').invalid && form.get('evaluados').touched ? 'danger' : 'basic' "
+            formControlName="evaluados" placeholder="Seleccione" shape='semi-round' [fullWidth]='true' multiple
+            (selectedChange)="evaluadosSeleccionados = $event">
+            <nb-select-label>Evaluados seleccionados</nb-select-label>
+            <nb-option *ngFor='let m of evaluados' [value]='m'>{{m.apellidosNombres}}</nb-option>
+          </nb-select>
+          <div class="text-danger" *ngIf="form.get('evaluados').invalid && form.get('evaluados').touched">
+            <small>El campo es obligatorio</small>
+          </div>
+          <div class="col-40-100 mt-2">
+            <mat-chip-list>
+              <mat-chip *ngFor="let e of evaluadosSeleccionados">
+                {{e.apellidosNombres}}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </nb-form-field>
+      </form>
+    </div>
+    <div class='col text-center'>
+      <button
+        class='btn btn-info pl-5 pr-5 mr-3 round'
+        (click)='guardar()'
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>

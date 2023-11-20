@@ -1,0 +1,161 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="flex-v-center-column py-3">
+  <img src="assets/images/icons/formulario.png" alt="logo formulario" />
+
+  <h5 class="mt-3">
+    {{ !editMode ? 'Registro' : 'Edición' }} de nivel educativo
+  </h5>
+
+  <div class="py-2 mx-2 body container-fluid">
+    <form [formGroup]="registerForm" class="row">
+      <div class="col-5 mb-3">
+        <select-field
+          [label]="'Nivel educativo'"
+          [control]="f.nivel"
+          [items]="helperService.nivelesEducativos"
+          [value]="'maeDetalleId'"
+          [valueToShow]="'descripcion'"
+          (selectedChange)="nivelChanged ($event)"
+        >
+        </select-field>
+      </div>
+
+      <div class="col-7 mb-3">
+        <div class="flex-v-bottom-left w-100" style="height: 80%">
+          <mat-radio-group formControlName="tipoNivel" color="primary">
+            <mat-radio-button
+              [value]="item.maeDetalleId"
+              *ngFor="let item of helperService.estadosNiveles"
+              class="mr-4"
+            >
+              {{ item.descripcion }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div
+          class="invalid-text"
+          *ngIf="f.tipoNivel.touched && f.tipoNivel.invalid"
+        >
+          Tiene que seleccionar una opción
+        </div>
+      </div>
+
+      <div *ngIf="f.nivel.value === const.NVL_EDU_UNI || f.nivel.value === const.NVL_EDU_TEC_BAS || f.nivel.value === const.NVL_EDU_TEC_SUP" class="col-5 mb-3">
+        <select-field
+          [label]="'Situación académica'"
+          [control]="f.grado"
+          [items]="helperService.grados"
+          [value]="'maeDetalleId'"
+          [valueToShow]="'descripcion'"
+          (selectedChange)="captureChange()"
+        >
+        </select-field>
+
+        <ng-container
+          *ngIf="
+            this.f.grado.value === this.codeToId(const.SIT_ACA_MAE) ||
+            this.f.grado.value === this.codeToId(const.SIT_ACA_DOC)
+          "
+        >
+          <div class="mt-3">
+            <mat-radio-group formControlName="tipoGrado" color="primary">
+              <mat-radio-button
+                [value]="item.maeDetalleId"
+                *ngFor="let item of helperService.estadosGrado"
+                class="mr-4"
+              >
+                {{ item.descripcion }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div
+            class="invalid-text"
+            *ngIf="f.tipoGrado.touched && f.tipoGrado.invalid"
+          >
+            Tiene que seleccionar una opción
+          </div>
+
+          <div class="mt-3">
+            <input-field
+              [control]="f.nombreGrado"
+              [label]="'Nombre del postgrado'"
+              [placeholder]="'Ingrese nombre'"
+              [maxlength]="45"
+              [banKeyType]="3"
+              [minlength]="0"
+            >
+            </input-field>
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="f.nivel.value === const.NVL_EDU_UNI || f.nivel.value === const.NVL_EDU_TEC_BAS || f.nivel.value === const.NVL_EDU_TEC_SUP" class="col-7 mb-3">
+        <autocomplete
+          [control]="carrera"
+          [items]="helperService.carrerasToShow"
+          [fieldToShow]="'descripcion'"
+          [label]="'Carrera'"
+          [placeholder]="'Elegir carrera/s'"
+          (selectedChange)="selectChange()"
+        >
+        </autocomplete>
+
+        <!-- <div
+          class="invalid-text"
+          *ngIf="carrerasSelected.length === 0 && f.nombreGrado.touched"
+        >
+          Tiene que seleccionar como minimo una carrera
+        </div> -->
+
+        <div class="w-100 mt-3 carreras__selected__wrapper">
+          <mat-chip-list aria-label="Seleccion de carreras">
+            <mat-chip
+              [removable]="true"
+              (removed)="remove(i)"
+              class="flex-v-center"
+              *ngFor="let item of carrerasSelected; let i = index"
+            >
+              {{ item?.descripcion }}
+              <nb-icon matChipRemove icon="close" class="ml-3 btnRemoveFile">
+              </nb-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </form>
+
+    <div class="d-flex">
+      <div class="flex-spacer"></div>
+      <button
+        class="px-5 mr-3"
+        nbButton
+        shape="round"
+        size="medium"
+        status="primary"
+        outline
+        (click)="onNoClick()"
+      >
+        Cancelar
+      </button>
+      <button
+        class="px-5"
+        nbButton
+        shape="round"
+        size="medium"
+        status="primary"
+        (click)="saveForm()"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>

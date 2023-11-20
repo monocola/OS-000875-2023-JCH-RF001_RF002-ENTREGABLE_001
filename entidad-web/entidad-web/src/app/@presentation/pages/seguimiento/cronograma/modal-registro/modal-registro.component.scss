@@ -1,0 +1,23 @@
+@import '_colors';
+
+.contenedor {
+  width: 100%;
+  margin: auto;
+}
+
+.lateral {
+  width: 35%; /* Este será el ancho que tendrá tu columna */
+  float: left; /* Aquí determinas de lado quieres quede esta "columna" */
+}
+
+.principal {
+  text-align: right;
+  width: 65%;
+  float: right;
+}
+
+.bottom {
+  width: 100%;
+  float: left;
+  text-align: left;
+}

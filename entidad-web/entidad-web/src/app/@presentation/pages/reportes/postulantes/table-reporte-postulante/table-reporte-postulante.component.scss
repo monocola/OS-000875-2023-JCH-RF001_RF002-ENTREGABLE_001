@@ -1,0 +1,39 @@
+@import '../../../../@common-components/material-table/material-table.component.scss';
+@import 'colors';
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}
+
+.ganador {
+  background-color: #bdbdbd;
+  color: black;
+}
+
+.enproceso {
+  background-color: #a7dbf1;
+}
+
+.descartado {
+  background-color: #f2994a;
+  color: white;
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+}
+
+.btn-excel {
+  background-color: white !important;
+  border: 1px solid #3b3a3c !important;
+  border-radius: 0.5rem !important;
+  &:disabled {
+    border: 1px solid #ccc !important;
+  }
+}

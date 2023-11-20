@@ -1,0 +1,159 @@
+@import '_colors';
+
+* {
+  user-select: none;
+}
+
+.body {
+  padding-bottom: 7.5rem !important;
+}
+
+.divbottom {
+  z-index: 0;
+  -webkit-box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  -moz-box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  width: 100%;
+  height: 6.25rem;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn__regimen_section {
+  height: 3rem;
+  & > button {
+    height: 100%;
+    margin-left: 1.25rem;
+    background: none;
+    border: none;
+  }
+}
+
+.w30 {
+  width: 30%;
+}
+
+.status-ok {
+  color: green !important;
+}
+
+.status-bad {
+  color: $red;
+}
+
+.example-list {
+  min-height: 3.75rem;
+  display: block;
+  background: white;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.container-box {
+  width: 56.25rem !important;
+  display: flex;
+  align-items: center;
+}
+
+.nombreEvaluacion {
+  width: 12.5rem !important;
+}
+
+.evaluacion {
+  width: 18.75rem;
+  max-width: 18.75rem;
+  word-wrap: break-word;
+}
+
+.pmin,
+.pmax,
+.ppor {
+  width: 7.5rem !important;
+  border: 1px solid $light-gray;
+  border-radius: 0.625rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > div {
+    color: $medium-gray;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-right: 1rem;
+    font-size: 0.75rem;
+  }
+  & > mat-form-field {
+    width: 3.75rem;
+  }
+}
+
+.example-box {
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: white;
+  font-size: 0.875rem;
+  margin-bottom: 0.625rem;
+}
+
+.btn-evaluation-section {
+  & > span {
+    cursor: pointer;
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 0.25rem;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 0.5rem 0.625rem 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.animationSlide {
+  transition: 0.25s;
+}
+
+.remove-icon {
+  transition: 0.25s;
+  color: $red !important;
+  &:hover {
+    filter: saturate(1.75);
+    transform: scale(1.25);
+  }
+}
+
+.add-icon {
+  transition: 0.25s;
+  color: $primary-color !important;
+  &:hover {
+    filter: saturate(1.75);
+    transform: scale(1.25);
+  }
+}
+
+.msgDivError {
+  color: $red;
+}

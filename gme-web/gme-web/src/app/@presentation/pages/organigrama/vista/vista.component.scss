@@ -1,0 +1,43 @@
+h3 {
+  margin: 0;
+}
+
+.filtros__organigrama {
+  max-height: 31.25rem;
+  transition: 0.3s;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  & > .body__organigrama {
+    padding: 1rem;
+  }
+}
+
+.hide {
+  max-height: 0 !important;
+}
+
+.filterIcon {
+  font-size: 1.125rem !important;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.back__arrow {
+  font-size: 2rem;
+  color: #024487;
+}
+
+.btn_back {
+  border: none;
+  background: transparent;
+  margin-top: -10px;
+}
+
+.titlePage {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+}

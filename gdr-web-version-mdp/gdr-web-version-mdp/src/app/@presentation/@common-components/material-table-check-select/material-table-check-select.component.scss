@@ -1,0 +1,348 @@
+/*
+@import 'colors';
+
+button:focus,
+button:active:focus,
+button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+::ng-deep mat-paginator {
+  background-color: transparent !important;
+}
+
+table {
+  width: 100%;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+th,
+td {
+  width: auto;
+  padding: 0.01rem 0.25rem !important;
+  &:first-child {
+    padding-left: 1rem !important;
+  }
+}
+
+tr {
+  border-radius: 20px;
+}
+
+em {
+  font-size: 1.25rem;
+}
+
+mat-form-field {
+  width: 40%;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.btnView,
+.btnEdit {
+  color: $primary_color;
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btnDelete {
+  color: $red;
+  &:disabled {
+    color: rgba(235, 87, 87, 0.3);
+  }
+}
+
+.btnCopy {
+  color: #3b3a3c;
+  &:disabled {
+    color: #3b3a3c50;
+  }
+}
+
+th {
+  width: 6.25rem;
+  background-color: #3b3a3c;
+  color: white;
+  text-transform: uppercase;
+  &:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+  &:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+.btn-excel {
+  background-color: white !important;
+  border: 1px solid #3b3a3c !important;
+  border-radius: 0.5rem !important;
+  &:disabled {
+    border: 1px solid #ccc !important;
+  }
+}
+
+.btnView,
+.btnEdit,
+.btnDelete,
+.btnCopy {
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  margin: 0 0.125rem;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+}
+
+::ng-deep .mat-paginator-range-actions > button {
+  outline: none !important;
+}
+
+::ng-deep .mat-sort-header-content {
+  text-align: left !important;
+}
+
+.control {
+  font-family: arial, sans-serif;
+  display: block;
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 5px;
+  padding-top: 1px;
+  cursor: pointer;
+  font-size: 17px;
+}
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.control_indicator {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: 27px;
+  width: 28px;
+  background: #ffff;
+  border: 3px solid #8515c8;
+  border-radius: 3px;
+}
+.control:hover input ~ .control_indicator,
+.control input:focus ~ .control_indicator {
+  background: #fff;
+}
+
+.control input:checked ~ .control_indicator {
+  background: #2aa1c0;
+}
+.control:hover input:not([disabled]):checked ~ .control_indicator,
+.control input:checked:focus ~ .control_indicator {
+  background: #2aa1c0;
+}
+.control input:disabled ~ .control_indicator {
+  background: #e6e6e6;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.control_indicator::after {
+  box-sizing: unset;
+  content: '';
+  position: absolute;
+  display: none;
+}
+.control input:checked ~ .control_indicator::after {
+  display: block;
+}
+.control-checkbox .control_indicator::after {
+  left: 6px;
+  width: 8px;
+  height: 14px;
+  border: solid #ffffff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.control-checkbox input:disabled ~ .control_indicator::after {
+  border-color: #7b7b7b;
+}
+.control-checkbox .control_indicator::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4.163rem;
+  height: 4.5rem;
+  margin-left: -1.3rem;
+  margin-top: -1.3rem;
+  background: #2aa1c0;
+  border-radius: 3rem;
+  opacity: 0.6;
+  z-index: 99999;
+  transform: scale(0);
+}
+@keyframes s-ripple {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+@keyframes s-ripple-dup {
+  0% {
+    transform: scale(0);
+  }
+  30% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+.control-checkbox input + .control_indicator::before {
+  animation: s-ripple 250ms ease-out;
+}
+.control-checkbox input:checked + .control_indicator::before {
+  animation-name: s-ripple-dup;
+}
+*/
+@import 'colors';
+
+button:focus,
+button:active:focus,
+button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+::ng-deep mat-paginator {
+  background-color: transparent !important;
+}
+
+table {
+  width: 100%;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+th,
+td {
+  width: auto;
+  padding: 0.01rem 0.25rem !important;
+  &:first-child {
+    padding-left: 1rem !important;
+  }
+}
+
+em {
+  font-size: 1.25rem;
+}
+
+mat-form-field {
+  width: 40%;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.btnView,
+.btnEdit {
+  color: $primary_color;
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btnDelete {
+  color: $red;
+  &:disabled {
+    color: rgba(235, 87, 87, 0.3);
+  }
+}
+
+.btnCopy {
+  color: #3b3a3c;
+  &:disabled {
+    color: #3b3a3c50;
+  }
+}
+
+th {
+  width: 6.25rem;
+  background-color: #ffffff;
+  color: #000000 !important;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  &:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+  &:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+.btn-excel {
+  background-color: white !important;
+  border: 1px solid #3b3a3c !important;
+  border-radius: 0.5rem !important;
+  &:disabled {
+    border: 1px solid #ccc !important;
+  }
+}
+
+.btnView,
+.btnEdit,
+.btnDelete,
+.btnCopy {
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+}
+
+::ng-deep .mat-paginator-range-actions > button {
+  outline: none !important;
+}
+
+::ng-deep .mat-sort-header-content {
+  text-align: left !important;
+}
+
+.example-section {
+  margin: 12px 0;
+}
+
+.example-margin {
+  margin: 0 12px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}

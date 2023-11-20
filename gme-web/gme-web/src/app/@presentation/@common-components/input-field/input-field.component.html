@@ -1,0 +1,42 @@
+<label *ngIf="label">
+  {{ label }}
+</label>
+
+<nb-form-field>
+  <span nbPrefix *ngIf="prefixContent">{{ prefixContent }}</span>
+  <input
+    [type]="type"
+    [formControl]="control"
+    [placeholder]="placeholder"
+    nbInput
+    fullWidth
+    shape="semi-round"
+    [fieldSize]="size"
+    [maxlength]="maxlength"
+    [minlength]="minlength"
+    [max]="max"
+    [min]="min"
+    (input)="onKeyUp()"
+    (blur)="onBlur()"
+    (blur)="blur.emit(null)"
+    (keyup)="keyup.emit(null)"
+    [status]="control.invalid && control.touched ? 'danger' : 'basic'"
+    (change)="change.emit(null)"
+  />
+  <span nbSuffix *ngIf="suffixContent">{{ suffixContent }}</span>
+</nb-form-field>
+
+<div
+  *ngIf="control.invalid && control.touched"
+  class="invalid-text flex-column"
+>
+  <span *ngIf="control.errors?.required"> El campo es obligatorio </span>
+  <span *ngIf="control.errors?.pattern"> Formato inválido </span>
+  <span *ngIf="control.errors?.email"> Formato inválido </span>
+  <span *ngIf="control.errors?.minlength">
+    El texto introducido es muy corto
+  </span>
+  <span *ngIf="control.errors?.maxlength">
+    El texto introducido es muy largo
+  </span>
+</div>

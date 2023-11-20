@@ -1,0 +1,165 @@
+<div class="body">
+  <div class="title">
+    <h4 class="titlePage">Evaluaciones de Conocimiento</h4>
+    <h4 class="sub-title">Mis Exámenes</h4>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="title-container col-12 mt-3 px-5">
+    <div class="etiqueta-busqueda">
+      <form [formGroup]="this.myForm" class="px-5">
+        <strong style="float: left; margin-left: -50px; margin-right: 12px"
+          >Examen:
+        </strong>
+        <input
+          *ngIf="activarTitulo"
+          placeholder="Nombre del examen"
+          style="float: left"
+          formControlName="examen"
+          required
+          [style.width.ch]="
+            this.f.examen.value.length !== 0
+              ? this.f.examen.value.length + 3
+              : 21
+          "
+        />
+        <input
+          *ngIf="!activarTitulo"
+          style="border: 0; float: left; background-color: white"
+          disabled="true"
+          formControlName="examen"
+          placeholder="Nombre del examen"
+          [style.width.ch]="
+            this.f.examen.value.length !== 0
+              ? this.f.examen.value.length + 3
+              : 21
+          "
+        />
+
+        <button
+          *ngIf="!activarTitulo"
+          matRipple
+          title="Editar"
+          class="btn-card"
+          (click)="this.toggleTitulo()"
+          style="float: left; margin-top: -5px"
+        >
+          <em class="ent-web-edit fs-24"></em>
+        </button>
+        <button
+          *ngIf="activarTitulo"
+          matRipple
+          title="Guardar"
+          class="btn-card"
+          (click)="this.guardarExamen()"
+          style="float: left"
+        >
+          <em class="ent-web-save fs-24"></em>
+        </button>
+        <button
+          *ngIf="activarTitulo"
+          matRipple
+          title="Cancelar"
+          class="btn-card"
+          (click)="cancelar()"
+          style="float: left"
+        >
+          <em class="ent-web-clean fs-24"></em>
+        </button>
+        <div *ngIf="f.examen.invalid && activarTitulo && f.examen.touched">
+          <span class="invalid-text m-0">El campo es obligatorio</span>
+        </div>
+      </form>
+    </div>
+
+    <div class='sumatoria border border-info mb-2'>
+      <div class="col-12 py-2 sumatoria-header rounded-top">
+        <span style='color: white;'>
+          Puntos
+        </span>
+      </div>
+      <div class="sumatoria-body">
+        <h1 class="my-1" style='color: #0B80B6; font-size: 2rem'>
+          {{sumatoriaPuntos}}
+        </h1>
+        <p class='descpuntaje'>
+          Equivale a la cantidad de puntos del examen
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <button
+        matRipple
+        type="button"
+        nbButton
+        shape="round"
+        status="primary"
+        class="px-5"
+        (click)="this.openModalCrearExamen()"
+      >
+        Seleccionar Preguntas
+      </button>
+      <br>
+      <button
+        matRipple
+        outline
+        type="button"
+        nbButton
+        shape="round"
+        status="primary"
+        class="px-5 mt-3"
+        (click)="this.openModalSubirPreguntasMasiva()"
+      >
+        Subir preguntas masivas
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div style="padding-left: 10%; padding-right: 10%; margin-top: 20px">
+    <div style="margin-top: 90px">
+      <div
+        class="flex-v-center flex-column"
+        *ngIf="this.preguntas.length === 0"
+      >
+        <img
+          width="70px"
+          alt="imagen bandeja"
+          src="assets/images/icons/bandeja.png"
+          class="my-3"
+        />
+        <span class="fs-13">No tienes Preguntas seleccionadas.</span>
+        <span class="fs-13">
+          Para seleccionarlas da <strong>click</strong> al botón
+          <strong>"Seleccionar Preguntas"</strong>
+        </span>
+      </div>
+
+      <ng-container *ngIf="this.preguntas.length > 0">
+        <div class="subtitle">Lista de categorías y preguntas</div>
+        <serv-talento-table
+          [tableData]="this.preguntas"
+          [tableColumns]="this.preguntasColumns"
+          title="Lista de categorías y preguntas"
+          [isFilterable]="true"
+          [isPageable]="true"
+          [paginationSizes]="[5]"
+          [defaultPageSize]="5"
+          (sort)="this.sortData($event)"
+          [acciones]="true"
+          [btnDeleteEnabled]="true"
+          (deleteAction)="this.delete($event)"
+          deleteTitle="Eliminar"
+          [showDownloadButton]="true"
+          [dataExport]="getDataExport()"
+          fontSize="fs-14"
+          rowHeight="54px"
+        >
+         <!-- (editAction)="editPregunta($event)"
+          editTitle="Editar pregunta"
+          [btnEditEnabled]="true" -->
+        </serv-talento-table>
+      </ng-container>
+    </div>
+  </div>
+</div>

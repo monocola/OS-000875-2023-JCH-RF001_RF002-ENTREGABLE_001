@@ -1,0 +1,210 @@
+<div class="d-flex">
+  <div class="col-12"> 
+  <p class="titlePage"> Resumen de Servidores civiles </p>
+  <span class="flex-spacer">
+  </span>
+</div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="col-12">
+      <div class="col-12">
+  <carousel [overflowCellsLimit]="3" [cellsToShow]="4.5" style="z-index: 1;">
+
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="totalservidores" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalEntidad}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Total de servidores
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="icontotalservidores" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="carrerasespeciales"
+          style="border-top-left-radius: 16px;border-top-right-radius: 16px;"></nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalCarrerasEspeciales}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Con carreras especiales
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="iconcarrerasespeciales" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="sindicalizados" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalSindicalizados}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Sindicalizados
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="iconsindicalizados" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="totaljefes" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalResponsablesOOUSUBOU}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Responsables de un O/UO/SUBUO
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="icontotaljefes" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="modalidad" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalModalidadFormativaSimilares}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Por modalidad formativas y/o similares
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="iconmodalidad" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="encargados" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalEncargadosOOUSUBOU}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Encargados de un O/UO/SUBUO
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="iconencargados" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+  </carousel>
+</div>
+</div>
+</div>
+</div>
+
+<!-- <mat-divider></mat-divider>
+
+<div class='mb-4 p-0'></div> -->
+
+<!-- <div class="container alineacionContainer"> -->
+  <div class="row">
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="civiles"> Servidores Civiles según tipo de Órgano</nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+              <apx-chart *ngIf="chartOptionsTipoOrgano!==undefined"
+              [series]="chartOptionsTipoOrgano.series"
+              [tooltip]="chartOptionsTipoOrgano.tooltip"
+              [chart]="chartOptionsTipoOrgano.chart"
+              [labels]="chartOptionsTipoOrgano.labels"
+              [dataLabels]="chartOptionsTipoOrgano.dataLabels"
+              [states]="chartOptionsTipoOrgano.states"
+              [plotOptions]="chartOptionsTipoOrgano.plotOptions"
+              [stroke]="chartOptionsTipoOrgano.stroke"
+              [theme]="chartOptionsTipoOrgano.theme"
+              [responsive]="chartOptionsTipoOrgano.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="regimen"> Servidores por régimen laboral</nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+            <apx-chart *ngIf="chartOptionsServidoresRegimenLaboral!==undefined"
+              [series]="chartOptionsServidoresRegimenLaboral.series"
+              [tooltip]="chartOptionsServidoresRegimenLaboral.tooltip"
+              [chart]="chartOptionsServidoresRegimenLaboral.chart"
+              [labels]="chartOptionsServidoresRegimenLaboral.labels"
+              [dataLabels]="chartOptionsServidoresRegimenLaboral.dataLabels"
+              [states]="chartOptionsServidoresRegimenLaboral.states"
+              [plotOptions]="chartOptionsServidoresRegimenLaboral.plotOptions"
+              [stroke]="chartOptionsServidoresRegimenLaboral.stroke"
+              [theme]="chartOptionsServidoresRegimenLaboral.theme"
+              [responsive]="chartOptionsServidoresRegimenLaboral.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+<!-- </div> -->

@@ -1,0 +1,38 @@
+<div class='d-flex w-100 header-modal'>
+    <div class="">
+        <p class="parrafo">
+            Envío de correo exitoso
+        </p>
+      </div>
+
+    <span class='flex-spacer'></span>
+    <nb-icon class='mr-2 btnClose' nbSuffix icon='close'  (click)="onNoClick(false)"></nb-icon>
+  </div>
+  
+  <div class="py-2 px-2 bodyModal">
+    <div class="flex-v-center">
+      <img src="assets/images/icons/check.png" alt="Logo pregunta eliminar" />
+    </div>
+  
+   
+  
+    <div class="fw-400 text-center my-3">
+        Se realizó la notificación de la observación a la ORH y a su evaluador/a de <br />
+        manera exitosa
+    </div>
+  
+    <div class="flex-v-center mt-4">
+      <button
+        nbButton
+        outline
+        shape="round"
+        status="primary"
+        class="py-2 px-5 mr-3"
+        (click)="onNoClick(true)"
+      >
+        Aceptar
+      </button>
+
+    </div>
+  </div>
+  

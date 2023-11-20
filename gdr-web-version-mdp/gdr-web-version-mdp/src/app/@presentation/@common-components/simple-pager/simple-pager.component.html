@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-center">
+  <button class="btn btn-light border" [ngClass]="{'text-secondary': !canBack, 'text-info': canBack}" (click)="back()" [disabled]="!canBack">
+    <fa-icon [icon]="backIcon"></fa-icon>
+  </button>
+  <div class="mx-2">
+    <ng-content></ng-content>
+  </div>
+  <button class="btn btn-light border" [ngClass]="{'text-secondary': !canNext, 'text-info': canNext}" (click)="next()" [disabled]="!canNext">
+    <fa-icon [icon]="nextIcon"></fa-icon>
+  </button>
+</div>

@@ -1,0 +1,38 @@
+@import '_colors';
+
+a,
+.documentIcon {
+    cursor: pointer;
+}
+
+h6 {
+    font-weight: 400;
+    color: $primary-color;
+}
+
+.optionDiv {
+    width: 40%;
+    height: 11.25rem;
+    border: 1px solid #ddd;
+}
+
+.flex-v-center {
+    justify-content: space-around !important;
+}
+
+.title {
+    font-size: 1.5rem;
+    color: $primary-color;
+    font-weight: 600;
+}
+
+.body,
+.step {
+    transition: all 1s ease-in-out;
+}
+
+.listOptions {
+    border: 1px solid #ddd;
+    min-height: 3.125rem;
+    width: 80%;
+}

@@ -1,0 +1,106 @@
+<div class="px-5">
+  <mat-form-field class="w-40">
+    <input
+      class="inputPuesto"
+      matInput
+      type="text"
+      placeholder="Ingrese denominación de la práctica"
+      [formControl]="f.nombrePerfil"
+      oninput="this.value = this.value.replace(/[^0-9a-zA-Z-()_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+    />
+    <mat-icon matSuffix>edit</mat-icon>
+    <mat-error *ngIf="f.nombrePerfil.invalid && f.nombrePerfil.touched">
+      <span class="invalid-text m-0">El campo es obligatorio</span>
+    </mat-error>
+  </mat-form-field>
+
+  <div [ngClass]="{ 'mt-3': f.nombrePerfil.invalid && f.nombrePerfil.touched }">
+    <label>Mision del puesto</label>
+    <nb-form-field>
+      <textarea
+        nbInput
+        placeholder="Redacta de forma breve la misión del puesto"
+        [status]="f.mision.invalid && f.mision.touched ? 'danger' : 'basic'"
+        fullWidth
+        shape="semi-round"
+        maxlength="500"
+        [formControl]="f.mision"
+        oninput="this.value = this.value.replace(/[^0-9a-zA-Z-_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+      ></textarea>
+    </nb-form-field>
+    <div *ngIf="f.mision.invalid && f.mision.touched" class="invalid-text m-0">
+      <span *ngIf="f.mision.errors?.required"> El campo es obligatorio </span>
+    </div>
+  </div>
+  
+  <h6 class="mt-3">Identificación del perfil</h6>
+
+  <form [formGroup]="helper1401Service.identificacionForm" class="row">
+    <div class="mb-3 col-md-3">
+      <autocomplete
+        [label]="'Órgano'"
+        [placeholder]="'Busca un órgano'"
+        [control]="f?.organo"
+        [fieldToShow]="'descripcion'"
+        [items]="helper1401Service.organos"
+        aria-label="Autocomplete de órgano 1401"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <autocomplete
+        [label]="'Unidad orgánica'"
+        [placeholder]="'Busca una unidad orgánica'"
+        [control]="f?.unidadOrganica"
+        [fieldToShow]="'unidadOrganica'"
+        [items]="helper1401Service.unidadesOrganicas"
+        aria-label="Autocomplete de unidad orgánica 1401"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <input-field
+        [control]="f.unidadFuncional"
+        [label]="'Unidad funcional (opcional)'"
+        [maxlength]="150"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <input-field
+        [label]="'Dependencia jerárquica'"
+        [control]="f.depJerarquica"
+        [maxlength]="150"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Tipo de prácticas'"
+        [control]="f.tipoPractica"
+        [items]="helper1401Service.tipoPracticas"
+        [value]="'maeDetalleId'"
+        [valueToShow]="'descripcion'"
+        (selectedChange)="changeTipoPracticas()"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Condición'"
+        [control]="f.condicion"
+        [items]="helper1401Service.condicionPracticas"
+        [value]="'maeDetalleId'"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+  </form>
+</div>

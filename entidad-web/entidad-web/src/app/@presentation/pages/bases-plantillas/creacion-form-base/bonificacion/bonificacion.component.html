@@ -1,0 +1,90 @@
+<div class="body" (resized)="onResized($event)">
+  <div class="flex-v-center-left mb-4">
+    <button mat-icon-button color="primary" (click)="goBack()">
+      <nb-icon nbSuffix icon="back"></nb-icon>
+    </button>
+    <span class="fs-24 fw-500 titleBase">Informe de bonificaciones</span>
+    <div class="flex-spacer"></div>
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="px-4"
+      size="medium"
+      (click)="addBonificacion()"
+      [disabled]="this.bonificaciones.length >= 3"
+    >
+      <span class="material-icons mr-2"> library_add </span>
+      Agregar bonificación
+    </button>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="p-3">
+    <input-field
+      [control]="tituloGeneral"
+      [label]="'Título general del informe'"
+      [placeholder]="'Ingrese un nombre'"
+      [maxlength]="45"
+      [banKeyType]="5"
+      [minlength]="0"
+    >
+    </input-field>
+  </div>
+
+  <div class="container-fluid pt-3">
+    <div *ngIf="this.bonificaciones.length === 0">
+      <div style="height: 25rem" class="flex-v-center flex-column fs-13">
+        <img
+          width="70px"
+          alt="imagen bandeja"
+          src="assets/images/icons/bandeja.png"
+          class="my-3"
+        />
+        <span>Aún no tienes ningún registro, para iniciar da</span>
+        <span>
+          <strong>click</strong> en el botón
+          <strong>Agregar bonificación</strong></span
+        >
+      </div>
+    </div>
+
+    <div class="mt-3" *ngFor="let item of bonificaciones; index as i">
+      <div class="mt-3 bonificacionTitulo flex-v-center-left">
+        <span class="subtitle"> Bonificación #{{ i + 1 }} </span>
+        <button mat-icon-button class="ml-2" (click)="item.open = !item.open">
+          <mat-icon class="iconArrow" [ngClass]="{ rotate180: item.open }">
+            arrow_drop_down
+          </mat-icon>
+        </button>
+        <div class="flex-spacer"></div>
+        <button
+          nbButton
+          [appearance]="'ghost'"
+          shape="round"
+          status="danger"
+          class="px-4"
+          size="small"
+          (click)="deleteBonificacion(i)"
+        >
+          <span class="material-icons fs-20 mr-2"> delete_outline </span>
+          Eliminar bonificación
+        </button>
+      </div>
+
+      <div class="bonificacionBody" [hidden]="!item.open">
+        <serv-talento-bonificacion-instance
+          [bonificaciones]="bonificaciones"
+          [form]="item.form"
+        ></serv-talento-bonificacion-instance>
+      </div>
+    </div>
+  </div>
+</div>
+
+<serv-talento-bottom-div
+  [bodySize]="bodySize"
+  (saveEmitter)="save()"
+  [disabledSave]="this.bonificaciones.length === 0"
+></serv-talento-bottom-div>

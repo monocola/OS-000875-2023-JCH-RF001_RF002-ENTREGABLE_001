@@ -1,0 +1,90 @@
+<div class="col-md-12 row h-100 p-0 m-0 mb-3">
+  <h6>Subir documento</h6>
+  <span class="flex-spacer"></span>
+  <nb-actions
+    size="small"
+    style="place-content: flex-end;"
+    class="col-md-12 position-absolute"
+  >
+    <nb-action
+      class="control-item p-0 justify-content-end"
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-action>
+  </nb-actions>
+</div>
+
+<div class="bodyRegisterForm">
+    <div class="container-fluid pt-2 px-5">
+        <form class="row mt-2"  [formGroup]="filterForm">
+
+
+
+            <!-- -------------------------------- Inicio- selección multiple---------------------------- -->
+
+           <!-- -------------------------------- Fin- selección multiple---------------------------- -->
+          <!-- -------------------------------- Inicio - Drag and Drop ---------------------------- -->
+
+
+              <h6>Ingresar archivo</h6>
+
+              <div class="dropzone" *ngIf='!file'>
+                <input type='file' #fileDropRef id='fileDropRef'
+                       accept='application/pdf'
+                       (change)='archivoSeleccionado($event)'>
+                <h6>Arrastra y suelta tu archivo aquí</h6>
+                <h6>ó</h6>
+                
+                <button
+                  nbButton
+                  shape="round"
+                  size="medium"
+                  style='color: #0dacbc; background-color: white; border-color: #0dacbc;'
+                  class="py-2.5 px-5 mr-3"
+                >
+                  Subir archivo
+                </button>
+              </div>
+
+              <div class="dropzone" *ngIf='file'>
+                <div class='row col-md-12 m-0 p-0'>
+                  <div class='col-md-1'>
+                    <nb-action
+                      class="control-item p-0 justify-content-around"
+                      icon="file"
+                    ></nb-action>
+                  </div>
+                  <div class='col-md-10 p-0 fs-12 text-left'>
+                    {{file.name}}
+                  </div>
+                  <div class='col-md-1 m-0 p-0'>
+                    <nb-action
+                      class="control-item p-0 justify-content-end"
+                      icon="close-circle"
+                      (click)='deleteFile()'
+                    ></nb-action>
+                  </div>
+                </div>
+              </div>
+          <div class="col-md-12 m-1 p-1"></div>
+
+              <span>Peso máximo de archivo 1 MB</span>
+
+            <div class="col-md-12"></div>
+            <div class='offset-4 col-md-8 my-3'>
+              <button
+                nbButton
+                class='btn-login'
+                style='color: white; background-color: #0dacbc;'
+                shape="round"
+                size="medium"
+                (click)='saveDocumento()'
+              >
+                Subir
+              </button>
+            </div>
+          <!-- -------------------------------- Inicio - Drag and Drop ---------------------------- -->
+
+        </form>
+    </div>
+</div>

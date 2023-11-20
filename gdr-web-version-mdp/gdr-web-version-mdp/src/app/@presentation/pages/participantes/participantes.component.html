@@ -1,0 +1,159 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="page-title pl-3">Participantes</h3>
+    <span class="ml-auto text-secondary pt-2 font-weight-bold">Ciclo {{cicloDefaultDesc}}</span>
+  </div>
+  <div class="w-100 d-flex mt-1 mb-2 pl-3">
+    <div class="text-secondary">
+      <span>{{cantidadConEvaluador}} Con Evaluador</span>
+      <span class="ml-3 mr-3">|</span>
+      <span>{{cantidadSinEvaluador}} Sin Evaluador</span>
+    </div>
+  </div>
+  <!-- <div class="d-flex mt-auto button-panel contadores">
+    <div class="d-flex justify-content-center w-50 p-2 border-right button-sub-panel">
+      <div class="d-flex align-items-center">
+        <div class="circle mr-2"></div> {{cantidadConEvaluador}} Con Evaluador
+      </div>
+    </div>
+    <div class="d-flex justify-content-center w-50 p-2 border-left button-sub-panel">
+      <div class="d-flex align-items-center">
+        <div class="circle bg-secondary mr-2"></div> {{cantidadSinEvaluador}} Sin Evaluador
+      </div>
+    </div>
+  </div> -->
+  <div class="w-100 d-flex mt-4 mb-2" [formGroup]="frm">
+    <div class='col-md-6'>
+
+      <nb-form-field style="width: 100%;">
+
+        <input id="filterP" type="text" placeholder="{{holderText}}" nbInput shape="semi-round" fieldSize="medium"
+               maxlength="70"
+               name="filterP"
+               formControlName='filterP'
+               (keypress)="busquedaSensitiva($event)"
+               (keydown)="onKeydown($event)"
+               />
+               <nb-icon icon="buscar" pack='entweb' nbPrefix></nb-icon>
+
+      </nb-form-field>
+    </div>
+    <div class='col-md-3 px-1 py-0'>
+      <nb-select
+
+        placeholder="Todas las áreas"
+        fullWidth="true"
+        [size]="'medium'"
+        shape="semi-round"
+        formControlName="area"
+        (selectedChange)="changeArea($event)"
+      >
+
+      <nb-option [value]="-1">
+        Todas la áreas
+      </nb-option>
+      <nb-option *ngFor="let cbo of unidadOrganicaCbo; let i = index" [value]="cbo.id">
+        {{ cbo.descripcion }}
+      </nb-option>
+      </nb-select>
+    </div>
+    <div class='col-md-3 px-1 py-0'>
+      <nb-select  fullWidth="true"
+      [size]="'medium'"
+      shape="semi-round"   placeholder="Todos los segmentos" formControlName="segmento"
+      (selectedChange)="changeSegmento($event)"
+      >
+      <nb-option [value]="-1">
+        Todas los segmentos
+      </nb-option>
+      <nb-option *ngFor="let cbo of segmentos; let i = index" [value]="cbo.codigoNumero">
+        {{ cbo.valorTexto }}
+      </nb-option>
+    </nb-select>
+    </div>
+
+  </div>
+  <div class='m-2 p-2'></div>
+
+  <!--div class="w-100 d-flex mb-2">
+    <div class="text-secondary">
+      <span>20 Con Evaluador</span>
+      <span class="ml-3 mr-3">||</span>
+      <span>03 Sin Evaluador</span>
+    </div>
+  </div-->
+
+  <div class="row">
+    <!-- mb-5 -->
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let evaluador of listaEvaluadoresPage">
+      <personal-card
+        (cardClick)="onClickParticipante(evaluador)"
+        (metasClick)="onClickMetas(evaluador)"
+        [informacion]="evaluador"
+        [urlImagen]="evaluador.urlFoto"
+        [nombre]="evaluador.apellidosNombres"
+        [cargo]="evaluador.puesto"
+        [nivel]="evaluador.areaAbreviado"
+        [segmentoCorto]="evaluador.segmentoCorto"
+        [mostrarParticipantes]="true"
+        [clickable]="true"
+        [cantidadParticipantes]="evaluador.cantidadEvaluados"
+        [metas]="evaluador.indicadorMeta"
+        [compromisos]="true"
+      >
+      </personal-card>
+    </div>
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <pagination [totalItems]="listaEvaluadores?.length || 0" [itemsPerPage]="9" (pageChanged)="pageChanged($event)"
+                  *ngIf="listaEvaluadores?.length > 0" previousText="&laquo;" nextText="&raquo;" [maxSize]="5" [rotate]="true">
+      </pagination>
+      </div>
+
+    </div>
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        
+      <div class=" leyenda p-2 border">
+        <div class="d-flex justify-content-between">
+          <div class="leyenda-item border-right" *ngIf="aparecerSuscrito">
+            <span class="circle" [style.color]="suscrito">&#11044;</span>
+            <div class="texto">
+              Suscrito
+            </div>
+          </div>
+          <hr />
+          <div class="leyenda-item border-right" *ngIf="aparecerPendiente">
+            <span class="circle" [style.color]="pendiente">&#11044;</span>
+            <div class="texto">
+              Pendiente
+            </div>
+          </div>
+          <hr />
+          <div class="leyenda-item border-right" *ngIf="aparecerSinRegistro">
+            <span class="circle" [style.color]="sinregistro">&#11044;</span>
+            <div class="texto">
+              Sin registro
+            </div>
+          </div>
+          <hr />
+          <div class="leyenda-item border-right" *ngIf="aparecerObservado">
+            <span class="circle" [style.color]="observado">&#11044;</span>
+            <div class="texto">
+              Observado
+            </div>
+          </div>
+          <hr />
+          <div class="leyenda-item end" *ngIf="aparecerInactivo">
+            <span class="circle" [style.color]="inactivo">&#11044;</span>
+            <div class="texto">
+              Inactivo
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+</div>

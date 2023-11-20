@@ -1,0 +1,32 @@
+@import '_colors';
+
+p {
+  color: $primary-color;
+}
+
+.tooltip-body {
+  max-width: 580px !important;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+img {
+  height: 2.5rem !important;
+}
+
+.ent-web-burbuja::before {
+  height: 15 0.5rem !important;
+  color: rgba(146, 146, 23, 0.159);
+  align-items: left;
+  justify-content: left;
+  padding: 1rem;
+}
+
+ul {
+  list-style-type: none;
+  align-items: left;
+  justify-content: center;
+}

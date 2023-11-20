@@ -1,0 +1,82 @@
+@import '_colors';
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $primary_color;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.subtitle {
+  font-weight: 600;
+}
+
+.invalid-text {
+  font-size: 0.75rem;
+  color: #fe6168;
+}
+
+.btnUploadFile {
+  border-radius: 0.5rem;
+  border: 1px solid $primary_color !important;
+  height: 3rem;
+  width: 100%;
+  font-size: 0.938rem !important;
+  background: white !important;
+  color: $primary_color !important;
+  cursor: pointer;
+}
+
+.fileUploaded {
+  border-radius: 0.5rem;
+  width: 100%;
+  height: 3rem;
+  border: 1px solid #3b3a3c;
+  font-size: 0.813rem;
+  background-color: white !important;
+  & > span {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.searchIcon {
+  cursor: pointer;
+}
+
+.popoverInfo {
+  font-size: 0.75rem;
+}
+
+/*
+    Catpcha - SERVIR
+*/
+
+.realperson-challenge {
+  text-align: center !important;
+  display: flex;
+}
+.captchaContent {
+  user-select: none !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25rem;
+}
+
+::ng-deep .realperson-text {
+  font-family: 'Courier New', monospace !important;
+}
+
+.captchaRegisterAdmin {
+  text-align: center;
+  font-weight: 600 !important;
+  color: $primary_color !important;
+  text-transform: uppercase;
+}

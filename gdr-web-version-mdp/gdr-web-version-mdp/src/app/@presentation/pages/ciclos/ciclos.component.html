@@ -1,0 +1,76 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Registro de ciclo</h3>
+    <span class="flex-spacer"></span>
+    <div class='flex-v-center-right'>
+      <label
+        for="ciclo"
+        class='titleCiclo m-1 p-1'
+      >Ciclo</label>
+      <nb-select
+        id="ciclo"
+        placeholder='Sin Registro'
+        fullWidth="true"
+        shape="semi-round"
+        size='small'
+        [(selected)]='cicloDefault'
+        [disabled]="cicloDefault == 0 ? 'true' : 'false'"
+        (selectedChange)='cambiaCiclo($event)'
+      >
+        <nb-option
+          class='dropdown-item'
+          *ngFor="let ciclo of this.lstCiclos"
+          [value]="ciclo.cicloId"
+        >
+          {{ ciclo.anioString }}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
+  
+  <div class='col-md-12 row p-0 m-0'>
+    <div class='col-md-9 p-0 m-0'></div>
+    <div class='col-md-3 p-0 m-0'>
+    <button class='btn-login'
+            nbButton
+            shape="round"
+            status='info'
+            (click)="addCiclo()"
+            fullWidth
+            onlyWrite
+            [ngClass]="isMonitoreo ? 'monitoreo' : 'noMonitor'"
+    >
+      Apertura de Ciclo
+    </button>
+    </div>
+  </div>
+
+  <div class='m-1 p-1'></div>
+
+  <ng-container>
+
+    <serv-talento-table
+      [holderText]="this.holderText"
+      [tableData]="this.lstCiclos"
+      [tableColumns]="ordersTableColumns"
+      [isFilterable]="true"
+      [isPageable]="false"
+      [paginationSizes]="false"
+      [defaultPageSize]="false"
+      (sort)="sortData($event)"
+      [acciones]="true"
+      [showTitle]='false'
+      [title]="'Lista de ciclo'"
+      [btnEditEnabled]="true"
+      (editAction)="editSede($event)"
+      [editTitle]="'Editar sede'"
+      [btnDeleteEnabled]="true"
+      (deleteAction)="removeSede($event)"
+      [deleteTitle]="'Inactivar sede'"
+      [showDownloadButton]='false'
+      [dataExport]="getDataExport()"
+    >
+    </serv-talento-table>
+  </ng-container>
+
+</div>

@@ -1,0 +1,65 @@
+CREATE OR REPLACE PACKAGE SCH_ENTIDAD.PKG_GENERAL AS
+TYPE cursor_test is ref cursor;
+
+PROCEDURE SP_BUSCAR_PARAMETRO(V_PARAMETRO_ID     IN SCH_MAESTRA.TBL_PARAMETRO.PARAMETRO_ID%TYPE DEFAULT NULL
+                             ,V_TIPO_PARAMETRO   IN SCH_MAESTRA.TBL_PARAMETRO.TIPO_PARAMETRO%TYPE DEFAULT NULL
+                           --  ,V_CODIGO_TEXTO     IN SCH_MAESTRA.TBL_PARAMETRO.CODIGO_TEXTO%TYPE DEFAULT NULL
+                             ,CUR_TEST           OUT cursor_test
+);
+
+PROCEDURE SP_BUSCAR_EMAIL( V_CORREO    IN SCH_PERSONA.TBL_CORREO.CORREO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          );
+
+PROCEDURE SP_VALIDAR_ROL_USUARIO( V_USUARIO_ID IN SCH_SEGURIDAD.TBL_USUARIO_ROL.USUARIO_ID%TYPE DEFAULT NULL
+                                 ,V_ROL_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                                 ,CUR_TEST        OUT cursor_test
+                                );
+PROCEDURE SP_BUSCAR_ROL_CUENTA(V_ENTIDAD   IN SCH_ENTIDAD.TBL_ENTIDAD.ENTIDAD_ID%TYPE DEFAULT NULL
+                              ,V_ROL_ID    IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                              ,CUR_TEST    OUT cursor_test
+                              );
+PROCEDURE SP_BUSCAR_CUENTA_CLIENTE(V_ENTIDAD   IN SCH_ENTIDAD.TBL_ENTIDAD.ENTIDAD_ID%TYPE DEFAULT NULL
+                              ,CUR_TEST    OUT cursor_test
+                              );
+PROCEDURE SP_BUSCAR_PAISES(CUR_TEST OUT cursor_test);
+
+PROCEDURE SP_VALIDA_ROL_USUARIO_ENTIDAD( V_USUARIO_ID IN SCH_SEGURIDAD.TBL_USUARIO_ROL.USUARIO_ID%TYPE DEFAULT NULL
+                                 ,V_ROL_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+                                 ,V_ENTIDAD_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ENTIDAD_ID%TYPE DEFAULT NULL
+                                 ,CUR_TEST        OUT cursor_test
+                                );
+
+PROCEDURE SP_BUSCAR_TELEFONO( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                             ,V_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.NUMERO_TELEFONO%TYPE 
+                             --,V_TIPO_TELEFONO IN SCH_PERSONA.TBL_TELEFONO.TIPO_TELEFONO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          );
+                          
+PROCEDURE SP_BUSCAR_TELEFONO_ID( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                             ,V_TELEFONO_ID    IN SCH_PERSONA.TBL_TELEFONO.TELEFONO_ID%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          );
+
+PROCEDURE SP_VALIDA_USUARIO_PERSONA_ID( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                                    ,V_ROL_ID   IN SCH_SEGURIDAD.TBL_ROL.ROL_ID%TYPE
+                                    ,V_ENTIDAD_ID   IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ENTIDAD_ID%TYPE
+                             ,CUR_TEST       OUT cursor_test
+                          );
+
+PROCEDURE SP_VALIDA_UPD_TELEFONO_PERSONA( V_PERSONA_ID   IN SCH_PERSONA.TBL_TELEFONO.PERSONA_ID%TYPE
+                             ,V_TELEFONO_ID    IN SCH_PERSONA.TBL_TELEFONO.TELEFONO_ID%TYPE
+                             ,V_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.NUMERO_TELEFONO%TYPE 
+                             ,V_TIPO_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.TIPO_TELEFONO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          );
+
+PROCEDURE SP_BUSCANDO_TELEFONO( V_TELEFONO    IN SCH_PERSONA.TBL_TELEFONO.NUMERO_TELEFONO%TYPE 
+                             ,CUR_TEST       OUT cursor_test
+                          );  
+                         
+ PROCEDURE SP_VALIDA_ROL_ENTIDAD(V_ROL_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ROL_ID%TYPE DEFAULT NULL
+         ,V_ENTIDAD_ID     IN SCH_SEGURIDAD.TBL_USUARIO_ROL.ENTIDAD_ID%TYPE DEFAULT NULL
+         ,CUR_TEST        OUT cursor_test
+        );
+END PKG_GENERAL;

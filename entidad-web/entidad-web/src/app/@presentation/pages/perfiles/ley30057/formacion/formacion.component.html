@@ -1,0 +1,157 @@
+<form [formGroup]="helper30057Service?.formacionAcademicaForm" class="px-5">
+  <!---------------------------------------------------------------------->
+  <!------ Formación académica ------>
+  <!---------------------------------------------------------------------->
+
+  <h6 class="d-flex">Formación académica</h6>
+
+  <div class="mt-3">
+    <div>A. Nivel académico</div>
+    <button
+      class="px-4 py-1 mt-2"
+      nbButton
+      shape="round"
+      status="primary"
+      (click)="openModal()"
+    >
+      Agregar nivel
+    </button>
+
+    <serv-talento-table-formacion-academica
+      [title]="'Lista de niveles académicos'"
+      [tableData]="arrayFormaciones"
+      (editAction)="this.openModal($event)"
+      (removeAction)="this.deleteItem($event)"
+    >
+    </serv-talento-table-formacion-academica>
+    <div
+      class="invalid-text"
+      *ngIf="
+        f.nivelesAcademicos.value.length === 0 && f?.nivelesAcademicos.touched
+      "
+    >
+      Tiene que llenar como mínimo un nivel académico
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-5 flex-column d-flex">
+      <label>B. ¿Tiene colegiatura? </label>
+      <mat-radio-group color="primary" formControlName="colegiatura">
+        <mat-radio-button value="0" class="mx-2"> Incompleta </mat-radio-button>
+        <mat-radio-button value="1" class="mx-2"> Completa </mat-radio-button>
+      </mat-radio-group>
+      <div
+        class="invalid-text"
+        *ngIf="f.colegiatura.invalid && f.colegiatura.touched"
+      >
+        Seleccione una opción
+      </div>
+    </div>
+
+    <div class="col-7 flex-column d-flex">
+      <label>C. ¿Tiene habilitación profesional? </label>
+      <mat-radio-group color="primary" formControlName="habProfesional">
+        <mat-radio-button value="0" class="mx-2"> Incompleta </mat-radio-button>
+        <mat-radio-button value="1" class="mx-2"> Completa </mat-radio-button>
+      </mat-radio-group>
+      <div
+        class="invalid-text"
+        *ngIf="f.habProfesional.invalid && f.habProfesional.touched"
+      >
+        Seleccione una opción
+      </div>
+    </div>
+  </div>
+
+  <!---------------------------------------------------------------------->
+  <!------ Conocimientos ------>
+  <!---------------------------------------------------------------------->
+
+  <h6 class="d-flex mt-4">Conocimientos</h6>
+
+  <div class="mt-3 row col-12 m-0 p-0">
+    <label
+      >A. Conocimientos técnicos principales requeridos para el puesto (No se
+      requiere sustentar con documentos):</label
+    >
+    <serv-talento-autocompleateagrupado
+      class="col-12"
+      placeholder="Ingrese texto"
+      [control]="f.conocimientosTecnicos"
+      *ngIf="listaConocimientoTecnico != null"
+      [listaConocimiento]="listaConocimientoTecnico"
+    >
+    </serv-talento-autocompleateagrupado>
+  </div>
+
+  <div class="mt-3 row col-12 m-0 p-0">
+    <label>B. Cursos de especialización requeridos</label>
+    <serv-talento-autocompleateagrupado
+      class="col-12"
+      placeholder="Ingrese el curso de especialización requerido"
+      [control]="f.cursosRequeridos"
+      showHour="true"
+      *ngIf="listaCursosEsp != null"
+      [listaConocimiento]="listaCursosEsp"
+    >
+    </serv-talento-autocompleateagrupado>
+  </div>
+
+  <div class="mt-3 row col-12 m-0 p-0">
+    <label>C. Programas de especialización requeridos</label>
+    <serv-talento-autocompleateagrupado
+      class="col-12"
+      placeholder="Ingrese el programa de especialización requerido"
+      [control]="f.programasRequeridos"
+      showHour="true"
+      *ngIf="listaProgramEsp != null"
+      [listaConocimiento]="listaProgramEsp"
+      isHourMore='true'
+      maxlenghtisHM='4'
+      maxisHM='1200'
+    >
+    </serv-talento-autocompleateagrupado>
+  </div>
+
+  <div class="mt-3 row col-12 m-0 p-0">
+    <label>D. Seleccione nivel de ofimática requerido</label>
+    <serv-talento-autocompleateagrupado
+      class="col-12"
+      placeholder="Ingrese el curso de ofimática"
+      [control]="f.ofimatica"
+      isOffice="false"
+      *ngIf="listaConOfi != null"
+      [listaConocimiento]="listaConOfi"
+    ><!--showHour="true"-->
+    </serv-talento-autocompleateagrupado>
+  </div>
+
+  <div class="mt-3 row col-12 m-0 p-0">
+    <label>E. Conocimientos de idioma</label>
+    <serv-talento-autocompleateagrupado
+      class="col-12"
+      placeholder="Ingrese un idioma"
+      [control]="f.idiomas"
+      isIdioma="false"
+      *ngIf="listaConIdio != null"
+      [listaConocimiento]="listaConIdio"
+    >
+    </serv-talento-autocompleateagrupado>
+  </div>
+
+  <div class="mt-3">
+    <input-field
+      [label]="'Observaciones'"
+      [control]="f.observaciones"
+      [placeholder]="'Ingrese una breve descripcion'"
+      [banKeyType]="5"
+      [maxlength]="250"
+    >
+    </input-field>
+    <div class="d-flex">
+      <div class="flex-spacer"></div>
+      <span class="fs-12"> {{ f.observaciones.value.length }}/250 </span>
+    </div>
+  </div>
+</form>

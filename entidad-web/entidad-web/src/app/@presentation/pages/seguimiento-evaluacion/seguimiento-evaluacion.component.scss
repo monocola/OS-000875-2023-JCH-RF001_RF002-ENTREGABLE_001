@@ -1,0 +1,36 @@
+@import '_colors';
+::ng-deep {
+  .text-primary {
+    color: $primary-color !important;
+  }
+  .boxPopInfo {
+    width: 300px !important;
+  }
+  .toolimg {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .progress-bar-tooltip {
+    height: 0.7rem !important;
+    border-radius: 100px !important;
+    .progress-tootlip {
+      border-radius:  100px 0 0 100px;
+      background-color: #27AE60;
+    }
+    .res-tooltip {
+      border-radius: 0 100px 100px 0;
+      background-color: #E2E2E2;
+    }
+    .progress-tootlip-total {
+      border-radius:  100px !important;
+    }
+  }
+  .separator {
+    height: 31px;
+    width: 1px;
+    background-color: #146080;
+  }
+  .border-buttom-opt {
+    border-bottom: 1px solid #146080 !important;
+  }
+}

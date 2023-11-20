@@ -1,0 +1,88 @@
+<mat-tab-group dynamicHeight [(selectedIndex)]="index" *ngIf="createMode">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <ng-container *ngIf="!editMode">
+        <nb-icon icon="documento" class="mr-2 icon"> </nb-icon>
+        <span>Registro</span>
+      </ng-container>
+      <ng-container *ngIf="editMode">
+        <nb-icon icon="edit" class="mr-2 icon"> </nb-icon>
+        <span>Edición</span>
+      </ng-container>
+    </ng-template>
+    <serv-talento-registro-organo
+      (closeOrgano)="handleClose($event)"
+      (updateOrganos)="handleUpdateEmitter()"
+      [dataToEdit]="dataToEdit"
+      [editMode]="this.editMode"
+    >
+    </serv-talento-registro-organo>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <nb-icon icon="copy" class="mr-2 icon"> </nb-icon>
+      Registro masivo
+    </ng-template>
+    <serv-talento-registro-masivo-organo
+      (closeOrgano)="handleClose($event)"
+      (updateOrganos)="handleUpdateEmitter()"
+    >
+    </serv-talento-registro-masivo-organo>
+  </mat-tab>
+</mat-tab-group>
+
+<div
+  style="height: 25rem"
+  class="flex-v-center flex-column"
+  *ngIf="!createMode && organos.length == 0"
+>
+  <img
+    alt="imagen organo estructura"
+    src="assets/images/org-structure.svg"
+    class="my-3"
+  />
+  <span>No tienes ningún registro,</span>
+  <span>para iniciar despliega combo Órgano luego</span>
+  <strong>click al botón "Crear"</strong>
+</div>
+
+<div
+  class="w-100 px-3 my-4"
+  *ngIf="(createMode && organos.length > 0) || organos.length > 0"
+>
+  <h6>Lista de órganos</h6>
+  <serv-talento-table
+    [tableData]="this.organos"
+    [tableColumns]="ordersTableColumns"
+    [dataExport]="getDataExport()"
+    [isFilterable]="true"
+    [isPageable]="true"
+    [paginationSizes]="[5, 10, 15]"
+    [defaultPageSize]="10"
+    (sort)="sortData($event)"
+    [acciones]="true"
+    [title]="'Lista de órganos'"
+    [btnEditEnabled]="true"
+    (editAction)="editOrgano($event)"
+    [editTitle]="'Editar órgano'"
+    [btnDeleteEnabled]="true"
+    (deleteAction)="removeOrgano($event)"
+    [deleteTitle]="'Inactivar órgano'"
+  >
+  </serv-talento-table>
+</div>
+
+<div
+  style="height: 25rem"
+  class="flex-v-center flex-column"
+  *ngIf="createMode && organos.length == 0"
+>
+  <img
+    alt="imagen bandeja"
+    src="assets/images/icons/bandeja.png"
+    class="my-3"
+  />
+  <span>Aún no tienes ningún registro, debes iniciar</span>
+  <span>el registro</span>
+</div>

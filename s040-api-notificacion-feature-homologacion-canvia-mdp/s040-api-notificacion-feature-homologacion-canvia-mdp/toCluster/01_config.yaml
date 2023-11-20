@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notificacion-mdp-dev
+  namespace: notificacion-mdp-dev
+data:
+  DB_HOSTNAME: "172.16.19.122"
+  DB_PORT: "5432"
+  DB_DBNAME: "db_notificacion"
+  DB_USERNAME: "sch_notificacion"
+
+  RSA_PUBLIC_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIUudlwZpxtTRcyg+nsFVobNHeD+MDwEXIDEqjxYk3V+4rbEXkmMjDAx324PPluuX0kbQVN+Qj3vJ8HDzqfWkYMCAwEAAQ=="
+  BASE_URL_MAESTRA: "https://devmdpmapp03.servir.gob.pe/maestra-mdp/api/private"
+  BASE_URL_PERSONA: "https://devmdpmapp03.servir.gob.pe/persona-mdp/api/private"
+
+  MQ_USER: "api_user_mq"
+  MQ_HOST: "172.16.19.206"
+  MQ_PORT: "5672"
+
+  MAIL_HOST: "smtp.gmail.com"
+  MAIL_PORT: "587"
+  MAIL_USERNAME: "talento.peru.desamdp@gmail.com"
+---
+apiVersion: v1
+kind: Secret
+data:
+  DB_PASSWORD: dXNScDA1dGczU3REYkQzdmZTdw==
+  MQ_PASSWORD: ZGV2bWRwcmFiYml0
+  MAIL_PASSWORD: aWVxbnhvbm1peWdudW95bg==
+metadata:
+  name: notificacion-mdp-dev
+  namespace: notificacion-mdp-dev
+
+type: Opaque

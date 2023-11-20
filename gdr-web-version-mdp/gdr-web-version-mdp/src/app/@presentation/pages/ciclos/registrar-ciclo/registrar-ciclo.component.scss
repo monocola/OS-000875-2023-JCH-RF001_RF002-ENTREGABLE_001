@@ -1,0 +1,19 @@
+@import '../../@theme/styles/themes';
+@import '_colors';
+
+.titleGDR {
+  // color: #0dacbc !important;
+  // font-size: 1.6rem;
+  color: #024487 !important;
+  font-size: 24px;
+}
+
+.btn-login {
+  background-color: #0dacbc;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-login:focus {
+  box-shadow: none;
+}

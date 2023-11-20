@@ -1,0 +1,170 @@
+@import "../../@common-components/material-table/material-table.component.scss";
+
+.body {
+  background-color: #fbfbfb;
+}
+
+table {
+  width: 100%;
+}
+
+.porcentaje {
+  padding: 0.5rem 1rem;
+  background: #ddf3f6;
+  border-radius: 10px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  // display: flex;
+  align-items: center;
+
+  color: #0dacbc;
+}
+
+.porcentajePaso {
+  padding: 0.5rem 1rem;
+  background: #ffe6e0;
+  border-radius: 10px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  // display: flex;
+  display: table;
+  align-items: center;
+
+  color: #ffe6e0;
+
+  /*  margin-right: 380px;
+  margin-left: 380px; */
+}
+
+.round {
+  border-radius: 42px;
+}
+
+.img-grande {
+  height: "10px";
+}
+
+.alert-text {
+  color: #ef2235;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 12px;
+  margin-left: -35px;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+/* .alinear-peso-junsto {
+  margin-left: 540px;
+} */
+
+.hightLigth {
+  background: #ffedee;
+
+  /*   background: #FA9C0E;
+  background: #024487;
+  background: #C00D1A;
+  background: #0DACBC; */
+}
+
+.fix-acciones {
+  position: absolute;
+  margin-left: -70px;
+  margin-top: 18px;
+  border-bottom-style: none;
+}
+
+@media only screen and (max-width: 1400px) {
+  .fix-acciones {
+    position: absolute;
+    margin-left: -70px;
+    margin-top: 18px;
+    border-bottom-style: none;
+  }
+}
+
+.fix-acciones1 {
+  position: absolute;
+  margin-left: -100px;
+  margin-top: 18px;
+  border-bottom-style: none;
+}
+
+@media only screen and (max-width: 1400px) {
+  .fix-acciones1 {
+    position: absolute;
+    margin-left: -80px;
+    margin-top: 18px;
+    border-bottom-style: none;
+  }
+}
+/* @media only screen and (min-width: 1400px) {
+  .fix-acciones {
+    position: absolute;
+    margin-left: -115px;
+    margin-top: 15px;
+    border-bottom-style: none;
+  } 
+} */
+
+.item-editar {
+  position: absolute;
+  margin-left: 10px;
+  margin-top: -3px;
+}
+
+.btnDelete,
+.btnEdit {
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+}
+
+.btnDeleteDis {
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  cursor: default;
+}
+
+.btnEditDis {
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  cursor: default;
+}
+
+.btnEdit {
+  //color: $primary_color;
+  color: #8191a4;
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btnDelete {
+  // color: $red;
+  color: #8191a4;
+  &:disabled {
+    color: rgba(235, 87, 87, 0.3);
+  }
+}

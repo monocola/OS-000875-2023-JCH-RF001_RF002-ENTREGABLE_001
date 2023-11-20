@@ -1,0 +1,49 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon class="mr-2 btnClose" nbSuffix icon="close" (click)="dismiss(false)"></nb-icon>
+</div>
+
+<div class="py-2 px-2 bodyModal">
+  <div class="flex-v-center">
+    <img src="assets/images/icons/salir.png" alt="Logo pregunta eliminar" />
+  </div>
+
+  <div class="title fw-600 flex-v-center mt-4 text-info">
+    Validar bonificación
+  </div>
+
+  <div class="fw-400 text-center my-3">
+    <strong>Elegir nivel de bonificación que se le asignará al postulante</strong>
+  </div>
+
+  <form [formGroup]="form" autocomplete="off">
+
+    <div class="pr-2">
+      <label>Nivel de bonificación (opcional)</label>
+      <nb-select placeholder="Elegir nivel" fullWidth shape="rectangle" size="large" formControlName="tipo">
+        <nb-option value="-1">---Ninguno---</nb-option>
+        <nb-option *ngFor="let item of lstNivel" [value]="item.bonificacionDetConvId">
+          {{ item.descripcion }}</nb-option>
+      </nb-select>
+
+      <div class="input__textarea my-3">
+        <label>Ingrese una breve descripción</label>
+        <textarea class="p-2" maxlength="200" formControlName="comentario" rows="4"></textarea>
+        <div class="number">{{ f.comentario?.length }}/200</div>
+      </div>
+    </div>
+
+    <div class="flex-v-center mt-4">
+      <button nbButton outline shape="round" status="primary" class="py-2 px-5 mr-3" (click)="dismiss(false)">
+        Cancelar
+      </button>
+      <button nbButton shape="round" status="primary" class="py-2 px-5" (click)="guardarBonificacion()"
+        [disabled]="!form.valid">
+        Aceptar
+      </button>
+    </div>
+
+  </form>
+
+
+</div>

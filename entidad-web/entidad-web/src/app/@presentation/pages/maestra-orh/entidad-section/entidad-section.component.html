@@ -1,0 +1,231 @@
+<div class="body">
+  <div class="row">
+    <div class="col-4">
+      <label>Nombre de tabla</label>
+      <nb-form-field>
+        <nb-select
+          placeholder="Elegir"
+          fullWidth="true"
+          [size]="'large'"
+          shape="semi-round"
+          [formControl]="combo"
+          (selectedChange)="changeComboCabecera()"
+        >
+          <nb-option value="">---Seleccione---</nb-option>
+          <nb-option
+            [value]="item.maeCabeceraId"
+            *ngFor="let item of cabecerasMaestra"
+          >
+            {{ item.descripcion }}
+          </nb-option>
+        </nb-select>
+      </nb-form-field>
+    </div>
+    <div class="col-4">
+      <div
+        class="d-flex w-100 h-100"
+        style="
+          justify-content: flex-start;
+          align-content: center;
+          align-items: flex-end;
+        "
+      >
+        <button
+          nbButton
+          class="px-5 mr-2"
+          shape="round"
+          size="medium"
+          status="primary"
+          (click)="search()"
+          [disabled]="!combo.value"
+        >
+          Buscar
+        </button>
+        <button
+          nbButton
+          outline
+          class="px-5"
+          shape="round"
+          size="medium"
+          status="primary"
+          (click)="openCreateModal()"
+          [disabled]="!combo.value"
+          *ngIf="showBtnRegister"
+        >
+          Crear registro
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="this.searchMode == true" id="entidadSectionDivImg">
+  <div style="height: 25rem" class="flex-v-center flex-column fs-13">
+    <img
+      width="70px"
+      alt="imagen bandeja"
+      src="assets/images/icons/bandeja.png"
+      class="my-3"
+    />
+    <span>Aún no tienes ningún registro, para iniciar da</span>
+    <span><strong>click</strong> en el botón <strong>"Buscar"</strong></span>
+  </div>
+</div>
+
+<div
+  [hidden]="!combo.value || this.searchMode == false"
+  id="divTablasConvocatoriaEntidad"
+>
+  <div class="padding-body">
+    <div class="flex-v-center w-100">
+      <div class="fw-600 fs-16">Lista de tablas de convocatoria</div>
+
+      <span class="flex-spacer"></span>
+
+      <serv-talento-paginator
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+        [length]="length"
+        (page)="getDataEvent($event)"
+      >
+      </serv-talento-paginator>
+    </div>
+
+    <div class="card mat-elevation-z3">
+      <table
+        aria-describedby="tabla organigrama"
+        [nbTreeGrid]="dataSource"
+        [nbSort]="dataSource"
+        (sort)="updateSort($event)"
+      >
+        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+        <tr
+          nbTreeGridRow
+          [clickToToggle]="false"
+          *nbTreeGridRowDef="let row; columns: allColumns"
+        ></tr>
+
+        <ng-container [nbTreeGridColumnDef]="customColumn">
+          <th
+            style="width: 12%"
+            scope="col"
+            nbTreeGridHeaderCell
+            [nbSortHeader]="getSortDirection(customColumn)"
+            *nbTreeGridHeaderCellDef
+            aria-label="Primera Columna"
+          >
+            #
+          </th>
+          <td
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            class="py-2"
+            [ngClass]="{ 'fw-800 fs-16 py-3': row.children }"
+          >
+            {{ row.data[customColumn] }}
+            <nb-tree-grid-row-toggle
+              style="font-size: 20px"
+              *ngIf="row.children"
+              [expanded]="row.expanded"
+              aria-label="Primera Columna - Toggle"
+            >
+            </nb-tree-grid-row-toggle>
+          </td>
+        </ng-container>
+
+        <ng-container
+          *ngFor="let column of defaultColumns; let index = index"
+          [nbTreeGridColumnDef]="column"
+          [showOn]="getShowOn(index)"
+          aria-label="Defaults Columns - Toggle"
+        >
+          <th
+            scope="col"
+            nbTreeGridHeaderCell
+            [nbSortHeader]="getSortDirection(column)"
+            *nbTreeGridHeaderCellDef
+          >
+            {{ this.defaultColumnsNames[index] }}
+          </th>
+          <td
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            [ngClass]="{ 'fw-800 fs-16 py-3': row.children }"
+          >
+            {{ row.data[column] ? row.data[column] : row.children ? '' : '-' }}
+          </td>
+        </ng-container>
+
+        <ng-container [nbTreeGridColumnDef]="customColumn3">
+          <th
+            scope="col"
+            class="text-center"
+            nbTreeGridHeaderCell
+            *nbTreeGridHeaderCellDef
+          >
+            ESTADO
+          </th>
+          <td
+            class="text-center"
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            [ngClass]="row.data['estado'] == 'ACTIVO' ? 'activo' : 'inactivo'"
+          >
+            {{ row.data['estado'] }}
+          </td>
+        </ng-container>
+
+        <ng-container [nbTreeGridColumnDef]="customColumn2">
+          <th
+            style="width: 12%"
+            scope="col"
+            nbTreeGridHeaderCell
+            *nbTreeGridHeaderCellDef
+          >
+            ACCIONES
+          </th>
+          <td class="text-center" nbTreeGridCell *nbTreeGridCellDef="let row">
+            <div
+              class="w-100 h-100 flex-v-center-left"
+              *ngIf="row?.children?.length == 0 || !row?.children"
+            >
+              <nb-toggle
+                class="mx-0 mt-2"
+                status="primary"
+                [(checked)]="row.data.active"
+                (checkedChange)="checkedChange($event, row)"
+              >
+              </nb-toggle>
+              <button
+                matRipple
+                title="Editar maestra"
+                class="btnEdit ml-2"
+                *ngIf="row.data.entidad"
+                (click)="this.editAction(row)"
+              >
+                <em class="ent-web-edit"></em>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+      </table>
+
+      <div class="p-2" *ngIf="this.arrayBuilded.length === 0">
+        <em>No se encontraron resultados.</em>
+      </div>
+    </div>
+    <div class="flex-v-center mt-3">
+      <div class="flex-spacer"></div>
+      <button
+        class="btn-excel px-4 py-2"
+        mat-stroked-button
+        (click)="exportData()"
+        [disabled]="this.data.length == 0"
+      >
+        Descargar Excel
+        <nb-icon icon="descargar"></nb-icon>
+      </button>
+    </div>
+  </div>
+</div>

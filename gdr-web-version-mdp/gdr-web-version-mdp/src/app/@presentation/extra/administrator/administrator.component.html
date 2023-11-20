@@ -1,0 +1,767 @@
+<div style="padding: 2.5rem 3.75rem">
+  <div class="title">
+    <span *ngIf="!updateMode">Crear administrador de sistema</span>
+    <span *ngIf="updateMode">Actualizar administrador del sistema</span>
+  </div>
+  <div class="pb-2 pt-4 subtitle">Datos de administrador</div>
+  <div>
+    El rol de administrador debe tener el máximo puesto de RRHH. Ejm: Jefe de
+    ORH.
+  </div>
+  <div class="py-4" [formGroup]="adminForm">
+    <div class="row">
+      <div class="col-md-3">
+        <label class="label">Tipo de documento</label>
+        <nb-select
+          placeholder="Selecciona documento"
+          fullWidth
+          formControlName="typeDocument"
+          [size]="'large'"
+          shape="semi-round"
+          [status]="
+            f.typeDocument.invalid && f.typeDocument.touched
+              ? 'danger'
+              : 'basic'
+          "
+          (selectedChange)="changeTypeDocument()"
+        >
+          <nb-option
+            [value]="item.codigoNumero"
+            *ngFor="let item of typeDocuments"
+          >
+            {{ item.valorTexto }}
+          </nb-option>
+        </nb-select>
+        <span
+          *ngIf="f.typeDocument.invalid && f.typeDocument.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.typeDocument.errors.required">
+            El campo es obligatorio
+          </span>
+        </span>
+      </div>
+      <div class="col-md-3" *ngIf="this.f.typeDocument.value == 1">
+        <label class="label">N° de documento</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingresa documento"
+            fullWidth
+            nbInput
+            shape="semi-round"
+            fieldSize="large"
+            formControlName="numberDocument"
+            maxlength="8"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            [status]="
+              f.numberDocument.invalid && f.numberDocument.touched
+                ? 'danger'
+                : 'basic'
+            "
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.numberDocument.invalid && f.numberDocument.touched"
+          class="invalid-text flex-columns"
+        >
+          <span *ngIf="f.numberDocument.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.numberDocument.errors.pattern">
+            Complete correctamente el campo
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3" *ngIf="this.f.typeDocument.value != 1">
+        <label class="label">N° de documento</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingresa documento"
+            fullWidth
+            nbInput
+            shape="semi-round"
+            fieldSize="large"
+            formControlName="numberDocument"
+            maxlength="12"
+            oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')"
+            [status]="
+              f.numberDocument.invalid && f.numberDocument.touched
+                ? 'danger'
+                : 'basic'
+            "
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.numberDocument.invalid && f.numberDocument.touched"
+          class="invalid-text flex-columns"
+        >
+          <span *ngIf="f.numberDocument.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.numberDocument.errors.pattern">
+            Complete correctamente el campo
+          </span>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label class="label">Nombres</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingrese nombres"
+            fullWidth
+            nbInput
+            formControlName="name"
+            shape="semi-round"
+            fieldSize="large"
+            #name
+            [value]="name.value.toUpperCase()"
+            [status]="f.name.invalid && f.name.touched ? 'danger' : 'basic'"
+            maxlength="30"
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.name.invalid && f.name.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.name.errors.required">
+            Los nombres son obligatorios
+          </span>
+          <span *ngIf="f.name.errors.pattern"> Solo se admiten letras </span>
+          <span *ngIf="f.name.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.name.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label class="label">Apellido Paterno</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingrese apellido paterno"
+            fullWidth
+            nbInput
+            formControlName="fatherName"
+            shape="semi-round"
+            fieldSize="large"
+            #fatherName
+            [value]="fatherName.value.toUpperCase()"
+            maxlength="30"
+            [status]="
+              f.fatherName.invalid && f.fatherName.touched ? 'danger' : 'basic'
+            "
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.fatherName.invalid && f.fatherName.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.fatherName.errors.required">
+            El apellido paterno es obligatorio
+          </span>
+          <span *ngIf="f.fatherName.errors.pattern">
+            Solo se admiten letras
+          </span>
+          <span *ngIf="f.fatherName.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.fatherName.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label class="label">Apellido Materno</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingrese apellido materno"
+            fullWidth
+            nbInput
+            formControlName="motherName"
+            shape="semi-round"
+            fieldSize="large"
+            #motherName
+            [value]="motherName.value.toUpperCase()"
+            maxlength="30"
+            [status]="
+              f.motherName.invalid && f.motherName.touched ? 'danger' : 'basic'
+            "
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.motherName.invalid && f.motherName.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.motherName.errors?.required">
+            El apellido materno es obligatorio
+          </span>
+          <span *ngIf="f.motherName.errors?.pattern">
+            Solo se admiten letras
+          </span>
+          <span *ngIf="f.motherName.errors?.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.motherName.errors?.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3">
+        <label class="label">Correo laboral</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="usuario@empresa.com"
+            fullWidth
+            nbInput
+            formControlName="email"
+            shape="semi-round"
+            fieldSize="large"
+            class="text-lowercase"
+            maxlength="50"
+            [status]="f.email.invalid && f.email.touched ? 'danger' : 'basic'"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.email.invalid && f.email.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.email.errors?.required">
+            El correo es obligatorio
+          </span>
+          <span *ngIf="f.email.errors?.pattern">
+            Formato de correo inválido
+          </span>
+          <span *ngIf="f.email.errors?.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.email.errors?.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="label">Correo laboral secundario (Opc.)</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingresa documento"
+            fullWidth
+            nbInput
+            class="text-lowercase"
+            formControlName="alternativeEmail"
+            shape="semi-round"
+            fieldSize="large"
+            maxlength="50"
+            [status]="
+              (f.alternativeEmail.invalid && f.alternativeEmail.touched) ||
+              this.adminForm.errors?.duplicatedEmail
+                ? 'danger'
+                : 'basic'
+            "
+          />
+        </nb-form-field>
+        <div
+          *ngIf="
+            (f.alternativeEmail.invalid && f.alternativeEmail.touched) ||
+            this.adminForm.errors?.duplicatedEmail
+          "
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.alternativeEmail.errors?.pattern">
+            Formato de correo inválido
+          </span>
+          <span *ngIf="f.alternativeEmail.errors?.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.alternativeEmail.errors?.maxlength">
+            El texto introducido es muy largo
+          </span>
+          <span *ngIf="this.adminForm.errors?.duplicatedEmail">
+            El correo debe de ser diferente
+          </span>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label class="label">Celular</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingrese celular"
+            fullWidth
+            nbInput
+            formControlName="phone"
+            [status]="f.phone.invalid && f.phone.touched ? 'danger' : 'basic'"
+            shape="semi-round"
+            fieldSize="large"
+            maxlength="9"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.phone.invalid && f.phone.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.phone.errors.required"> El campo es obligatorio </span>
+          <span *ngIf="f.phone.errors.pattern"> Solo se aceptan números </span>
+          <span *ngIf="f.phone.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.phone.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <label class="label">Celular secundario (Opc.)</label>
+        <nb-form-field>
+          <input
+            type="text"
+            placeholder="Ingrese celular secundario"
+            fullWidth
+            nbInput
+            formControlName="alternatePhone"
+            fieldSize="large"
+            shape="semi-round"
+            maxlength="9"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            [status]="
+              (f.alternatePhone.invalid && f.alternatePhone.touched) ||
+              this.adminForm.errors?.duplicatedPhone
+                ? 'danger'
+                : 'basic'
+            "
+          />
+        </nb-form-field>
+        <div
+          *ngIf="
+            (f.alternatePhone.invalid && f.alternatePhone.touched) ||
+            this.adminForm.errors?.duplicatedPhone
+          "
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.alternatePhone.errors?.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.alternatePhone.errors?.pattern">
+            Solo se aceptan números
+          </span>
+          <span *ngIf="f.alternatePhone.errors?.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="this.adminForm.errors?.duplicatedPhone">
+            El celular debe de ser diferente
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <label class="label">Fecha de nacimiento</label>
+        <nb-form-field>
+          <input
+            id="birthday"
+            #birthday
+            type="text"
+            fullWidth
+            nbInput
+            formControlName="birthday"
+            [nbDatepicker]="dateTimePicker"
+            [status]="
+              f.birthday.invalid && f.birthday.touched ? 'danger' : 'basic'
+            "
+            shape="semi-round"
+            fieldSize="large"
+            maxlength="20"
+            oninput="this.value = this.value.replace(/[^0-9/]/g, '')"
+          />
+          <nb-icon class="mr-2" nbSuffix icon="calendario"> </nb-icon>
+          <nb-datepicker
+            startView="year"
+            [max]="maxDate"
+            [min]="minDate"
+            #dateTimePicker
+          ></nb-datepicker>
+        </nb-form-field>
+        <div
+          *ngIf="f.birthday.invalid && f.birthday.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.birthday.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="!f.birthday.errors.required">
+            La fecha no es válida
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-3" *ngIf="this.f.typeDocument.value === 4">
+        <label class="label">País</label>
+        <nb-form-field>
+          <input
+            #inputCountry
+            nbInput
+            type="text"
+            fullWidth
+            (input)="onChange()"
+            placeholder="Indicar país"
+            [nbAutocomplete]="auto"
+            formControlName="country"
+            (blur)="verifyCountry()"
+            maxlength="60"
+            [status]="
+              f.country.invalid && f.country.touched ? 'danger' : 'basic'
+            "
+            shape="semi-round"
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+            fieldSize="large"
+          />
+          <nb-icon nbSuffix icon="buscar"></nb-icon>
+        </nb-form-field>
+        <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+          <nb-option
+            *ngFor="let option of filteredOptions$ | async"
+            [value]="option.nombrePais"
+          >
+            {{ option.nombrePais }}
+          </nb-option>
+        </nb-autocomplete>
+        <div
+          *ngIf="f.country.invalid && f.country.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.country.errors.required">
+            El país es obligatorio
+          </span>
+          <span *ngIf="f.country.errors.notfound">
+            Tiene que seleccionar un país de la lista
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <label class="label">Sexo</label>
+        <nb-select
+          fullWidth
+          placeholder="Elige"
+          formControlName="genre"
+          [size]="'large'"
+          shape="semi-round"
+          [status]="f.genre.invalid && f.genre.touched ? 'danger' : 'basic'"
+        >
+          <nb-option [value]="item.codigoTexto" *ngFor="let item of typeGenres">
+            {{ item.valorTexto }}
+          </nb-option>
+        </nb-select>
+        <div
+          *ngIf="f.genre.invalid && f.genre.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.genre.errors"> El campo es obligatorio </span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label class="label">Puesto</label>
+        <nb-form-field>
+          <input
+            #inputOccupation
+            nbInput
+            type="text"
+            fullWidth
+            placeholder="Indicar cargo"
+            formControlName="occupation"
+            (blur)="verifyOccupation()"
+            maxlength="60"
+            [status]="
+              f.occupation.invalid && f.occupation.touched ? 'danger' : 'basic'
+            "
+            (input)="onChangeOccupation()"
+            [nbAutocomplete]="occupationAutocomplete"
+            shape="semi-round"
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+            fieldSize="large"
+          />
+          <nb-icon nbSuffix icon="buscar"></nb-icon>
+        </nb-form-field>
+        <nb-autocomplete
+          #occupationAutocomplete
+          (selectedChange)="onSelectionChangeOccupation($event)"
+        >
+          <nb-option
+            *ngFor="let option of filteredOptionsOccupation$ | async"
+            [value]="option.descripcion"
+          >
+            {{ option.descripcion }}
+          </nb-option>
+        </nb-autocomplete>
+        <span
+          *ngIf="f.occupation.invalid && f.occupation.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.occupation.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.occupation.errors.notfound">
+            Tiene que seleccionar un campo de la lista
+          </span>
+        </span>
+      </div>
+      <div class="col-md-2">
+        <label class="label">
+          Documento sustentatorio
+          <nb-icon
+            [nbPopover]="templateRef"
+            icon="info"
+            nbPopoverPlacement="right"
+            nbPopoverTrigger="hint"
+            class="popoverTrigger"
+          >
+          </nb-icon>
+        </label>
+        <ng-template #templateRef>
+          <serv-talento-tooltip-info
+            [message]="messageTooltipDoc"
+          ></serv-talento-tooltip-info>
+        </ng-template>
+
+        <label for="file-upload" class="btnUploadFile flex-v-center px-3">
+          Subir documento
+          <span class="flex-spacer"></span>
+          <nb-icon class="mr-2" nbSuffix icon="subir"></nb-icon>
+        </label>
+
+        <input id="file-upload" type="file" (change)="fileChange($event)" />
+      </div>
+      <div class="col-md-2">
+        <label class="label"> </label>
+        <button class="fileUploaded flex-v-center" *ngIf="this.document">
+          <nb-icon class="mr-2" nbSuffix icon="documento"></nb-icon>
+          <span>{{ this.document.name }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="pb-2 pt-5 subtitle">Datos de entidad asociada</div>
+    <div class="row">
+      <div class="form-control-group col-md-2">
+        <label class="label">N° de RUC</label>
+        <nb-form-field>
+          <input
+            type="text"
+            fullWidth
+            nbInput
+            formControlName="ruc"
+            (keyup.enter)="searchSunat()"
+            [status]="f.ruc.invalid && f.ruc.touched ? 'danger' : 'basic'"
+            (change)="clearSunat()"
+            (keyup)="clearSunat()"
+            placeholder="Ingresa RUC"
+            shape="semi-round"
+            fieldSize="large"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            maxlength="11"
+          />
+          <nb-icon
+            nbSuffix
+            icon="buscar"
+            class="searchIcon"
+            (click)="searchSunat()"
+          ></nb-icon>
+        </nb-form-field>
+        <div
+          *ngIf="f.ruc.invalid && f.ruc.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.ruc.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.ruc.errors.required"> El campo es obligatorio </span>
+          <span *ngIf="f.ruc.errors.pattern"> El formato es incorrecto </span>
+          <span *ngIf="f.ruc.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+      <div class="form-control-group col-md-4">
+        <label class="label">Razón social</label>
+        <nb-form-field>
+          <input
+            type="text"
+            fullWidth
+            nbInput
+            formControlName="businessName"
+            shape="semi-round"
+            fieldSize="large"
+            class="text-uppercase"
+            maxlength="200"
+            [status]="
+              f.businessName.invalid && f.businessName.touched
+                ? 'danger'
+                : 'basic'
+            "
+          />
+        </nb-form-field>
+        <div
+          *ngIf="
+            f.businessName?.errors ||
+            (f.ruc.invalid && f.ruc.touched && f.businessName?.value == '')
+          "
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.businessName.errors?.required">
+            La razón social es obligatoria
+          </span>
+          <span *ngIf="f.businessName.errors?.minlength">
+            El texto introducido es muy corto
+          </span>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label class="label">Sector</label>
+        <nb-select
+          fullWidth
+          placeholder="Elige"
+          formControlName="governmentSector"
+          [size]="'large'"
+          shape="semi-round"
+          [status]="
+            f.governmentSector.invalid && f.governmentSector.touched
+              ? 'danger'
+              : 'basic'
+          "
+        >
+          <nb-option
+            [value]="item.parametroId"
+            *ngFor="let item of governmentSector"
+            (change)="clearSunat()"
+          >
+            {{ item.valorTexto }}
+          </nb-option>
+        </nb-select>
+        <span
+          *ngIf="f.governmentSector.invalid && f.governmentSector.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.governmentSector.errors">
+            El campo es obligatorio
+          </span>
+        </span>
+      </div>
+      <div class="col-md-2">
+        <label class="label">Nivel de gobierno</label>
+        <nb-select
+          fullWidth
+          placeholder="Niveles"
+          formControlName="governmentLevel"
+          [size]="'large'"
+          shape="semi-round"
+          [status]="
+            f.governmentLevel.invalid && f.governmentLevel.touched
+              ? 'danger'
+              : 'basic'
+          "
+        >
+          <nb-option
+            [value]="item.parametroId"
+            *ngFor="let item of governmentLevels"
+          >
+            {{ item.valorTexto }}
+          </nb-option>
+        </nb-select>
+        <span
+          *ngIf="f.governmentLevel.invalid && f.governmentLevel.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.governmentLevel.errors">
+            El campo es obligatorio
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <div class="py-1">
+          <div class="captchaContent">
+            <input
+              type="text"
+              id="captchaRegisterAdmin"
+              placeholder="Ingrese el código"
+              maxlength="5"
+              autocomplete="off"
+              nbInput
+              shape="semi-round"
+              fieldSize="large"
+              formControlName="inputCaptcha"
+              class="ml-3 captchaRegisterAdmin"
+              oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')"
+              [status]="
+                f.inputCaptcha.invalid && f.inputCaptcha.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+            <br />
+          </div>
+          <div
+            *ngIf="f.inputCaptcha.invalid && f.inputCaptcha.touched"
+            class="invalid-text text-center w-100"
+          >
+            <span *ngIf="f.inputCaptcha.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.inputCaptcha.errors.minlength">
+              El texto debe tener 5 caracteres
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-2 col-6">
+        <div class="w-100 h-100 flex-v-center">
+          <button
+            nbButton
+            outline
+            shape="round"
+            status="primary"
+            fullWidth
+            [routerLink]="'/auth/'"
+          >
+            Volver a Inicio
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-2 col-6">
+        <div class="w-100 h-100 flex-v-center">
+          <button
+            nbButton
+            shape="round"
+            status="primary"
+            fullWidth
+            (click)="registerOrUpdateAdmin()"
+            [disabled]="!disabledCreateAdmin()"
+          >
+            <span *ngIf="!this.updateMode">Crear administrador</span>
+            <span *ngIf="this.updateMode">Guardar cambios</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

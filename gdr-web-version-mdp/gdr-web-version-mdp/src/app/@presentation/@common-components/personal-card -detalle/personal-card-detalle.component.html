@@ -1,0 +1,176 @@
+<div class="d-inline-flex flex-column personal-card shadow-sm w-100" [ngClass]="informacion.estado == 0 ? 'sinevlauar' : ''">
+  <div class="d-flex h-100 initial" [class.clickable]="clickable" (click)="onCardClick()">
+    <div class="mr-3 d-flex flex-column" *ngIf="!(informacion.estado == 0)">
+
+      <img *ngIf="urlImagen" [src]="urlImagen">
+      <div *ngIf="!urlImagen">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g opacity="0.5">
+            <path opacity="0.5"
+              d="M30 60C46.5685 60 60 46.5685 60 30C60 13.4315 46.5685 0 30 0C13.4315 0 0 13.4315 0 30C0 46.5685 13.4315 60 30 60Z"
+              fill="url(#paint0_linear)" />
+          </g>
+          <path
+            d="M30.0587 59.1761C46.2779 59.1761 59.4261 46.0279 59.4261 29.8087C59.4261 13.5896 46.2779 0.441406 30.0587 0.441406C13.8396 0.441406 0.691406 13.5896 0.691406 29.8087C0.691406 46.0279 13.8396 59.1761 30.0587 59.1761Z"
+            fill="#F5F5F5" />
+          <path
+            d="M30.0856 59.2919C35.8239 59.3012 41.4381 57.6211 46.228 54.461C45.1457 48.5469 41.0274 48.21 41.0274 48.21H18.3168C18.3168 48.21 14.4306 48.5289 13.2168 53.9693C18.1551 57.443 24.0479 59.3023 30.0856 59.2919Z"
+            fill="#00BFA6" />
+          <path
+            d="M29.7734 43.3642C37.6019 43.3642 43.9482 37.018 43.9482 29.1894C43.9482 21.3609 37.6019 15.0146 29.7734 15.0146C21.9449 15.0146 15.5986 21.3609 15.5986 29.1894C15.5986 37.018 21.9449 43.3642 29.7734 43.3642Z"
+            fill="#333333" />
+          <path opacity="0.1"
+            d="M25.1992 40.9961H34.2817V48.2623C34.2817 49.4664 33.8035 50.6212 32.9522 51.4728C32.101 52.3244 30.9463 52.8031 29.7422 52.8036C28.5378 52.8036 27.3827 52.3251 26.531 51.4734C25.6794 50.6218 25.2009 49.4667 25.2009 48.2623V40.9961H25.1992Z"
+            fill="black" />
+          <path
+            d="M25.4874 40.6592H33.9974C34.0738 40.6592 34.1471 40.6895 34.2011 40.7435C34.2551 40.7975 34.2854 40.8708 34.2854 40.9471V47.9254C34.2855 48.522 34.1681 49.1127 33.9398 49.6639C33.7115 50.2151 33.3769 50.7159 32.955 51.1377C32.5331 51.5595 32.0322 51.894 31.481 52.1222C30.9298 52.3504 30.339 52.4677 29.7424 52.4675C28.538 52.4675 27.3829 51.989 26.5313 51.1374C25.6796 50.2857 25.2012 49.1306 25.2012 47.9262V40.9471C25.2012 40.8711 25.2313 40.7981 25.2849 40.7441C25.3385 40.6902 25.4113 40.6596 25.4874 40.6592Z"
+            fill="#FDB797" />
+          <path opacity="0.1" d="M25.2158 44.4256C28.143 45.5192 31.3652 45.528 34.2983 44.4505V43.333H25.2158V44.4256Z"
+            fill="black" />
+          <path
+            d="M29.7735 45.0333C36.9635 45.0333 42.7921 39.2047 42.7921 32.0147C42.7921 24.8247 36.9635 18.9961 29.7735 18.9961C22.5835 18.9961 16.7549 24.8247 16.7549 32.0147C16.7549 39.2047 22.5835 45.0333 29.7735 45.0333Z"
+            fill="#FDB797" />
+          <path opacity="0.1"
+            d="M20.5 20.1728C20.5 20.1728 25.9868 31.3097 41.4639 24.8421L37.8605 19.192L31.4728 16.8994L20.5 20.1728Z"
+            fill="black" />
+          <path
+            d="M20.5 20.0094C20.5 20.0094 25.9868 31.1464 41.4639 24.6771L37.8605 19.0269L31.4728 16.7344L20.5 20.0094Z"
+            fill="#333333" />
+          <path
+            d="M20.4524 19.2552C20.8224 18.1099 21.4618 17.0702 22.3169 16.2233C24.8777 13.6918 29.0759 13.158 31.2292 10.2715C31.745 11.0726 31.3461 12.3044 30.4556 12.6483C32.5186 12.6345 34.9092 12.454 36.0756 10.7572C36.3639 11.4283 36.4558 12.1674 36.3406 12.8887C36.2254 13.61 35.9079 14.2837 35.4249 14.8317C37.2533 14.9176 39.2072 16.1554 39.3224 17.9821C39.4014 19.1993 38.6347 20.3511 37.6384 21.0491C36.6421 21.7471 35.4284 22.0678 34.2378 22.3299C30.7616 23.0976 18.184 26.3099 20.4524 19.2552Z"
+            fill="#333333" />
+          <path
+            d="M16.7502 34.2736C17.4192 34.2736 17.9614 33.2568 17.9614 32.0025C17.9614 30.7482 17.4192 29.7314 16.7502 29.7314C16.0813 29.7314 15.5391 30.7482 15.5391 32.0025C15.5391 33.2568 16.0813 34.2736 16.7502 34.2736Z"
+            fill="#FDB797" />
+          <path
+            d="M42.7913 34.2736C43.4602 34.2736 44.0024 33.2568 44.0024 32.0025C44.0024 30.7482 43.4602 29.7314 42.7913 29.7314C42.1223 29.7314 41.5801 30.7482 41.5801 32.0025C41.5801 33.2568 42.1223 34.2736 42.7913 34.2736Z"
+            fill="#FDB797" />
+          <defs>
+            <linearGradient id="paint0_linear" x1="30" y1="60" x2="30" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#808080" stop-opacity="0.25" />
+              <stop offset="0.54" stop-color="#808080" stop-opacity="0.12" />
+              <stop offset="1" stop-color="#808080" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="info-usuario mt-2 w-100 p-1 text-center" *ngIf="mostrarEtiquetaUsuario">{{etiquetaUsuario}}</span>
+    </div>
+
+    <div class="mr-3 d-flex flex-column" *ngIf="informacion.estado == 0">
+
+      <img *ngIf="urlImagen" [src]="urlImagen">
+      <div *ngIf="!urlImagen">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30.158" cy="29.8421" r="29.8421" fill="#E9EBF1" />
+          <path
+            d="M32.3616 37.1922H25.9703C25.9703 35.8517 26.0594 34.6711 26.2375 33.6505C26.4305 32.6147 26.7572 31.6855 27.2174 30.8629C27.6776 30.0403 28.3012 29.2787 29.088 28.578C29.7858 27.9839 30.3871 27.4126 30.8918 26.8642C31.3966 26.3159 31.7826 25.7599 32.0498 25.1962C32.3171 24.6326 32.4507 24.0309 32.4507 23.3911C32.4507 22.599 32.3393 21.9516 32.1166 21.4489C31.9088 20.9462 31.5896 20.573 31.1591 20.3293C30.7434 20.0703 30.2163 19.9409 29.5779 19.9409C29.0583 19.9409 28.5684 20.0703 28.1082 20.3293C27.6628 20.5883 27.299 20.9919 27.017 21.5403C26.7349 22.0735 26.579 22.7818 26.5493 23.6653H19C19.0445 21.3956 19.5345 19.5524 20.4698 18.1358C21.4199 16.7039 22.6819 15.6604 24.2556 15.0054C25.8441 14.3351 27.6182 14 29.5779 14C31.7455 14 33.6087 14.3427 35.1675 15.0282C36.7264 15.7137 37.9215 16.7343 38.7529 18.0901C39.5843 19.4306 40 21.0833 40 23.0484C40 24.3584 39.755 25.5009 39.2651 26.4758C38.79 27.4355 38.1442 28.3342 37.3277 29.172C36.526 29.9946 35.6278 30.8781 34.6331 31.8226C33.772 32.5995 33.1856 33.3916 32.8738 34.1989C32.562 34.991 32.3913 35.9888 32.3616 37.1922ZM25.0573 44.1384C25.0573 43.0417 25.4433 42.1277 26.2153 41.3965C26.9873 40.6501 27.9894 40.2769 29.2216 40.2769C30.4539 40.2769 31.456 40.6501 32.228 41.3965C33 42.1277 33.386 43.0417 33.386 44.1384C33.386 45.2352 33 46.1568 32.228 46.9032C31.456 47.6344 30.4539 48 29.2216 48C27.9894 48 26.9873 47.6344 26.2153 46.9032C25.4433 46.1568 25.0573 45.2352 25.0573 44.1384Z"
+            fill="#C4C4C4" />
+        </svg>
+
+
+
+      </div>
+      <span class="info-usuario mt-2 w-100 p-1 text-center" *ngIf="mostrarEtiquetaUsuario">{{etiquetaUsuario}}</span>
+    </div>
+
+    <div class="d-flex flex-column w-100">
+      <div class="d-flex">
+        <div class="d-flex flex-column mr-3">
+          <span *ngIf="metas!==0" class="nombre">{{nombre}}</span>
+          <span *ngIf="metas==0" class="nombre">Evaluador sin asignar</span>
+          <span class="puesto mt-3 mb-2">{{cortarTexto(cargo)}}</span>
+        </div>
+
+        <div class="ml-auto">
+        
+            <span class="rol-abreviado">{{segmentoCorto}}</span>
+     
+          <div *ngIf="mostrarCerrar" class="icono-cerrar" (click)="onCerrarClick()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0)">
+                <path
+                  d="M19.0711 4.92849C15.1678 1.02526 8.83216 1.02526 4.92893 4.92849C1.0257 8.83172 1.0257 15.1674 4.92893 19.0706C8.83216 22.9739 15.1678 22.9739 19.0711 19.0706C22.9743 15.1674 22.9743 8.83172 19.0711 4.92849ZM14.8284 16.2422L12 13.4138L9.17157 16.2422L7.75736 14.828L10.5858 11.9996L7.75736 9.17113L9.17157 7.75692L12 10.5853L14.8284 7.75692L16.2426 9.17113L13.4142 11.9996L16.2426 14.828L14.8284 16.2422Z"
+                  fill="#8191A4" />
+              </g>
+              <defs>
+                <clipPath id="clip0">
+                  <rect width="24" height="24" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="pie-info d-flex">
+
+        <div class="d-flex flex-column mr-3">
+          <span class="mb-0 d-flex align-items-end area">{{informacion.areaAbreviado}}</span>
+          <button class="info-usuario bg-white mt-2 pt-2 pb-2 pr-3 pl-3 ng-star-inserted" *ngIf="mostrarBotonLink"
+            (click)="onBotonLinkClick()">
+            {{etiquetaLink}}
+          </button>
+        </div>
+
+
+
+        <!-- <div class="ml-auto"> -->
+        <div class="ml-auto d-flex align-items-end pb-1" *ngIf="mostrarParticipantes"
+          style="margin-left: 20% !important;">
+
+          <div class="tooltip-body-rol">
+            <span class="mr-2">{{cantidadParticipantes}}</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z"
+                fill="#0DACBC" />
+            </svg>
+
+
+            <div class="flex-column popoverInfoEvaluados" *ngIf="informacion.segmentoId === 3">
+              <span class="texto-tooltip-body-evaluador">Ver evaluados</span>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+
+      <!-- <div class="mt-auto w-100">
+        <div class="pie-info d-flex">
+          <div class="d-flex flex-column">
+            <span class="pie-info mb-0 d-flex align-items-end">{{nivel}}</span>
+            <button class="info-usuario bg-white mt-2 pt-2 pb-2 pr-3 pl-3 ng-star-inserted"
+                    *ngIf="mostrarBotonLink" (click)="onBotonLinkClick()">
+              {{etiquetaLink}}
+              <span class="ml-3"></span>
+            </button>
+          </div>
+          <div class="ml-auto d-flex align-items-end pb-1" *ngIf="mostrarParticipantes"
+               title="{{cantidadParticipantes}} Evaluados asignados"  style="margin-left: 36% !important;">
+            <span class="mr-2">{{cantidadParticipantes}}</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 11C17.66 11 18.99 9.66 18.99 8C18.99 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 10.99 9.66 10.99 8C10.99 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V19H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V19H23V16.5C23 14.17 18.33 13 16 13Z" fill="#0DACBC"/>
+            </svg>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <div *ngIf="metas || compromisos" class="d-flex mt-auto border-top button-panel">
+    <div class="d-flex justify-content-center w-50 p-2 border-right button-sub-panel" [class.invisible]="!(metas >= 0)">
+      <div *ngIf="metas==0" class="d-flex align-items-center" [class.invisible]="!(metas >= 0)">
+        <div class="circle bg-meta-{{colorMeta}} mr-2"></div> Metas
+      </div>
+      <div *ngIf="metas!=0" class="d-flex align-items-center clickable" [class.invisible]="!(metas >= 0)"
+        (click)="onMetasClick()">
+        <div class="circle bg-meta-{{colorMeta}} mr-2"></div> Metas
+      </div>
+    </div>
+    <div class="d-flex justify-content-center w-50 p-2 border-left button-sub-panel" [class.invisible]="!compromisos">
+      <div class="d-flex align-items-center" [class.invisible]="!compromisos">
+        <div class="circle bg-secondary mr-2"></div> Compromisos
+      </div>
+    </div>
+  </div>
+</div>

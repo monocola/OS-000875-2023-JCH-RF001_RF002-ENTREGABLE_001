@@ -1,0 +1,54 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: entidad-mdp-dev
+  name: entidad-mdp-dev
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    app: entidad-mdp-dev
+  template:
+    metadata:
+      labels:
+        app: entidad-mdp-dev
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/entidad-mdp-dev/entidad-mdp-dev:latest
+        imagePullPolicy: IfNotPresent
+        name: entidad-mdp-dev
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 250m
+            memory: 768Mi
+        envFrom:
+        - configMapRef:
+            name: entidad-mdp-dev
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: entidad-mdp-dev
+              key: DB_PASSWORD
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - entidad-mdp-dev
+      from:
+        kind: ImageStreamTag
+        name: entidad-mdp-dev:latest
+        namespace: entidad-mdp-dev

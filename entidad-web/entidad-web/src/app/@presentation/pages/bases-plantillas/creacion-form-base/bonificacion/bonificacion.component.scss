@@ -1,0 +1,50 @@
+@import 'colors';
+
+.quill {
+  width: 100%;
+}
+
+.titleBase {
+  color: $primary-color;
+}
+
+.table {
+  border-radius: 10px;
+}
+
+thead > tr > th {
+  &:first-child {
+    border-top-left-radius: 10px !important;
+  }
+  &:last-child {
+    border-top-right-radius: 10px !important;
+  }
+}
+
+.header_table {
+  background-color: #3b3a3c !important;
+  color: white;
+}
+
+.iconArrow {
+  transition: 0.2s;
+}
+
+.rotate180 {
+  transform: rotate(180deg);
+}
+
+.bonificacionTitulo {
+  padding: 12px 24px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #eee;
+}
+
+.bonificacionBody {
+  padding: 8px 36px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #eee;
+}

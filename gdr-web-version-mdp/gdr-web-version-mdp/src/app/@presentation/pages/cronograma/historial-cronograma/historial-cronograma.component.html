@@ -1,0 +1,137 @@
+<div class="m-1 p-1">
+  <div class="d-flex">
+    <button
+      size="tiny"
+      style='background-color: white; border: 0;'
+      [routerLink]="['../../cronograma']"
+    ><mat-icon class='m-0 p-1 pr-4' > arrow_back </mat-icon>
+    </button>
+    <h5 class="titlePage m-0 p-0"> Historial de modificación </h5>
+    <span class="flex-spacer"></span>
+  </div>
+  <div class='m-1 p-0'></div>
+  <div class='m-0 p-1'>
+    <mat-card class='card-body border-top-0'>
+      <div class="container-fluid" [formGroup]="frm">
+        <div class="row mt-1">
+          <div class="mb-3 col-md-6">
+            <label class='font-weight-bold'>Resolución</label>
+            <nb-select
+              formControlName="resolucion"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+            >
+            <nb-option
+              *ngFor="let cboResolucion of resolucion"
+              [value]="cboResolucion.resolucionId"
+            >
+            <!--
+                 parametroId
+                 valorTexto
+            -->
+              {{ cboResolucion.descripcionResolucion }}
+            </nb-option>
+            </nb-select>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label class='font-weight-bold'>Etapa</label>
+            <nb-select
+              formControlName="etapa"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+
+            >
+              <nb-option
+                *ngFor="let cboEtapa of etapa"
+                [value]="cboEtapa.codigoNumero"
+              >
+                <!-- parametroId -->
+                {{ cboEtapa.valorTexto }}
+              </nb-option>
+            </nb-select>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label class='font-weight-bold'>Actividad</label>
+            <nb-select
+              formControlName="actividad"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+            >
+              <nb-option
+                *ngFor="let cboActividad of lstActividad"
+                [value]="cboActividad.actividadId.actividadId"
+              >
+                <!-- parametroId
+                    valorTexto -->
+                {{ cboActividad.descripcionActividad }}
+              </nb-option>
+            </nb-select>
+          </div>
+          <div class="mb-3 col-md-3"></div>
+          <div class="mb-3 col-md-3">
+            <div class="w-100 h-100 btn-area col-md-12 m-0 p-0">
+              <button
+                nbButton
+                shape="round"
+                size="medium"
+                status="primary"
+                style='color: #0dacbc; background-color: white;'
+                (click)='clear()'
+              >
+                Limpiar
+              </button>
+              <button
+                nbButton
+                shape="round"
+                size="medium"
+                style='color: white; background-color: #0dacbc;'
+                (click)='search()'
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <div class='m-2 p-2'></div>
+    <ng-container  >
+      <!--*ngIf="
+    this.lstServCiviles.length > 0 || (this.lstServCiviles.length === 0 && this.searchMode)"
+    >-->
+      <!-- <div class="subtitle">Lista de Servidores Civiles</div> -->
+      <serv-talento-table
+        [holderText]="this.holderText"
+        [tableData]="this.lstHistActividades"
+        [tableColumns]="ordersTableColumns"
+        [isFilterable]="true"
+        [isPageable]="true"
+        [paginationSizes]="[10, 20, 50, 100]"
+        [defaultPageSize]="10"
+        (sort)="sortData($event)"
+        [acciones]="false"
+        [title]="'Lista de servidores'"
+        [btnEditEnabled]="false"
+        (editAction)="editAct($event)"
+        [editTitle]="'Editar sevidor'"
+        [btnDeleteEnabled]="false"
+        (deleteAction)="delAct($event)"
+        [deleteTitle]="'Inactivar sevidor'"
+        [showDownloadButton]='false'
+        [dataExport]="getDataExport()"
+      >
+      </serv-talento-table>
+    </ng-container>
+    <div class='m-2 p-2'></div>
+
+
+  </div>
+
+</div>

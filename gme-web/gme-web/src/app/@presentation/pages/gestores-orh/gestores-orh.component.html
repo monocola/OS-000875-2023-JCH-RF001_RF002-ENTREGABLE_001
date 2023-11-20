@@ -1,0 +1,28 @@
+<form [formGroup]="filterForm">
+  <div class="body">
+    <div class="d-flex">
+      <p class="titlePage">Registrar Gestores ORH</p>
+      <span class="flex-spacer"></span>
+      <div class="m-1 p-1">
+        <button nbButton shape="round" size="medium" status="primary" class="mr-3"
+          style='color: white; background-color: #0DACBC;' (click)='registerManager()'>
+          Registrar gestor
+
+        </button>
+      </div>
+    </div>
+
+    <br />
+    <div class="mt-3 mx-1 mb-1">
+      <ng-container>
+        <gme-web-table class="col-12" [holderText]="this.holderText" [tableData]="this.listGestores"
+          [tableColumns]="tableColumns" [isFilterable]="true" [isPageable]="true" [paginationSizes]="[10, 20, 50, 100]"
+          [defaultPageSize]="10" [acciones]="true" customBtnDeleteDisabledKey="disabledDelete"
+          [deleteTitle]="'Eliminar Gestor'" (deleteAction)="delete($event)" [btnDeleteEnabled]="true"
+          [title]="'Lista de gestores ORH'" [btnEditEnabled]="true" [editTitle]="'Editar sevidor'"
+          (editAction)='edit($event)' [showDownloadButton]="false">
+        </gme-web-table>
+      </ng-container>
+    </div>
+  </div>
+</form>

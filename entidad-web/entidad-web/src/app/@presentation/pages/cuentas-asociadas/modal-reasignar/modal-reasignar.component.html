@@ -1,0 +1,38 @@
+<nb-card class="modal__reasignarCuenta">
+  <nb-card-header class="row align-items-center nb-card-header-modal-reasignar">
+    <div class="col-6"></div>
+    <div class="col-6">
+      <nb-actions size="small" style="place-content: flex-end">
+        <nb-action
+          class="control-item p-0"
+          icon="close"
+          (click)="dismiss(false)"
+        ></nb-action>
+      </nb-actions>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body class="align-self-center text-center mb-4">
+    <img alt="aviso" src="assets/images/avisos.svg" class="mr-3" />
+    <h3 class="titlePage">Alerta</h3>
+    <br />
+    <div>
+      No puedes dar de baja a la cuenta asociada porque tiene<br />
+      tareas por completar, deberás reasignar la cuenta asociada.
+    </div>
+    <br />
+    <div>
+      <strong>¿Deseas reasignar la cuenta asociada?</strong>
+    </div>
+    <br />
+    <button
+      class="w-75"
+      nbButton
+      shape="round"
+      status="primary"
+      (click)="dismiss(true)"
+    >
+      SI
+    </button>
+  </nb-card-body>
+</nb-card>

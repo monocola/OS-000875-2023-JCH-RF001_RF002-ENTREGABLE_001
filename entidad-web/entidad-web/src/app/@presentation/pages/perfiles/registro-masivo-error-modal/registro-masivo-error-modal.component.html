@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="d-flex w-100">
+    <span class="flex-spacer"></span>
+    <nb-icon
+      class="mr-2 btnClose"
+      nbSuffix
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-icon>
+  </div>
+
+  <h6 class="text-center">LISTA DE ERRORES</h6>
+  <p class="primary-color" style="margin-bottom: 0px;">Recuerde</p>
+  <p class="primary-color">Debe de corregir todos los errores antes de volver a cargar su archivo</p>
+
+  <div class="row table__header">
+    <div class="col-2">FILA</div>
+    <div class="col-5">NOMBRE DE COLUMNA</div>
+    <div class="col-5">DESCRIPCIÓN</div>
+  </div>
+
+  <div *ngFor="let item of errors" class="row table__body">
+    <div class="col-2 primary-color font-bold">{{ item.fila }}</div>
+    <div class="col-5">{{ item.columna }}</div>
+    <div class="col-5">{{ item.descripcion }}</div>
+  </div>
+</div>

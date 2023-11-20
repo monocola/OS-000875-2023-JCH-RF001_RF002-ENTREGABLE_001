@@ -1,0 +1,69 @@
+<form [formGroup]="frm">
+  <nb-card class="col-md-12 m-0 p-0" style="width: 550px; border: #2aa1c0;">
+    <nb-card-header class='m-0 p-0'>
+      <div class="col-md-12 row h-100 p-0 m-0 mb-3">
+        <h5 class="titleGDR">Entidad</h5>
+        <span class="flex-spacer"></span>
+        <nb-actions
+          size="small"
+          style="place-content: flex-end;"
+          class="col-md-12 position-absolute"
+        >
+          <nb-action
+            class="control-item p-0 justify-content-end"
+            icon="close"
+            (click)="dismiss(false)"
+          ></nb-action>
+        </nb-actions>
+      </div>
+    </nb-card-header>
+    <nb-card-body class='mt-4 mb-0 p-0'>
+      Para poder continuar con el inicio de sesión, por favor elija una Entidad.
+      <div class="col-md-12 mt-5 mb-4 row">
+        <label
+          for="entidadId"
+          class="font-weight-bold fs-16 text-black-70"
+        >Seleccione Entidad</label>
+        <nb-select
+          placeholder="Elegir tipo de entidad"
+          id="entidadId"
+          fullWidth="true"
+          formControlName="entidadId"
+          shape="semi-round"
+          [status]="f.entidadId.invalid && f.entidadId.touched ? 'danger' : 'basic' "
+
+        >
+          <nb-option
+            *ngFor="let item of lstEntidad"
+            [value]="item.entidadId"
+          >
+            {{ item.descripcionEntidad }}
+          </nb-option>
+        </nb-select>
+        <div *ngIf="f.entidadId.invalid && f.entidadId.touched" class="flex-column">
+            <span
+              *ngIf="f.entidadId.errors.required"
+              class="invalid-text"
+            >
+              El Campo es requerido
+            </span>
+        </div>
+      </div>
+      <div class="col-md-12 mt-4 mb-0 row">
+        <div class=' col-md-4 offset-md-4'>
+          <button
+            nbButton
+            class="px-5 "
+            shape="round"
+            size="medium"
+            style='background-color: #0DACBC; color: #f1f1f1;'
+            fullWidth
+            (click)="getPerfil()"
+          >
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</form>

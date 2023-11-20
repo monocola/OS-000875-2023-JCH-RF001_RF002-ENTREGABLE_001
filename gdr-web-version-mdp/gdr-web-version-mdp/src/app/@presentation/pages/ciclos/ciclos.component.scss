@@ -1,0 +1,32 @@
+@import '../../@theme/styles/themes';
+@import '_colors';
+
+.btn-login {
+  background-color: #0dacbc;
+  color: white;
+  font-weight: bold;
+}
+.btn-login:focus {
+  box-shadow: none;
+ }
+
+.titleCiclo {
+  color: #0dacbc !important;
+  font-weight: bold;
+}
+
+.select.blueSelect:hover {
+  font-weight: bold;
+  color: #0DACBC !important;
+  font-size: 1.75rem;
+  opacity: 0.75;
+}
+
+nb-option.selected:focus {
+  background-color: #DDF3F6;
+  color: #0DACBC !important;
+}
+nb-option.selected {
+  background-color: #DDF3F6;
+  color: #0DACBC !important;
+}

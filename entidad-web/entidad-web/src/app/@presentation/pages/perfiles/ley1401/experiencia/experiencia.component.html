@@ -1,0 +1,13 @@
+<form [formGroup]="helper1401Service.experienciaForm" class="px-5">
+  <serv-talento-strings-array-field
+    [title]="'Habilidades o competencias'"
+    [addItemLabel]="'Añadir experiencia'"
+    [items]="f.experiencias"
+    [placeholderItem]="'Ingrese experiencia'"
+    [minItems]="minExperiencias"
+    [maxItems]="15"
+    [deletedItems]="helper1401Service.habilidadesToDelete"
+    [orderable]="false"
+  >
+  </serv-talento-strings-array-field>
+</form>

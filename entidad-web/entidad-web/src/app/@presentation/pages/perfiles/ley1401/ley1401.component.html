@@ -1,0 +1,94 @@
+<div (resized)="onResized($event)">
+  <div class="parentBox">
+    <div class="firstBox px-4" [ngStyle]="{ width: bodySize }">
+      <div
+        class="title pr-4 m-0"
+        [ngClass]="{ selected: mode === 0 }"
+        (click)="changeMode(0)"
+      >
+        <span *ngIf="!helper1401Service.duplicarMode">
+          {{ helper1401Service.createMode ? 'Crear perfil' : 'Editar perfil' }}
+        </span>
+        <span *ngIf="helper1401Service.duplicarMode"> Duplicar Perfil </span>
+      </div>
+      <div class="flex-spacer"></div>
+      <div class="flex-v-center">
+        Régimen laboral:
+        <strong class="fs-16 ml-3">
+          {{ helper1401Service.regimenSelected?.descripcion || 'Ley 1401' }}
+        </strong>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mode === 0">
+    <div class="steps-box" [ngStyle]="{ width: bodySize }">
+      <mat-horizontal-stepper
+        class="stepper perfilesStepper"
+        labelPosition="bottom"
+        #stepper
+        [selectedIndex]="helper1401Service.indexStepper"
+        (selectionChange)="change($event)"
+      >
+        <mat-step [completed]="helper1401Service.idIdentificacion">
+          <ng-template
+            matStepLabel
+            aria-label="Identificacion del perfil - Ley 1401"
+          >
+            Identificación del perfil
+          </ng-template>
+        </mat-step>
+
+        <mat-step [completed]="helper1401Service.idFunciones">
+          <ng-template
+            matStepLabel
+            aria-label="Funciones / Actividades -Ley 1401"
+          >
+            Funciones / Actividades
+          </ng-template>
+        </mat-step>
+
+        <mat-step [completed]="helper1401Service.idFormacion">
+          <ng-template matStepLabel aria-label="Formación académica - Ley 1401">
+            Formación académica
+          </ng-template>
+        </mat-step>
+
+        <mat-step [completed]="helper1401Service.idExperiencia">
+          <ng-template matStepLabel aria-label="Experiencia - Ley 1401">
+            Habilidades
+          </ng-template>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+
+    <div class="contentToRender">
+      <serv-talento-identificacion
+        [hidden]="helper1401Service.indexStepper !== 0"
+      ></serv-talento-identificacion>
+
+      <serv-talento-funciones
+        [hidden]="helper1401Service.indexStepper !== 1"
+      ></serv-talento-funciones>
+
+      <serv-talento-formacion
+        [hidden]="helper1401Service.indexStepper !== 2"
+      ></serv-talento-formacion>
+
+      <serv-talento-experiencia
+        [hidden]="helper1401Service.indexStepper !== 3"
+      ></serv-talento-experiencia>
+    </div>
+  </div>
+</div>
+
+<serv-talento-bottom-div
+  [indexStepper]="helper1401Service.indexStepper"
+  [bodySize]="bodySize"
+  (previousStep)="previousStep()"
+  (nextStep)="nextStep()"
+  (createProfile)="createProfile()"
+  [createMode]="helper1401Service.createMode"
+  (cancelClick)="router.navigateByUrl('pages/regperfilpuesto')"
+>
+</serv-talento-bottom-div>

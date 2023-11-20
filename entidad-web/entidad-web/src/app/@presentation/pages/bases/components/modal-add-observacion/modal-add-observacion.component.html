@@ -1,0 +1,46 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="py-2 px-2 bodyModal">
+  <div class="flex-v-center">
+    <img src="assets/images/icons/observado.png" alt="Logo pregunta eliminar" />
+  </div>
+
+  <div class="title fw-600 flex-v-center my-3">Registrar observaciones</div>
+  <textarea-field
+    [control]="observacion"
+    [placeholder]="'Ingrese su observación'"
+    [maxlength]="100"
+    [banKeyType]="5"
+    [minlength]="0"
+  >
+  </textarea-field>
+  <div class="flex-v-center mt-4">
+    <button
+      nbButton
+      outline
+      shape="round"
+      status="primary"
+      class="py-2 px-4 mr-3"
+      (click)="onNoClick()"
+    >
+      Cancelar
+    </button>
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="py-2 px-4"
+      (click)="save()"
+    >
+      Guardar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+/**** CSS TABLE ****/
+.mat-column-descripcionEvaluado {
+  margin-right: 1px;
+  padding-right: 1.25rem;
+  padding-left: 0.5rem;
+}
+.mat-column-descripcionPuesto {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+
+.mat-column-duracion {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-acciones {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-apellidosNombres {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-select {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  color: black;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.bg-gray {
+  background: #F4F6F8;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: inherit;
+  padding: 0 0 10px;
+}

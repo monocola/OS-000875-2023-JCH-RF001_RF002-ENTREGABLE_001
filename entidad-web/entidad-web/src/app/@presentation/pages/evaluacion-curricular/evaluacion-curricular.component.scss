@@ -1,0 +1,44 @@
+@import 'colors';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  .subtitle {
+    font-weight: normal;
+    align-self: center;
+    font-size: 18px;
+  }
+}
+
+.filtro {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  .titulo {
+    font-weight: 500;
+    padding-bottom: 1rem;
+  }
+  .items {
+    display: flex;
+    justify-content: space-between;
+  }
+  .action {
+    align-self: flex-end;
+    padding-left: 2rem;
+    padding-bottom: 6px;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.table {
+  padding: 2rem;
+  background-color: #f5f5f5;
+  margin-bottom: 0;
+  .title {
+    font-weight: bold;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+}

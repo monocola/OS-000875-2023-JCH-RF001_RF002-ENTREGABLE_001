@@ -1,0 +1,70 @@
+nb-card {
+  padding: 0.5rem !important;
+  // width: 620px;
+  max-height: 85vh;
+  border-radius: 1rem !important;
+  border: none !important;
+}
+.logo {
+  height: 60px;
+}
+
+.box {
+  background: #DDF3F6 !important;
+  color: #0DACBC !important;
+  border-radius: 10px;
+  padding: 0.8rem 1rem !important;
+}
+
+.dropzone {
+  width: 100%;
+  padding: 1.5rem;
+  text-align: center;
+  border: dashed 2px rgba(129, 145, 164, 0.24);
+  position: relative;
+  margin: 0;
+  border-radius: 10px;
+
+  input {
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  label {
+    color: #0dacbc;
+    font-size: 12px;
+
+    /* width: 183px;
+    height: 44px;
+    border-color: black !important;
+    border-radius: 21.5px;
+    background-color: lightblue;
+    padding: 8px 16px; */
+  }
+
+  h6 {
+    color: #8191A4;
+    font-size: 1rem !important;
+    font-weight: 400;
+  }
+}
+.dot2 {
+  width: 15px !important;
+  height: 15px !important;
+  border-radius: 50%;
+  display: inline-block;
+}
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+@include nb-install-component() {
+  ::ng-deep .select-button {
+    color: #565656 !important;
+  }
+
+}

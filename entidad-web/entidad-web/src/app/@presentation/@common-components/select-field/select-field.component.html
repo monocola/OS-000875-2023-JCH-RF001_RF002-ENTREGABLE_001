@@ -1,0 +1,28 @@
+<nb-form-field>
+  <label>{{ label }}</label>
+  <nb-select
+    [fullWidth]="fullWidth"
+    [placeholder]="placeholder"
+    [size]="size"
+    shape="semi-round"
+    [formControl]="control"
+    [status]="control.invalid && control.touched ? 'danger' : 'basic'"
+    [ngClass]="{ 'select-component-empty': control.value === '' }"
+    [multiple]="multiple"
+    (selectedChange)="changeValue()"
+    [disabled]="disabled"
+  >
+    <nb-option value="" *ngIf="!hideDefaultOption">
+      {{ labelOptionDefault }}
+    </nb-option>
+    <nb-option [value]="value ? item[value] : item" *ngFor="let item of items">
+      {{ valueToShow ? item[valueToShow] : item }}
+    </nb-option>
+  </nb-select>
+</nb-form-field>
+<div
+  *ngIf="control.invalid && control.touched"
+  class="invalid-text flex-column"
+>
+  <span *ngIf="control.errors.required"> El campo es obligatorio. </span>
+</div>

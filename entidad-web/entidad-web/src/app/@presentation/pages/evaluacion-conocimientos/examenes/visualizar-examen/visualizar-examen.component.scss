@@ -1,0 +1,65 @@
+@import '_colors';
+
+.title {
+  margin-left: 10%;
+  margin-right: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.etiqueta-busqueda {
+  font-size: 1rem;
+  align-self: center;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.sub-title {
+  font-weight: 400;
+  color: #444;
+}
+
+.btn-card {
+  color: $primary_color;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.sumatoria {
+  border-radius: 0.5rem;
+  text-align: center;
+  width: 10rem;
+}
+
+.sumatoria-header {
+  background-color: #0b80b6;
+}
+
+.sumatoria-body {
+  background-color: white;
+}
+
+.descpuntaje {
+  font-size: 10px;
+  color: #0B80B6;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

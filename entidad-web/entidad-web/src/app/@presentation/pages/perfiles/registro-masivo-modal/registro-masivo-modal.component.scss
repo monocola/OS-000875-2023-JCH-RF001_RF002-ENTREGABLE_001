@@ -1,0 +1,45 @@
+@import '_colors';
+
+h5 {
+  color: $primary-color;
+}
+
+.a {
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.message {
+  color: $primary-color;
+  padding-top: 1rem;
+}
+
+.upload-button {
+  color: #8f9bb3 !important;
+  border-color: #8f9bb3 !important;
+  background-color: #ffff !important;
+}
+
+.alert-box {
+  text-align: center;
+  background: #ff8c8247;
+  padding: 3px;
+  color: #c6262e;
+  border-radius: 6px;
+  margin-top: 6px;
+  font-size: small;
+}
+
+.result-box {
+  padding: 1rem 2rem;
+  background: #e8fafe;
+  border-radius: 6px;
+  color: #606060;
+}
+
+.button-icon {
+  font-size: 16px;
+  align-items: center;
+  display: flex;
+  margin-left: 6px;
+}

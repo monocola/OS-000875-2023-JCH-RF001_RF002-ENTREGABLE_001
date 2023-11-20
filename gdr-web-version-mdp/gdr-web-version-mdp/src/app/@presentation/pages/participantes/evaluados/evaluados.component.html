@@ -1,0 +1,168 @@
+<div class="body">
+  <div class="d-flex align-items-center mb-4">
+    <serv-talento-back-button *ngIf="!(evaluador.accedioDirecto === true)" routerLink="../"></serv-talento-back-button>
+    <h3 class="page-title mb-0">{{evaluador.accedioDirecto === true ? 'Evaluados' : 'Participantes'}}</h3>
+    <span class="ml-auto text-secondary pt-2 font-weight-bold">Ciclo {{cicloDefaultDesc}}</span>
+  </div>
+
+  <mat-tab-group mat-align-tabs="start" (selectedIndexChange)="onTabChanged($event)">
+    <mat-tab label="Jefe de área">
+      <div class=" col-lg-4 col-md-6 mb-4">
+        <personal-card [urlImagen]="evaluador.urlFoto" [nombre]="evaluador.apellidosNombres" [cargo]="evaluador.puesto" [informacion]="evaluador"
+          [nivel]="evaluador.areaAbreviado" [cantidadParticipantes]="evaluador.cantidadEvaluados" [metas]="evaluador.indicadorMeta"
+          [compromisos]="true"> 
+        </personal-card>
+      </div>
+    </mat-tab>
+    <mat-tab *ngIf="listaMandosMedio.length !== 0" label="Mando medio">
+      <div class="p-1">
+        <!-- <serv-talento-simple-slider-pager [totalItems]="listaMandosMedio?.length"
+            (pageChanged)="pageChangedMandoMedio($event)">
+
+            <personal-card *ngFor="let mandoMedio of listaMandosMedioPage" [urlImagen]="mandoMedio.urlFoto"
+              [nombre]="mandoMedio.apellidosNombres" [cargo]="mandoMedio.puesto" [nivel]="mandoMedio.segmento"
+              [mostrarParticipantes]="true" [cantidadParticipantes]="mandoMedio.cantidadEvaluados"
+              [informacion]="mandoMedio" (cerrarClick)="eliminar($event, 'Mando Medio')"
+
+              [segmentoCorto]="evaluador.segmentoCorto"
+              [metas]="evaluador.indicadorMeta"
+              [compromisos]="true"
+              >
+            </personal-card>
+
+          </serv-talento-simple-slider-pager> -->
+        <serv-talento-simple-pager [totalItems]="listaMandosMedio?.length"
+          (pageChanged)="pageChangedMandoMedio($event)">
+          <personal-card *ngFor="let mandoMedio of listaMandosMedioPage" [urlImagen]="mandoMedio.urlFoto"
+            [nombre]="mandoMedio.apellidosNombres" [cargo]="mandoMedio.puesto" [nivel]="mandoMedio.segmento"
+            [mostrarParticipantes]="true" [cantidadParticipantes]="mandoMedio.cantidadEvaluados"
+            [informacion]="mandoMedio" (cerrarClick)="eliminar($event, 'Mando Medio')">
+          </personal-card>
+        </serv-talento-simple-pager>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="w-99 d-flex mt-4 mb-2 ml-3">
+    <div class="text-secondary">
+      <span>{{cantidadConEvaluador}} Con Evaluador</span>
+      <span class="ml-3 mr-3">|</span>
+      <span>{{cantidadSinEvaluador}} Sin Evaluador</span>
+    </div>
+
+    <div class="ml-auto btn-group-sm">
+      <button class="btn btn-info pr-4 pl-4 pt-2 pb-2 mr-3 round" (click)="agregarMandoMedio()"
+        onlyWrite
+        *ngIf="btnAddMandoMedioVisible" [disabled]="evaluador.descripcionRoles=='Evaluado' || evaluador.segmentoId == 3">Agregar mando medio
+      </button>
+      <button class="btn btn-info pr-4 pl-4 pt-2 pb-2 round" *ngIf="btnAddMandoMedioVisible" [disabled]="evaluador.descripcionRoles=='Evaluado'" (click)="agregaEvaluados()" onlyWrite>Agregar evaluados</button>
+      <button class="btn btn-info pr-4 pl-4 pt-2 pb-2 round" *ngIf="!btnAddMandoMedioVisible" (click)="agregaEvaluadosMM()" onlyWrite>Agregar evaluados</button>
+    </div>
+  </div>
+
+  <div class="w-100 d-flex mt-4 mb-2" [formGroup]="frm">
+    <div class='col-md-6'>
+
+      <nb-form-field style="width: 100%;">
+
+        <input id="filterP" type="text" placeholder="{{holderText}}" nbInput shape="semi-round" fieldSize="medium"
+          maxlength="70" name="filterP" formControlName='filterP' (keypress)="busquedaSensitiva($event)"
+          (keydown)="onKeydown($event)" />
+        <nb-icon icon="buscar" pack='entweb' nbPrefix></nb-icon>
+
+      </nb-form-field>
+    </div>
+    <div class='col-md-3 px-1 py-0'>
+      <nb-select placeholder="Seleccione" fullWidth="true" [size]="'medium'" shape="semi-round" formControlName="area"
+        (selectedChange)="changeArea($event)">
+        <nb-option [value]="-1">
+          Todas la áreas
+        </nb-option>
+        <nb-option *ngFor="let cbo of unidadOrganicaCbo; let i = index" [value]="cbo.id">
+          {{ cbo.descripcion }}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div class='col-md-3 px-1 py-0'>
+      <nb-select fullWidth="true" [size]="'medium'" shape="semi-round" placeholder="Seleccione"
+        formControlName="segmento" (selectedChange)="changeSegmento($event)">
+        <nb-option [value]="-1">
+          Todos los segmentos
+        </nb-option>
+        <nb-option *ngFor="let cbo of segmentos; let i = index" [value]="cbo.codigoNumero">
+          {{ cbo.valorTexto }}
+        </nb-option>
+      </nb-select>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let evaluado of listaEvaluadosPage; let i = index">
+      <!-- <personal-card [urlImagen]="evaluado.urlFoto"
+        [nombre]="evaluado.apellidosNombres"
+         [cargo]="evaluado.puesto"
+        [nivel]="evaluado.segmento"
+        [informacion]="evaluado"
+        [metas]="evaluado.indicadorMeta"
+        [compromisos]="true" (metasClick)="onClickMetas(evaluado)"
+        [mostrarParticipantes]="true"
+        [cantidadParticipantes]="evaluado.cantidadEvaluados"
+         [segmentoCorto]="evaluado.segmentoCorto">
+      </personal-card> -->
+      <personal-card [urlImagen]="evaluado.urlFoto" [nombre]="evaluado.apellidosNombres" [cargo]="evaluado.puesto"
+        [nivel]="evaluado.areaAbreviado" [mostrarCerrar]="true" [cantidadParticipantes]="evaluado.cantidadEvaluados" [informacion]="evaluado" [metas]="evaluado.indicadorMeta"
+        [compromisos]="true" (cerrarClick)="eliminar($event, 'Evaluado')" (metasClick)="onClickMetas(evaluado)">
+      </personal-card>
+    </div> 
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <pagination [totalItems]="listaEvaluados?.length || 0" [itemsPerPage]="9" (pageChanged)="pageChanged($event)"
+          *ngIf="listaEvaluados?.length > 0" previousText="&laquo;" nextText="&raquo;" [maxSize]="5" [rotate]="true">
+        </pagination>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <div class=" leyenda p-2 border" >
+          <div class="d-flex justify-content-between">
+            <div class="leyenda-item border-right" *ngIf="aparecerSuscrito">
+              <span class="circle" [style.color]="suscrito">&#11044;</span>
+              <div class="texto">
+                Suscrito
+              </div>
+            </div>
+            <hr />
+            <div class="leyenda-item border-right" *ngIf="aparecerPendiente">
+              <span class="circle" [style.color]="pendiente">&#11044;</span>
+              <div class="texto">
+                Pendiente
+              </div>
+            </div>
+            <hr />
+            <div class="leyenda-item border-right" *ngIf="aparecerSinRegistro">
+              <span class="circle" [style.color]="sinregistro">&#11044;</span>
+              <div class="texto">
+                Sin registro
+              </div>
+            </div>
+            <hr />
+            <div class="leyenda-item border-right" *ngIf="aparecerObservado">
+              <span class="circle" [style.color]="observado">&#11044;</span>
+              <div class="texto">
+                Observado
+              </div>
+            </div>
+            <hr />
+            <div class="leyenda-item end" *ngIf="aparecerInactivo">
+              <span class="circle" [style.color]="inactivo">&#11044;</span> 
+              <div class="texto">
+                Inactivo
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

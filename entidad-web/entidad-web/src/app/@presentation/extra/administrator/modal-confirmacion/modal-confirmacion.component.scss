@@ -1,0 +1,18 @@
+@import '_colors';
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $primary_color;
+}
+
+.btn {
+  border-radius: 0.5rem;
+  border: 1px solid $primary_color !important;
+  height: 3rem;
+  width: 100%;
+  font-size: 0.938rem !important;
+  background: white !important;
+  color: $primary_color !important;
+  cursor: pointer;
+}

@@ -1,0 +1,124 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Gestión de conocimientos</h3>
+    <span class="flex-spacer"></span>
+    <div>
+      <button
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+        (click)="openModalCrearConocimiento()"
+      >
+        Añadir Conocimiento
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="container-fluid mt-3">
+    <div class="subtitle">Filtros de búsqueda</div>
+
+    <div class="row mt-3">
+      <div class="col-3 mb-3">
+        <select-field
+          [placeholder]="'Elegir conocimiento'"
+          [label]="'Tipos de conocimiento'"
+          [control]="f.tipoConocimiento"
+          [items]="this.tipos"
+          [value]="'maeDetalleId'"
+          [valueToShow]="'descripcion'"
+        >
+        </select-field>
+      </div>
+
+      <div class="col-3 mb-3">
+        <select-field
+          [label]="'Categoría'"
+          [control]="f.categoria"
+          [items]="this.categoria"
+          [value]="'maeDetalleId'"
+          [valueToShow]="'descripcion'"
+        >
+        </select-field>
+      </div>
+      <div class="col-3">
+        <input-field
+          [control]="f.descripcion"
+          [label]="'Descripción de conocimiento'"
+          [placeholder]="'Buscar por descripción'"
+          [maxlength]="500"
+          [minlength]="0"
+        >
+        </input-field>
+      </div>
+
+      <div class="mb-3 col-md-3">
+        <div class="w-100 h-100 btn_area">
+          <button
+            type="button"
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="clear()"
+          >
+            Limpiar
+          </button>
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="getConocimientos()"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="padding-body">
+  <div
+    class="flex-v-center flex-column mt-5"
+    *ngIf="this.conocimientos.length === 0 && !searchMode"
+  >
+    <img
+      width="70px"
+      alt="imagen bandeja"
+      src="assets/images/icons/bandeja.png"
+      class="my-3"
+    />
+    <span class="fs-13">No tienes conocimientos creados.</span>
+    <span class="fs-13">
+      Para crearlos da <strong>click</strong> al botón
+      <strong>"Crear conocimiento"</strong>
+    </span>
+  </div>
+
+  <ng-container *ngIf="this.conocimientos.length > 0 || searchMode">
+    <div class="subtitle">Lista de conocimientos</div>
+    <serv-talento-table
+      [tableData]="this.conocimientos"
+      [tableColumns]="conocimientoTableColumns"
+      [dataExport]="getDataExport()"
+      [isFilterable]="true"
+      [isPageable]="true"
+      [paginationSizes]="[5, 10, 15]"
+      [defaultPageSize]="5"
+      (sort)="sortData($event)"
+      [acciones]="true"
+      [title]="'Lista de conocimientos'"
+      [btnEditEnabled]="true"
+      (editAction)="editConocimiento($event)"
+      [editTitle]="'Editar conocimiento'"
+      [btnDeleteEnabled]="true"
+      (deleteAction)="removeConocimiento($event)"
+      [deleteTitle]="'Inactivar conocimiento'"
+      [fontSize]="'fs-13'"
+    >
+    </serv-talento-table>
+  </ng-container>
+</div>

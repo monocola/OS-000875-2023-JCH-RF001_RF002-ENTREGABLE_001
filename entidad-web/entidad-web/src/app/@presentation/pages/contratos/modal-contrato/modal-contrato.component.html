@@ -1,0 +1,121 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="mb-12 col-md-12 divHeaderMargin">
+  <div class="flex-v-center flex-column">
+    <img
+      src="assets/images/icons/observado.png"
+      style="height: 50px; width: 55px"
+      alt="Logo"
+    />
+    <h6 class="mt-3">{{ title }}</h6>
+  </div>
+</div>
+
+<form [formGroup]="Form">
+  <div class="mb-12 col-md-12 mdcss">
+    <label>Fecha de Suscripción</label>
+    <nb-form-field>
+      <input
+        #fecha
+        formControlName="fecha"
+        [nbDatepicker]="dateTimePicker"
+        nbInput
+        placeholder="Agregue una fecha"
+        fieldSize="large"
+        shape="semi-round"
+        [status]="fechaStatus"
+        (ngModelChange)="validDateFormat($event)"
+      />
+      <nb-icon (click)="fecha.click ()" nbSuffix class="mr-2" icon="calendario"> </nb-icon>
+      <nb-datepicker startView="year" #dateTimePicker></nb-datepicker>
+    </nb-form-field>
+  </div>
+
+  <div class="mb-12 col-md-12 mdcss">
+    <label>Archivo de Documento Escaneado</label>
+    <div
+      [ngClass]="{
+        item_card_input_img: uploadfile === true,
+        item_card_input_img_error: uploadfile === false
+      }"
+      style="background-color: white"
+    >
+      <div
+        style="
+          width: 70%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+        "
+      >
+        <div class="filename">
+          {{ fileName }}
+        </div>
+      </div>
+      <div
+        style="
+          width: 30%;
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;
+        "
+      >
+        <button
+          matRipple
+          title="Subir"
+          class="btn-card-black"
+          (click)="fileUpload.click()"
+        >
+          <em class="ent-web-subir"></em>
+        </button>
+        <input
+          type="file"
+          class="file-input"
+          accept="application/pdf"
+          (change)="onFileSelected($event)"
+          #fileUpload
+        />
+      </div>
+
+      <div class="invalid-text mx-2" *ngIf="!uploadfile">
+        Tiene que cargar un documento
+      </div>
+    </div>
+  </div>
+</form>
+<div style="align-self: center; margin-top: 15px">
+  <div class="flex-v-center">
+    <div class="col-6">
+      <button
+        nbButton
+        outline
+        shape="round"
+        status="primary"
+        fullWidth
+        (click)="onNoClick()"
+      >
+        Cancelar
+      </button>
+    </div>
+    <div class="col-6">
+      <button
+        nbButton
+        shape="round"
+        status="primary"
+        fullWidth
+        (click)="GuardarComunicado()"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>

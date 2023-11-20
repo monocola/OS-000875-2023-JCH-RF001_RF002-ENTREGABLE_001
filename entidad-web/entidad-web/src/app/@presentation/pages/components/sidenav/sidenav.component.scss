@@ -1,0 +1,73 @@
+@import '_colors';
+
+* {
+  user-select: none;
+}
+
+.parent {
+  background-color: $primary-color;
+  flex-direction: column;
+  min-height: calc(100vh - 4.75rem);
+}
+
+.item {
+  color: white !important;
+  font-weight: 600;
+  font-size: 0.938rem;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(182, 219, 235, 0.3);
+    border-radius: 0.75rem;
+  }
+}
+
+.itemPadre {
+  color: white !important;
+  font-weight: 600;
+  font-size: 0.938rem;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(182, 219, 235, 0.3);
+    border-radius: 0.75rem;
+  }
+}
+
+.active {
+  background-color: rgba(182, 219, 235, 0.3) !important;
+  border-radius: 0.75rem !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+.text-menu-hijo {
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+}
+
+.submenu {
+  max-height: 0 !important;
+  overflow: hidden;
+}
+.submenu-on {
+  max-height: 2000px !important;
+}
+
+.icon-arrow {
+  font-size: 0.75rem;
+}
+
+.icon__item {
+  transition: all 0.2s ease-in-out;
+}
+
+.rotate {
+  transition: all 0.2s ease-in-out;
+  transform: rotate(-180deg);
+}
+
+.menuSelected {
+  background-color: #0c6d97;
+  border-radius: 0.25rem;
+}

@@ -1,0 +1,45 @@
+<div class="text-center">
+  <div class="d-flex w-100">
+    <span class="flex-spacer"></span>
+    <nb-icon
+      class="mr-2 btnClose"
+      nbSuffix
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-icon>
+  </div>
+
+  <div class="flex-v-center flex-column">
+    <img
+      height="64px"
+      src="assets/images/icons/formulario.png"
+      alt="icon image"
+    />
+    <h5 class="text-center mt-4">
+      ¿A qué régimen vamos a trasladar el <br />
+      duplicado del contenido?
+    </h5>
+  </div>
+
+  <div class="flex-v-center flex-column w-100 fs-14 px-5 mt-3 mb-4">
+    <select-field
+      class="w-90 text-left"
+      [label]="'Elige un régimen o decreto de ley'"
+      [control]="control"
+      [items]="this.items"
+      [valueToShow]="'descripcion'"
+    >
+    </select-field>
+
+    <button
+      class="w-90 mt-4"
+      nbButton
+      shape="round"
+      size="medium"
+      status="primary"
+      (click)="this.onNoClick(control.value)"
+    >
+      Aceptar
+    </button>
+  </div>
+</div>

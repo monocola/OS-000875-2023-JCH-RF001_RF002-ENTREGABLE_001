@@ -1,0 +1,68 @@
+<div class="body flex-v-center">
+  <button class="btnBack m-3 p-2" [routerLink]="['/pages/gestionbases']">
+    Atrás
+  </button>
+  <div class="container row">
+    <div class="col-md-2"></div>
+    <div class="col-md-5 h-100 w-100 text-left flex-column">
+      <h5 #lblForm class="fw-500 labelForm mb-4">Empecemos a crear bases</h5>
+      <form [formGroup]="registerForm" class="formCreation w-100" #formCreation>
+        <div class="mt-3">
+          <select-field
+            [label]="'Régimen o modalidad formativa'"
+            [control]="f.regimen"
+            [items]="regimenes"
+            [valueToShow]="'descripcion'"
+            (selectedChange)="changeRegimen()"
+          >
+          </select-field>
+        </div>
+
+        <div class="mt-3" [hidden]="modalidades.length <= 0">
+          <select-field
+            [label]="'Modalidad'"
+            [control]="f.modalidad"
+            [items]="modalidades"
+            [valueToShow]="'descripcion'"
+            (selectedChange)="changeModalidad()"
+          >
+          </select-field>
+        </div>
+
+        <div class="mt-3" [hidden]="tipos.length <= 0">
+          <select-field
+            [label]="'Tipo'"
+            [control]="f.tipo"
+            [items]="tipos"
+            [valueToShow]="'descripcion'"
+          >
+          </select-field>
+        </div>
+
+        <button
+          class="w-100 mt-4"
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          (click)="createPlantilla()"
+        >
+          Crear Base
+        </button>
+      </form>
+    </div>
+
+    <div class="col-md-1"></div>
+
+    <div class="col-md-3">
+      <img
+        width="90%"
+        #imgCreation
+        class="imgCreation"
+        src="assets/images/bases.png"
+        alt="imagen bases"
+      />
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>

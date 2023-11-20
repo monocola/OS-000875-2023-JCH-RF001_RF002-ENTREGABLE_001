@@ -1,0 +1,48 @@
+<div>
+  <div class="d-flex title-container">
+    <h4 class="titlePage">Reportes</h4>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row">
+    <div class="col-12">
+      <mat-tab-group class="mt-3 px-2 custom-tab-group" mat-align-tabs="start" dynamicHeight
+        (selectedTabChange)="changeTabRegistro($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <img src="/assets/images/icons/convocatoria.svg" alt="imagen convocatoria" class="mr-2">Convocatorias
+            <!--<nb-icon [nbPopover]="templateRef" icon="convocatoria" nbPopoverPlacement="right" nbPopoverTrigger="hint"
+              class="popoverTrigger fs-18">
+            </nb-icon>-->
+          </ng-template>
+
+          <serv-talento-convocatorias>
+          </serv-talento-convocatorias>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>school</mat-icon>
+            Postulantes
+          </ng-template>
+
+           <serv-talento-postulantes>
+          </serv-talento-postulantes>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <!-- <nb-icon [nbPopover]="templateRef" icon="file" nbPopoverPlacement="right" nbPopoverTrigger="hint"
+              class="popoverTrigger fs-18 ">
+            </nb-icon> -->
+            <mat-icon>assignment</mat-icon> Evaluaciones
+          </ng-template>
+
+           <serv-talento-evaluaciones>
+          </serv-talento-evaluaciones>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

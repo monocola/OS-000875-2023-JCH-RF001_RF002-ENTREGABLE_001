@@ -1,0 +1,42 @@
+<div class='col-12 row m-0 p-0 justify-content-left'>
+  <div class="p-6 col-md-12 col-12">
+
+    <div class="d-flex align-items-center mb-4">
+      <serv-talento-back-button routerLink="../../implementacion"></serv-talento-back-button>
+      <h3 class="page-title mb-0">{{entidad?.descripcionEntidad}}</h3>
+      <span class="ml-auto text-secondary pt-2 font-weight-bold">Ciclo {{currentCicle}}</span>
+    </div>
+
+    <div [formGroup]="frm">
+
+      <div class="col-12 row m-0 p-0 justify-content-end">
+        <button nbButton shape="round" size="medium" status='info' class="py-2 px-5 mr-3 text-right" (click)='agregarGestor(null) '>
+          Agregar gestor GDR
+        </button>
+      </div>
+
+      <div class="row mt-1">
+        <ng-container>
+          <serv-talento-table class='col-12' holderText="Buscar por Rector, entidades"
+                              [tableData]="this.listaUsuariosGdr"
+                              [tableColumns]="this.tableColumns" [isFilterable]="true"
+                              [isPageable]="true"
+                              [paginationSizes]="[5, 10, 20, 50, 100]" [defaultPageSize]="10"asdd
+                              [acciones]="true" [showTitle]='false'
+                              custom2BtnIcon="ent-web-mail-lleno" custom2BtnClass='accion-notification'
+                              [custom2BtnShow]="true"
+                              custom2BtnDisabledKey="disabledNotification"
+                              (custom2BtnOnClick)="notificar($event)"
+                              [showDownloadButton]='false' custom2BtnTitle="Notificar"
+                              [btnEditEnabled]="true" [editTitle]="'Editar Usuario'"
+                              (editAction)="editUser($event)"
+                              custom1BtnTitle="Doc. Asignación" custom1BtnIcon="ent-web-file" custom1BtnClass='accion-house-add'
+                              [custom1BtnShow]="true" (custom1BtnOnClick)="actionShowPDF($event)"
+
+                              >
+          </serv-talento-table>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

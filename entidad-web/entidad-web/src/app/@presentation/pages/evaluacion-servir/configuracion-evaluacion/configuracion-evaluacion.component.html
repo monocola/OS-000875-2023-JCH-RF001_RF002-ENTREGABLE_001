@@ -1,0 +1,493 @@
+<div class="body">
+  <h3 class="titlePage">Enlazar el régimen</h3>
+
+  <div class="flex-v-center-left ml-3">
+    <span class="material-icons mr-2"> home </span>
+    Régimen
+
+    <serv-talento-add-item-button
+      text="Añadir régimen"
+      (clickEmitter)="showRegimenCombo()"
+      [disable]="regimenSelected"
+    >
+    </serv-talento-add-item-button>
+  </div>
+
+  <div class="mt-3" *ngIf="this.showComboRegimen && regimenSelected">
+    <h5 class="ml-4">{{ regimenSelected }}</h5>
+    <hr />
+  </div>
+
+  <div
+    class="mt-3 ml-3 flex-v-center-bottom animate__animated animate__fadeIn"
+    *ngIf="this.showComboRegimen && !regimenSelected"
+  >
+    <div class="w30">
+      <select-field
+        [label]="'Elige el régimen'"
+        [control]="regimenControl"
+        [items]="helperServirService.regimenes"
+        [valueToShow]="'descripcion'"
+        [hideDefaultOption]="true"
+      >
+      </select-field>
+    </div>
+
+    <div class="btn__regimen_section">
+      <button (click)="addRegimen()" class="add-icon">
+        <span class="material-icons"> done </span>
+      </button>
+      <button (click)="showComboRegimen = false" class="remove-icon">
+        <span class="material-icons"> remove_circle_outline </span>
+      </button>
+    </div>
+
+    <div class="flex-spacer"></div>
+  </div>
+
+  <div
+    class="mt-3 ml-3 flex-v-column animate__animated animate__fadeIn"
+    *ngIf="regimenSelected"
+  >
+    <!------------------------------------------------------------------->
+    <!---------------- ARREGLO DE MODALIDADES ------------------------------->
+
+    <div class="flex-v-center-left">
+      <button
+        mat-icon-button
+        (click)="openModalidad = !openModalidad"
+        [disabled]="treeNode.length === 0"
+      >
+        <span class="material-icons">
+          {{ openModalidad ? 'arrow_drop_up ' : 'arrow_drop_down' }}
+        </span>
+      </button>
+
+      <span class="material-icons mr-2">
+        {{ openModalidad ? 'folder_open' : 'folder' }}
+      </span>
+      Modalidad de acceso
+
+      <serv-talento-add-item-button
+        text="Añadir modalidad de acceso"
+        [disable]="showComboAddModalidad"
+        *ngIf="!this.helperServirService.editMode"
+        (clickEmitter)="newModality()"
+      >
+      </serv-talento-add-item-button>
+    </div>
+
+    <div
+      class="ml-3 flex-v-column animate__animated animate__fadeIn"
+      [hidden]="!openModalidad"
+    >
+      <!---------------------------------------------------------------------------->
+      <!---------------- ARREGLO DE TIPOS DE MODALIDADES ------------------------------->
+
+      <div
+        class="ml-3 mt-2 flex-v-column animate__animated animate__fadeIn"
+        *ngFor="let modalidad of treeNode; index as i"
+      >
+        <div class="flex-v-center-left">
+          <button
+            mat-icon-button
+            (click)="modalidad.open = !modalidad.open"
+            [disabled]="modalidad.modalidades.length === 0"
+          >
+            <span class="material-icons">
+              {{ modalidad.open ? 'arrow_drop_up ' : 'arrow_drop_down' }}
+            </span>
+          </button>
+
+          <span class="material-icons mr-2">
+            {{
+              modalidad.open && modalidad.modalidades.length > 0
+                ? 'folder_open'
+                : 'folder'
+            }}
+          </span>
+          {{ modalidad.selected }}
+
+          <ng-container *ngIf="!this.helperServirService.editMode">
+            <button
+              mat-icon-button
+              class="remove-icon ml-3"
+              (click)="removeModalidad(i)"
+            >
+              <span class="material-icons"> remove_circle_outline </span>
+            </button>
+
+            <serv-talento-add-item-button
+              text="Añadir tipo de acceso"
+              [disable]="
+                showComboAddTipoModalidad &&
+                this.helperServirService.tiposFiltrados.length > 0
+              "
+              (clickEmitter)="newModalityType(i)"
+            >
+            </serv-talento-add-item-button>
+          </ng-container>
+        </div>
+
+        <div
+          class="ml-5 mt-2 flex-v-column"
+          [hidden]="!modalidad.open"
+          *ngFor="let tipoModalidad of modalidad.modalidades; index as j"
+        >
+          <div class="ml-3 mt-2 flex-v-center-left pb-1">
+            <button
+              mat-icon-button
+              (click)="tipoModalidad.open = !tipoModalidad.open"
+              [disabled]="tipoModalidad.evaluaciones.length === 0"
+            >
+              <span class="material-icons">
+                {{
+                  tipoModalidad.open && tipoModalidad.evaluaciones.length > 0
+                    ? 'arrow_drop_up '
+                    : 'arrow_drop_down'
+                }}
+              </span>
+            </button>
+
+            <span class="material-icons mr-2">
+              {{
+                tipoModalidad.open && tipoModalidad.evaluaciones.length > 0
+                  ? 'folder_open'
+                  : 'folder'
+              }}
+            </span>
+            {{ tipoModalidad.selected }}
+
+            <button
+              mat-icon-button
+              class="remove-icon ml-3"
+              (click)="removeModalityType(i, j)"
+              *ngIf="!tipoModalidad.saved && !this.helperServirService.editMode"
+            >
+              <span class="material-icons"> remove_circle_outline </span>
+            </button>
+
+            <serv-talento-add-item-button
+              text="Añadir evaluaciones"
+              (clickEmitter)="newEvaluaciones(i, j)"
+              *ngIf="!tipoModalidad.saved"
+            >
+            </serv-talento-add-item-button>
+          </div>
+
+          <div
+            class="ml-3 mt-3 flex-v-center-left animate__animated animate__fadeIn"
+            *ngIf="
+              showComboAddEvaluacion &&
+              tipoModalidadCombo === i &&
+              subTipoModalidadCombo === j
+            "
+          >
+            <div class="w30 ml-3">
+              <nb-select
+                style="width: 100%"
+                multiple
+                placeholder="Selecciona las evaluaciones a completar"
+                [size]="'large'"
+                shape="semi-round"
+                [formControl]="setEvaluacionesControl"
+              >
+                <nb-option
+                  *ngFor="let item of helperServirService.evaluacionesServir"
+                  [value]="item"
+                  [disabled]="verifyOption(i, j, item)"
+                >
+                  {{ item.descripcion }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="btn__regimen_section">
+              <button (click)="addEvaluaciones(i, j)" class="add-icon">
+                <span class="material-icons"> done </span>
+              </button>
+              <button
+                (click)="this.showComboAddEvaluacion = false"
+                class="remove-icon"
+              >
+                <span class="material-icons"> remove_circle_outline </span>
+              </button>
+            </div>
+          </div>
+
+          <!---------------------------------------------------------------------------->
+          <!---------------- ARREGLO DE EVALUACIONES ------------------------------->
+
+          <div
+            class="ml-3 animate__animated animate__fadeIn"
+            [hidden]="!tipoModalidad.open"
+          >
+            <div
+              class="subtitle ml-4 mt-3"
+              *ngIf="tipoModalidad.evaluaciones.length !== 0"
+            >
+              Lista de evaluaciones
+            </div>
+            <div
+              class="ml-4 fs-13 msgDivError w-100 px-3 text-center"
+              *ngIf="!tipoModalidad.correcto"
+            >
+              {{ tipoModalidad.msgError }}
+            </div>
+
+            <div
+              class="container-box ml-3 mt-1 animate__animated animate__fadeIn"
+              *ngIf="tipoModalidad.evaluaciones.length !== 0"
+            >
+              <div class="flex-v-center-bottom w-100">
+                <div
+                  cdkDropList
+                  class="example-list w-100 py-2 px-2"
+                  (cdkDropListDropped)="drop($event, i, j)"
+                >
+                  <ng-container
+                    *ngFor="let item of tipoModalidad.evaluaciones; index as k"
+                  >
+                    <div
+                      class="example-box mat-elevation-z2 py-2 px-3"
+                      cdkDrag
+                      cdkDragHandle
+                    >
+                      <div class="drag-index fw-600 fs-16 ml-1">
+                        {{ k + 1 }}
+                      </div>
+
+                      <div class="flex-v-center-left">
+                        <span class="material-icons mr-2">
+                          insert_drive_file
+                        </span>
+
+                        <div class="evaluacion">
+                          {{ item.detalleEvaluacion }}
+                        </div>
+                      </div>
+
+                      <div class="pmin">
+                        <div>
+                          <span>P/</span>
+                          <span>Mín</span>
+                        </div>
+                        <mat-form-field>
+                          <input
+                            type="number"
+                            class="fs-16"
+                            matInput
+                            max="100"
+                            required
+                            min="0"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                            (keyup)="verifyRow(i, j, k)"
+                            (change)="verifyRow(i, j, k)"
+                            onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}"
+                            [disabled]="tipoModalidad.saved"
+                            [(ngModel)]="
+                              treeNode[i].modalidades[j].evaluaciones[k]
+                                .puntajeMinimo
+                            "
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="pmax">
+                        <div>
+                          <div>P/</div>
+                          <div>Máx</div>
+                        </div>
+                        <mat-form-field>
+                          <input
+                            type="number"
+                            class="fs-16"
+                            matInput
+                            maxlength="3"
+                            [(ngModel)]="item.puntajeMaximo"
+                            required
+                            min="0"
+                            max="100"
+                            (keyup)="verifyRow(i, j, k)"
+                            (change)="verifyRow(i, j, k)"
+                            onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}"
+                            [disabled]="tipoModalidad.saved"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                          />
+                        </mat-form-field>
+                      </div>
+
+                      <div class="ppor">
+                        <div>
+                          <span>Pct. </span>
+                        </div>
+                        <mat-form-field>
+                          <input
+                            type="number"
+                            class="fs-16"
+                            matInput
+                            [(ngModel)]="item.peso"
+                            required
+                            maxlength="3"
+                            [disabled]="tipoModalidad.saved"
+                            min="0"
+                            max="100"
+                            (keyup)="verifyRow(i, j, k)"
+                            (change)="verifyRow(i, j, k)"
+                            onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                          />
+                          <span
+                            mat-button
+                            matSuffix
+                            mat-icon-button
+                            class="fw-600 fs-20"
+                          >
+                            %
+                          </span>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="ml-2 btn-evaluation-section">
+                        <em
+                          class="material-icons mr-2 status-ok animate__animated animate__bounceIn"
+                          *ngIf="item.correcto"
+                        >
+                          done
+                        </em>
+
+                        <em
+                          *ngIf="!item.correcto"
+                          class="material-icons mr-2 status-bad animate__animated animate__bounceIn"
+                        >
+                          clear
+                        </em>
+
+                        <span
+                          class="material-icons remove-icon"
+                          *ngIf="!treeNode[i].modalidades[j].saved"
+                          (click)="removeEvaluacion(i, j, k)"
+                        >
+                          remove_circle_outline
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="ml-4 fs-12 px-3 mb-3 mt-n2 msgDivError text-right w-100"
+                      *ngIf="!item.correcto"
+                    >
+                      {{ item.msgError }}
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!---------------- FIN DE ARREGLO DE DE EVALUACIONES ------------------------------->
+          <!------------------------------------------------------------------------------------->
+        </div>
+
+        <div
+          class="ml-3 mt-3 flex-v-center-bottom animate__animated animate__fadeIn"
+          *ngIf="showComboAddTipoModalidad && tipoModalidadOpen === i"
+        >
+          <div class="w30 ml-3">
+            <select-field
+              [label]="'Elige el tipo de acceso'"
+              [hideDefaultOption]="true"
+              [control]="newTipoModalidadControl"
+              [items]="helperServirService.tiposFiltrados"
+              [valueToShow]="'descripcion'"
+            >
+            </select-field>
+          </div>
+
+          <div class="btn__regimen_section">
+            <button
+              (click)="addTipoModalidad(i)"
+              [disabled]="!newTipoModalidadControl.value"
+              class="add-icon"
+            >
+              <span class="material-icons"> done </span>
+            </button>
+            <button
+              (click)="showComboAddTipoModalidad = false"
+              class="remove-icon"
+            >
+              <span class="material-icons"> remove_circle_outline </span>
+            </button>
+          </div>
+
+          <div class="flex-spacer"></div>
+        </div>
+        <hr />
+      </div>
+
+      <!---------------- FIN DE ARREGLO DE DE TIPO MODALIDADES ------------------------------->
+      <!------------------------------------------------------------------------------------->
+
+      <div
+        class="mt-3 ml-3 flex-v-center-bottom animate__animated animate__fadeIn"
+        *ngIf="this.showComboAddModalidad"
+      >
+        <div class="w30">
+          <select-field
+            [label]="'Elige la modalidad de acceso'"
+            [control]="newModalidadControl"
+            [items]="helperServirService.modalidadesFiltradas"
+            [valueToShow]="'descripcion'"
+            [hideDefaultOption]="true"
+          >
+          </select-field>
+        </div>
+
+        <div class="btn__regimen_section">
+          <button (click)="addModalidad()" class="add-icon">
+            <span class="material-icons"> done </span>
+          </button>
+          <button (click)="showComboAddModalidad = false" class="remove-icon">
+            <span class="material-icons"> remove_circle_outline </span>
+          </button>
+        </div>
+
+        <div class="flex-spacer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divbottom px-5">
+  <button
+    nbButton
+    shape="round"
+    outline
+    status="primary"
+    class="px-5 mr-3"
+    [routerLink]="['/pages/gestionevaluaciones']"
+  >
+    Cancelar
+  </button>
+
+  <button
+    *ngIf="!this.helperServirService.editMode"
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="saveEnlaces()"
+  >
+    Guardar enlaces
+  </button>
+
+  <button
+    *ngIf="this.helperServirService.editMode"
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="saveEditEnlace()"
+  >
+    Guardar cambios
+  </button>
+</div>

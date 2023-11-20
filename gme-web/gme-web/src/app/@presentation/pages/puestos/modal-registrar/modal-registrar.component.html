@@ -1,0 +1,77 @@
+<div class="panel">
+   <div class="d-flex">
+      <span class="titulo">{{data.createMode ? 'Registrar Puesto' : 'Editar Puesto'}}</span>
+      <span class="flex-spacer"></span>
+      <nb-icon class="mr-2 btnClose" nbSuffix icon="close" (click)="onNoClick()"></nb-icon>
+   </div>
+   <mat-divider class="divider-modal my-3"></mat-divider>
+   <div>
+      <div class="row">
+         <label class="col-12 sub-titulo">Ingrese los siguientes datos </label>
+      </div>
+      
+      <form class="row mt-2" [formGroup]="form">
+         <div class="mb-3 col-md-12">
+            <label class="etiqueta">Nombre del puesto</label>
+            <input trim="blur" placeholder="Ingresar" type="text" nbInput shape="semi-round"
+               [status]="f.descripcion.invalid && f.descripcion.touched ? 'danger' : 'basic' " fullWidth
+               formControlName="descripcion" />
+
+            <div *ngIf="f.descripcion.invalid && f.descripcion.touched" class="invalid-text flex-column">
+               <span *ngIf="f.descripcion.errors.required">
+                  El campo es obligatorio
+               </span>
+               <span *ngIf="f.descripcion.errors.maxlength">
+                  El texto introducido es muy largo máximo 500 caracteres
+               </span>
+               <span *ngIf="f.descripcion.errors.uoError">
+                  {{mensaje}}
+               </span>
+            </div>
+         </div>
+
+         <div class="mb-3 col-md-12">
+            <label class="etiqueta">Órgano / UO / Sub UO</label>
+            <nb-select 
+               formControlName="organigramaId" 
+               placeholder="Seleccione" 
+               fullWidth="true" 
+               [size] = "'medium'"
+               shape = "semi-round"
+               [status]="f.organigramaId.invalid && f.organigramaId.touched ? 'danger' : 'basic' "
+            >
+               <nb-option 
+                  *ngFor="let uo of unidadOrganicaCbo" 
+                  [value]="uo.id">
+                  {{ uo.sigla }} - {{ uo.descripcion }}
+               </nb-option>
+            </nb-select>
+
+            <div *ngIf="f.organigramaId.invalid && f.organigramaId.touched" class="invalid-text flex-column">
+               <span *ngIf="f.organigramaId.errors.required">
+                  El campo es obligatorio
+               </span>
+            </div>
+         </div>
+
+         <div class="mb-3 col-md-12">
+            <label class="etiqueta">¿El puesto ingresado es jefe?</label>
+            <nb-radio-group [formControl]="f.esJefe" class="d-flex" name="esJefe">
+               <nb-radio  class="custom-rb" value="S">Sí</nb-radio>
+               <nb-radio  class="custom-rb" value="N">No</nb-radio>
+            </nb-radio-group>
+         </div>
+      </form>
+         
+      <div class="d-flex justify-content-center">
+         <button nbButton shape="round" size="medium" status="primary"
+            class="background-light-blue text-white" (click)="save()">
+            {{data.createMode ? 'Registrar' : 'Guardar'}}
+         </button>
+         <button nbButton shape="round" size="medium" status="secondary" (click)="onNoClick()"
+            class="text-white ml-3" style="background-color: #ADB5BD;">
+            Cancelar
+         </button>
+      </div>
+   </div>
+</div>

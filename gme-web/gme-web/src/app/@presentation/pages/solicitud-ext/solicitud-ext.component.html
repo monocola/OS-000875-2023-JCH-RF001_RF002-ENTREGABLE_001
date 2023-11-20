@@ -1,0 +1,150 @@
+<div class='col-12 row m-0 p-0 justify-content-left'>
+  <div class="p-6 col-md-12 col-12">
+    <div class="d-flex">
+      <h3 class="titlePage">Solicitud de registro de entidades</h3>
+      <span class="flex-spacer"></span>
+      <div class="m-1 p-1">
+        <button nbButton shape="round" size="medium" status="primary" class="mr-3"
+          style='color: #0DACBC; background-color: transparent; border: none;' (click)='filter = !filter'>
+          {{filter ? 'Ocultar ' : 'Mostrar '}} filtros <em class="ml-2 ent-web-eyes-open"></em>
+
+        </button>
+      </div>
+    </div>
+
+    <div [formGroup]="frm">
+
+      <ng-container *ngIf="filter">
+
+        <nb-card class='filter'>
+          <nb-card-body class='px-2'>
+            <div class='col-12 justify-content-left m-0 p-0 align-items-end'>
+              <div class="mt-3 subtitle"></div>
+              <div class="row mt-1 ml-1 mr-1">
+                <div class="mb-3 col-md-3">
+                  <label>Año de solicitud</label>
+                  <nb-select formControlName="anio" placeholder="Seleccione" fullWidth="true" size='medium'
+                    shape="semi-round">
+
+                    <nb-option *ngFor="let cboAnio of anio" [value]="cboAnio.texto">{{ cboAnio.texto }}
+                    </nb-option>
+                  </nb-select>
+                  <div *ngIf="f.anio.invalid && f.anio.touched" class="invalid-text flex-column">
+                    <span *ngIf="f.anio.errors.required">
+                      El campo es obligatorio
+                    </span>
+
+                  </div>
+                </div>
+
+                <div class="mb-3 col-md-3">
+                  <label>Estado de solicitud</label>
+                  <nb-select formControlName="estado" placeholder="Seleccione" fullWidth="true" size='medium'
+                    shape="semi-round">
+                    <nb-option>Seleccione</nb-option>
+                    <nb-option *ngFor="let cboEstado of estado" [value]="cboEstado.codigoNumero">
+
+                      {{cboEstado.valorTexto}}
+                    </nb-option>
+                  </nb-select>
+                </div>
+
+                <div class="mb-3 col-md-3">
+                  <label>RUC</label>
+                  <input [maxLength]='rucMaxLenght' [simpleCharacteresAndNumber]='simpleCharacteresAndNumber'
+                    trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                    [status]="f.ruc.invalid && f.ruc.touched ? 'danger' : 'basic' " formControlName="ruc" />
+                  <div *ngIf="f.ruc.invalid && f.ruc.touched" class="invalid-text flex-column">
+                    <span *ngIf="f.ruc.errors.minLength">
+                      El numero de ruc es muy corto
+                    </span>
+                    <span *ngIf="f.ruc.errors.maxLength">
+                      El numero de ruc es muy largo
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mb-3 col-md-3">
+                  <label>Entidad</label>
+                  <input trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                    [status]="f.entidad.invalid && f.entidad.touched ? 'danger' : 'basic' " formControlName="entidad" />
+                  <div *ngIf="f.entidad.invalid && f.entidad.touched" class="invalid-text flex-column">
+                    <span *ngIf="f.entidad.errors.minlength">
+                      El numero de ruc es muy corto
+                    </span>
+                    <span *ngIf="f.entidad.errors.maxlength">
+                      El numero de ruc es muy largo
+                    </span>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="row mt-1 ml-1 mr-1">
+
+                <div class="mb-3 col-md-3">
+                  <label>DNI / CE</label>
+                  <input trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                    oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+                    maxlength="12"
+                    minlength="8"
+                    [status]="f.nroDoc.invalid && f.nroDoc.touched ? 'danger' : 'basic' " formControlName="nroDoc" />
+                  <div *ngIf="f.nroDoc.invalid && f.nroDoc.touched" class="invalid-text flex-column">
+                    <span *ngIf="f.nroDoc.errors.minlength">
+                      El numero de ruc es muy corto
+                    </span>
+                    <span *ngIf="f.nroDoc.errors.maxlength">
+                      El numero de ruc es muy largo
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  <label>Apellidos y Nombres</label>
+                  <input trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                    [status]="f.nombres.invalid && f.nombres.touched ? 'danger' : 'basic' " formControlName="nombres" />
+                  <div *ngIf="f.nombres.invalid && f.nombres.touched" class="invalid-text flex-column">
+                    <span *ngIf="f.nombres.errors.minlength">
+                      El numero de ruc es muy corto
+                    </span>
+                    <span *ngIf="f.nombres.errors.maxlength">
+                      El numero de ruc es muy largo
+                    </span>
+                  </div>
+                </div>
+
+                <div class="mb-3 col-md-3">
+                  <div class="w-100 h-100 btn_area">
+                    <button nbButton shape="round" size="medium" status="primary" outline (click)='clear()'>
+                      Limpiar
+                    </button>
+                    <button nbButton shape="round" size="medium" style='color: white; background-color: #0dacbc;'
+                      (click)='search()' [disabled]='!frm.valid'>
+                      Buscar
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+      </ng-container>
+
+      <div class="row mt-1">
+        <ng-container>
+          <gme-web-table class='col-12' holderText="Buscar por Año, Entidad, DNI, Solicitante..."
+            [tableData]="this.lstSolicitudesExt" [tableColumns]="this.tableColumns" [isFilterable]="true"
+            [isPageable]="true" [paginationSizes]="[10, 20, 50, 100]" [defaultPageSize]="10" [acciones]="true"
+            [showTitle]='false' custom1BtnTitle="Ver" custom1BtnIcon="ent-web-eyes-open"
+            custom1BtnClass='accion-monitor' [custom1BtnShow]="true" (custom1BtnOnClick)="openVer($event)"
+            custom2BtnTitle="Notificar" custom2BtnIcon="ent-web-mail" custom2BtnClass='accion-notification'
+            [custom2BtnShow]="true" (custom2BtnOnClick)="notificar($event)" [showDownloadButton]='false'>
+          </gme-web-table>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

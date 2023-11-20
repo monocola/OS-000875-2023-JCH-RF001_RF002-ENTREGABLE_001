@@ -1,0 +1,77 @@
+<div class="mt-3">
+  <label class="flex-v-center-left">
+    {{ title }}
+    <serv-talento-btn-add
+      (clickEmitter)="addFirstItem()"
+      [text]="addItemLabel"
+      [disableButton]="control.value.length > 0"
+    >
+    </serv-talento-btn-add>
+  </label>
+
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div
+      class="flex-v-center w-100 my-1"
+      *ngFor="let item of control.value; let i = index"
+    >
+      <span class="ml-3 mr-2"> {{ i + 1 }}. </span>
+
+      <input
+        type="text"
+        class="input"
+        [(ngModel)]="item.nombre"
+        [placeholder]="placeholderItem"
+        nbInput
+        shape="semi-round"
+        maxlength="250"
+        [status]="!item.nombre && control?.touched ? 'danger' : 'basic'"
+        (blur)="this.clear(i)"
+        (keyup)="control.markAsDirty()"
+      />
+
+      <div class="flex-spacer"></div>
+
+      <div class="flex-v-center boxRadioGroup">
+        <mat-radio-group
+          [(ngModel)]="item.nivel"
+          aria-label="Select an option"
+          class="d-flex"
+          color="primary"
+          (change)="control.markAsDirty()"
+        >
+          <mat-radio-button class="radio mx-2" value="1">
+            Básico
+          </mat-radio-button>
+          <mat-radio-button class="radio mx-2" value="2">
+            Intermedio
+          </mat-radio-button>
+          <mat-radio-button class="radio mx-2" value="3">
+            Avanzado
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="flex-spacer"></div>
+
+      <div class="flex-v-center-right boxButtons">
+        <button
+          mat-icon-button
+          class="mr-2 iconAdd"
+          (click)="addItem()"
+          *ngIf="i == control.value.length - 1"
+          [disabled]="control.value.length >= maxItems"
+        >
+          <em class="material-icons"> add_circle_outline </em>
+        </button>
+
+        <button mat-icon-button class="mr-2 iconRemove" (click)="removeItem(i)">
+          <span class="material-icons"> remove_circle_outline </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="invalid-text" *ngIf="control.invalid && control.touched">
+  Tiene que ingresar como mínimo un ítem.
+</div>

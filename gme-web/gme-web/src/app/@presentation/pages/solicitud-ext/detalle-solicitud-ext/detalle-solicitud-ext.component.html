@@ -1,0 +1,189 @@
+<div class='col-12 row m-0 p-0 justify-content-left' xmlns='http://www.w3.org/1999/html'
+     xmlns='http://www.w3.org/1999/html'>
+  <div class="p-6 col-md-12 col-12">
+
+    <div class="d-flex align-items-center mb-2 mt-2">
+      <gme-web-back-button routerLink="../../"></gme-web-back-button>
+      <h3 class="page-title mb-0">Detalles de entidad</h3>
+    </div> 
+
+    <div [formGroup]="frm">
+      <div class='row col-12 m-0 p-0'>
+        <nb-card class='cards-container'>
+          <nb-card-body class='m-0 p-0'>
+            <div class='row col-md-12 m-0 p-0'>
+              <div class='material-icons blue col-md-6'>
+                <span class="material-icons blue ">business</span>
+                <span class='texto'>   Entidad</span>
+              </div>
+              <div class='row blue col-md-6'>
+                <div class='col-6'>
+                  <div class='align-items-end m-0 p-0'>
+                    <button class="outer-estado" type="button">
+                      <span [className]='estadoColor'><span class="dot">
+                      </span>   {{ this.frm.controls.estado.value | titlecase}}</span>
+                    </button>
+                  </div>
+                </div>
+                <div class='d-flex align-items-end'>
+                  <span class='estado'>Estado</span>
+                </div>
+              </div>
+            </div>
+            <div class='row col-md-12 m-0 p-0 mt-4'>
+              <div class='col-md-5 recuadro pl-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  RUC
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='ruc'>
+                </div>
+              </div>
+              <div class='col-md-7 recuadro pl-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Razón Social
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                 <label id="labelDisabled">{{ this.frm.controls.razonSocial.value}}</label>
+                </div>
+              </div>
+            </div>
+            <div class='row col-md-12 m-0 p-0 mt-3'>
+              <div class='col-md-5 recuadro pl-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Nombre abreviado de la entidad
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='abreviatura'>
+                </div>
+              </div>
+              <div class='col-md-7 recuadro pl-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Nivel de gobierno
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='nivelGobierno'>
+                </div>
+              </div>
+            </div>
+            <div class='row col-md-12 m-0 p-0 mt-3'>
+              <div class='col-md-5 recuadro pl-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Tipo de entidad
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='tipoEntidad'>
+                </div>
+              </div>
+              <div class='col-md-7 recuadro pl-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Sector
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='sector'>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <nb-card class='cards-container'>
+          <nb-card-body class='m-0 p-0'>
+            <div class='row col-md-12 m-0 p-0'>
+              <div class='material-icons blue col-md-6'>
+                <span class="material-icons blue ">face</span>
+                <span class='texto'>   Solicitante</span>
+              </div>
+              <div class='row blue col-md-6 mr-0 pr-0'>
+                <div class='col-12 m-0 p-0'>
+                  <div class='align-items-end'>
+                    <button class="my-button" type="button">
+                      <span class='material-icons small'>description</span>   Doc. asignación</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class='row col-md-12 m-0 p-0 mt-3'>
+              <div class='col-md-2 recuadro pl-3 mt-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  DNI/CE
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='documento'>
+                </div>
+              </div>
+              <div class='col-md-3 recuadro pl-3 mt-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Apellido paterno
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='apePaterno'>
+                </div>
+              </div>
+              <div class='col-md-3 recuadro pl-3 mt-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Apellido materno
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='apeMaterno'>
+                </div>
+              </div>
+              <div class='col-md-4 recuadro pl-3 mt-3 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Nombres
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='nombres'>
+                </div>
+              </div>
+            </div>
+            <div class='row col-md-12 m-0 p-0 mt-2'>
+              <div class='col-md-4 recuadro pl-3 mt-2 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Correo electrónico
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='correo'>
+                </div>
+              </div>
+              <div class='col-md-3 recuadro pl-3 mt-2 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Teléfono
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='telefono'>
+                </div>
+              </div>
+              <div class='col-md-2 recuadro pl-3 mt-2 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Anexo
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='anexo'>
+                </div>
+              </div>
+              <div class='col-md-3 recuadro pl-3 mt-2 m-0 p-0'>
+                <div class='row col-md-12 m-0 p-0'>
+                  Celular
+                </div>
+                <div class='row col-md-12 etiqueta m-0 p-0'>
+                  <input class='cajaTexto etiqueta' type='text' formControlName='celular'>
+                </div>
+              </div>
+            </div>
+
+          </nb-card-body>
+        </nb-card>
+        <div class='row col-md-12'>
+          <div class='offset-4 col-md-6'>
+            <input type='button' value='Validar' class='btnValidar' (click)='validaEntidad(1)' [disabled]='habilitarOpcion'>
+            <input type='button' value='Observar' class='btnObservar' (click)='validaEntidad(2)' [disabled]='habilitarOpcion'>
+            <input type='button' value='Rechazar' class='btnRechazar' (click)='validaEntidad(3)' [disabled]='habilitarOpcion'>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

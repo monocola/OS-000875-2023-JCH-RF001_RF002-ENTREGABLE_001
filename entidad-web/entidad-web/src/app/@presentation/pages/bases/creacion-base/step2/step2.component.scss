@@ -1,0 +1,6 @@
+::ng-deep .mat-checkbox-layout {
+  white-space: normal !important;
+  & > span {
+    line-height: 1.125rem !important;
+  }
+}

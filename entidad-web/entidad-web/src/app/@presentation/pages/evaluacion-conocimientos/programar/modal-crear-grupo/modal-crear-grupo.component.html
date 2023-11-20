@@ -1,0 +1,310 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="mb-12 col-md-12 divHeaderMargin">
+  <div class="flex-v-center flex-column">
+    <img
+      src="assets/images/icons/creado.png"
+      style="height: 50px; width: 55px;"
+      alt="Logo"
+    />
+    <h6 class="mt-3">{{ titulo }}</h6>
+  </div>
+
+  <div class="divHeader">
+    <div class="divSubtitle">
+      <div>
+        <strong>{{ this.nombreperfil }}</strong>
+      </div>
+      <div>
+        |
+        <span class="blueText">{{ this.cantidadPostulantes }} postulantes</span>
+      </div>
+    </div>
+    <div style="margin-top: 10px; align-self: flex-end;">
+      <span class="h5Text">{{ this.nombreGrupo }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="divHr">
+  <hr class="solid" />
+</div>
+
+<div class="py-2 mx-2 body container-fluid divMargin">
+  <form [formGroup]="registerForm" class="row">
+    <div class="mb-4 col-md-4">
+      <label for="dep1">Fecha de Inicio</label>
+      <nb-form-field>
+        <input
+          id='dep1'
+          nbInput
+          readonly
+          [ngxMatDatetimePicker]="pickerFecIni"
+          [formControl]="f.fechaInicio"
+          shape="semi-round"
+          fieldSize="large"
+          [disabled]="false"
+        />
+
+        <mat-datepicker-toggle
+          nbSuffix
+          [for]="pickerFecIni"
+        ></mat-datepicker-toggle>
+
+        <ngx-mat-datetime-picker
+          #pickerFecIni
+          [showSpinners]="true"
+          [showSeconds]="false"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [touchUi]="true"
+          [color]="color"
+          [enableMeridian]="false"
+        >
+        </ngx-mat-datetime-picker>
+      </nb-form-field>
+    </div>
+
+    <div class="mb-4 col-md-4">
+      <label for="dep2">Fecha de Fin</label>
+      <nb-form-field>
+        <input
+          id='dep2'
+          nbInput
+          readonly
+          [ngxMatDatetimePicker]="picker"
+          [formControl]="f.fechaFin"
+          shape="semi-round"
+          fieldSize="large"
+          [disabled]="false"
+        />
+
+        <mat-datepicker-toggle nbSuffix [for]="picker"></mat-datepicker-toggle>
+
+        <ngx-mat-datetime-picker
+          #picker
+          [showSpinners]="true"
+          [showSeconds]="false"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [touchUi]="true"
+          [color]="color"
+          [enableMeridian]="false"
+        >
+        </ngx-mat-datetime-picker>
+      </nb-form-field>
+    </div>
+
+    <div class="mb-4 col-md-4">
+      <input-field
+        [control]="f.cantidad"
+        [label]="'Cantidad'"
+        [placeholder]="'Cantidad'"
+        [maxlength]="3"
+        [minlength]="0"
+        [banKeyType]="2"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-4 col-md-4">
+      <autocomplete
+        [label]="'Evaluación'"
+        [placeholder]="'Buscar Evaluación'"
+        [control]="f.evaluacion"
+        [fieldToShow]="'descripcion'"
+        [items]="autoEvaluaciones"
+        (selectedChange)="changeAutoCompleteEvaluacion()"
+      ></autocomplete>
+    </div>
+
+    <div class="mb-4 col-md-4">
+      <autocomplete
+        [label]="'Evaluador'"
+        [placeholder]="'Buscar Evaluador'"
+        [control]="f.evaluador"
+        [fieldToShow]="'nombreCompleto'"
+        [items]="autoEvaluadores"
+        (selectedChange)="changeAutoCompleteEvaluador()"
+      ></autocomplete>
+    </div>
+
+    <div class="mb-4 col-md-4">
+      <select-field
+        [label]="'Modalidad'"
+        [control]="f.selModalidad"
+        [items]="cmbModalidad"
+        [value]="'idMaeDuracion'"
+        [valueToShow]="'descrDuracion'"
+        (selectedChange)="changeModalidad()"
+      >
+      </select-field>
+    </div>
+
+    <div *ngIf="!isVirtual" class="mb-12 col-md-12">
+      <select-field
+        [label]="'Sede'"
+        [control]="f.selSede"
+        [items]="cmbSede"
+        [value]="'sedeId'"
+        [valueToShow]="'nombreSede'"
+        (selectedChange)="changeSede()"
+      >
+      </select-field>
+    </div>
+
+    <div *ngIf="isOtroSelected" class="mb-12 col-md-12">
+      <br />
+      <input-field
+        [control]="f.nombreSede"
+        [label]="'Nombre de la Sede'"
+        [placeholder]=""
+        [maxlength]="200"
+        [minlength]="0"
+      >
+      </input-field>
+      <br />
+    </div>
+
+    <div *ngIf="isOtroSelected" class="mb-4 col-md-4">
+      <select-field
+        [label]="'Departamento'"
+        [control]="f.deptSelectValue"
+        [items]="departamentos"
+        [value]="'ubigeoId'"
+        [valueToShow]="'nombre'"
+        (selectedChange)="cambioDept($event)"
+      >
+      </select-field>
+    </div>
+
+    <div *ngIf="isOtroSelected" class="mb-4 col-md-4">
+      <select-field
+        [label]="'Provincia'"
+        [control]="f.provSelectValue"
+        [items]="provincias"
+        [value]="'ubigeoId'"
+        [valueToShow]="'nombre'"
+        (selectedChange)="cambioProv($event)"
+      >
+      </select-field>
+    </div>
+
+    <div *ngIf="isOtroSelected" class="mb-4 col-md-4">
+      <select-field
+        [label]="'Distrito'"
+        [control]="f.distSelectValue"
+        [items]="distritos"
+        [value]="'ubigeoId'"
+        [valueToShow]="'nombre'"
+        (selectedChange)="cambioDistr($event)"
+      >
+      </select-field>
+    </div>
+
+    <div *ngIf="isOtroSelected" class="mb-12 col-md-12">
+      <input-field
+        [control]="f.lugarEvaluacion"
+        [label]="'Lugar de evaluaciòn'"
+        [placeholder]=""
+        [maxlength]="200"
+        [minlength]="0"
+      >
+      </input-field>
+    </div>
+
+    <div *ngIf="!isVirtual" class="mb-12 col-md-12">
+      <br />
+      <input-field
+        [control]="f.referencias"
+        [label]="'Referencias (Opcional)'"
+        [placeholder]=""
+        [maxlength]="200"
+        [minlength]="0"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-12 col-md-12">
+      <br />
+      <label> Indicaciones adicionales : </label>
+      <textarea
+        shape="semi-round"
+        fieldSize="medium"
+        [rows]="2"
+        nbInput
+        fullWidth
+        placeholder="Indicaciones adicionales"
+        [formControl]="f.indicaciones"
+        [status]="
+          f.indicaciones?.invalid && f.indicaciones?.touched
+            ? 'danger'
+            : 'basic'
+        "
+      ></textarea>
+      <div class="d-flex w-100">
+        <div
+          *ngIf="f.indicaciones?.invalid && f.indicaciones?.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.indicaciones.errors?.required">
+            El campo es obligatorio
+          </span>
+        </div>
+        <div class="flex-spacer"></div>
+      </div>
+      <br />
+    </div>
+
+    <div *ngIf="isVirtual" class="mb-12 col-md-12">
+      <input-field
+        [control]="f.linkMeet"
+        [label]="'Link de la sala'"
+        [placeholder]=""
+        [maxlength]="200"
+        [minlength]="0"
+      >
+      </input-field>
+    </div>
+  </form>
+</div>
+
+<div style="position: relative;">
+  <div style="align-self: center;">
+    <div class="flex-v-center">
+      <div class="col-4">
+        <button
+          nbButton
+          outline
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="onNoClick()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-4">
+        <button
+          nbButton
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="onClickGuardar()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

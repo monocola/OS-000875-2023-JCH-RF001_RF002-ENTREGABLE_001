@@ -1,0 +1,253 @@
+.personal-card {
+  min-width: 235px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 1rem;
+  // box-shadow: 0 0 7px rgba(129, 145, 164, 0.17);
+  // border-radius: 20px;
+  // height: 162px;
+  // left: 348px;
+  // top: 433px;
+}
+
+.info-usuario {
+  // border: 1px solid #249eaf;
+  // box-sizing: border-box;
+  // border-radius: 10px;
+  // font-style: normal;
+  // font-weight: 500;
+  // font-size: 12px;
+  // line-height: 14px;
+  // color: #0dacbc;
+
+  border: 1px solid #249EAF;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  // position: absolute;
+  // width: 158px;
+  // height: 16px;
+  // left: 433px;
+  // top: 514px;
+
+  // font-family: 'Roboto';
+  // font-style: normal;
+  // font-weight: 700;
+  // font-size: 14px;
+  // line-height: 16px;
+  // display: flex;
+  // align-items: center;
+  // text-transform: capitalize;
+  color: #0DACBC;
+}
+
+// .tooltip-body-::-webkit-search-results-button .popoverInfoEvaluados {
+//   visibility: visible;
+// }
+
+// .tooltip-body-rol:hover .popoverInfoEvaluados {
+//   visibility: visible;
+// }
+
+// .tooltip-body-::-webkit-search-results-button .popoverInfo {
+//   visibility: visible;
+// }
+
+// .tooltip-body-rol:hover .popoverInfo {
+//   visibility: visible;
+// }
+
+// .tooltip-body-rol {
+//   position: relative;
+//   display: inline-block;
+//   // border-bottom: 1px dotted black;
+// }
+
+// .texto-tooltip-body-rol {
+//   font-size: 11px;
+//   line-height: 13px;
+//   /* identical to box height */
+//   align-items: center;
+//   color: #f2994a;
+// }
+
+// .texto-tooltip-body-evaluador {
+//   font-size: 11px;
+//   line-height: 13px;
+//   /* identical to box height */
+//   align-items: center;
+//   color: #0DACBC;
+// }
+
+// .popoverInfo {
+//   visibility: hidden;
+//   width: 156px;
+//   background-color: #fff;
+//   color: #fff;
+//   text-align: center;
+//   border-radius: 6px;
+//   padding: 5px 0;
+//   position: relative;
+//   z-index: 1;
+//   top: -50px;
+//   right: 85%;
+//   border: outset;
+// }
+
+// .area {
+//   width: 115px;
+// height: 14px;
+// left: 433px;
+// top: 716px;
+
+// font-family: 'Roboto';
+// font-style: normal;
+// font-weight: 400;
+// font-size: 12px;
+// line-height: 14px;
+// /* identical to box height */
+
+// display: flex;
+// align-items: center;
+// text-transform: capitalize;
+
+// color: #8191A4;
+// }
+
+// .sinevlauar {
+//   background-color: #FFF0F0;
+// }
+
+// .popoverInfoEvaluados {
+//   visibility: hidden;
+//   width: 123px;
+//   background-color: #fff;
+//   color: #000;
+//   text-align: center;
+//   border-radius: 6px;
+//   padding: 5px 0;
+//   position: relative;
+//   z-index: 1;
+//   top: -50px;
+//   right: 77%;
+//   border: outset;
+// }
+
+// .rol-abreviado {
+//   width: 51px;
+//   height: 14px;
+//   left: 599px;
+//   top: 456px;
+
+//   font-family: 'Roboto';
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 12px;
+//   line-height: 14px;
+//   /* identical to box height */
+
+//   display: flex;
+//   align-items: center;
+//   text-align: right;
+//   text-transform: capitalize;
+
+//   color: #8191a4;
+// }
+
+.icono-cerrar {
+  cursor: pointer;
+}
+
+.nombre {
+  // height: 12px;
+  // left: 444px;
+  // top: 455px;
+  color: #000000;
+  font-size: 18px;
+  line-height: 21px;
+
+  // font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  // font-weight: 700;
+  // font-size: 12px;
+  // line-height: 16px;
+  // display: flex;
+  // align-items: center;
+  // text-transform: capitalize;
+
+  // color: #000000;
+}
+
+// .initial {
+//   margin-top: 10px;
+// }
+.puesto {
+  // width: 154px;
+  // height: 14px;
+  // left: 444px;
+  // top: 475px;
+  // font-family: 'Roboto';
+  color: #8191A4;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 16px;
+  // line-height: 14px;
+  /* identical to box height */
+
+  // display: flex;
+  // align-items: center;
+  // text-transform: capitalize;
+
+  // color: #8191a4;
+}
+
+.pie-info {
+  color: #8191A4;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.button-panel {
+  margin: 0 -1rem;
+}
+
+.button-sub-panel {
+  margin-bottom: -1rem;
+}
+
+.bg-meta-success {
+  background-color: #00BFA6;
+}
+
+.bg-meta-warning {
+  background-color: #F7AC52;
+}
+
+.bg-meta-danger {
+  background-color: #FC5162;
+}
+
+.bg-meta-info {
+  background-color: #e4520f;
+}
+
+.bg-meta-gray {
+  background-color: #8191A4;
+}

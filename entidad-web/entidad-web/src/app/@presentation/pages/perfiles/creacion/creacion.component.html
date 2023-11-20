@@ -1,0 +1,75 @@
+<div class="body flex-v-center">
+  <button class="btnBack m-3 p-2" [routerLink]="['/pages/regperfilpuesto']">
+    Atrás
+  </button>
+  <div class="d-flex">
+    <div class="container-fluid row">
+      <div class="col-md-2"></div>
+      <div
+        class="col-md-5 d-flex h-100 w-100"
+        style="
+          align-content: center;
+          justify-content: center;
+          flex-direction: column;
+        "
+      >
+        <h5 #lblForm class="fw-500 labelForm">
+          Empecemos a crear nuevos perfiles de puestos y prácticas
+        </h5>
+        <div class="formCreation" #formCreation>
+          <label>
+            Régimen o modalidad formativa
+            <nb-icon
+              (click)="openLegendModal()"
+              icon="info"
+              nbPopoverPlacement="right"
+              nbPopoverTrigger="hint"
+              class="popoverTrigger"
+            >
+            </nb-icon>
+          </label>
+          <nb-form-field>
+            <nb-select
+              [formControl]="this.modalityField"
+              placeholder="Elegir"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+            >
+              <nb-option value="">---Seleccione---</nb-option>
+              <nb-option
+                *ngFor="let item of helperPerfilesService.regimenesToCreate"
+                [value]="item"
+              >
+                {{ item.descripcion + ' (' + item.descripcionCorta + ')' }}
+              </nb-option>
+            </nb-select>
+          </nb-form-field>
+
+          <button
+            class="w-100 mt-3"
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="create()"
+            [disabled]="!this.modalityField.value"
+          >
+            Crear
+          </button>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <img
+          width="90%"
+          #imgCreation
+          class="imgCreation"
+          src="assets/images/perfil.png"
+          alt="imagen perfil de puesto"
+        />
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>

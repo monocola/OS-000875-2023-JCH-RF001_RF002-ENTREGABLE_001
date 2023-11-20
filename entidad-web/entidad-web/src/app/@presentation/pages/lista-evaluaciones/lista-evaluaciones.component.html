@@ -1,0 +1,184 @@
+<div class="title py-4">
+  <!-- <div class="col-md-6 col-sm-12 m-0 text-info">Evaluaciones</div> -->
+  <h3 class="titlePage">Evaluaciones</h3>
+</div>
+<mat-divider></mat-divider>
+<form [formGroup]="filterForm" autocomplete="off">
+  <div class="p-4" class="mt-4 align-items-end">
+    <div class="col-12 row m-0 justify-content-center bg-white p-0">
+      <div class="col-xl-10 col-12 row ml-0 mr-0 p-0">
+        <div class="col-md-10 col-12 row m-0 p-0">
+          <div class="col-12 font-weight-bold fs-16 mb-2">
+            Filtros de Busqueda
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="col-12 row pl-0">
+            <div class="col-md-4 col-12">
+              <label>Código de convocatoria | Régimen</label>
+              <nb-form-field>
+                <input
+                  #inputConvocatoria
+                  formControlName="convocatoria"
+                  id="convocatoria"
+                  fullWidth
+                  nbInput
+                  type="search"
+                  autocomplete="off"
+                  shape="rectangle"
+                  fieldSize="small"
+                  placeholder="Buscar"
+                  (blur)="verifyConvocatoria()"
+                  shape="semi-round"
+                  maxlength="120"
+                  name="inputConvocatoria"
+                  class="cursor-pointer"
+                  (input)="onChangeConvocatoria()"
+                  [nbAutocomplete]="autoConvocatoria"
+                  autocomplete="off"
+                  fieldSize="large"
+                />
+                <nb-icon nbSuffix icon="buscar"></nb-icon>
+              </nb-form-field>
+
+              <nb-autocomplete
+                #autoConvocatoria
+                (selectedChange)="onSelectionChangeConvocatoria($event)"
+                formControlName="convocatoriaId"
+                ngDefaultControl
+              >
+                <nb-option
+                  *ngFor="let option of filteredOptionsConvocatoria$ | async"
+                  [value]="option.codigoConvocatoria"
+                >
+                  {{ option.codigoConvocatoria }}
+                </nb-option>
+              </nb-autocomplete>
+            </div>
+            <div class="col-md-3 col-12">
+              <label>Régimen</label>
+              <nb-form-field>
+                <input
+                  #inputRegimen
+                  formControlName="regimen"
+                  id="regimen"
+                  fullWidth
+                  nbInput
+                  type="text"
+                  shape="rectangle"
+                  fieldSize="small"
+                  placeholder="Buscar régimen"
+                  (blur)="verifyRegimen()"
+                  shape="semi-round"
+                  maxlength="120"
+                  name="inputRegimen"
+                  class="cursor-pointer"
+                  (input)="onChangeRegimen()"
+                  [nbAutocomplete]="autoRegimen"
+                  autocomplete="off"
+                  fieldSize="large"
+                />
+                <nb-icon nbSuffix icon="buscar"></nb-icon>
+              </nb-form-field>
+
+              <nb-autocomplete
+                #autoRegimen
+                (selectedChange)="onSelectionChangeRegimen($event)"
+                formControlName="regimenId"
+                ngDefaultControl
+              >
+                <nb-option
+                  *ngFor="let option of filteredOptionsRegimen$ | async"
+                  [value]="option.desRegimen"
+                >
+                  {{ option.desRegimen }}
+                </nb-option>
+              </nb-autocomplete>
+            </div>
+            <div class="col-md-3 col-12">
+              <label>Fecha de evaluacion</label>
+              <nb-form-field>
+                <input
+                  [nbDatepicker]="rangepicker"
+                  nbInput
+                  fullWidth
+                  formControlName="rangoFechas"
+                  class="cursor-pointer"
+                  format="DD/MM/YYYY"
+                  placeholder="Elegir rango"
+                  fieldSize="large"
+                />
+                <nb-icon nbSuffix icon="calendario"></nb-icon>
+                <nb-rangepicker #rangepicker></nb-rangepicker>
+              </nb-form-field>
+            </div>
+            <div class="col-md-2 col-12">
+              <nb-form-field>
+                <label>Estado</label>
+                <nb-select
+                  placeholder="Elegir estado"
+                  formControlName="estado"
+                  fullWidth
+                  shape="rectangle"
+                  size="large"
+                >
+                  <nb-option
+                    *ngFor="let item of lstEstado"
+                    [value]="item.maeDetalleId"
+                    >{{ item.descripcion }}</nb-option
+                  >
+                </nb-select>
+              </nb-form-field>
+            </div>
+          </div>
+          <div class="col p-0 my-4 row m-0 align-self-end justify-content-end">
+            <button
+              nbButton
+              class="col-1"
+              outline
+              shape="round"
+              status="primary"
+              (click)="limpiar()"
+            >
+              Limpiar
+            </button>
+            <button
+              nbButton
+              class="col-1 ml-2"
+              shape="round"
+              status="primary"
+              (click)="buscar()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<mat-divider></mat-divider>
+<div class="bg-gray col-12 row m-0 justify-content-center p-0 pb-4">
+  <div class="col-xl-10 col-12 row ml-0 mr-0 p-0">
+    <div class="subtitle pt-2">Lista de convocatorias</div>
+    <div class="col-md-12 col-12 m-0 p-0">
+      <serv-talento-table
+        [tableData]="this.lstEvaluaciones"
+        [tableColumns]="conocimientoTableColumns"
+        [isFilterable]="true"
+        [isPageable]="true"
+        [paginationSizes]="[5, 10, 15]"
+        [defaultPageSize]="10"
+        (sort)="sortData($event)"
+        [acciones]="true"
+        [title]="'Lista de conocimientos'"
+        [btnShowPdf]="true"
+        (showpdfAction)="viewDetailEvaluacion($event)"
+
+        [dataExport]="getDataExportEvaluaciones()"
+      >
+      </serv-talento-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="body" style="background-color: #fbfbfb;">
+
+  <div class="d-flex">
+    <h3 class="titlePage">Mi Entidad</h3>
+    <span class="flex-spacer"></span>
+  </div>
+
+  <mat-tab-group  mat-align-tabs="end" (selectedTabChange)="tipoAplicacion($event)">
+    <mat-tab label='Datos de la entidad'  >
+
+    </mat-tab>
+    <mat-tab label='Datos de GDR'>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class='mb-4 p-0'></div>
+
+  <gme-web-datos-entidad></gme-web-datos-entidad>
+  
+  <div class='mb-4 p-0'></div>
+
+  <div class="row">
+    <div class="col-12">
+    <mat-divider></mat-divider>
+  </div>
+  </div>
+<div class='mb-4 p-0'></div>
+
+<div>
+  <gme-web-gme *ngIf="!isGDR"></gme-web-gme>
+</div>
+
+<div>
+  <gdr-web-gdr *ngIf="isGDR"></gdr-web-gdr>
+
+</div>
+ 
+</div>

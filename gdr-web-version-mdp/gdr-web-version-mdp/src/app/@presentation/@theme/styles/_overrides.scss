@@ -1,0 +1,22 @@
+@import 'themes';
+
+@mixin nb-overrides() {
+  width: auto;
+}
+
+@mixin width-class($size) {
+  .w-#{$size} {
+    width: $size * 1% !important;
+  }
+}
+
+@include width-class(10);
+@include width-class(20);
+@include width-class(30);
+@include width-class(40);
+@include width-class(50);
+@include width-class(60);
+@include width-class(70);
+@include width-class(80);
+@include width-class(90);
+@include width-class(100);

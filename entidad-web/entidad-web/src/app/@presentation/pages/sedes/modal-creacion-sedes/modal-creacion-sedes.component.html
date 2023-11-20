@@ -1,0 +1,255 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="bodyRegisterForm">
+  <div class="flex-v-center mt-0">
+    <img src="assets/images/icons/formulario.png" alt="formulario icon" />
+  </div>
+
+  <div class="flex-v-center mt-3">
+    <h5 *ngIf="data.createMode">Registro de sede</h5>
+    <h5 *ngIf="!data.createMode">Edición de sede</h5>
+  </div>
+
+  <div class="container-fluid pt-2 px-4">
+    <form class="row mt-2" [formGroup]="registerForm">
+      <div class="col-2 mb-2">
+        <ng-container
+          *ngIf="!data.dataToEdit || data.dataToEdit.estadoId === '1'"
+        >
+          <label>Estado</label>
+          <div class="w-100 flex-v-center-left mt-2 fs-17">Activo</div>
+        </ng-container>
+
+        <ng-container
+          *ngIf="data.dataToEdit && data.dataToEdit.estadoId !== '1'"
+        >
+          <select-field
+            [label]="'Estado'"
+            [control]="f.estado"
+            [items]="data.estados"
+            [value]="'codigoTexto'"
+            [valueToShow]="'valorTexto'"
+            [hideDefaultOption]="true"
+          >
+          </select-field>
+        </ng-container>
+      </div>
+
+      <div class="col-4 mb-2">
+        <label>Nombre de sede</label>
+        <input
+          trim="blur"
+          placeholder="Indicar el nombre de la sede"
+          type="text"
+          nbInput
+          shape="semi-round"
+          maxlength="250"
+          oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ0-9,.-´ ]/g, '')"
+          [status]="
+            f.nombreSede.invalid && f.nombreSede.touched ? 'danger' : 'basic'
+          "
+          fieldSize="large"
+          fullWidth
+          formControlName="nombreSede"
+        />
+        <span
+          *ngIf="f.nombreSede.invalid && f.nombreSede.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.nombreSede.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.nombreSede.errors.pattern">
+            Solo se admiten letras
+          </span>
+          <span *ngIf="f.nombreSede.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.nombreSede.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </span>
+      </div>
+
+      <div class="col-6 mb-2">
+        <label>Dirección</label>
+        <input
+          trim="blur"
+          placeholder="Indicar dirección"
+          type="text"
+          nbInput
+          shape="semi-round"
+          maxlength="100"
+          oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ0-9,.-´ ]/g, '')"
+          [status]="
+            f.direccion.invalid && f.direccion.touched ? 'danger' : 'basic'
+          "
+          fieldSize="large"
+          fullWidth
+          formControlName="direccion"
+        />
+        <span
+          *ngIf="f.direccion.invalid && f.direccion.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.direccion.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.direccion.errors.pattern">
+            Solo se admiten letras
+          </span>
+          <span *ngIf="f.direccion.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.direccion.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </span>
+      </div>
+
+      <serv-talento-ubigeo-form
+        class="col-12 p-0 mb-2 mt-1"
+        [departamentoControl]="f.departamento"
+        [provinciaControl]="f.provincia"
+        [distritoControl]="f.distrito"
+        [updateArray]="this.arrayUbigeo"
+      >
+      </serv-talento-ubigeo-form>
+
+      <div class="col-6 mb-2">
+        <label>Representante <strong>(Opcional)</strong></label>
+        <input
+          trim="blur"
+          placeholder="Indicar el nombre del representante de la sede"
+          type="text"
+          nbInput
+          shape="semi-round"
+          maxlength="150"
+          formControlName="representante"
+          fullWidth
+          fieldSize="large"
+          oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ´ ]/g, '')"
+          [status]="
+            f.representante.invalid && f.representante.touched
+              ? 'danger'
+              : 'basic'
+          "
+        />
+        <span
+          *ngIf="f.representante.invalid && f.representante.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.representante.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.representante.errors.pattern">
+            Solo se admiten letras
+          </span>
+          <span *ngIf="f.representante.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.representante.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </span>
+      </div>
+
+      <div class="col-3 mb-2">
+        <label>Teléfono <strong>(Opcional)</strong></label>
+        <input
+          trim="blur"
+          placeholder="Indicar numero de teléfono"
+          type="text"
+          nbInput
+          shape="semi-round"
+          maxlength="9"
+          formControlName="telefono"
+          fullWidth
+          fieldSize="large"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="
+            f.telefono.invalid && f.telefono.touched ? 'danger' : 'basic'
+          "
+        />
+        <span
+          *ngIf="f.telefono.invalid && f.telefono.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.telefono.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.telefono.errors.pattern">
+            Solo se admiten letras
+          </span>
+          <span *ngIf="f.telefono.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.telefono.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </span>
+      </div>
+
+      <div class="col-3 mb-2">
+        <label>Anexo <strong>(Opcional)</strong></label>
+        <input
+          trim="blur"
+          placeholder="Indicar el anexo"
+          type="text"
+          nbInput
+          shape="semi-round"
+          maxlength="5"
+          formControlName="anexo"
+          fullWidth
+          fieldSize="large"
+          oninput="this.value = this.value.replace(/[^0-9-´ ]/g, '')"
+          [status]="f.anexo.invalid && f.anexo.touched ? 'danger' : 'basic'"
+        />
+        <span *ngIf="f.anexo.invalid && f.anexo.touched" class="invalid-text">
+          <span *ngIf="f.anexo.errors.required"> El campo es obligatorio </span>
+          <span *ngIf="f.anexo.errors.pattern"> Solo se admiten letras </span>
+          <span *ngIf="f.anexo.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.anexo.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </span>
+      </div>
+
+      <div class="col-7"></div>
+
+      <div class="col-5 my-3">
+        <div class="w-100 h-100 btn_area">
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="onNoClick()"
+          >
+            Cancelar
+          </button>
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="this.data.dataToEdit ? editOrgano() : saveOrgano()"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

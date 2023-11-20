@@ -1,0 +1,170 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onCancel()"
+  ></nb-icon>
+</div>
+
+<div class="py-2 px-2 bodyModal">
+  <div class="flex-v-center">
+    <img
+      src="assets/images/icons/formulario.png"
+      alt="Logo pregunta eliminar"
+    />
+  </div>
+
+  <div class="title fw-600 flex-v-center mt-4 mb-4">Editar Cronograma</div>
+
+  <div class="row mb-3">
+    <div class="col-6">
+      <select-field
+        label="Etapa del Proceso"
+        [control]="mainForm.controls.etapaId"
+        [items]="helperService.etapas"
+        value="value"
+        valueToShow="valueToShow"
+      >
+      </select-field>
+    </div>
+    <div class="col-6">
+      <select-field
+        label="Evaluacion"
+        [control]="mainForm.controls.evaluacion"
+        [items]="helperService.listaDeEvaluaciones"
+        value="tipoEvaluacionId"
+        valueToShow="descripcion"
+        [disabled]="validarEtapaEvaluacion()"
+      >
+      </select-field>
+    </div>
+    <div class="col-12">
+      <input-field
+        [control]="mainForm.controls.responsable"
+        label="Ingrese el responsable"
+        [maxlength]="100"
+        [banKeyType]="5"
+        [minlength]="0"
+      >
+      </input-field>
+    </div>
+    <div class="col-6">
+      <label for="dep">Fecha de Inicio</label>
+      <nb-form-field>
+        <input
+          nbInput
+          readonly
+          [placeholder]="'Fecha y hora Inicio'"
+          [ngxMatDatetimePicker]="pickerFecIni"
+          [formControl]="f.fechaInicio"
+          shape="semi-round"
+          fieldSize="large"
+          [status]="
+            f.fechaInicio.value === null && mainForm.touched
+              ? 'danger'
+              : 'basic'
+          "
+          [disabled]="false"
+        />
+
+        <mat-datepicker-toggle
+          nbSuffix
+          [for]="pickerFecIni"
+        ></mat-datepicker-toggle>
+
+        <ngx-mat-datetime-picker
+          #pickerFecIni
+          [showSpinners]="true"
+          [showSeconds]="false"
+          [disableMinute]="false"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [touchUi]="true"
+          [enableMeridian]="true"
+        >
+        </ngx-mat-datetime-picker>
+      </nb-form-field>
+      <mat-error *ngIf="f.fechaInicio.invalid && mainForm.touched">
+        <span class="invalid-text m-0">El campo es obligatorio</span>
+      </mat-error>
+    </div>
+    <div class="col-6">
+      <label for="dep">Fecha de Fin</label>
+      <nb-form-field>
+        <input
+          nbInput
+          readonly
+          [placeholder]="'Fecha y hora Fin'"
+          [ngxMatDatetimePicker]="pickerFecFin"
+          [formControl]="f.fechaFin"
+          shape="semi-round"
+          fieldSize="large"
+          [status]="
+            f.fechaFin.value === null && helperService.form5.touched
+              ? 'danger'
+              : 'basic'
+          "
+          [disabled]="false"
+        />
+
+        <mat-datepicker-toggle
+          nbSuffix
+          [for]="pickerFecFin"
+        ></mat-datepicker-toggle>
+
+        <ngx-mat-datetime-picker
+          #pickerFecFin
+          [showSpinners]="true"
+          [showSeconds]="false"
+          [disableMinute]="false"
+          [stepHour]="1"
+          [stepMinute]="15"
+          [stepSecond]="1"
+          [touchUi]="true"
+          [enableMeridian]="true"
+        >
+        </ngx-mat-datetime-picker>
+      </nb-form-field>
+      <mat-error *ngIf="f.fechaFin.invalid && f.fechaFin.touched">
+        <span class="invalid-text m-0">El campo es obligatorio</span>
+      </mat-error>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <textarea-field
+        [control]="mainForm.controls.descripcion"
+        label="Ingrese la actividad"
+        [maxlength]="200"
+        [banKeyType]="5"
+        [minlength]="0"
+      >
+      </textarea-field>
+    </div>
+  </div>
+
+  <div class="flex-v-center mt-4">
+    <button
+      nbButton
+      outline
+      shape="round"
+      status="primary"
+      class="py-2 px-5 mr-3"
+      (click)="onCancel()"
+    >
+      Cancelar
+    </button>
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="py-2 px-5"
+      (click)="onSave()"
+    >
+      Guardar
+    </button>
+  </div>
+</div>

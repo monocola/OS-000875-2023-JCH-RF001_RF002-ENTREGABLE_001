@@ -1,0 +1,166 @@
+<form>
+  <div class="body">
+    <div class="bg-card m-1">
+      <div class="container">
+        <label class="label">
+          <strong>Datos del jefe RRHH</strong>
+          <span> (jefe de recursos humanos)</span>
+        </label>
+        <mat-divider class="mt-3"></mat-divider>
+
+        <div class="row">
+          <div class="col-3">
+            <label>Tipo de documento</label>
+            <nb-select
+              formControlName="tipoDocumentoId"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+            >
+              <nb-option style="color: #a4a4a4" value="0">Seleccione</nb-option>
+              <nb-option></nb-option>
+            </nb-select>
+          </div>
+          <div class="col-3">
+            <label>N˚ de documento</label>
+            <input
+              nbInput
+              placeholder="Ingresar"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+
+          <div class="dropzone">
+            <input
+              type="file"
+              #fileDropRef
+              id="fileDropRef"
+              accept="application/pdf"
+              (change)="archivoSeleccionado($event)"
+              formControlName="archivo"
+            />
+            <h6>Arrastra y suelta tu archivo aquí</h6>
+            <h6>ó</h6>
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              style="
+                color: #0dacbc;
+                background-color: white;
+                border-color: #0dacbc;
+              "
+              class="py-2.5 px-5 mr-3"
+            >
+              Subir archivo
+            </button>
+          </div>
+          <div class="col-12 m-0 p-3 box" *ngIf="file">
+            <div class="row col-md-12 m-0 p-0 font-weight-bold">
+              <div class="col-10 p-0 fs-12 text-left">
+                {{ file.name }}
+              </div>
+              <div class="col-2 m-0 p-0">
+                <nb-action
+                  class="control-item p-0 justify-content-end"
+                  icon="close-circle"
+                  (click)="deleteFile()"
+                ></nb-action>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 row m-0 p-0">
+            <div class="col-6 fs-11 mt-2">Peso máximo de archivo 5 MB</div>
+            <div class="col-6 fs-11 mt-2 text-right">Formato PDF</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label>Nombres</label>
+            <input
+              nbInput
+              placeholder="Ingresar"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <label>Fecha Nacimiento</label>
+            <input
+              nbInput
+              placeholder="Ingresar"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+          <div class="col-3">
+            <label>Teléfono Fijo</label>
+            <input
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+              nbInput
+              placeholder="75737010"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <label>Anexo</label>
+            <input
+              nbInput
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+              placeholder="75737010"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+          <div class="col-3">
+            <label>Celular</label>
+            <input
+              nbInput
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+              placeholder="75737010"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <label>Correo electrónico</label>
+            <input
+              nbInput
+              placeholder="Ingresar"
+              shape="semi-round"
+              fullWidth
+            />
+          </div>
+        </div>
+        <br />
+        <div class="mb-12 col-lg-6 col-md-8">
+          <div class="h-100 m-10 flex-v-bottom-right btn_area">
+            <button
+              nbButton
+              shape="round"
+              size="large"
+              status="primary"
+              class="mr-4"
+              style="color: white; background-color: #0dacbc"
+            >
+              Enviar solicitud
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

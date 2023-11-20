@@ -1,0 +1,226 @@
+<div class="d-flex">
+  <div class="col-12"> 
+  <p class="titlePage"> Resumen de Datos GDR </p>
+  <span class="flex-spacer">
+  </span>
+</div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="col-12">
+      <div class="col-12">
+<carousel [overflowCellsLimit]="3" [cellsToShow]="3.5" style="z-index: 1;" *ngIf="chartOptionsTipoOrgano!==undefined || chartOptionsTipoOrgano!=null">
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="totalservidores" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalgestoresgdr}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Gestores de GDR 
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="icontotalservidores" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="carrerasespeciales"
+          style="border-top-left-radius: 16px;border-top-right-radius: 16px;"></nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalservidoresgdr}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-9">
+              <span>
+                Participantes de GDR 
+              </span>
+            </div>
+            <div class="col-sm-3">
+              <nb-icon class="iconcarrerasespeciales" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="sindicalizados" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalevaluados}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Evaluados
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="iconsindicalizados" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="carousel-cell">
+      <nb-card>
+        <nb-card-header class="totaljefes" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-8">
+            <h5>{{resumenServidoresCiviles?.totalevaluadores}}</h5>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <span>
+                Evaluadores
+              </span>
+            </div>
+            <div class="col-sm-4">
+              <nb-icon class="icontotaljefes" icon="people" nbSuffix></nb-icon>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </carousel>
+</div>
+</div>
+</div>
+</div>
+
+<div class='mb-4 p-0'></div>
+
+<!-- <div class="container"> -->
+  <div class="row">
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="regimen"> Servidores que participan de GDR, según régimen laboral</nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+              <apx-chart *ngIf="chartOptionsServidoresRegimenLaboral!==undefined"
+              [series]="chartOptionsServidoresRegimenLaboral.series"
+              [tooltip]="chartOptionsServidoresRegimenLaboral.tooltip"
+              [chart]="chartOptionsServidoresRegimenLaboral.chart"
+              [labels]="chartOptionsServidoresRegimenLaboral.labels"
+              [dataLabels]="chartOptionsServidoresRegimenLaboral.dataLabels"
+              [states]="chartOptionsServidoresRegimenLaboral.states"
+              [plotOptions]="chartOptionsServidoresRegimenLaboral.plotOptions"
+              [stroke]="chartOptionsServidoresRegimenLaboral.stroke"
+              [theme]="chartOptionsServidoresRegimenLaboral.theme"
+              [responsive]="chartOptionsServidoresRegimenLaboral.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="organo"> Servidores que participan de GDR, según tipo de órgano </nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+            <apx-chart *ngIf="chartOptionsTipoOrgano!==undefined"
+              [series]="chartOptionsTipoOrgano.series"
+              [tooltip]="chartOptionsTipoOrgano.tooltip"
+              [chart]="chartOptionsTipoOrgano.chart"
+              [labels]="chartOptionsTipoOrgano.labels"
+              [dataLabels]="chartOptionsTipoOrgano.dataLabels"
+              [states]="chartOptionsTipoOrgano.states"
+              [plotOptions]="chartOptionsTipoOrgano.plotOptions"
+              [stroke]="chartOptionsTipoOrgano.stroke"
+              [theme]="chartOptionsTipoOrgano.theme"
+              [responsive]="chartOptionsTipoOrgano.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="carreras"> Servidores de carreras especiales que participan de GDR</nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+              <apx-chart *ngIf="chartOptionsCarrerasEspeciales!==undefined"
+              [series]="chartOptionsCarrerasEspeciales.series"
+              [tooltip]="chartOptionsCarrerasEspeciales.tooltip"
+              [chart]="chartOptionsCarrerasEspeciales.chart"
+              [labels]="chartOptionsCarrerasEspeciales.labels"
+              [dataLabels]="chartOptionsCarrerasEspeciales.dataLabels"
+              [states]="chartOptionsCarrerasEspeciales.states"
+              [plotOptions]="chartOptionsCarrerasEspeciales.plotOptions"
+              [stroke]="chartOptionsCarrerasEspeciales.stroke"
+              [theme]="chartOptionsCarrerasEspeciales.theme"
+              [responsive]="chartOptionsCarrerasEspeciales.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="sindicalizadoss"> Servidores sindicalizados que participan de GDR </nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+            <apx-chart *ngIf="chartOptionsSindicalizados!==undefined"
+              [series]="chartOptionsSindicalizados.series"
+              [tooltip]="chartOptionsSindicalizados.tooltip"
+              [chart]="chartOptionsSindicalizados.chart"
+              [labels]="chartOptionsSindicalizados.labels"
+              [dataLabels]="chartOptionsSindicalizados.dataLabels"
+              [states]="chartOptionsSindicalizados.states"
+              [plotOptions]="chartOptionsSindicalizados.plotOptions"
+              [stroke]="chartOptionsSindicalizados.stroke"
+              [theme]="chartOptionsSindicalizados.theme"
+              [responsive]="chartOptionsSindicalizados.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <nb-card>
+        <nb-card-header class="segmento"> Servidores que participan de GDR, según segmento</nb-card-header>
+        <nb-card-body>
+          <div id="chart">
+              <apx-chart *ngIf="chartOptionsPorSegmento!==undefined"
+              [series]="chartOptionsPorSegmento.series"
+              [tooltip]="chartOptionsPorSegmento.tooltip"
+              [chart]="chartOptionsPorSegmento.chart"
+              [labels]="chartOptionsPorSegmento.labels"
+              [dataLabels]="chartOptionsPorSegmento.dataLabels"
+              [states]="chartOptionsPorSegmento.states"
+              [plotOptions]="chartOptionsPorSegmento.plotOptions"
+              [stroke]="chartOptionsPorSegmento.stroke"
+              [theme]="chartOptionsPorSegmento.theme"
+              [responsive]="chartOptionsPorSegmento.responsive">
+            </apx-chart>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+<!-- </div> -->

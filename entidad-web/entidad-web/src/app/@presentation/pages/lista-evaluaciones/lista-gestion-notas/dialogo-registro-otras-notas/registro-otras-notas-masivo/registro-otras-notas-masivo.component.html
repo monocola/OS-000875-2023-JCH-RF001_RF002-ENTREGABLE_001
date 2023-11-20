@@ -1,0 +1,136 @@
+<div [formGroup]="filterForm" class="body">
+  <div class="row col-12 mb-3">
+    <div class="col-6">
+      <label>Perfil del puesto</label>
+      <nb-form-field>
+        <nb-select
+          placeholder="Seleccione perfil"
+          fullWidth
+          shape="rectangle"
+          formControlName="perfilId"
+          size="large"
+        >
+          <nb-option
+            *ngFor="let item of lstPerfilMasivo"
+            [value]="item.perfilId"
+            >{{ item.desPerfil }}</nb-option
+          >
+        </nb-select>
+      </nb-form-field>
+    </div>
+
+    <div class="col-6">
+      <label class="w-100">Plantilla</label>
+      <button
+        nbButton
+        status="primary"
+        size="small"
+        (click)="downloadTemplate()"
+      >
+        Descargar plantilla<nb-icon class="fs-15" icon="descargar"></nb-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="row col-12 mb-3">
+    <div class="col-4 align-self-baseline">
+      <label>Fecha Evaluación</label>
+      <nb-form-field>
+        <input
+          #fechaInicio
+          nbInput
+          formControlName="fechaEvaluacion"
+          fullWidth
+          [nbDatepicker]="fechaEvaluacionDatePicker"
+          fieldSize="medium"
+          (ngModelChange)="validRangeDateFormat($event)"
+          [status]="rangePickerStatus"
+        />
+        <nb-icon
+          style="cursor: pointer"
+          nbSuffix
+          class="mr-2"
+          icon="calendario"
+        >
+        </nb-icon>
+        <nb-datepicker #fechaEvaluacionDatePicker></nb-datepicker>
+      </nb-form-field>
+    </div>
+
+    <div class="col-4">
+      <label>Documento adjunto</label>
+      <button
+        *ngIf="document == null"
+        (click)="cleanAndClick(inputfile)"
+        nbButton
+        outline
+        status="primary"
+        size="small"
+        fullWidth
+      >
+        <nb-icon class="fs-15" icon="subir"></nb-icon> Subir documento
+      </button>
+      <nb-form-field *ngIf="document != null">
+        <input
+          readonly
+          fullWidth
+          size="small"
+          nbInput
+          [value]="document.name"
+          disabled
+        />
+        <button nbSuffix nbButton ghost (click)="cleanFileSelect()">
+          <nb-icon class="fs-15" icon="clean"> </nb-icon>
+        </button>
+      </nb-form-field>
+    </div>
+  </div>
+
+  <div class="row col-12 mb-3">
+    <div class="col-12">
+      <label>Observación (opcional)</label>
+      <nb-form-field>
+        <textarea
+          nbInput
+          fullWidth
+          placeholder="Subir documento"
+          formControlName="observacion"
+        ></textarea>
+      </nb-form-field>
+    </div>
+  </div>
+  <input
+    hidden
+    #inputfile
+    name="subirPlantilla"
+    type="file"
+    (change)="onFileChange($event)"
+  />
+
+  <div class="col-12 pt-3 mb-3">
+    <div class="custom-row-buttons">
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        status="primary"
+        class="w-30"
+        outline
+        (click)="dismiss(false)"
+      >
+        Cancelar
+      </button>
+      <button
+        nbButton
+        shape="round"
+        size="small"
+        status="primary"
+        class="ml-2 w-30"
+        [disabled]="!filterForm.valid"
+        (click)="guardar()"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>

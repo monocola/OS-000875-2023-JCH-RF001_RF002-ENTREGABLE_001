@@ -1,0 +1,89 @@
+@import '_colors';
+
+.documentIcon {
+  cursor: pointer;
+  transition: 0.2s;
+  color: rgb(70, 70, 70);
+  &:hover {
+    color: black;
+    transform: scale(1.2);
+  }
+}
+
+table {
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+thead > tr {
+  & > th:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+  & > th:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+table,
+td {
+  border-collapse: collapse;
+}
+
+.table thead th {
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  background-color: rgb(59, 58, 60);
+  font-size: 0.875rem !important;
+  font-weight: 400;
+}
+
+.expanded-row {
+  font-size: 0.813rem !important;
+  background-color: rgb(167, 219, 241) !important;
+  color: rgb(59, 58, 60) !important;
+  font-weight: 600;
+  padding: 1.625rem auto !important;
+}
+
+thead {
+  display: table;
+  width: calc(100%);
+}
+
+tbody {
+  display: block;
+  max-height: 28.125rem;
+  // max-width: 45vw;
+  overflow-y: scroll;
+}
+
+th,
+td {
+  padding: 0.313rem;
+  min-width: 8.75rem;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+td {
+  font-size: 0.813rem;
+  text-align: left;
+  border-bottom: none;
+  border-left: none;
+}
+
+h5 {
+  margin-top: 1.25rem;
+  color: $primary_color;
+}
+
+.borderless td,
+.borderless th {
+  border: none;
+}

@@ -1,0 +1,87 @@
+.title {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.subtitle {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  margin: 10%;
+}
+.etiqueta-busqueda {
+  font-size: 1.25rem;
+  margin-top: 25px;
+}
+.crear-categoria {
+  margin-top: 15px;
+  margin-right: 10%;
+  color: #0d88bc !important;
+}
+
+.categoria-sub {
+  text-align: right;
+  position: absolute;
+  right: 12%;
+  color: #444;
+  font-weight: 400;
+}
+
+.imagenBase {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  margin-left: 15%;
+  margin-right: 10%;
+  margin-top: 10%;
+}
+
+.cabeceraCar {
+  background-color: #146080 !important;
+  text-align: center;
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.bodyCar {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tituloCard {
+  font-size: 24px;
+  text-align: center;
+}
+
+.textBlue {
+  font-size: 18px;
+  color: #146080;
+}
+
+.textNota {
+  font-size: 36px;
+}
+
+.miniSubTitle {
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.resultado {
+  color: #0d88bc;
+  font-size: 36;
+}
+
+.footerCard {
+  font-size: 14px;
+  font-style: italic;
+  color: #9a9a9a;
+}

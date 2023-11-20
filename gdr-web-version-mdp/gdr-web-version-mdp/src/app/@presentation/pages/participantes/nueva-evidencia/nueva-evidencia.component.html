@@ -1,0 +1,104 @@
+<div class="d-flex w-100 header-modal">
+  <div class="">
+    <p class="parrafo">Agregar evidencia</p>
+  </div>
+
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="dismiss(false)"
+  ></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+<div class="bodyRegisterForm">
+  <div class="row mt-4">
+    <div class="container-fluid pt-2 px-5">
+      <div class="mb-4">
+        <p class="title-modal">Ingrese los siguientes campos</p>
+      </div>
+      <form [formGroup]="registerForm" class="row mt-2">
+        <div class="mb-3 col-md-4">
+          <label>Plazo</label>
+          <nb-form-field>
+            <input
+              id="plazoID"
+              #plazoID
+              formControlName="plazo"
+              nbInput
+              class="pointer"
+              placeholder="dd/mm/aaaa"
+              [nbDatepicker]="formpicker"
+              fieldSize="medium"
+              shape="semi-round"
+              [status]="f.plazo.invalid && f.plazo.touched ? 'danger' : 'basic'"
+            />
+
+            <nb-icon
+              style="cursor: pointer"
+              nbSuffix
+              class="mr-2 pointer"
+              (click)="plazoID.click()"
+              icon="calendar-outline"
+            >
+            </nb-icon>
+            <nb-datepicker #formpicker></nb-datepicker>
+          </nb-form-field>
+
+          <div
+            *ngIf="f.plazo.invalid && f.plazo.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.plazo.errors.required">
+              El campo es obligatorio
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-12">
+          <label for="anio">Evidencia</label>
+          <nb-form-field>
+            <textarea
+              formControlName="evidencia"
+              nbInput
+              fullWidth
+              rows="5"
+              [status]="
+                f.evidencia.invalid && f.evidencia.touched ? 'danger' : 'basic'
+              "
+              placeholder="Escriba la evidencia"
+              fieldSize="large"
+            ></textarea>
+          </nb-form-field>
+        </div>
+      </form>
+    </div>
+    <div class="row col-12 m-0 p-0 justify-content-center">
+      <div class="row col-8 m-0 p-0">
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          style="color: white"
+          [disabled]="!registerForm.valid"
+          class="col"
+          status="info"
+          (click)="registrar()"
+        >
+          Guardar
+        </button>
+
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          class="col offset-3"
+          (click)="dismiss(false)"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

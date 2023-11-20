@@ -1,0 +1,18 @@
+@import '_colors';
+
+
+span {
+    font-size: 0.75rem !important;
+}
+
+.tooltip-body {
+    max-width: 300px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.938rem;
+}
+
+img {
+    height: 2.5rem !important;
+}

@@ -1,0 +1,101 @@
+<div class='col-12 row m-0 p-0 justify-content-left'>
+  <div class="p-6 col-md-12 col-12">
+    <div class="d-flex">
+      <h3 class="titlePage">Implementación</h3>
+      <span class="flex-spacer"></span>
+    </div>
+    <!-- <serv-talento-asignar-gestor-gdr></serv-talento-asignar-gestor-gdr> -->
+    <div [formGroup]="frm">
+      <nb-card class='filter'>
+        <nb-card-body class='px-2'>
+          <div class='row col-12 justify-content-center m-0 p-0 align-items-end'>
+            <div class="mt-3 subtitle"></div>
+            <div class="row mt-1" style='width: 99%;'>
+              <div class="mb-3 col-md-4">
+                <label>Ciclo</label>
+                <nb-select formControlName="ciclo" placeholder="Seleccione" fullWidth="true" size='medium'
+                  shape="semi-round" (select)='anioFilter'>
+ 
+                  <nb-option *ngFor="let cboCiclo of cicloFilter" [value]="cboCiclo">{{ cboCiclo }}
+                  </nb-option>
+                </nb-select>
+                <div *ngIf="f.ciclo.invalid && f.ciclo.touched" class="invalid-text flex-column">
+                  <span *ngIf="f.ciclo.errors.required">
+                    El campo es obligatorio
+                  </span>
+                </div>
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label>Nivel de Gobierno</label>
+                <nb-select formControlName="nivel" placeholder="Seleccione" fullWidth="true" size='medium'
+                  shape="semi-round">
+                  <nb-option>Seleccione</nb-option>
+                  <nb-option *ngFor="let cboNivel of nivel" [value]="cboNivel.parametroId">
+                    {{cboNivel.valorTexto}}
+
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label>Sector</label>
+                <nb-select formControlName="sector" placeholder="Seleccione" fullWidth="true" size='medium'
+                  shape="semi-round">
+                  <nb-option>Seleccione</nb-option>
+                  <nb-option *ngFor="let cboSector of sector" [value]="cboSector.parametroId">
+
+                    {{cboSector.valorTexto}}
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <label>Tipo de entidad</label>
+                <nb-select formControlName="tipoEntidad" placeholder="Seleccione" fullWidth="true" size='medium'
+                  shape="semi-round">
+                  <nb-option>Seleccione</nb-option>
+                  <nb-option *ngFor="let cboTipo of tipoEntidad" [value]="cboTipo.parametroId">
+                    {{cboTipo.valorTexto}}
+                  </nb-option>
+                </nb-select>
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <autocomplete class='col-md-12 m-0 p-0' [label]="'Entidad'" [placeholder]="'Ingresar'"
+                  [control]="f?.entidad" [fieldToShow]="'siglaDescripcion'" [items]="listaEntidades"
+                  [requiredField]="false" [size]='fieldsize'>
+                </autocomplete>
+              </div>
+
+            </div>
+            <div class="mb-3 col-md-4 offset-8">
+              <div class="w-100 h-100 btn_area">
+                <button nbButton shape="round" size="medium" status="primary" outline (click)='clear()'>
+                  Limpiar
+                </button>
+                <button nbButton shape="round" size="medium" style='color: white; background-color: #0dacbc;'
+                  (click)='search()'>
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <div class="row mt-1">
+        <ng-container>
+          <serv-talento-table class='col-12' holderText="Buscar por Ciclo, NG, Sector, Entidad..."
+            [tableData]="this.lstImplementacion" [tableColumns]="this.tableColumns" [isFilterable]="true"
+            [isPageable]="true" [paginationSizes]="[5, 10, 20, 50, 100]" [defaultPageSize]="10" [acciones]="true"
+            [showTitle]='false' custom1BtnTitle="Monitoreo" custom1BtnIcon="ent-web-monitor"
+            custom1BtnClass='accion-monitor' [custom1BtnShow]="true" (custom1BtnOnClick)="openMonitor($event)"
+            custom2BtnTitle="Añadir" custom2BtnIcon="ent-web-add-person" custom2BtnClass='accion-add-people'
+            [custom2BtnShow]="true" (custom2BtnOnClick)="asignarUsuarioGdr($event)" [showDownloadButton]='false'>
+          </serv-talento-table>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

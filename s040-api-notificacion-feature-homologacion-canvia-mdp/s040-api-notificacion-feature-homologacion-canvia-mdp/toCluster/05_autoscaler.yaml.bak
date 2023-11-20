@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: notificacion-dev
+  name: notificacion-dev
+spec:
+  scaleTargetRef:
+    apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    name: notificacion-dev
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80

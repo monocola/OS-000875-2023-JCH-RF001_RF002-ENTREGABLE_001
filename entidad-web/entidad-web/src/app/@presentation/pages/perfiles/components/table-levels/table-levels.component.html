@@ -1,0 +1,115 @@
+<div class="mt-3">
+  <div class="flex-v-center w-100">
+    <div class="fw-600 fs-16">Lista de niveles académicos</div>
+    <span class="flex-spacer"></span>
+  </div>
+
+  <div class="card mat-elevation-z3 mt-2">
+    <table
+      aria-describedby="tabla organigrama"
+      [nbTreeGrid]="dataSource"
+      [nbSort]="dataSource"
+      (sort)="updateSort($event)"
+    >
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr
+        nbTreeGridRow
+        [clickToToggle]="false"
+        *nbTreeGridRowDef="let row; columns: allColumns"
+      ></tr>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn1">
+        <th
+          style="width: 25%"
+          scope="col"
+          nbTreeGridHeaderCell
+          *nbTreeGridHeaderCellDef
+        >
+          NIVEL EDUCATIVO
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row" class="py-2">
+          <nb-tree-grid-row-toggle
+            class="toggle fs-24"
+            *ngIf="row.children"
+            [expanded]="row.expanded"
+          >
+          </nb-tree-grid-row-toggle>
+          {{ row.data['descripcion'] }}
+        </td>
+      </ng-container>
+
+      <ng-container
+        *ngFor="let column of defaultColumns; let index = index"
+        [nbTreeGridColumnDef]="column"
+        [showOn]="getShowOn(index)"
+      >
+        <th
+          class="text-center"
+          scope="col"
+          nbTreeGridHeaderCell
+          [nbSortHeader]="getSortDirection(column)"
+          *nbTreeGridHeaderCellDef
+        >
+          {{ this.defaultColumnsNames[index] }}
+        </th>
+        <td class="text-center" nbTreeGridCell *nbTreeGridCellDef="let row">
+          {{ row.data[column] ? row.data[column] : row.level != 3 ? '' : '-' }}
+        </td>
+      </ng-container>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn3">
+        <th
+          style="width: 30%"
+          scope="col"
+          nbTreeGridHeaderCell
+          *nbTreeGridHeaderCellDef
+        >
+          CARRERA/S O ESPECIALIDAD/ES
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          {{ row.data['carrerasToShow'] }}
+        </td>
+      </ng-container>
+
+      <ng-container [nbTreeGridColumnDef]="customColumn2">
+        <th
+          style="width: 15%"
+          class="text-center"
+          scope="col"
+          nbTreeGridHeaderCell
+          *nbTreeGridHeaderCellDef
+        >
+          ACCIONES
+        </th>
+        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+          <div class="w-100 h-100 flex-v-center">
+            <div style="width: 5rem" class="flex-v-center-right">
+              <button
+                title="Editar evaluacion"
+                class="btnEdit mx-1"
+                (click)="this.editAction(row)"
+                *ngIf="row.level === 2"
+              >
+                <em class="ent-web-edit"></em>
+              </button>
+              <button
+                title="Desactivar maestra"
+                class="btnEdit mx-1"
+                (click)="this.deleteAction(row)"
+                *ngIf="row.level === 2"
+              >
+                <em class="ent-web-eliminar"></em>
+              </button>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+    </table>
+
+    <div class="p-3" *ngIf="this.arrayBuilded.length === 0">
+      Aún no hay datos ingresados. Para comenzar a registrar, haz click en el
+      botón
+      <strong>Agregar nivel.</strong>
+    </div>
+  </div>
+</div>

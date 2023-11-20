@@ -1,0 +1,73 @@
+<div class="dropzone">
+    <div class="dropzone-file">
+      <div class="dropzone-button dropzone-label">
+        <ng-container *ngIf="fileOrgano; else elseButton">
+          <div class="col-md-12 m-1 p-1"></div>
+          <div class="col-md-12 m-1 p-1"></div>
+          <div class="dropzone" *ngIf='fileOrgano'>
+            <div class='row col-md-12 m-0 p-0'>
+              <div class='col-md-1'>
+                <nb-action
+                  class="control-item p-0 justify-content-around"
+                  icon="file"
+                ></nb-action>
+              </div>
+              <div class='col-md-10 p-0 fs-12 text-left'>
+                {{fileOrgano.name}}
+              </div>
+              <div class='col-md-1 m-0 p-0'>
+                <nb-action
+                  class="control-item p-0 justify-content"
+                  icon="close-circle"
+                  (click)='removeFile()'
+                ></nb-action>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #elseButton>
+         
+         <label
+            class="btnUploadLogo flex-v-center"
+            shape="round"
+            status="primary"
+            fullWidth
+            for="file"
+            nbButton
+            style='color: #0dacbc; background-color: white; border: 1px solid #0dacbc;'>
+            <mat-icon style="color: #0dacbc;" class='m-0' >backup</mat-icon>
+            <span style="color: #0dacbc; margin-left: 10px;">Subir plantilla</span>
+          </label>
+        </ng-template>
+      
+     </div>
+        <input
+        style="color: red;"
+        id="file"
+        type="file"
+        [(ngModel)]="fileDataModel"
+        (change)="fileChangeEvent($event)"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        />
+    </div>
+    
+
+    <div class="btnProcesar">
+        <div class="w-100 h-100">
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            class="button-val"
+            [disabled]="!fileOrgano"
+            (click)="uploadFile()"
+            style='color: #0dacbc; background-color: white;'
+          >
+            Procesar
+          </button>
+        </div>
+    </div>
+
+  </div>

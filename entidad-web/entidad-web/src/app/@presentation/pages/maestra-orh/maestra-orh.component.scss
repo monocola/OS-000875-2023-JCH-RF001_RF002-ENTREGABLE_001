@@ -1,0 +1,9 @@
+@import 'colors';
+
+.flex-column {
+    color: $medium-gray;
+    & > span > b {
+        color: black;
+    }
+}
+

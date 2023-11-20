@@ -1,0 +1,126 @@
+<div class="body">
+  <div class="d-flex title-container">
+    <img src="assets/images/icons/formulario.svg" alt="Logo" />
+    <h4 class="titlePage">Configuración de perfiles | Requisitos mínimos | Ev. Curricular</h4>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div style="padding-right: 15px; padding-left: 15px; margin-top: 2px">
+    <form [formGroup]="filterForm" class="mt-3">
+      <div class="subtitle">Filtros de búsqueda</div>
+
+      <div class="row mt-3">
+
+        <div class="col-md-4 mb-3">
+          <input-field
+          [control]="f.nombrePerfil"
+          [label]="'Nombre del perfil de puesto/prácticas'"
+          [placeholder]="'Buscar'"
+          [maxlength]="60"
+          [banKeyType]="5"
+          [minlength]="0"
+        >
+        </input-field>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <select-field
+            [label]="'Régimen'"
+            [control]="f.selRegimen"
+            [items]="regimenes"
+            [value]="'maeDetalleId'"
+            [valueToShow]="'descripcion'"
+          >
+          </select-field>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <select-field
+            [label]="'Rol'"
+            [control]="f.selRol"
+            [items]="roles"
+            [value]="'id'"
+            [valueToShow]="'descripcion'"
+          >
+          </select-field>
+        </div>
+        <div class="col-md-4 mb-3">
+          <select-field
+            [label]="'Estado requisitos mínimos'"
+            [control]="f.selEstadoRm"
+            [items]="estadoReqMin"
+            [value]="'maeDetalleId'"
+            [valueToShow]="'descripcion'"
+          >
+          </select-field>
+        </div>
+        <div class="col-md-4 mb-3">
+          <select-field
+            [label]="'Estado evaluación curricular'"
+            [control]="f.selEc"
+            [items]="estadoEvaCur"
+            [value]="'maeDetalleId'"
+            [valueToShow]="'descripcion'"
+          >
+          </select-field>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="w-100 h-100 btn_area">
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              outline
+              (click)="clear()"
+            >
+              Limpiar
+            </button>
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              (click)="search()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row mb-4 container-table">
+  <div class="col-12">
+    <ng-container>
+      <div class="subtitle">Lista de Perfiles</div>
+      <serv-talento-table
+        [tableData]="this.perfiles"
+        [tableColumns]="this.perfilColumns"
+        [showDownloadButton]="true"
+        [dataExport]="getDataExport()"
+        [isFilterable]="true"
+        (sort)="sortData($event)"
+        [isPageable]="true"
+        [paginationSizes]="[10, 15, 20]"
+        [defaultPageSize]="10"
+        [acciones]="true"
+        [btnEditEnabled]="true"
+        (editAction)="configPerfil($event)"
+        [editTitle]="'Editar Perfiles'"
+        [btnDeleteEnabled]="true"
+        (deleteAction)="removePerfil($event)"
+        [deleteTitle]="'Eliminar Perfiles'"
+        title="Lista de Perfiles"
+        fontSize="fs-14"
+        rowHeight="64px"
+      >
+      </serv-talento-table>
+    </ng-container>
+  </div>
+</div>
+
+</div>

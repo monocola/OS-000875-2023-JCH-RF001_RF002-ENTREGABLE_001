@@ -1,0 +1,143 @@
+<!--<div class="dropzone mt-5">
+  <div ngDropFiles (mouseSobre)="estaSobreElemento = $event" [ngClass]= "{ 'file-over': estaSobreElemento}" class="well dropzone-file">
+    <div class="dropzone-button ">
+      <ng-container *ngIf="fileOrgano; else elseButton">
+        <div class="col-md-12 m-1 p-1"></div>
+        <div class="col-md-12 m-1 p-1"></div>
+
+          <div class='row col-md-12 m-0 p-0'>
+              <div class='col-md-1'>
+                <nb-action
+                  class="control-item p-0 justify-content-around"
+                  icon="file"
+                ></nb-action>
+              </div>
+              <div class='col-md-10 p-0 fs-12 text-left'>
+                {{fileOrgano.name}}
+              </div>
+              <div class='col-md-1 m-0 p-0'>
+                <nb-action
+                  class="control-item p-0 justify-content"
+                  icon="close-circle"
+                  (click)='removeFile()'
+                ></nb-action>
+              </div>
+            </div>
+        </ng-container>
+        <ng-template #elseButton>
+          <h6 class="txtArrastrar" style="margin-left: 285px; margin-top: 15px;">Arrastra y suelta tu archivo aquí</h6>
+          <h6 class="txtArrastrar" style="margin-left: 400px;">Ó</h6>
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            class="btnUploadLogo"
+            for="file"
+            style='color: #0dacbc; background-color: white; border: 2px solid #0dacbc;'>
+             <span style="color: #0dacbc; margin-left: 22px; font-weight: bold;">Subir archivo</span>
+          </button>
+          <div class="col-md-12 m-1 p-1"></div>
+
+              <input
+              id="file"
+              type="file"
+              [ngModel]="fileDataModel"
+              (change)="fileChangeEvent($event)"
+              accept="application/vnd.ms-excel.sheet.macroEnabled.12"
+              />
+
+        </ng-template>
+    </div>
+
+  </div>
+
+  <div class="btnProcesar">
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              outline
+              class="button-val py-2.5 px-5 m-5"
+              [disabled]="!fileOrgano"
+              (click)="uploadFile()"
+              style='color: #0dacbc; background-color: white; width: 100%; font-weight: bold;'
+            >
+              Procesar
+            </button>
+  </div>
+
+</div>-->
+
+<div class="row">
+  <div class="col-lg-9">
+    <div class="dropzone">
+      <form [formGroup]="form">
+        <div ngDropFiles
+             (mouseSobre)="estaSobreElemento = $event"
+             [ngClass]="{ 'file-over': estaSobreElemento}"
+             class="well dropzone-file py-3">
+          <div class="dropzone-button dropzone-label">
+            <ng-container *ngIf="fileOrgano; else elseButton">
+              <div class="col-md-12 m-1 p-1"></div>
+              <div class="col-md-12 m-1 p-1"></div>
+              <div class="dropzone" *ngIf='fileOrgano'>
+                <div class='row col-md-12 m-0 p-0'>
+                  <div class='col-md-1'>
+                    <nb-action class="control-item p-0 justify-content-around" icon="file"></nb-action>
+                  </div>
+                  <div class='col-md-10 p-0 fs-12 text-left'>
+                    {{fileOrgano.name}}
+                  </div>
+                  <div class='col-md-1 m-0 p-0'>
+                    <nb-action class="control-item p-0 justify-content" icon="close-circle" (click)='removeFile()'>
+                    </nb-action>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #elseButton>
+              <div class="text-center">
+                <h6 class="txtArrastrar" >Arrastra y suelta tu archivo aquí</h6>
+                <h6 class="txtArrastrar" >Ó</h6>
+                <label class="btnUploadLogo" shape="round" status="primary" fullWidth for="file"
+                       style='color: #0dacbc; background-color: white; border: 2px solid #0dacbc;'>
+                  <span style="color: #0dacbc; font-weight: bold;">Subir archivo</span>
+                </label>
+              </div>
+            </ng-template>
+          </div>
+          <!--<input id="file" type="file" formControlName="file" (change)="fileChangeEvent($event)"
+                 accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+        </div>-->
+          <input id="file" type="file" formControlName="file" (change)="fileChangeEvent($event)"
+                 accept="'xlsm', 'XLSM'" />
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-3 my-auto">
+    <div class="btnDescargar">
+      <button
+        nbButton
+        shape="round"
+        size="medium"
+        class="py-1 mb-3"
+        (click)="downloadFile()"
+        style='color: white; background-color: #0dacbc; width: 100%;'
+      >
+       <span> <img class='m-1 p-0' alt='banner'
+                   src='assets/images/icons/cloud_download.png'/> </span>
+        Descargar Plantilla
+      </button>
+    </div>
+    <div class="m-1">
+      <button nbButton shape="round" size="medium" status="primary" outline class="button-val py-2.5"
+              [disabled]="!fileOrgano" (click)="uploadFile()"
+              style="color: #0dacbc; background-color: white; width: 100%; font-weight: bold;">
+        Procesar
+      </button>
+    </div>
+  </div>
+</div>
+

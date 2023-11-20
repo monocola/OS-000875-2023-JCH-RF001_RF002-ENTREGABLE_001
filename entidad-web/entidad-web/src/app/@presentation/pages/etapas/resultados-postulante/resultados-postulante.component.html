@@ -1,0 +1,847 @@
+<div class="body">
+  <div class='row'>
+    <div class="col-2">
+      <div class="row mb-0" style='margin-bottom: 0'>
+        <div class="col-12 mb-0 pt-5">
+          <div class="d-flex">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="back()"
+            >
+              <nb-icon nbSuffix icon="back"></nb-icon>
+            </button>
+            <h3 class='mb-0'>Req. Mínimos</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-0 mt-0 ml-5">
+        <h6>Resultados</h6>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="row">
+        <img [src]="urlMaestra + datosPostulanteSeleccion.urlPerfil" class="photo-postul" alt='photo_postulante'>
+      </div>
+      <div class="row">
+        <p class="descargar-cv">Descargar cv <a (click)="openCvPDF()" class="aqui"><strong> aqui</strong></a></p>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <h4> {{datosPostulanteSeleccion.nombre}} {{datosPostulanteSeleccion.apellidos}}</h4>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <div class="row">
+            {{datosPostulanteSeleccion.desTipoDocumento}}: {{datosPostulanteSeleccion.nroDocumento}}
+          </div>
+          <div class="row mt-2">
+            Edad: {{datosPostulanteSeleccion.edad}} años
+          </div>
+          <div class="row mt-2">
+            {{datosPostulanteSeleccion.correo}}
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="row">
+            nac. {{datosPostulanteSeleccion.fechaNacimientoString}}
+          </div>
+          <div class="row">
+
+          </div>
+          <div class="row">
+            <nb-icon nbSuffix icon="location"></nb-icon>&#32;
+            {{datosPostulanteSeleccion.direccion}} <br>
+            (Referencia: {{datosPostulanteSeleccion.referenciaDireccion}})
+          </div>
+          <div class="row">
+            <nb-icon nbSuffix icon="call"></nb-icon>&#32;
+            {{datosPostulanteSeleccion.nroTelefono}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2 mb-3 situacion">
+      <div class="container mt-4">
+        <p class="text-center" style="font-weight: bold; color: white;"> Califica </p>
+        <p class="text-center fs-30" style="font-weight: bold; color: white;"> 100% </p>
+        <p class="text-center" style="color: white;">de requisitos <br> cumplidos </p>
+      </div>
+    </div>
+  </div>
+
+
+  <mat-divider></mat-divider>
+
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col-3">
+
+        <nb-card size="small" style="border: 0em;">
+          <nb-card-body>
+            <nb-stepper orientation="vertical">
+              <nb-step label="Formacion Academica" completed>
+
+              </nb-step>
+              <nb-step label="Experiencia" completed>
+
+              </nb-step>
+              <nb-step label="Otros requisitos" completed>
+
+              </nb-step>
+              <nb-step label="Declaraciones juradas" completed>
+
+              </nb-step>
+            </nb-stepper>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-9">
+        <div class="row w-100 m-0">
+          <nb-accordion class="col-12 p-0 acordion-perfil">
+            <nb-accordion-item>
+              <nb-accordion-item-header class="fs-14 font-weight-medium text-primary header-detail">
+                <nb-icon class="fs-26 mr-2" icon="virrete" status="primary"></nb-icon>Formación Académica
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row">
+                  <div class="col-7">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/cuentas.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-10 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Formación básica</div>
+                      </div>
+
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let formBas of listaFormacionAcademicaSeleccion'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-7'>
+                            <div class='mb-2'> {{formBas.nombreInstitucion}} </div>
+                            <div class='text-primary fs-12 font-weight-bold'> {{formBas.desNivelEducativo}} - {{formBas.desEstadoAcademico}} </div>
+                          </div>
+                          <div class='col-5 text-right p-0'>
+                            <div class="row">
+                              <div class="col-10">
+                                <div class='text-primary mb-2 fs-12 subrayado'>
+                                  <span class='mr-2 subrayado font-weight-bold' *ngIf='formBas.adjDocumento'>
+                                    <a target='_blank' rel='documento' [href]="urlMaestra + formBas.adjDocumento">Ver Documento</a>
+                                  </span>
+                                  </div>
+                              </div>
+                              <div class='col-2 text-right p-0'>
+                                <div class='col p-0 row fs-12 justify-content-end'>
+                                  <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                                </div>
+                              </div>
+                            </div>
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon icon='calendario' status='primary'></nb-icon>
+                              <span class='ml-2'> {{formBas.fechaInicio}} - {{formBas.fechaFin}} </span>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/academico.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-8 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Formación superior</div>
+                      </div>
+                      <div class='col-2'>
+                        <div class="col-2 align-content-end pt-2">
+                          <nb-icon
+                            icon="info"
+                            status="primary"
+                            nbPopover="Hint Mode"
+                            [nbPopoverTrigger]="popHint"
+                            [nbPopoverPlacement]="pospopRigth"
+                            [nbPopover]="iconPopInfoFormSup"
+                          ></nb-icon>
+                          <ng-template #iconPopInfoFormSup>
+                            <div class="row m-0 px-3 py-2 boxPopInfoFormSup">
+                              <div class="col m-0 p-0 row">
+                                <div class="container">
+                                  <div class="p-0 m-0 row">
+                                    <div class="p-0 m-0 col-12">
+                                      <div class="row border border-dark rounded-top bg-dark">
+                                        <div class="col-2 mt-2 text-center">
+                                          <p class="fs-10 font-weight-bold text-light">GRADO</p>
+                                        </div>
+                                        <div class="col-2 mt-2 text-center">
+                                          <p class="fs-10 font-weight-bold text-light">SITUACIÓN ACADÉMICA</p>
+                                        </div>
+                                        <div class="col-8 mt-2 text-center">
+                                          <p class="fs-10 font-weight-bold text-light">CARRERAS O ESPECIALIDADES</p>
+                                        </div>
+                                      </div>
+                                      <div class="row border border-dark text-center" *ngFor="let item of listaReqFormacionSup">
+                                        <div class="col-2 fs-10">
+                                          {{item.nombreGrado}}
+                                        </div>
+                                        <div class="col-2 fs-10">
+                                          {{item.sitAcademicDesc}}
+                                        </div>
+                                        <div class="col-8 fs-10">
+                                          {{item.descripcionCarrera}}
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let formSup of listaFormacionSuperiorSeleccion'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-8'>
+                            <div class='mb-2'> {{formSup.nombreEspecificoCarrera}} </div>
+                            <div class='text-primary fs-12 font-weight-bold'> {{formSup.nombreCentroEstudios}} - {{formSup.desSituacionAcademica}} </div>
+                            <div class='text-primary fs-12 font-italic' *ngIf='formSup.indColegiatura'>
+                              {{formSup.colegioProfesional != null ? formSup.colegioProfesional : ''}} - {{formSup.nroColegiatura != null ? formSup.nroColegiatura : ''}}
+                            </div>
+                            <div class='text-primary fs-12 font-weight-bold'> {{formSup.desNivelEducativo}} </div>
+                          </div>
+                          <div class='col-4 text-right p-0'>
+                            <div class="row">
+                              <div class="col-10">
+                                <div class='text-primary mb-2 fs-12 subrayado'>
+                                  <span class='mr-2 subrayado font-weight-bold' *ngIf='formSup.adjDocumento'>
+                                    <a target='_blank' rel='documento' [href]="urlMaestra + formSup.adjDocumento">Ver Documento</a>
+                                  </span>
+                                  </div>
+                              </div>
+                              <div class="col-2">
+                                <div class='col p-0 row fs-12 justify-content-end'>
+                                  <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon icon='calendario' status='primary'></nb-icon>
+                              <span class='ml-2'> {{formSup.fechaInicio}} - {{formSup.fechaFin}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/lenguaje.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-8 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Idiomas</div>
+                      </div>
+                      <div class="col-2">
+                        <div class="col-2 align-content-end pt-2">
+                          <nb-icon
+                            icon="info"
+                            status="primary"
+                            nbPopover="Hint Mode"
+                            [nbPopoverTrigger]="popHint"
+                            [nbPopoverPlacement]="pospopRigth"
+                            [nbPopover]="iconPopInfoIdiomas"
+                          ></nb-icon>
+                          <ng-template #iconPopInfoIdiomas>
+                            <div class="row m-0 px-3 py-2 boxPopInfo">
+                              <div class="col m-0 p-0 row">
+                                <div class="container">
+                                  <div class="row">
+                                    <p class="font-weight-bold fs-10">Conocimientos de Idiomas</p>
+                                  </div>
+                                  <div class="row pl-0" *ngIf='listaConocIdiomas'>
+                                    <div *ngFor='let conIdiom of listaConocIdiomas' class='col-12 border-bottom'>
+                                      {{conIdiom.descrConocimiento}} - {{conIdiom.nivelDominioId}}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let idio of listaIdiomasSeleccion'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-7'>
+                            <div class='mb-2'> {{idio.descIdioma}} </div>
+                          </div>
+                          <div class='col-3 text-right p-0'>
+                            <div class='text-primary mb-2 fs-12 subrayado'>
+                            <span class='mr-2 subrayado font-weight-bold' *ngIf='idio.urlDocumento'>
+                              <a target='_blank' rel='documento' [href]="urlMaestra + idio.urlDocumento">Ver Documento</a>
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/ofimatica.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-8 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Ofimática</div>
+                      </div>
+                      <div class="col-2">
+                        <div class="col-2 align-content-end pt-2">
+                          <nb-icon
+                            icon="info"
+                            status="primary"
+                            nbPopover="Hint Mode"
+                            [nbPopoverTrigger]="popHint"
+                            [nbPopoverPlacement]="pospopRigth"
+                            [nbPopover]="iconPopInfoOfimac"
+                          ></nb-icon>
+                          <ng-template #iconPopInfoOfimac>
+                            <div class="row m-0 px-3 py-2 boxPopInfo">
+                              <div class="col-12 m-0 p-0 row">
+                                <div class="container">
+                                  <div class="row">
+                                    <p class="font-weight-bold fs-10">Nivel de ofimática requerido</p>
+                                  </div>
+                                  <div class="row pl-0" *ngIf='listaConocOfimatica'>
+                                    <div *ngFor='let concOfi of listaConocOfimatica' class='col-12 border-bottom'>
+                                      {{concOfi.descrConocimiento}} - {{concOfi.desNivel}}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let ofim of listaOfimaticaSeleccion'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-7'>
+                            <div class='mb-2'> {{ofim.nombre}} </div>
+                            <div class='text-primary fs-12 font-weight-bold'> {{ofim.desNivel}} </div>
+                          </div>
+                          <div class='col-3 text-right p-0'>
+                            <div class='text-primary mb-2 fs-12 subrayado'>
+                              <span class='mr-2 subrayado font-weight-bold' *ngIf='ofim.urlDocumento'>
+                                <a target='_blank' rel='documento' [href]='urlMaestra + ofim.urlDocumento'>Ver Documento</a>
+                              </span>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/especialización.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-8 ml-0">
+                        <div class="m-0 p-0 w-100 titulo-formacion text-primary">Estudios de especialización</div>
+                      </div>
+                      <div class="col-2">
+                        <div class="col-2 align-content-end pt-2">
+                          <nb-icon
+                            icon="info"
+                            status="primary"
+                            nbPopover="Hint Mode"
+                            [nbPopoverTrigger]="popHint"
+                            [nbPopoverPlacement]="pospopRigth"
+                            [nbPopover]="iconPopInfoEspec"
+                          ></nb-icon>
+                          <ng-template #iconPopInfoEspec>
+                            <div class="row m-0 px-3 py-2 boxPopInfoFormSup">
+                              <div class="col m-0 p-0 row">
+                                <div class="container">
+                                  <div class="row">
+                                    <p class="font-weight-bold fs-10">Cursor de especialización</p>
+                                  </div>
+                                  <div class="row pl-0">
+                                    <div *ngIf='listaCursosEspecial'>
+                                      <div class='col-12 border-bottom' *ngFor='let curEsp of listaCursosEspecial'>
+                                        {{curEsp.descrConocimiento}} - {{curEsp.horas}} horas
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="row pt-0 mt-2">
+                                    <p class="font-weight-bold fs-10">Programas de especialización</p>
+                                  </div>
+                                  <div class="row pl-0">
+                                    <div *ngIf='listaProgramasEspecial'>
+                                      <div class='col-12 border-bottom' *ngFor='let programEspec of listaCursosEspecial'>
+                                        {{programEspec.descrConocimiento}} - {{programEspec.horas}} horas
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let esp of listaEspecializacionSeleccion'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-8'>
+                            <div class='mb-2'> {{esp.nombreOtro}} </div>
+                            <div class='mb-2'> {{esp.desInstitucion}} </div>
+                          </div>
+                          <div class='col-4 text-left p-0'>
+                            <div class="row">
+                              <div class="col-10">
+                                <div class='text-primary mb-2 fs-12 subrayado'>
+                                  <span class='mr-2 subrayado font-weight-bold' *ngIf='esp.urlDocumento'>
+                                    <a target='_blank' rel='documento' [href]='urlMaestra + esp.urlDocumento'>Ver Documento</a>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="col-2">
+                                <div class='col p-0 row fs-12 justify-content-end'>
+                                  <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class='row fs-12'>
+                              <nb-icon icon='hora' status='primary'></nb-icon>
+                              <span class='ml-2'> {{esp.horasAcademicas}} horas</span>
+                            </div>
+                            <div class='row mt-1 fs-12'>
+                              <nb-icon icon='calendario' status='primary'></nb-icon>
+                              <span class='ml-2'> {{esp.fechaInicio}} - {{esp.fechaFin}}</span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </nb-card>
+
+                    </div>
+
+                  </div>
+                  <div class="col-5">
+                    <nb-card style="border: 0em;">
+                      <nb-card-body>
+                        <nb-toggle checked class="pt-0 mt-0" (click)='calificarSeccion($event)'>
+                          <h6 class="text-success pt-0 mt-0">Califica, en esta seccion</h6>
+                        </nb-toggle>
+                      </nb-card-body>
+                    </nb-card>
+                  </div>
+                </div>
+
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header class="fs-14 font-weight-medium text-primary header-detail">
+                <nb-icon class="fs-26 mr-2" icon="puesto" status="primary"></nb-icon>Experiencia Laboral
+              </nb-accordion-item-header>
+              <nb-accordion-item-body class="p-0">
+
+                <div class="row">
+                  <div class="col-8">
+
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/experiencia.png" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-8 ml-0">
+                        <div class="m-0 p-0 w-100 titulo-formacion text-primary">Experiencia Laboral</div>
+                      </div>
+                      <div class="col-2">
+                        <div class="col-2 align-content-end pt-2">
+                          <nb-icon
+                            icon="info"
+                            status="primary"
+                            nbPopover="Hint Mode"
+                            [nbPopoverTrigger]="popHint"
+                            [nbPopoverPlacement]="pospopRigth"
+                            [nbPopover]="iconPopInfoExper"
+                          ></nb-icon>
+                          <ng-template #iconPopInfoExper>
+                            <div class="row m-0 px-3 py-2 boxPopInfo">
+                              <div class="col m-0 p-0 row">
+                                <div class="container">
+                                  <div class="row">
+                                    <p class="font-weight-bold fs-10">Experiencia</p>
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 p-0 tarjetas">
+                                      <div class="row pl-2 m-0">
+                                        <p class="font-weight-bold fs-10">Experiencia General</p>
+                                      </div>
+                                      <div class="row pl-2">
+                                        <div class="col-8 fs-8 pt-0 font-weight-bold text-justify">
+                                          Indica el tiempo total de experiencia laboral.
+                                          Ya sea en el sector público o privado.
+                                        </div>
+                                        <div class="col-4 fs-8 font-weight-bold">
+                                          1 año 3 meses
+                                        </div>
+                                      </div>
+                                    </nb-card>
+
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 p-0 tarjetas">
+                                      <div class="row pl-2 m-0">
+                                        <p class="font-weight-bold fs-10">Experiencia Específica</p>
+                                      </div>
+                                      <div class="row pl-2">
+                                        <div class="col-8 fs-8 pt-0 font-weight-bold text-justify">
+                                          A. Indique el tiempo de experiencia requerida
+                                          para el puesto en la función o la materia.
+                                        </div>
+                                        <div class="col-4 fs-8 font-weight-bold">
+                                          1 año 3 meses
+                                        </div>
+                                      </div>
+                                    </nb-card>
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 p-0 tarjetas">
+                                      <div class="row pl-2 m-0">
+                                        <p class="font-weight-bold fs-10">Experiencia requerida para el puesto</p>
+                                      </div>
+                                      <div class="row pl-2">
+                                        <div class="col-8 fs-8 pt-0 font-weight-bold text-justify">
+                                          B. En base a la experiencia requerida para el
+                                          puesto (parte A), señale el tiempo requerido
+                                          en el sector público.
+                                        </div>
+                                        <div class="col-4 fs-8 font-weight-bold">
+                                          1 año 3 meses
+                                        </div>
+                                      </div>
+                                    </nb-card>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let exp of listaExperienciaSeleccion'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-7'>
+                            <div class='mb-2 text-primary'><strong> {{exp.puestoCargo}} </strong>  </div>
+                            <div class='mb-2'> {{exp.nombreEntidad}} </div>
+                            <div class='text-primary fs-12 font-italic'>Empleo</div>
+                            <div class='mb-2'>S./ {{exp.remuneracionFijaBruta}} </div>
+                          </div>
+                          <div class='col-5 text-left p-0'>
+                            <div class="row">
+                              <div class="col-10">
+                                <div class='text-primary mb-2 fs-12 subrayado'>
+                                  <span class='mr-2 subrayado font-weight-bold' *ngIf='exp.urlDocumento'>
+                                    <a target='_blank' rel='documento' [href]='urlMaestra + exp.urlDocumento'>Ver Documento</a>
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="col-2">
+                                <div class='col p-0 row fs-12 justify-content-end'>
+                                  <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                                </div>
+                              </div>
+                            </div>
+                            <div class='row p-0 fs-12'>
+                              <nb-icon icon='hora' status='primary'></nb-icon>
+                              <span class='ml-2'>Exp. General:  {{exp.tiempoExperiencia}} </span>
+                            </div>
+                            <div class='row p-0 mt-1 fs-12'>
+                              <nb-icon icon='calendario' status='primary'></nb-icon>
+                              <span class='ml-2'> {{exp.fechaInicio}}  - {{exp.fechaFin}} </span>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+
+                    </div>
+
+                  </div>
+                  <div class="col-4">
+                    <nb-card style="border: 0em;">
+                      <nb-card-body>
+                        <nb-toggle checked class="pt-0 mt-0" (click)='calificarSeccion($event)'>
+                          <h6 class="text-success pt-0 mt-0">Califica, en esta seccion</h6>
+                        </nb-toggle>
+                      </nb-card-body>
+                    </nb-card>
+                  </div>
+                </div>
+
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header class="fs-14 font-weight-medium text-primary header-detail">
+                <nb-icon class="fs-26 mr-2" icon="evaluacin" status="primary"></nb-icon>Otros Requisitos
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+
+                <div class="row">
+                  <div class="col-7">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/calendario.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-8 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Disponibilidad</div>
+                      </div>
+                      <div class="col-2">
+                        <div class="col-2 align-content-end pt-2">
+                          <nb-icon
+                            icon="info"
+                            status="primary"
+                            nbPopover="Hint Mode"
+                            [nbPopoverTrigger]="popHint"
+                            [nbPopoverPlacement]="pospopRigth"
+                            [nbPopover]="iconPopInfoDispon"
+                          ></nb-icon>
+                          <ng-template #iconPopInfoDispon>
+                            <div class="row m-0 px-3 py-2 boxPopInfo">
+                              <div class="col m-0 p-0 row">
+                                <div class="container">
+                                  <div class="row">
+                                    <p class="font-weight-bold fs-10">Disponibilidad</p>
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 p-0 tarjetas">
+                                      <div class="row pl-2">
+                                        <div class="col-12 fs-8 pt-0 text-justify">
+                                          Debe contar con la disponibilidad para trasladarse a las diferentes
+                                          sedes a nivel nacional, según las necesidades de la institución.
+                                        </div>
+                                      </div>
+                                    </nb-card>
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 pr-3 tarjetas">
+                                      <div class="row">
+                                        <div class="col-12 fs-8 ml-3 p-2 text-justify">
+                                          Licencia para conducir - AIIB
+                                        </div>
+                                      </div>
+                                    </nb-card>
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 pr-3 tarjetas">
+                                      <div class="row">
+                                        <div class="col-12 fs-8 ml-3 p-2 text-justify">
+                                          Nacionalidad - Peruano
+                                        </div>
+                                      </div>
+                                    </nb-card>
+                                  </div>
+                                  <div class="row">
+                                    <nb-card class="m-0 pr-3 tarjetas">
+                                      <div class="row">
+                                        <div class="col-12 fs-8 ml-3 p-2 text-justify">
+                                          Investigación y publicación - Aguas Contaminadas
+                                        </div>
+                                      </div>
+                                    </nb-card>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <nb-card class='col-12 p-0 box w-100 tarjetas'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-10'>
+                            <div class='mb-2'>
+                              <p class='text-justify'>
+                                Registre en esta sección si cuenta con la disponibilidad para
+                                trasladar a las diferentes sedes a nivel nacional, según las necesidades de la institución.
+                              </p>
+                            </div>
+                            <div class='text-primary fs-12 font-weight-bold'>
+                              <nb-radio-group (click)='checkRadioButton'>
+                                <nb-radio value="true" class="inline-radio" [checked]="dispTrabajarIntPais">Sí</nb-radio>
+                                <nb-radio value="false" class="inline-radio" [checked]="!dispTrabajarIntPais">No</nb-radio>
+                              </nb-radio-group>
+                            </div>
+                          </div>
+                          <div class='col-2 text-right p-0'>
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+
+                      <nb-card class='col-12 p-0 box w-100 tarjetas' *ngFor='let otrReq of objDatosOtrosReq?.listaReqAdicionalesPostulante'>
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-10'>
+                            <div class='mb-2'> {{otrReq.descripcion}} <span class='text-info pl-3'>{{otrReq.respuesta ? 'Sí' : 'No'}}</span> </div>
+                          </div>
+                          <div class='col-2 text-right p-0'>
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon *ngIf='otrReq.respuesta' icon='check' status='primary' class='text-success'></nb-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+                      <nb-card *ngFor="let objInvestig of objDatosOtrosReq?.listaInvestigacionPostulante" class='col-12 p-0 box w-100 tarjetas' >
+                        <div class='row m-0 p-2 align-items-center'>
+                          <div class='col-10'>
+                            <div class='mb-2'>Investigación y publicación  <span class='text-info pl-3'>{{objInvestig.nombrePublicacion}}</span></div>
+                          </div>
+                          <div class='col-2 text-right p-0'>
+                            <div class='col p-0 row fs-12 justify-content-end'>
+                              <nb-icon icon='check' status='primary' class='text-success'></nb-icon>
+                            </div>
+                          </div>
+                        </div>
+                      </nb-card>
+
+                    </div>
+
+                  </div>
+                  <div class="col-5">
+                    <nb-card style="border: 0em;">
+                      <nb-card-body>
+                        <nb-toggle checked class="pt-0 mt-0" (click)='calificarSeccion($event)'>
+                          <h6 class="text-success pt-0 mt-0">Califica, en esta seccion</h6>
+                        </nb-toggle>
+                      </nb-card-body>
+                    </nb-card>
+                  </div>
+                </div>
+
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+            <nb-accordion-item>
+              <nb-accordion-item-header class="fs-14 font-weight-medium text-primary header-detail">
+                <nb-icon class="fs-26 mr-2" icon="declaracin" status="primary"></nb-icon>Declaraciones Juradas
+              </nb-accordion-item-header>
+              <nb-accordion-item-body class="p-0">
+                <div class="row">
+                  <div class="col-8">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/declaracion_jurada.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-10 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Declaraciones Juradas SERVIR</div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+
+                      <div class="row p-0 m-0 pl-1 declara-jurada justify-content-end border-bottom" *ngFor='let declJuraSer of listaDeclaraJuradaServir; let indice = index'>
+                        <div class="offset-2 col-12 p-0 pt-2 m-0 text-justify">
+                          {{indice + 1}}. {{declJuraSer.descripcion}}
+                        </div>
+                        <div class="offset-2 col-12 p-0 pt-2 m-0">
+                          <nb-radio-group [name]="'declaJurSer' + indice" (click)='checkRadioButton'>
+                            <nb-radio value="true" class="inline-radio" [checked]="declJuraSer.respuesta">Sí</nb-radio>
+                            <nb-radio value="false" class="inline-radio" [checked]="!declJuraSer.respuesta">No</nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row pt-2">
+                      <div class="col-2">
+                        <div class="text-center">
+                          <img src="assets/images/icons/declaracion_jurada.svg" alt="Cuentas" style="width: 3rem;">
+                        </div>
+                      </div>
+                      <div class="col-10 ml-0">
+                        <div class="m-0 p-0 w-80 titulo-formacion text-primary">Declaraciones Juradas ENTIDAD</div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+
+                      <div class="row p-0 m-0 declara-jurada justify-content-end border-bottom" *ngFor='let declJurEnt of listaDeclaraJuradaEntidad; let indice = index'>
+                        <div class="col-12 offset-2 p-0 pt-2 m-0 text-justify">
+                          {{indice + 1}}. {{declJurEnt.descripcion}}
+                        </div>
+                        <div class="col-12 offset-2 p-0 pt-2 m-0">
+                          <nb-radio-group [name]="'declJurEnt' + indice" (click)='checkRadioButton'>
+                            <nb-radio value="true" class="inline-radio" [checked]="declJurEnt.respuesta">Sí</nb-radio>
+                            <nb-radio value="false" class="inline-radio" [checked]="!declJurEnt.respuesta">No</nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-4">
+                    <nb-card style="border: 0em;">
+                      <nb-card-body>
+                        <nb-toggle checked class="pt-0 mt-0" (click)='calificarSeccion($event)'>
+                          <h6 class="text-success pt-0 mt-0">Califica, en esta seccion</h6>
+                        </nb-toggle>
+                      </nb-card-body>
+                    </nb-card>
+                  </div>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+
+          </nb-accordion>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

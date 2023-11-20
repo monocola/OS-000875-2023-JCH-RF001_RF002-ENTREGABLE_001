@@ -1,0 +1,157 @@
+<div class="d-flex w-100 header-modal">
+  {{ this.data.dataToEdit ? 'Editar' : 'Registrar' }}
+
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+
+<div class="bodyRegisterForm">
+  <div>
+    <form class="row mt-2" [formGroup]="filterForm">
+      <div class="row pb-2 ml-1">
+        <label class="col-12 mb-3"
+          >Ingrese los siguientes datos
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label
+        >
+      </div>
+      <div class="mb-3 col-md-6">
+        <label>Tipo de órgano</label>
+        <nb-select
+          formControlName="tipoOrganoId"
+          placeholder="Seleccione"
+          fullWidth="true"
+          [size]="'medium'"
+          shape="semi-round"
+          [status]="
+            f.tipoOrganoId.invalid && f.tipoOrganoId.touched
+              ? 'danger'
+              : 'basic'
+          "
+          [(selected)]="selectTipoOrgano"
+        >
+          <nb-option
+            *ngFor="let cboOrgano of organos"
+            [value]="cboOrgano.parametroId"
+          >
+            {{ cboOrgano.valorTexto }}
+          </nb-option>
+        </nb-select>
+
+        <div
+          *ngIf="f.tipoOrganoId.invalid && f.tipoOrganoId.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.tipoOrganoId.errors.required">
+            El campo es obligatorio
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label>Nombre de órgano / UO / Sub UO</label>
+        <input
+          trim="blur"
+          placeholder="Nombre de Órgano"
+          type="text"
+          nbInput
+          shape="semi-round"
+          [status]="
+            f.descripcion.invalid && f.descripcion.touched ? 'danger' : 'basic'
+          "
+          fullWidth
+          formControlName="descripcion"
+          maxlength="200"
+        />
+
+        <div
+          *ngIf="f.descripcion.invalid && f.descripcion.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.descripcion.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.descripcion.errors.maxlength">
+            El texto introducido es muy largo max 300 caracteres
+          </span>
+          <span *ngIf="f.descripcion.errors.uoError">
+            {{ mensaje }}
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label>Siglas del órgano / UO / Sub UO</label>
+        <input
+          trim="blur"
+          placeholder="Siglas del órgano"
+          type="text"
+          nbInput
+          shape="semi-round"
+          [status]="f.sigla.invalid && f.sigla.touched ? 'danger' : 'basic'"
+          fullWidth
+          formControlName="sigla"
+        />
+
+        <div
+          *ngIf="f.sigla.invalid && f.sigla.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.sigla.errors.required"> El campo es obligatorio </span>
+          <span *ngIf="f.sigla.errors.maxlength">
+            El texto introducido es muy largo max 10 caracteres
+          </span>
+          <span *ngIf="f.sigla.errors.uoError">
+            {{ mensaje }}
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label>Órgano / UO superior</label>
+        <nb-select
+          formControlName="unidadOrganicaSuperiorId"
+          placeholder="Seleccione"
+          fullWidth="true"
+          [size]="'medium'"
+          shape="semi-round"
+          [status]="
+            f.unidadOrganicaSuperiorId.invalid &&
+            f.unidadOrganicaSuperiorId.touched
+              ? 'danger'
+              : 'basic'
+          "
+          [(selected)]="selectOrgano"
+        >
+          <nb-option
+            *ngFor="let unidadSup of unidadOrganicaCbo"
+            [value]="unidadSup.id"
+          >
+            {{ unidadSup.descripcion }}
+          </nb-option>
+        </nb-select>
+      </div>
+
+      <div class="col-4"></div>
+
+      <div class="col-8 my-3">
+        <div class="w-100 h-100 btn_area">
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            style="color: white; background-color: #0dacbc"
+            (click)="this.data.dataToEdit ? editOrgano() : saveOrgano()"
+          >
+            Registrar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

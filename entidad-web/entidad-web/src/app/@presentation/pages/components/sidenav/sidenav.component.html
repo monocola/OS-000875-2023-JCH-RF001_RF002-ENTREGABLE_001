@@ -1,0 +1,85 @@
+<div class="w-100 parent d-flex py-2">
+  <a
+    class="flex-v-center py-1 flex-column"
+    *ngFor="let item of sidenavService.menu; let i = index"
+    [ngClass]="{ 'px-3': !sidenavService.collapsed }"
+  >
+    <!---------------------------------------------------------------------->
+    <!------ MENU CON HIJOS ------>
+    <!---------------------------------------------------------------------->
+
+    <ng-container *ngIf="item.subMenu.length != 0">
+      <a
+        class="itemPadre w-100 py-2 px-1 flex-v-center"
+        (click)="clickMenu(i)"
+        [ngClass]="{
+          menuSelected: item.childSelected && sidenavService.collapsed
+        }"
+      >
+        <nb-icon
+          [icon]="item.icono"
+          class="icon__item"
+          [ngClass]="{ 'mr-2': !sidenavService.collapsed }"
+        >
+        </nb-icon>
+        <div *ngIf="!sidenavService.collapsed">
+          {{ item.descripcion }}
+        </div>
+        <span class="flex-spacer" *ngIf="!sidenavService.collapsed"></span>
+        <nb-icon
+          *ngIf="!sidenavService.collapsed"
+          [ngClass]="{ rotate: item.opened }"
+          class="icon-arrow ml-2"
+          [icon]="'down'"
+        >
+        </nb-icon>
+      </a>
+      <div
+        class="submenu w-100"
+        [ngClass]="{ 'submenu-on': item.opened }"
+        *ngIf="!sidenavService.collapsed"
+      >
+        <a
+          class="item w-100 py-1 mt-1 pr-2 pl-4 flex-v-center-left"
+          [routerLink]="'/pages/' + children.url"
+          routerLinkActive="active"
+          *ngFor="let children of item.subMenu"
+          (click)="clickItem(i)"
+        >
+          <nb-icon [icon]="children.icono" class="mr-2"></nb-icon>
+          <div class="text-menu-hijo">
+            {{ children.descripcion }}
+          </div>
+        </a>
+      </div>
+    </ng-container>
+
+    <!---------------------------------------------------------------------->
+    <!------ MENU SIN HIJOS ------>
+    <!---------------------------------------------------------------------->
+    <ng-container *ngIf="item.subMenu.length == 0">
+      <a
+        class="item w-100 py-2 px-2 flex-v-center-left"
+        [routerLink]="'/pages/' + item.url"
+        routerLinkActive="active"
+      >
+        <nb-icon [icon]="item.icono" class="mr-2"></nb-icon>
+        <div *ngIf="!sidenavService.collapsed">
+          {{ item.descripcion }}
+        </div>
+      </a>
+      <div class="submenu w-100" *ngIf="!sidenavService.collapsed"></div>
+    </ng-container>
+  </a>
+
+  <span style="flex: 1"></span>
+
+  <mat-divider class="mt-3"></mat-divider>
+
+  <div class="flex-v-center-left px-3 pt-3 pb-1">
+    <a class="item w-100 h-100 py-2 px-2 d-flex" (click)="logout()">
+      <nb-icon icon="logout" class="mr-2"></nb-icon>
+      <div *ngIf="!sidenavService.collapsed">Cerrar sesión</div>
+    </a>
+  </div>
+</div>

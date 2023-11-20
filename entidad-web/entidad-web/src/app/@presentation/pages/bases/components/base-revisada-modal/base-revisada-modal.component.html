@@ -1,0 +1,30 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="py-2 px-2 bodyModal">
+  <div class="flex-v-center">
+    <img src="assets/images/icons/creado.png" alt="Logo pregunta eliminar" />
+  </div>
+
+  <div class="title fw-600 flex-v-center my-3">Bases revisadas</div>
+  <div>Las bases fueron revisadas de forma exitosa</div>
+
+  <div class="flex-v-center mt-4">
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="py-2 px-5"
+      (click)="onNoClick()"
+    >
+      Aceptar
+    </button>
+  </div>
+</div>

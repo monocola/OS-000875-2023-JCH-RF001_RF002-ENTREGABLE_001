@@ -1,0 +1,146 @@
+<h6 class="d-flex">
+  Cronograma
+  <serv-talento-btn-add
+    (clickEmitter)="addNewItem()"
+    text="Añadir cronograma"
+    [disableButton]="items.value?.length > 0 || items.disabled"
+  >
+  </serv-talento-btn-add>
+</h6>
+
+<div
+  cdkDropList
+  class="example-list w-100 pr-2"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div
+    class="flex-v-center w-100 my-1"
+    *ngFor="let item of items.value; index as i"
+    cdkDrag
+  >
+    <div
+      class="handle_icon flex-v-center mx-2"
+      cdkDragHandle
+      title="Presionar y arrastrar"
+      *ngIf="orderable"
+    >
+      <span class="material-icons p-1"> drag_handle </span>
+    </div>
+
+    <div
+      class="handle_icon flex-v-center"
+      cdkDragHandle
+      title="Presionar y arrastrar"
+      style="width: 0; height: 0"
+      *ngIf="!orderable"
+    ></div>
+
+    <span class="ml-3 mr-2 fw-600"> {{ i + 1 }}. </span>
+    <input
+      type="text"
+      class="w-50 mr-4 ml-2"
+      [(ngModel)]="item.descripcion"
+      placeholder="Ingrese la actividad"
+      nbInput
+      shape="semi-round"
+      [status]="item.descripcion === '' && items.touched ? 'danger' : 'basic'"
+      maxlength="250"
+      (change)="validateItems()"
+    />
+    <input
+      type="text"
+      class="w-25 mr-4 ml-2"
+      [(ngModel)]="item.responsable"
+      placeholder="Ingrese un responsable"
+      nbInput
+      shape="semi-round"
+      [status]="item.responsable === '' && items.touched ? 'danger' : 'basic'"
+      maxlength="250"
+      (change)="validateItems()"
+    />
+
+    <nb-form-field class="ml-3 mr-2 fw-600" style="width: 340px">
+      <input
+        nbInput
+        readonly
+        style="height: 35px"
+        [ngxMatDatetimePicker]="pickerFecIni"
+        shape="semi-round"
+        placeholder="Fecha y hora Inicio"
+        [(ngModel)]="item.fechaInicio"
+        fieldSize="large"
+        [disabled]="false"
+        [status]="
+          item.fechaInicio === null && items.touched ? 'danger' : 'basic'
+        "
+      />
+
+      <mat-datepicker-toggle
+        nbSuffix
+        [for]="pickerFecIni"
+      ></mat-datepicker-toggle>
+
+      <ngx-mat-datetime-picker
+        #pickerFecIni
+        [showSpinners]="true"
+        [showSeconds]="false"
+        [stepHour]="1"
+        [stepMinute]="1"
+        [stepSecond]="1"
+        [touchUi]="true"
+        [enableMeridian]="true"
+      >
+      </ngx-mat-datetime-picker>
+    </nb-form-field>
+
+    <nb-form-field class="ml-3 mr-2 fw-600" style="width: 340px">
+      <input
+        style="height: 35px"
+        nbInput
+        readonly
+        [ngxMatDatetimePicker]="pickerFecFin"
+        shape="semi-round"
+        placeholder="Fecha y hora Fin"
+        [(ngModel)]="item.fechaFin"
+        fieldSize="large"
+        [disabled]="false"
+        [status]="item.fechaFin === null && items.touched ? 'danger' : 'basic'"
+        (ngModelChange)="validateItems()"
+      />
+
+      <mat-datepicker-toggle
+        nbSuffix
+        [for]="pickerFecFin"
+      ></mat-datepicker-toggle>
+
+      <ngx-mat-datetime-picker
+        #pickerFecFin
+        [showSpinners]="true"
+        [showSeconds]="false"
+        [stepHour]="1"
+        [stepMinute]="1"
+        [stepSecond]="1"
+        [touchUi]="true"
+        [enableMeridian]="true"
+      >
+      </ngx-mat-datetime-picker>
+    </nb-form-field>
+
+    <div class="flex-spacer"></div>
+
+    <div class="flex-v-center-right example-box">
+      <button
+        mat-icon-button
+        class="mr-2 iconAdd"
+        (click)="addNewItem()"
+        *ngIf="i == this.items.value?.length - 1"
+      >
+        <em class="material-icons"> add_circle_outline </em>
+      </button>
+
+      <button mat-icon-button class="mr-2 iconRemove" (click)="removeItem(i)">
+        <span class="material-icons"> remove_circle_outline </span>
+      </button>
+    </div>
+  </div>
+</div>

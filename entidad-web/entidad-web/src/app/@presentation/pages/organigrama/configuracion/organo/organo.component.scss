@@ -1,0 +1,29 @@
+@import '_colors';
+
+h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.icon {
+    color: $primary_color;
+}
+
+.searchButton:disabled {
+    & > .icon {
+        font-size: 1.25rem;
+        color: gainsboro;
+    }
+}
+
+.searchButton {
+    & > .icon {
+        font-size: 1.25rem;
+        color: $primary_color;
+    }
+}
+
+.subtitle {
+    font-weight: 500;
+    color: $primary_color;
+}

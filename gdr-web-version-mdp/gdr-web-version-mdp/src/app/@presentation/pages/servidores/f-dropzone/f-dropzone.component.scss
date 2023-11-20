@@ -1,0 +1,147 @@
+@import "../../@theme/styles/themes";
+@import "_colors";
+
+.btnFileUpload {
+  /*   margin: auto; */
+  user-select: none;
+  border: 1px solid #ccc;
+  border-radius: 0.625rem;
+  padding: 0.563rem;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.btnUploadLogo {
+  background-color: $primary_color;
+  border-radius: 2.125rem;
+  padding: 0.375rem 1.125rem;
+  // width: 20%;
+  transition: 0.2s;
+  width: 100%;
+  max-width: 200px;
+  color: white !important;
+  & > .documentIcon {
+    font-size: 1.75rem !important;
+  }
+  &:hover {
+    background-color: #259acc;
+  }
+  // margin-left: 320px;
+  // margin-top: 10px;
+}
+
+.buttonArea {
+  & > button {
+    font-size: 0.875rem;
+    font-weight: 400;
+    & > .iconArrow {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.button-val {
+  cursor: pointer;
+  margin-bottom: 10px;
+  width: 100%;
+  // width: 150px;
+  display: block;
+}
+
+.dropzone-label {
+  width: 100%;
+  margin: 0 0 10px;
+}
+
+/*.btnProcesar {
+  position: absolute;
+  left: 800px;
+  top: 265px;
+  margin-top: -20px;
+}*/
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+/*Haciendo para el arrastrar*/
+
+$danger: red;
+$primary: #2665c5;
+
+.dropzone {
+  //width: 800px;
+  margin-bottom: 16px;
+  margin-left: 15px;
+  &-file {
+    // width: 800px;
+    height: 150px;
+    position: relative;
+    background: #ffffff;
+    border: 2px dashed rgba(129, 145, 164, 0.5);
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    input {
+      opacity: 0;
+      position: absolute;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+  &-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    margin-bottom: 16px;
+  }
+  &-button {
+    // display: flex;
+    flex-direction: column;
+    // margin-left: 50%;
+    align-items: center;
+    justify-content: center;
+    height: 35%;
+
+  }
+
+  label {
+
+    &:hover {
+      opacity: 0.75;
+      cursor: pointer;
+    }
+  }
+}
+
+.txtArrastrar {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #8191a4;
+}
+
+.file-over {
+  border: dotted 3px #0DACBC;
+}
+.row {
+  width: 100%;
+}

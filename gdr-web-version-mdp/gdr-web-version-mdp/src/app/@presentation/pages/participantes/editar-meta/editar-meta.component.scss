@@ -1,0 +1,118 @@
+@import "../../@common-components/material-table/material-table.component.scss";
+
+.body {
+  background-color: #fbfbfb;
+}
+
+$danger: red;
+$primary: #2665c5;
+
+/**** CSS TABLE ****/
+.mat-column-estado {
+  margin-right: 1px;
+  padding-right: 1.25rem;
+  padding-left: 0.5rem;
+}
+.mat-column-rolId {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.mat-column-segmentoId {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-puesto {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-siglaUO {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-apellidosNombres {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+.mat-column-numeroDocumento {
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  color: black;
+  padding-right: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+.search-panel {
+  padding: 1rem 0;
+  box-shadow: 0 0 7px rgba(129, 145, 164, 0.17);
+  border-radius: 10px;
+  margin: 0 -12px;
+}
+
+.button-panel-1 {
+  width: 150px;
+}
+
+th {
+  text-transform: none;
+}
+
+.titlePage {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.btn-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  & > button {
+    width: 15% !important;
+  }
+}
+
+.btn-evidencia {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  & > button {
+    width: 15% !important;
+  }
+}
+
+.back__arrow {
+  color: $primary_color;
+  font-size: 2rem;
+}
+
+.btn_back {
+  border: none;
+  background: transparent;
+  margin-top: -10px;
+}
+
+.container-fluid {
+  background-color: #fff;
+  padding-bottom: 15px;
+  border-radius: 10px;
+  margin-left: 0;
+}
+.inline-radio {
+  display: flex !important;
+}
+label {
+  font-size: 16px !important;
+}
+input {
+  font-size: 12px !important;
+}

@@ -1,0 +1,132 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Gestión de bonificaciones</h3>
+    <span class="flex-spacer"></span>
+    <div>
+      <button
+        [routerLink]="['creacion']"
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+      >
+        Crear registros
+      </button>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="container-fluid">
+    <form [formGroup]="filterForm" class="mt-3">
+      <div class="subtitle">Filtros de búsqueda</div>
+
+      <div class="row mt-3">
+        <div class="mb-3 col-md-3">
+          <input-field
+            [control]="f.titulo"
+            [label]="'Nombre de la bonificación'"
+            [placeholder]="'Buscar'"
+            [maxlength]="45"
+            [banKeyType]="5"
+            [minlength]="0"
+          >
+          </input-field>
+        </div>
+
+        <div class="mb-3 col-md-3">
+          <select-field
+            [label]="'Tipo de bonificación'"
+            [control]="f.tipoBonificacion"
+            [items]="helperService.tiposBonificacion"
+            [value]="'maeDetalleId'"
+            [valueToShow]="'descripcion'"
+          >
+          </select-field>
+        </div>
+
+        <div class="mb-3 col-md-2">
+          <select-field
+            [label]="'Estado'"
+            [control]="f.estado"
+            [items]="helperService.estados"
+            [value]="'codigoTexto'"
+            [valueToShow]="'valorTexto'"
+          >
+          </select-field>
+        </div>
+
+        <div class="mb-3 col-md-1"></div>
+
+        <div class="mb-3 col-md-3">
+          <div class="w-100 h-100 btn_area">
+            <button
+              type="button"
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              outline
+              (click)="clear()"
+            >
+              Limpiar
+            </button>
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              (click)="getBonificaciones()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="padding-body">
+  <div
+    class="flex-v-center flex-column mt-5"
+    *ngIf="this.bonificaciones.length === 0 && !searchMode"
+  >
+    <img
+      width="70px"
+      alt="imagen bandeja"
+      src="assets/images/icons/bandeja.png"
+      class="my-3"
+    />
+    <span class="fs-13">No tienes perfiles creados.</span>
+    <span class="fs-13">
+      Para crearlos da <strong>click</strong> al botón
+      <strong>"Crear perfil"</strong>
+    </span>
+  </div>
+
+  <ng-container *ngIf="this.bonificaciones.length > 0 || searchMode">
+    <div class="subtitle">Lista de bonificaciones</div>
+    <serv-talento-table
+      [tableData]="this.bonificaciones"
+      [tableColumns]="bonificacionesTableColumns"
+      [dataExport]="getDataExport()"
+      [isFilterable]="true"
+      [isPageable]="true"
+      [paginationSizes]="[5, 10, 15]"
+      [defaultPageSize]="10"
+      (sort)="sortData($event)"
+      [acciones]="true"
+      [title]="'Lista de perfiles'"
+      [btnEditEnabled]="true"
+      (editAction)="editBonificacion($event)"
+      [editTitle]="'Editar bonificación'"
+      [btnDeleteEnabled]="true"
+      (deleteAction)="removeBonificacion($event)"
+      [deleteTitle]="'Inactivar bonificación'"
+      [fontSize]="'fs-13'"
+    >
+    </serv-talento-table>
+  </ng-container>
+</div>

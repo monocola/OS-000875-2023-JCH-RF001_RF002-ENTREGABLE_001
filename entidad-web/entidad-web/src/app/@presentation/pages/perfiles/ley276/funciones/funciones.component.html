@@ -1,0 +1,38 @@
+<form [formGroup]="this.helperService.funcionesForm" class="px-5">
+  <div class="w-100">
+    <serv-talento-strings-array-field
+      [title]="'Funciones del puesto'"
+      [addItemLabel]="'Añadir función'"
+      [items]="f.funciones"
+      [placeholderItem]="'Ingrese descripción de función'"
+      [minItems]="5"
+      [maxItems]="15"
+      [deletedItems]="helperService.funcionesToDelete"
+    >
+    </serv-talento-strings-array-field>
+  </div>
+
+  <div class="mt-3">
+    <h6>Coordinaciones principales</h6>
+
+    <div class="mt-3">
+      <textarea-field
+        [control]="f.coordinacionInterna"
+        [maxlength]="250"
+        [label]="'Coordinaciones internas'"
+        [placeholder]="'Ingrese texto'"
+      >
+      </textarea-field>
+    </div>
+
+    <div class="mt-3">
+      <textarea-field
+        [control]="f.coordinacionExterna"
+        [maxlength]="250"
+        [label]="'Coordinaciones externas'"
+        [placeholder]="'Ingrese texto'"
+      >
+      </textarea-field>
+    </div>
+  </div>
+</form>

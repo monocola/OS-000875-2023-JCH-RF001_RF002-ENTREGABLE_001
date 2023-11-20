@@ -1,0 +1,112 @@
+<form [formGroup]="helper30057Service.experienciaForm" class="px-5">
+  <h6>Experiencia</h6>
+
+  <div class="subtitle">Experiencia general</div>
+
+  <serv-talento-month-and-year-field
+    [monthControl]="f.monthsExpGeneral"
+    [yearControl]="f.yearExpGeneral"
+    [label]="
+      'Indica el tiempo total de experiencia laboral. Ya sea en el sector público o privado'
+    "
+  >
+  </serv-talento-month-and-year-field>
+
+  <div class="subtitle mt-3">Experiencia específica</div>
+  <div class="row">
+    <div class="col-6">
+      <serv-talento-month-and-year-field
+        [monthControl]="f.monthsEspecificaA"
+        [yearControl]="f.yearEspecificaA"
+        [label]="
+          'A. Indique el tiempo de experiencia requerida para el puesto en la función o la materia'
+        "
+      >
+      </serv-talento-month-and-year-field>
+    </div>
+    <div class="col-6">
+      <serv-talento-month-and-year-field
+        [monthControl]="f.monthsEspecificaB"
+        [yearControl]="f.yearEspecificaB"
+        [label]="
+          'B. En base a la experiencia requerida para el puesto (parte A), señale el tiempo requerido en el sector público'
+        "
+      >
+      </serv-talento-month-and-year-field>
+    </div>
+  </div>
+
+  <!---------------------------------------------------------------------->
+  <!------ Demás filas ------>
+  <!---------------------------------------------------------------------->
+
+  <div class="mt-3">
+    <label>
+      C. Marque el nivel mínimo de puesto que se requiere como experiencia; ya
+      sea en el sector público o privado
+    </label>
+    <div class="mt-3">
+      <mat-radio-group
+        class="mt-3"
+        color="primary"
+        formControlName="nivelPuesto"
+      >
+        <mat-radio-button
+          [value]="item.maeDetalleId"
+          class="mr-5"
+          *ngFor="let item of helper30057Service.nivelesMinimosPuestos"
+        >
+          {{ item.descripcion }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <span
+      class="invalid-text mt-2"
+      *ngIf="f.nivelPuesto.invalid && f.nivelPuesto.touched"
+    >
+      Seleccione una de las opciones
+    </span>
+  </div>
+
+  <div class="my-3">
+    <input-field
+      [control]="f.aspectosComplementarios"
+      [placeholder]="'Ingrese texto'"
+      [banKeyType]="5"
+      [label]="
+        'D. Mencione otros aspectos complementarios sobre el requisito de ' +
+        'experiencia; en caso existiera algo adicional para el puesto'
+      "
+    >
+    </input-field>
+  </div>
+
+  <serv-talento-strings-array-field
+    [title]="'Habilidades o competencias'"
+    [addItemLabel]="'Añadir habilidades'"
+    [items]="f.habilidades"
+    [placeholderItem]="'Ingrese descripción de función'"
+    [maxItems]="8"
+    [minItems]="0"
+    [deletedItems]="helper30057Service.habilidadesToDelete"
+    [orderable]="false"
+  >
+  </serv-talento-strings-array-field>
+
+  <div class="pt-3"></div>
+
+  <serv-talento-strings-array-field
+    [title]="'Requisitos adicionales'"
+    [addItemLabel]="'Añadir requisitos'"
+    [placeholderItem]="'Ingrese descripción del requisito'"
+    [mode]="1"
+    [items]="f.requisitos"
+    [extraItems]="helper30057Service.reqAdicionales"
+    [maxItems]="helper30057Service.reqAdicionales.length"
+    noDuplicateItems="true"
+    [minItems]="0"
+    [deletedItems]="helper30057Service.requisitosToDelete"
+    [orderable]="false"
+  >
+  </serv-talento-strings-array-field>
+</form>

@@ -1,0 +1,408 @@
+<div class="body">
+  <div
+    class="d-flex"
+    style="align-items: center; justify-content: space-between"
+  >
+    <div class="d-flex">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/pages/generacionconvenio']"
+      >
+        <nb-icon nbSuffix class="back__arrow" icon="back"></nb-icon>
+      </button>
+      <h3 class="titlePage">Convenios</h3>
+    </div>
+    <p style="font-size: 15px; margin-right: 64px"></p>
+  </div>
+  <mat-divider></mat-divider>
+  <div
+    *ngIf="codProEstado == 1 && contratoCreado == false"
+    class="d-flex contratoSection"
+    style="margin-top: 20px; margin-bottom: 20px"
+  >
+    <span class="flex-spacer"></span>
+    <div>
+      <button
+        (click)="crearContrato()"
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+        fullWidth
+      >
+        Crear convenio
+      </button>
+    </div>
+  </div>
+  <div
+    *ngIf="codProEstado != 4"
+    class="d-flex contratoSection"
+    style="margin-top: 20px; margin-bottom: 20px"
+  >
+    <div>
+      <button
+        (click)="desestimarContrato()"
+        style="background: rgb(232, 87, 87); border: 1px solid rgb(232, 87, 87)"
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="danger"
+        fullWidth
+      >
+        Desestimar Contrato
+      </button>
+    </div>
+
+    <span *ngIf="codProEstado != 3" class="col-md-6"> </span>
+    <span *ngIf="codProEstado == 3" class="col-md-8"> </span>
+
+    <div class="d-flex" style="align-items: center">
+      <div *ngIf="codProEstado != 3" class="col-md-5">
+        <div>
+          <div
+            class="item_card_input_img"
+            style="background-color: white; width: 127px"
+          >
+            <div
+              style="
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+              "
+            >
+              <div class="filename" style="font-size: 11px">
+                Descargar Contrato
+              </div>
+            </div>
+            <div
+              style="
+                width: 30%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+              "
+            >
+              <button
+                matRipple
+                title="Subir"
+                class="btn-card-black"
+                (click)="descargar($event)"
+              >
+                <em class="ent-web-descargar"></em>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="codProEstado == 3" class="col-md-12">
+        <div>
+          <div
+            class="item_card_input_img"
+            style="background-color: white; width: 127px"
+          >
+            <div
+              style="
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+              "
+            >
+              <div class="filename" style="font-size: 11px">
+                Descargar Contrato
+              </div>
+            </div>
+            <div
+              style="
+                width: 30%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+              "
+            >
+              <button
+                matRipple
+                title="Subir"
+                class="btn-card-black"
+                (click)="descargar($event)"
+              >
+                <em class="ent-web-descargar"></em>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="codProEstado != 3" class="col-md-5">
+        <div>
+          <div
+            class="item_card_input_img"
+            style="background-color: white; width: 127px"
+          >
+            <div
+              style="
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+              "
+            >
+              <div class="filename" style="font-size: 11px">Subir Contrato</div>
+            </div>
+            <div
+              style="
+                width: 30%;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+              "
+            >
+              <button
+                matRipple
+                title="Subir"
+                class="btn-card-black"
+                (click)="subir()"
+              >
+                <em class="ent-web-subir"></em>
+              </button>
+              <input
+                type="file"
+                class="file-input"
+                accept="application/pdf"
+                #fileUpload
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="contratoSection">
+    <div class="flex-v-left d-flex position">
+      <img
+        src="assets/images/icons/experiencia.png"
+        style="height: 50px; width: 55px; margin-right: 12px"
+        alt="Logo"
+      />
+      <p class="titlePage texPage">Datos del Convenio</p>
+      <em
+        *ngIf="codProEstado == 1 && contratoCreado == false"
+        (click)="openModalConvenio()"
+        style="font-size: 23px; cursor: pointer"
+        class="ent-web-arrow_down mr-2"
+      >
+        <em style="color: #0d88bc" class="ent-web-edit mr-2"></em>
+      </em>
+    </div>
+
+    <div class="contratoGrid">
+      <div class="item">
+        <p>Area donde se realizarán las prácticas</p>
+        <span>{{ contratoList.nombreOrgano }}</span>
+      </div>
+      <div
+        *ngIf="contratoList.nombreUniOrganica === 'checkearCodigo'"
+        class="item"
+      >
+        <p>Unidad Orgánica</p>
+        <span>{{ contratoList.nombreUniOrganica }}</span>
+      </div>
+      <div class="item">
+        <p>Dirección de Prácticas</p>
+        <span>{{ contratoList.direccionLabores }}</span>
+      </div>
+      <div
+        *ngIf="contratoList.nombreUniOrganica === 'checkearCodigo'"
+        class="item"
+      >
+        <p>Tipo de Prácticas</p>
+        <span>{{ contratoList.tipoPracticas }}</span>
+      </div>
+      <div class="item">
+        <p>Periodo de Convenio</p>
+        <span>{{ contratoList.periodoConvenio }}</span>
+      </div>
+      <div class="item">
+        <p>Fecha inicio de Prácticas</p>
+        <span>{{ fechainiPractica }}</span>
+      </div>
+      <div class="item">
+        <p>Fecha fin de Prácticas</p>
+        <span>{{ fechafinPractica }}</span>
+      </div>
+      <div
+        *ngIf="contratoList.nombreUniOrganica === 'checkearCodigo'"
+        class="item"
+      >
+        <p>Jornada de horas Semanal</p>
+        <span>{{ contratoList.jornalaboral }}</span>
+      </div>
+      <div
+        *ngIf="contratoList.nombreUniOrganica === 'checkearCodigo'"
+        class="item"
+      >
+        <p>Cant. de días de Prácticas semanales</p>
+        <span>{{ contratoList.practicassemanales }}</span>
+      </div>
+      <div class="item">
+        <p>Horario de Entrada</p>
+        <span>{{ contratoList.horaIniPractica }}</span>
+      </div>
+      <div class="item">
+        <p>Horario de Salida</p>
+        <span>{{ contratoList.horaFinPractica }}</span>
+      </div>
+      <div class="item">
+        <p>Subvención Económica</p>
+        <span>S/ {{ contratoList.compeEconomica }}</span>
+      </div>
+      <div
+        *ngIf="contratoList.nombreUniOrganica === 'checkearCodigo'"
+        class="item"
+      >
+        <p>Fecha de Suscripción</p>
+        <span> {{ fechasubscripcion }}</span>
+      </div>
+    </div>
+
+    <div class="flex-v-left d-flex position">
+      <img
+        src="assets/images/icons/modal-entidad.png"
+        style="height: 50px; width: 55px; margin-right: 12px"
+        alt="Logo"
+      />
+      <p class="titlePage texPage">Datos de la Entidad</p>
+      <em
+        *ngIf="codProEstado == 1 && contratoCreado == false"
+        (click)="openModalEntidadData()"
+        style="font-size: 23px; cursor: pointer"
+        class="ent-web-arrow_down mr-2"
+      >
+        <em style="color: #0d88bc" class="ent-web-edit mr-2"></em>
+      </em>
+    </div>
+
+    <div class="contratoGrid--New">
+      <div class="item">
+        <p>Razón social</p>
+        <span> {{ contratoList.razonSocial }}</span>
+      </div>
+      <div class="item">
+        <p>RUC</p>
+        <span>{{ contratoList.ruc }}</span>
+      </div>
+      <div class="item">
+        <p>Siglas</p>
+        <span>{{ contratoList.siglas }}</span>
+      </div>
+      <div class="item">
+        <p>Dirección</p>
+        <span>{{ contratoList.direccion }}</span>
+      </div>
+      <div class="item">
+        <p>Puesto del Representante Legal</p>
+        <span>{{ contratoList.puestoResponsableOrh }}</span>
+      </div>
+      <div class="item">
+        <p>Nombre del Representante Legal</p>
+        <span>{{ contratoList.responsableOrh }}</span>
+      </div>
+      <div class="item">
+        <p>Tipo de Documento</p>
+        <span *ngIf="contratoList.tipoDocResponsable == 1">DNI</span>
+        <span *ngIf="contratoList.tipoDocResponsable == 4"
+          >Carnet de Extranjeria</span
+        >
+      </div>
+      <div class="item">
+        <p>N° Documento</p>
+        <span>{{ contratoList.nroDocResponsable }}</span>
+      </div>
+    </div>
+
+    <div class="flex-v-left d-flex position">
+      <img
+        src="assets/images/icons/perfil-creado.png"
+        style="height: 50px; width: 55px; margin-right: 12px"
+        alt="Logo"
+      />
+      <p class="titlePage texPage">Datos del Postulante</p>
+      <div *ngIf="contratoList.codigoTipoContrato === 'PRE1401'">
+        <em
+          *ngIf="codProEstado == 1 && contratoCreado == false"
+          (click)="openModalEntidadConvenio()"
+          style="font-size: 23px; cursor: pointer"
+          class="ent-web-arrow_down mr-2"
+        >
+          <em style="color: #0d88bc" class="ent-web-edit mr-2"></em>
+        </em>
+      </div>
+    </div>
+    <div class="contratoGrid--New">
+      <div class="item">
+        <p>Nombres y Apellidos</p>
+        <span>{{ contratoList.nombres }}</span>
+      </div>
+      <div class="item">
+        <p>Tipo de Documento</p>
+        <span>{{ contratoList.tipoDoc }}</span>
+      </div>
+      <div class="item">
+        <p>DNI</p>
+        <span>{{ contratoList.dni }}</span>
+      </div>
+      <div class="item">
+        <p>Nacionalidad</p>
+        <span>{{ contratoList.nacionalidad }}</span>
+      </div>
+      <div class="item">
+        <p>Fecha de Nacimiento</p>
+        <span>{{ fechanacimiento }}</span>
+      </div>
+      <div class="item">
+        <p>Domicilio</p>
+        <span>{{ contratoList.domicilio }}</span>
+      </div>
+
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>Nombre del centro de estudios</p>
+        <span>{{ contratoList.centroEstudios }}</span>
+      </div>
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>RUC</p>
+        <span>{{ contratoList.rucCentroEstudios }}</span>
+      </div>
+
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>Domicilio del centro de estudios</p>
+        <span>{{ contratoList.direccionCentroEstudios }}</span>
+      </div>
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>Puesto del Representante Legal</p>
+        <span>{{ contratoList.puestoRepreUni }}</span>
+      </div>
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>Nombre del Representante Legal</p>
+        <span>{{ contratoList.nombRepreUni }}</span>
+      </div>
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>Tipo de Doc. del Representante Legal</p>
+        <span *ngIf="contratoList.tipoDocRepreUni == 1">DNI</span>
+        <span *ngIf="contratoList.tipoDocRepreUni == 4">C.E</span>
+      </div>
+      <div *ngIf="contratoList.codigoTipoContrato == 'PRE1401'" class="item">
+        <p>N° Doc. del Representante Legal</p>
+        <span>{{ contratoList.nroDocRepreUni }}</span>
+      </div>
+    </div>
+  </div>
+</div>

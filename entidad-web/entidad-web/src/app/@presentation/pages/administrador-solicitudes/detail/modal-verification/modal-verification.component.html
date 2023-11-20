@@ -1,0 +1,148 @@
+<div class="body">
+  <!---------------------------------------------------------------------->
+  <!------ STEP 1 ------>
+  <!---------------------------------------------------------------------->
+
+  <div *ngIf="step == 0">
+    <div class="flex-v-center">
+      <span class="flex-spacer"></span>
+      <span>
+        <nb-icon
+          class="mr-2 documentIcon"
+          nbSuffix
+          icon="close"
+          (click)="onNoClick()"
+        ></nb-icon>
+      </span>
+    </div>
+    <div class="mt-3 flex-v-center title">
+      <span>Validación de contenido</span>
+    </div>
+
+    <div class="mt-5 flex-v-center">
+      <h6>Elige una de las opciones</h6>
+    </div>
+
+    <div class="p-3 my-5 flex-v-center">
+      <div class="optionDiv flex-v-center-column">
+        <img src="assets/images/icons/creado.png" alt="" />
+
+        <nb-radio-group class="mt-4">
+          <nb-radio (click)="nextStep(1)" [disabled]="okEntity()">
+            Contenido exitoso
+          </nb-radio>
+        </nb-radio-group>
+      </div>
+
+      <div class="optionDiv flex-v-center-column">
+        <img src="assets/images/icons/observado.png" alt="" />
+
+        <nb-radio-group class="mt-4">
+          <nb-radio (click)="nextStep(2)"> Contenido observado </nb-radio>
+        </nb-radio-group>
+      </div>
+    </div>
+  </div>
+
+  <!---------------------------------------------------------------------->
+  <!------ CONTENIDO CORRECTO ------>
+  <!---------------------------------------------------------------------->
+
+  <div *ngIf="step == 1" class="flex-v-center-column">
+    <div class="flex-v-center w-100">
+      <div class="flex-v-center title">
+        <h6>Validación de contenido</h6>
+      </div>
+      <span class="flex-spacer"></span>
+      <span>
+        <nb-icon
+          class="mr-2 documentIcon"
+          nbSuffix
+          icon="close"
+          (click)="onNoClick()"
+        ></nb-icon>
+      </span>
+    </div>
+
+    <div class="my-5 flex-v-center title">
+      <span>Contenido exitoso</span>
+    </div>
+
+    <img src="assets/images/icons/creado.png" alt="" />
+
+    <div class="mt-5 flex-column text-center">
+      <span>Confirma que los datos registrados por la entidad </span>
+      <span>son correctos</span>
+    </div>
+
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="mt-5"
+      style="width: 300px"
+      (click)="darAlta()"
+    >
+      Aceptar
+    </button>
+
+    <a (click)="this.step = 0" class="mb-5 mt-2"> Atrás </a>
+  </div>
+
+  <!---------------------------------------------------------------------->
+  <!------ OBSERVADO ------>
+  <!---------------------------------------------------------------------->
+
+  <div *ngIf="step == 2" class="flex-v-center-column">
+    <div class="flex-v-center w-100">
+      <div class="flex-v-center title">
+        <h6>Validación de contenido</h6>
+      </div>
+      <span class="flex-spacer"></span>
+      <span>
+        <nb-icon
+          class="mr-2 documentIcon"
+          nbSuffix
+          icon="close"
+          (click)="onNoClick()"
+        ></nb-icon>
+      </span>
+    </div>
+
+    <div class="my-3 flex-v-center title">
+      <span>Contenido observado</span>
+    </div>
+
+    <img src="assets/images/icons/observado.png" alt="" />
+
+    <div class="mt-3 flex-column text-center">
+      <span>Marque la/s observación/es, según corresponda</span>
+    </div>
+
+    <div class="mt-3 p-2 listOptions">
+      <mat-selection-list [formControl]="reasonsSelected">
+        <mat-list-option
+          style="font-size: 14px !important"
+          [checkboxPosition]="'before'"
+          [color]="'primary'"
+          *ngFor="let item of this.reasons"
+          [value]="item.parametroId"
+        >
+          {{ item.valorTexto }}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="mt-5"
+      style="width: 300px"
+      (click)="observeRequest()"
+    >
+      Enviar
+    </button>
+    <a (click)="this.step = 0" class="mb-5 mt-2"> Atrás </a>
+  </div>
+</div>

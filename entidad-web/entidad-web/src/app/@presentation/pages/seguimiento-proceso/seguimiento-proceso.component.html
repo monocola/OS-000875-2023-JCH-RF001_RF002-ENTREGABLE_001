@@ -1,0 +1,106 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Seguimiento de proceso</h3>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="container-fluid">
+    <form [formGroup]="filterForm" class="mt-3">
+      <div class="subtitle">Filtros de convocatorias</div>
+
+      <div class="row m-0 mt-3 align-items-end">
+        <div class="col">
+          <label>Régimen</label>
+          <nb-form-field>
+            <nb-select placeholder="Elegir régimen" formControlName="regimen">
+              <nb-option [value]="item.value" *ngFor="let item of regimenes">{{
+                item.description
+              }}</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class="col">
+          <label>Etapa</label>
+          <nb-form-field>
+            <nb-select placeholder="Elegir etapa" formControlName="etapa">
+              <nb-option [value]="item.value" *ngFor="let item of etapas">
+                {{ item.description }}
+              </nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class="col-3">
+          <label>Fecha / Periodo de convocatoria</label>
+          <nb-form-field>
+            <input
+              formControlName="periodo"
+              nbInput
+              placeholder="Elegir fecha o periodo"
+              [nbDatepicker]="formpicker"
+              fieldSize="large"
+              shape="semi-round"
+              [disabled]="false"
+              [status]="rangePickerStatus"
+              (ngModelChange)="validRangeDateFormat($event)"
+            />
+            <nb-icon nbSuffix icon="calendar"></nb-icon>
+            <nb-rangepicker #formpicker></nb-rangepicker>
+          </nb-form-field>
+        </div>
+        <div class="col">
+          <label>Estado</label>
+          <nb-form-field>
+            <nb-select placeholder="Elegir estado" formControlName="estado">
+              <nb-option [value]="item.value" *ngFor="let item of estados">
+                {{ item.description }}
+              </nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class="col-4 row m-0 mt-3 align-content-end">
+          <div class="col pl-0">
+            <button
+              nbButton
+              fullWidth
+              outline
+              shape="semi-round"
+              status="primary"
+              (click)="limpiar()"
+            >
+              Limpiar
+            </button>
+          </div>
+          <div class="col pl-0">
+            <button
+              nbButton
+              fullWidth
+              shape="semi-round"
+              status="primary"
+              (click)="buscar()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="w-100 row m-0 mt-5">
+    <serv-talento-table-seguimiento
+      class="col-12 p-0"
+      [tableColumns]="this.columns"
+      [title]="'Listado de seguimientos'"
+      [tableData]="this.data"
+      [tamanio]="this.total"
+      [pageIndex]="this.page"
+      [dataExport]="getDataExport()"
+      (pageEvent)="getPaginado($event)"
+      (sort)="sortData($event)"
+      (procesoAction)="procesoAction($event)"
+      (comunicadoAction)="verComunicados($event)"
+      (cronogramaAction)="verCronograma($event)"
+    >
+    </serv-talento-table-seguimiento>
+  </div>
+</div>

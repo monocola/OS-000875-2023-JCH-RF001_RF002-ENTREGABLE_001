@@ -1,0 +1,114 @@
+<div class="px-5">
+  <h6 class="d-flex">Formación académica</h6>
+
+  <div class="mt-3">
+    <div>A. Nivel académico</div>
+    <button
+      class="px-4 py-1 mt-2"
+      nbButton
+      shape="round"
+      status="primary"
+      (click)="openModal()"
+    >
+      Agregar nivel
+    </button>
+
+    <serv-talento-table-formacion-academica
+      [title]="'Lista de niveles académicos'"
+      [tableData]="arrayFormaciones"
+      (editAction)="openModal($event)"
+      (removeAction)="deleteItem($event)"
+    >
+    </serv-talento-table-formacion-academica>
+    <div
+      class="invalid-text"
+      *ngIf="
+        f.nivelesAcademicos.value.length === 0 && f?.nivelesAcademicos.touched
+      "
+    >
+      Tiene que llenar como mínimo un nivel académico
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h6 class="d-flex">
+      <span>Conocimientos básicos</span>
+      <serv-talento-btn-add
+        (clickEmitter)="addNewItem()"
+        text="Añadir conocimientos"
+        [disableButton]="false"
+      >
+      </serv-talento-btn-add>
+    </h6>
+
+    <div
+      class="flex-v-center w-100 my-1"
+      *ngFor="let item of itemsToShow(); let i = index"
+    >
+      <span class="ml-3 mr-2 fw-600"> {{ i + 1 }}. </span>
+
+      <input
+        class="w-100 mr-4 ml-2"
+        readonly
+        nbInput
+        fullWidth
+        [(ngModel)]="item.descripcion"
+        type="text"
+        placeholder="Ingrese un conocimiento"
+        [nbAutocomplete]="auto"
+      />
+
+      <nb-autocomplete #auto>
+        <nb-option
+          *ngFor="let option of listaoriginal"
+          [value]="option.descripcion"
+        >
+          {{ option.descripcion }}
+        </nb-option>
+      </nb-autocomplete>
+
+      <div class="flex-spacer"></div>
+
+      <div class="flex-v-center-right example-box">
+        <button
+          mat-icon-button
+          class="mr-2 iconAdd"
+          (click)="addNewItem()"
+          *ngIf="i == itemsToShow().length - 1"
+          [disabled]="
+            itemsToShow().length >= maxItems || itemsToShow().disabled
+          "
+        >
+          <em class="material-icons"> add_circle_outline </em>
+        </button>
+
+        <button
+          mat-icon-button
+          class="mr-2 iconRemove"
+          (click)="removeItem(i)"
+          [disabled]="itemsToShow().disabled"
+        >
+          <span class="material-icons"> remove_circle_outline </span>
+        </button>
+      </div>
+    </div>
+
+    <div
+      *ngIf="f.conocimientosBasicos.touched && f.conocimientosBasicos.invalid"
+      class="invalid-text m-0"
+    >
+      <span
+        class="mt-n5"
+        *ngIf="
+          f.conocimientosBasicos.value.length < minItems ||
+          f.conocimientosBasicos.errors?.pocasFilas
+        "
+      >
+        Tiene que ingresar como mínimo {{ minItems }} filas.
+      </span>
+      <span class="mt-n5" *ngIf="f.conocimientosBasicos.errors?.dataFaltante">
+        Revise todos los campos marcados con rojo y complételo según sea el caso
+      </span>
+    </div>
+  </div>
+</div>

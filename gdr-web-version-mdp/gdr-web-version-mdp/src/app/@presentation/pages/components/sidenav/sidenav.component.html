@@ -1,0 +1,124 @@
+<div class='sidenav_container' (mouseenter)="onSinenavToggle()" (mouseleave)="onSinenavToggle()">
+  <div class="w-100 parent d-flex py-2" >
+    <a
+      *ngIf='implementacionService.validateTempMenu()'
+      class="flex-v-center py-1 flex-column"
+      [ngClass]="{ 'pl-0 pr-3': !sidenavService.collapsed }"
+    >
+        <a
+          class="itemBackImplement w-100 p-3 flex-v-center"
+          (click)='closeTempMenu()'
+        >
+          <mat-icon
+            aria-hidden="false" class="mr-2 mf-1"
+            aria-label="Example home icon">arrow_back</mat-icon>
+
+          <div *ngIf="!sidenavService.collapsed">
+            Implementación
+          </div>
+          <span class="flex-spacer" *ngIf="!sidenavService.collapsed"></span>
+          <mat-icon *ngIf="!sidenavService.collapsed"
+                    aria-hidden="false" class="mr-2 mf-1"
+                    aria-label="Example home icon"></mat-icon>
+        </a>
+    </a>
+    <a
+      class="flex-v-center py-1 flex-column"
+      *ngFor="let item of sidenavService.menu; let i = index"
+      [ngClass]="{ 'px-3': !sidenavService.collapsed }"
+    >
+      <!---------------------------------------------------------------------->
+      <!------ MENU CON HIJOS ------>
+      <!---------------------------------------------------------------------->
+
+      <ng-container *ngIf="item.subMenu.length != 0" >
+        <a
+          class="itemPadre w-100 py-2 px-1 flex-v-center"
+          (click)="clickMenu(i)"
+          [ngClass]="{
+            menuSelected: item.childSelected && sidenavService.collapsed
+          }"
+        >
+          <mat-icon
+            aria-hidden="false" class="mr-2 mf-1"
+            aria-label="Example home icon">{{item.icono}}</mat-icon>
+          <div *ngIf="!sidenavService.collapsed">
+            {{ item.descripcion }}
+          </div>
+          <span class="flex-spacer" *ngIf="!sidenavService.collapsed"></span>
+          <mat-icon *ngIf="!sidenavService.collapsed"
+                    [ngClass]="{ rotate: item.opened }"
+                    aria-hidden="false" class="mr-2 mf-1"
+                    aria-label="Example home icon">expand_more</mat-icon>
+        </a>
+        <div
+          class="submenu w-100"
+          [ngClass]="{ 'submenu-on': item.opened }"
+          *ngIf="!sidenavService.collapsed"
+        >
+          <a
+            class="item w-100 py-1 mt-1 pr-2 pl-4 flex-v-center-left"
+            [routerLink]="'/pages/' + children.url"
+            routerLinkActive="active"
+            *ngFor="let children of item.subMenu"
+            (click)="clickItem(i)"
+          >
+            <mat-icon
+              aria-hidden="false" class="mr-2 mf-1"
+              aria-label="Example home icon">{{children.icono}}</mat-icon>
+            <!--<nb-icon [icon]="children.icono" class="mr-2"></nb-icon>-->
+            <div class="text-menu-hijo">
+              {{ children.descripcion }}
+            </div>
+          </a>
+        </div>
+      </ng-container>
+
+      <!---------------------------------------------------------------------->
+      <!------ MENU SIN HIJOS ------>
+      <!---------------------------------------------------------------------->
+      <ng-container *ngIf="item.subMenu.length == 0" >
+        <a
+          class="itemPadre w-100 py-2 px-1 flex-v-center"
+          [routerLink]="'/pages/' + item.url"
+          routerLinkActive="active"
+          [ngClass]="{ menuSelected: item.childSelected && sidenavService.collapsed }"
+        >
+          <mat-icon
+            aria-hidden="false" class="mr-2 mf-1"
+            aria-label="Example home icon">{{item.icono}}</mat-icon>
+
+          <div *ngIf="!sidenavService.collapsed">
+            {{ item.descripcion }}
+          </div>
+          <span class="flex-spacer" *ngIf="!sidenavService.collapsed"></span>
+          <mat-icon *ngIf="!sidenavService.collapsed"
+                    [ngClass]="{ rotate: item.opened }"
+                    aria-hidden="false" class="mr-2 mf-1"
+                    aria-label="Example home icon"></mat-icon>
+        </a>
+      </ng-container>
+    </a>
+
+    <span style="flex: 1;"></span>
+
+    <mat-divider class="mt-3"></mat-divider>
+    <div class="flex-v-center-left px-3 pt-3 pb-1 row">
+      <a class="item w-100 h-100 py-2 px-2 d-flex">
+        <nb-toggle [(ngModel)]='toggleNgModel'
+                   (checkedChange)='clickBar()'
+        ><div *ngIf="!sidenavService.collapsed" class='fijar'>{{etiqueta}}</div></nb-toggle>
+
+      </a>
+      <a class="item w-100 h-100 py-2 px-2 d-flex">
+        <mat-icon aria-hidden="false" class="mr-2 mf-1" aria-label="Example home icon">settings</mat-icon>
+        <div *ngIf="!sidenavService.collapsed">Configuración</div>
+      </a>
+
+      <a class="item w-100 h-100 py-2 px-2 d-flex" (click)="logout()">
+        <mat-icon aria-hidden="false" class="mr-2 mf-1" aria-label="Example home icon">logout</mat-icon>
+        <div *ngIf="!sidenavService.collapsed">Cerrar sesión</div>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<label *ngIf="label">
+  {{ label }}
+</label>
+<nb-form-field>
+  <textarea
+    [formControl]="control"
+    [placeholder]="placeholder"
+    nbInput
+    fullWidth
+    shape="semi-round"
+    fieldSize="large"
+    [maxlength]="maxlength"
+    [minlength]="minlength"
+    (input)="onKeyUp()"
+    (blur)="onBlur()"
+    (blur)="blur.emit(null)"
+    (keyup)="keyup.emit(null)"
+    [status]="control?.invalid && control?.touched ? 'danger' : 'basic'"
+    (change)="change.emit(null)"
+    [rows]="rows"
+    style="resize: none"
+  >
+  </textarea>
+</nb-form-field>
+
+<div class="d-flex w-100">
+  <div
+    *ngIf="control?.invalid && control?.touched"
+    class="invalid-text flex-column"
+  >
+    <span *ngIf="control.errors?.required"> El campo es obligatorio </span>
+    <span *ngIf="control.errors?.pattern"> Formato inválido </span>
+    <span *ngIf="control.errors?.minlength">
+      El texto introducido es muy corto
+    </span>
+    <span *ngIf="control.errors?.maxlength">
+      El texto introducido es muy largo
+    </span>
+  </div>
+  <div class="flex-spacer"></div>
+  <span class="fs-12">{{
+    this.control.value.length + '/' + (this.maxlength || '50')
+  }}</span>
+</div>

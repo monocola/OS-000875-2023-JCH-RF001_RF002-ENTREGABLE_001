@@ -1,0 +1,2657 @@
+<div (resized)="onResized($event)">
+  <div class="row m-0 px-5 py-3 col-12">
+    <div class="col-6">
+      <div
+        class="m-0 col-8 p-2 mt-4 cursor-pointer fs-20 d-inline"
+        (click)="backConfiguracion()"
+      >
+        <nb-icon icon="back" class="mr-2" status="primary"></nb-icon
+        ><label class="fs-18 cursor-pointer"
+          >Configuración de
+          <span class="font-weight-bold">R.Mínimos y E.Curricular</span></label
+        >
+      </div>
+      <div class="fs-20 text-info pl-5">
+        Perfil: {{ selectedPerfil.nombrePerfil }}
+      </div>
+      <div class="fs-12 text-info pl-5">
+        Rol: {{ selectedPerfil.rol === null ? ' - ' : selectedPerfil.rol }}
+      </div>
+    </div>
+    <div class="col-6 p-1 row center-row">
+      <div
+        class="px-3 font-weight-bold rounded-left border custom-resumen fs-20"
+      >
+        <div class="custom-resumen-center pr-2">Resumen</div>
+      </div>
+      <div class="row rounded-right border bg-white">
+        <div class="px-4 py-1 custom-detail-resumen">
+          <div class="divTableRow font-weight-bold fs-13 custom-resumen-center">
+            Total
+          </div>
+          <div class="divTableRow text-info fs-20 custom-resumen-center">
+            {{ resumen != null ? resumen.total : '' }}
+          </div>
+          <div class="divTableRow text-muted fs-11 custom-resumen-center">
+            {{ lstResumen != null ? lstResumen.peso : '' }} % max
+          </div>
+        </div>
+        <div class="px-4 py-1 custom-detail-resumen">
+          <div class="divTableRow font-weight-bold fs-13">Puntos min</div>
+          <div class="divTableRow text-info fs-20">
+            {{ resumen != null ? resumen.puntosMin : '' }}
+          </div>
+          <div class="divTableRow text-muted fs-11">
+            {{ lstResumen != null ? lstResumen.puntajeMinimo : '' }} min
+          </div>
+        </div>
+        <div class="px-4 py-1 custom-detail-resumen">
+          <div class="divTableRow font-weight-bold fs-13">Puntos max</div>
+          <div class="divTableRow text-info fs-20">
+            {{ resumen.puntosMax }}
+          </div>
+          <div class="divTableRow text-muted fs-11">
+            {{ lstResumen != null ? lstResumen.puntajeMaximo : '' }} max
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="">
+    <mat-horizontal-stepper
+      class="stepper steps-box"
+      labelPosition="bottom"
+      linear
+      [@.disabled]="true"
+      (animationDone)="showHideContenidoStepper()"
+      #stepper
+    >
+      <ng-template matStepperIcon="edit">
+        <mat-icon>check</mat-icon>
+      </ng-template>
+
+      <mat-step state="check">
+        <ng-template matStepLabel>
+          <img
+            class="logoStep"
+            src="assets/images/icons/step_formacionacademica.png"
+            alt="Experiencia"
+          />
+          Formación académica
+        </ng-template>
+      </mat-step>
+      <mat-step state="check">
+        <ng-template matStepLabel>
+          <img
+            class="logoStep"
+            src="assets/images/icons/step_experiencialaboral.svg"
+            alt="Experiencia"
+          />
+          Experiencia Laboral
+        </ng-template>
+      </mat-step>
+      <mat-step state="check">
+        <ng-template matStepLabel>
+          <img
+            class="logoStep"
+            src="assets/images/icons/step_otrosrequisitos.svg"
+            alt="Otros Requisitos"
+          />
+          Otros requisitos
+        </ng-template>
+      </mat-step>
+      <mat-step state="check">
+        <ng-template matStepLabel>
+          <img
+            class="logoStep"
+            src="assets/images/icons/step_declaracionjurada.svg"
+            alt="Declaración Jurada"
+          />
+          Declaraciones Juradas
+        </ng-template>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+    <div *ngIf="isStepFormacion" class="py-2 px-5 m-3">
+      <div class="row m-0 pt-3">
+        <img
+          class="logo pl-2"
+          src="assets/images/icons/academico.svg"
+          alt="Experiencia"
+        />
+        <div class="h4 text-info align-self-center pl-3 pt-2">
+          Formación académica
+        </div>
+      </div>
+      <div class="pt-3">
+        <div class="row m-0 col-12 custom-header p-2 align-middle">
+          <div class="col-6">Formación académica</div>
+          <div class="col-2 text-center">Requisitos mínimos</div>
+          <div class="col-2 text-center">Pts. Ev. CURRICULAR</div>
+          <div class="col-2 text-center fs-14">
+            Peso en esta sección
+            <input
+              nbInput
+              fieldSize="medium"
+              (keypress)="keyPressNumbers($event)"
+              (focusout)="actualizarResumen($event, 1)"
+              [value]="pesoFAExpGeneral"
+              placeholder="%"
+              [maxLength]="3"
+              type="text"
+              class="w-40 custom-input-border"
+            />
+          </div>
+        </div>
+
+        <div class="m-0 custom-body">
+          <div class="row m-0 py-4 px-3 col-12 font-weight-bold">CARRERAS</div>
+          <div *ngFor="let item of lstCarreras; let i = index">
+            <div class="row m-0 px-2 col-12">
+              <div class="p-2 col-2">{{ item.descNivelEducativo }}</div>
+              <div class="p-2 col-10 custom-vcenter">
+                <div class="divTable rowData">
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        {{ item.descCarreras }}
+                      </div>
+                      <div class="divTableCell w-15">
+                        <nb-checkbox
+                          class="custom-valign-center"
+                          (checkedChange)="onCheckReqMinCarrera($event, i)"
+                          [checked]="item.flagReqMin"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <input
+                          nbInput
+                          fieldSize="small"
+                          (keypress)="keyPressNumbers($event)"
+                          maxlength='3'
+                          [value]="item.puntaje"
+                          (focusout)="actualizarPuntajeCarrera($event, i)"
+                          type="text"
+                          class="mw-10-rem border-input"
+                        />
+                      </div>
+                      <div class="divTableCell w-20"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="isConfigEstrategico"
+            class="row m-0 py-4 px-3 col-12 font-weight-bold"
+          >
+            Grados superiores adicionales al mínimo requerido
+          </div>
+          <div *ngIf="isConfigEstrategico">
+            <div
+              class="row m-0 px-2 col-12"
+              *ngFor="
+                let objGrados of lstGradosFormacionACarrera;
+                let iGrado = index
+              "
+            >
+              <div class="p-2 col-2">Grados</div>
+              <div class="p-2 col-10 custom-vcenter">
+                <div class="divTable rowData">
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        <nb-select
+                          size="tiny"
+                          placeholder="Elegir"
+                          shape="rectangle"
+                          [(selected)]="objGrados.grado"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperiencia"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1"
+                          >Grado (Si cumple con {{ objGrados.grado }} grado(s)
+                          adicional al mínimo requerido)</label
+                        >
+                      </div>
+                      <div class="divTableCell w-15"></div>
+                      <div class="divTableCell w-20">
+                        <input
+                          [value]="objGrados.puntaje"
+                          nbInput
+                          (keypress)="keyPressNumbers($event)"
+                          fieldSize="small"
+                          type="text"
+                          class="mw-10-rem border-input"
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconRemove"
+                          (click)="removeGradosCarrera(iGrado)"
+                        >
+                          <em class="material-icons custom-color">
+                            remove_circle_outline
+                          </em>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <form [formGroup]="frmCarreraGradosAdicionales">
+              <div class="row m-0 px-2 col-12">
+                <div class="p-2 col-2">Grados</div>
+                <div class="p-2 col-10 custom-vcenter">
+                  <div class="divTable rowData">
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell text-justify w-40">
+                          <nb-select
+                            size="tiny"
+                            placeholder="Elegir"
+                            shape="rectangle"
+                            formControlName="cantidadGrados"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperiencia"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">GRADOS</label>
+                        </div>
+                        <div class="divTableCell w-15"></div>
+                        <div class="divTableCell w-20">
+                          <input
+                            nbInput
+                            formControlName="puntajeGrados"
+                            (keypress)="keyPressNumbers($event)"
+                            maxlength='3'
+                            fieldSize="small"
+                            type="text"
+                            class="mw-10-rem border-input"
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconAdd"
+                            (click)="addGradosCarreras()"
+                          >
+                            <em class="material-icons custom-color">
+                              add_circle_outline
+                            </em>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <mat-divider class="mx-3 my-2"></mat-divider>
+
+          <div class="row m-0 py-4 px-3 col-12 font-weight-bold">
+            ESPECIALIDADES (Programa de Especialización y/o diplomados,
+            ofimática, idiomas)
+          </div>
+
+          <form [formGroup]="frmEspecialidades">
+            <div
+              class="row m-0 px-2 col-12"
+              *ngFor="let item of lstEspecialidades; let i = index"
+            >
+              <div class="p-2 col-2">{{ item.descTipo }}</div>
+              <div class="p-2 col-10 custom-vcenter">
+                <div class="divTable rowData">
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        {{ item.descConocimiento }}
+                      </div>
+                      <div class="divTableCell w-15">
+                        <nb-checkbox
+                          [checked]="item.flagReqMin"
+                          (checkedChange)="onCheckReqMinEspecialidad($event, i)"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell w-20"></div>
+                      <div class="divTableCell w-20"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </form>
+
+          <div class="row m-0 py-4 px-3 col-12 font-weight-bold">
+            Especificaciones para validación curricular | Universitario titulado
+            o Bachiller
+          </div>
+
+          <div class="row m-0 px-2 col-12">
+            <div class="p-2 col-2">CANTIDAD DE PROGRAMAS</div>
+            <div class="p-2 col-10 custom-vcenter">
+              <form [formGroup]="frmEspecificacionPrograma">
+                <div
+                  class="divTable rowData"
+                  [class.mt-3]="i > 0"
+                  *ngFor="
+                    let objPrograma of lstEspecificacionPrograma;
+                    let i = index
+                  "
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        <nb-select
+                          size="tiny"
+                          placeholder="Elegir"
+                          shape="rectangle"
+                          disabled="true"
+                          [(selected)]="objPrograma.cantidad"
+                        >
+                          <nb-option [value]="objPrograma.cantidad">
+                            {{ objPrograma.cantidad }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Programas</label>
+                      </div>
+                      <div class="divTableCell w-15">
+                        <nb-checkbox
+                          [checked]="objPrograma.requisitoMinimo"
+                          (checkedChange)="onCheckReqMinProgramas($event, i)"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <input
+                          disabled="true"
+                          nbInput
+                          fieldSize="small"
+                          maxlength='3'
+                          (keypress)="keyPressNumbers($event)"
+                          (focusout)="calcularPuntajeMinimoFA()"
+                          type="text"
+                          class="mw-10-rem border-input"
+                          [value]="objPrograma.puntaje"
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconRemove"
+                          (click)="removeEspecificacionPrograma(i)"
+                        >
+                          <span class="material-icons custom-color">
+                            remove_circle_outline
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="divTable rowData"
+                  [class.mt-3]="
+                    lstEspecificacionPrograma &&
+                    lstEspecificacionPrograma.length > 0
+                  "
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        <nb-select
+                          size="tiny"
+                          placeholder="Elegir"
+                          shape="rectangle"
+                          formControlName="cantidadPrograma"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperiencia"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Programas</label>
+                      </div>
+                      <div class="divTableCell w-15">
+                        <nb-checkbox
+                          formControlName="reqMin"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <input
+                          nbInput
+                          formControlName="puntajePrograma"
+                          (keypress)="keyPressNumbers($event)"
+                          maxlength='3'
+                          fieldSize="small"
+                          type="text"
+                          class="mw-10-rem border-input"
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconAdd"
+                          (click)="addEspecificacionPrograma()"
+                        >
+                          <em class="material-icons custom-color">
+                            add_circle_outline
+                          </em>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row m-0 px-2 pt-3 col-12">
+            <div class="p-2 col-2">CANTIDAD DE CURSOS</div>
+            <div class="p-2 pt-0 col-10 custom-vcenter">
+              <form [formGroup]="frmEspecificacionCurso">
+                <div
+                  class="divTable rowData"
+                  [class.mt-3]="i > 0"
+                  *ngFor="let objCurso of lstEspecificacionCurso; let i = index"
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        <nb-select
+                          size="tiny"
+                          placeholder="Elegir"
+                          shape="rectangle"
+                          disabled="true"
+                          [(selected)]="objCurso.cantidad"
+                        >
+                          <nb-option [value]="objCurso.cantidad">
+                            {{ objCurso.cantidad }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Cursos</label>
+                      </div>
+                      <div class="divTableCell w-15">
+                        <nb-checkbox
+                          [checked]="objCurso.requisitoMinimo"
+                          (checkedChange)="onCheckReqMinCursos($event, i)"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <input
+                          nbInput
+                          disabled="true"
+                          (keypress)="keyPressNumbers($event)"
+                          maxlength='3'
+                          fieldSize="small"
+                          type="text"
+                          class="mw-10-rem border-input"
+                          value="{{ objCurso.puntaje }}"
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconRemove"
+                          (click)="removeEspecificacionCurso(i)"
+                        >
+                          <em class="material-icons custom-color">
+                            remove_circle_outline
+                          </em>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="divTable rowData"
+                  [class.mt-3]="
+                    lstEspecificacionCurso && lstEspecificacionCurso.length > 0
+                  "
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell text-justify w-40">
+                        <nb-select
+                          size="tiny"
+                          placeholder="Elegir"
+                          shape="rectangle"
+                          formControlName="cantidadCurso"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperiencia"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Cursos</label>
+                      </div>
+                      <div class="divTableCell w-15">
+                        <nb-checkbox
+                          formControlName="reqMin"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <input
+                          nbInput
+                          formControlName="puntajeCurso"
+                          fieldSize="small"
+                          type="text"
+                          class="mw-10-rem border-input"
+                          (keypress)="keyPressNumbers($event)"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconAdd"
+                          (click)="addEspecificacionCurso()"
+                        >
+                          <span class="material-icons custom-color">
+                            add_circle_outline
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isStepExperiencia" class="py-2 px-5 m-3">
+      <div class="row m-0">
+        <img
+          class="logo pl-2"
+          src="assets/images/icons/experiencia.svg"
+          alt="Experiencia"
+        />
+        <div class="h4 text-info align-self-center pl-3 pt-2">
+          Experiencia Laboral
+        </div>
+      </div>
+      <div class="pt-3">
+        <div class="row m-0 col-12 custom-header p-2 align-middle">
+          <div class="col-6">Experiencia general</div>
+          <div class="col-2 text-center">Requisitos mínimos</div>
+          <div class="col-2 text-center">Pts. Ev. CURRICULAR</div>
+          <div class="col-2 text-center fs-14">
+            Peso en esta sección
+            <input
+              nbInput
+              fieldSize="medium"
+              (keypress)="keyPressNumbers($event)"
+              (focusout)="actualizarResumen($event, 2)"
+              [value]="pesoELExpGeneral"
+              placeholder="%"
+              [maxLength]="3"
+              type="text"
+              class="w-40 custom-input-border"
+            />
+          </div>
+        </div>
+
+        <div class="m-0 custom-body">
+          <div>
+            <div class="row m-0 px-2 pt-2 col-12 font-weight-bold">
+              Experiencia general
+            </div>
+            <form [formGroup]="frmExperienciaGeneral">
+              <div
+                class="row m-0 px-2 col-12"
+                *ngFor="let item of lstExperienciaGeneral; let iCab = index"
+              >
+                <div class="p-2 col-2"></div>
+                <div class="p-2 col-10 custom-vcenter">
+                  <div
+                    class="divTable rowData my-2 bg-light"
+                    *ngFor="
+                      let objExpLab of item.listDetalleExperiencia;
+                      let iDet = index
+                    "
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            [(selected)]="objExpLab.desdeAnios"
+                            (selectedChange)="
+                              onChangeExpLabExpGeneralDesde($event, iCab, iDet)
+                            "
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            [(selected)]="objExpLab.hastaAnios"
+                            (selectedChange)="
+                              onChangeExpLabExpGeneralHasta($event, iCab, iDet)
+                            "
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-15">
+                          <nb-checkbox
+                            [checked]="objExpLab.requisitoMinimo"
+                            (checkedChange)="
+                              onCheckReqMinExpLabGeneral($event, iCab, iDet)
+                            "
+                            class="custom-valign-center"
+                          >
+                          </nb-checkbox>
+                        </div>
+                        <div class="divTableCell w-20">
+                          <input
+                            nbInput
+                            [value]="objExpLab.puntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            (focusout)="
+                              actualizarPuntajeExpLabGeneral($event, iCab, iDet)
+                            "
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            *ngIf="
+                              !isConfigEstrategico && isEnableAddExpGeneral
+                            "
+                            mat-icon-button
+                            class="iconRemove"
+                            (click)="removeExperienciaGeneral(iCab, iDet)"
+                          >
+                            <span class="material-icons custom-color">
+                              remove_circle_outline
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="divTable rowData my-2"
+                    *ngIf="isEnableAddExpGeneral"
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            formControlName="expGenDesde"
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            formControlName="expGenHasta"
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-15">
+                          <nb-checkbox
+                            formControlName="expGenReqMin"
+                            class="custom-valign-center"
+                          ></nb-checkbox>
+                        </div>
+                        <div class="divTableCell w-20">
+                          <input
+                            formControlName="expGenPuntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            nbInput
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconAdd"
+                            (click)="addExperienciaGeneral(iCab)"
+                          >
+                            <em class="material-icons custom-color">
+                              add_circle_outline
+                            </em>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row p-0 m-0 col-12" *ngIf="isConfigEstrategico">
+                  <div class="p-2 col-12 fs-13">
+                    Años adicionales al mínimo requerido a la experiencia
+                    general
+                  </div>
+                  <div class="p-2 col-2 fs-13">
+                    Años adicionales al mínimo requerido
+                  </div>
+                  <div class="p-2 col-10 custom-vcenter">
+                    <div
+                      class="divTable rowData my-2 bg-light"
+                      *ngFor="
+                        let objAnio of item.listModeloDetalleExperiencia;
+                        let iAnio = index
+                      "
+                    >
+                      <div class="divTableBody">
+                        <div class="divTableRow">
+                          <div class="divTableCell w-55">
+                            <nb-select
+                              [(selected)]="objAnio.desdeAnios"
+                              size="tiny"
+                              placeholder="Desde"
+                              shape="rectangle"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperienciaExp"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Años</label>
+                            <nb-select
+                              [(selected)]="objAnio.hastaAnios"
+                              size="tiny"
+                              placeholder="hasta"
+                              shape="rectangle"
+                              class="pl-3"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperienciaExp"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Años</label>
+                            <label class="pl-4 text-info"
+                              >mínimo
+                              <span class="fs-16"
+                                >{{ objAnio.desdeAnios }} años</span
+                              >
+                              de experiencia</label
+                            >
+                          </div>
+                          <div class="divTableCell w-20">
+                            <input
+                              nbInput
+                              [value]="objAnio.puntaje"
+                              (keypress)="keyPressNumbers($event)"
+                              fieldSize="small"
+                              type="text"
+                              maxlength='3'
+                            />
+                          </div>
+                          <div class="divTableCell w-20">
+                            <button
+                              mat-icon-button
+                              class="iconRemove"
+                              (click)="
+                                removeAniosExperienciaGeneral(iCab, iAnio)
+                              "
+                            >
+                              <span class="material-icons custom-color">
+                                remove_circle_outline
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="divTable rowData my-2">
+                      <div class="divTableBody">
+                        <div class="divTableRow">
+                          <div class="divTableCell w-40">
+                            <nb-select
+                              formControlName="desdeAnio"
+                              size="tiny"
+                              placeholder="Desde"
+                              shape="rectangle"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperienciaExp"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Años</label>
+                            <nb-select
+                              formControlName="hastaAnio"
+                              size="tiny"
+                              placeholder="hasta"
+                              shape="rectangle"
+                              class="pl-3"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperienciaExp"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Años</label>
+                          </div>
+                          <div class="divTableCell w-15"></div>
+                          <div class="divTableCell w-20">
+                            <input
+                              nbInput
+                              formControlName="puntajeAnio"
+                              (keypress)="keyPressNumbers($event)"
+                              fieldSize="small"
+                              type="text"
+                              maxlength='3'
+                            />
+                          </div>
+                          <div class="divTableCell w-20">
+                            <button
+                              mat-icon-button
+                              class="iconAdd"
+                              (click)="
+                                addAniosExperienciaGeneral(
+                                  item.confPerfExpeLaboralId,
+                                  iCab
+                                )
+                              "
+                            >
+                              <em class="material-icons custom-color">
+                                add_circle_outline
+                              </em>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-divider class="mx-3 my-2"></mat-divider>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-5">
+        <div class="row m-0 col-12 custom-header p-2 align-middle">
+          <div class="col-6">Experiencia específica</div>
+          <div class="col-2 text-center">Requisitos mínimos</div>
+          <div class="col-2 text-center">Pts. Ev. CURRICULAR</div>
+          <div class="col-2 text-center fs-14">
+            Peso en esta sección
+            <input
+              nbInput
+              fieldSize="medium"
+              (keypress)="keyPressNumbers($event)"
+              (focusout)="actualizarResumen($event, 3)"
+              [value]="pesoELExpEspecifica"
+              placeholder="%"
+              [maxLength]="3"
+              type="text"
+              class="w-40 custom-input-border"
+            />
+          </div>
+        </div>
+
+        <div class="m-0 custom-body">
+          <div>
+            <form [formGroup]="frmExpLabEspecificaMateria">
+              <div class="row m-0 p-2 col-12 font-weight-bold">
+                Experiencia específica en función a la materia
+              </div>
+              <div
+                class="row m-0 p-2 col-12"
+                *ngFor="
+                  let objExpEspec of lstExpEspecificaMateria;
+                  let iCab = index
+                "
+              >
+                <div class="p-2 col-2"></div>
+                <div class="p-2 col-10 custom-vcenter">
+                  <div
+                    class="divTable rowData my-2 bg-light"
+                    *ngFor="
+                      let objDet of objExpEspec.listDetalleExperiencia;
+                      let iDet = index
+                    "
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            [(selected)]="objDet.desdeAnios"
+                            (selectedChange)="
+                              onChangeExpLabExpMateriaDesde($event, iCab, iDet)
+                            "
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            [(selected)]="objDet.hastaAnios"
+                            (selectedChange)="
+                              onChangeExpLabExpMateriaHasta($event, iCab, iDet)
+                            "
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-20">
+                          <nb-checkbox
+                            [checked]="objDet.requisitoMinimo"
+                            (checkedChange)="
+                              onCheckReqMinExpLabMateria($event, iCab, iDet)
+                            "
+                            class="custom-valign-center"
+                          >
+                          </nb-checkbox>
+                        </div>
+                        <div class="divTableCell">
+                          <input
+                            nbInput
+                            [value]="objDet.puntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            (focusout)="
+                              actualizarPuntajeExpLabMateria($event, iCab, iDet)
+                            "
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconRemove"
+                            *ngIf="isEnableAddExpEspMateria"
+                            (click)="removeExperienciaEspecMateria(iCab, iDet)"
+                          >
+                            <span class="material-icons custom-color">
+                              remove_circle_outline
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="divTable rowData my-2"
+                    *ngIf="isEnableAddExpEspMateria"
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            formControlName="expEspMatDesde"
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            formControlName="expEspMatHasta"
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-20">
+                          <nb-checkbox
+                            formControlName="expEspMatReqMin"
+                            class="custom-valign-center"
+                          ></nb-checkbox>
+                        </div>
+                        <div class="divTableCell">
+                          <input
+                            nbInput
+                            formControlName="expEspMatPuntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconAdd"
+                            (click)="addExperienciaEspecMateria(iCab)"
+                          >
+                            <em class="material-icons custom-color">
+                              add_circle_outline
+                            </em>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-2 col-12 fs-13" *ngIf="isConfigEstrategico">
+                  Años adicionales al mínimo requerido a la experiencia
+                  específica
+                </div>
+                <div class="p-2 col-2 fs-13" *ngIf="isConfigEstrategico">
+                  Años adicionales al mínimo requerido
+                </div>
+                <div
+                  class="p-2 col-10 custom-vcenter"
+                  *ngIf="isConfigEstrategico"
+                >
+                  <div
+                    class="divTable rowData my-2 bg-light"
+                    *ngFor="
+                      let objAnio of objExpEspec.listModeloDetalleExperiencia;
+                      let iAnio = index
+                    "
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-55">
+                          <nb-select
+                            [(selected)]="objAnio.desdeAnios"
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            [(selected)]="objAnio.hastaAnios"
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <label class="pl-4 text-info"
+                            >mínimo
+                            <span class="fs-16"
+                              >{{ objAnio.desdeAnios }} años</span
+                            >
+                            de experiencia</label
+                          >
+                        </div>
+                        <div class="divTableCell w-20">
+                          <input
+                            nbInput
+                            [value]="objAnio.puntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconRemove"
+                            (click)="removeAniosExperienciaMateria(iCab, iAnio)"
+                          >
+                            <span class="material-icons custom-color">
+                              remove_circle_outline
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="divTable rowData my-2">
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            size="tiny"
+                            formControlName="desdeAnio"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            size="tiny"
+                            formControlName="hastaAnio"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-15"></div>
+                        <div class="divTableCell w-20">
+                          <input
+                            nbInput
+                            formControlName="puntajeAnio"
+                            (keypress)="keyPressNumbers($event)"
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconAdd"
+                            (click)="
+                              addAniosExperienciaMateria(
+                                objExpEspec.confPerfExpeLaboralId,
+                                iCab
+                              )
+                            "
+                          >
+                            <em class="material-icons custom-color">
+                              add_circle_outline
+                            </em>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <mat-divider class="mx-3 my-2"></mat-divider>
+
+          <form [formGroup]="frmExpLabEspecificaPublico">
+            <div class="row m-0 p-2 col-12 font-weight-bold">
+              Experiencia específica en el sector público
+            </div>
+            <div
+              class="row m-0 p-2 col-12"
+              *ngFor="
+                let objExpPub of lstExpEspecificaPublico;
+                let iCab = index
+              "
+            >
+              <div class="p-2 col-2"></div>
+              <div class="p-2 col-10 custom-vcenter">
+                <div
+                  class="divTable rowData my-2 bg-light"
+                  *ngFor="
+                    let objDet of objExpPub.listDetalleExperiencia;
+                    let iDet = index
+                  "
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell w-40">
+                        <nb-select
+                          [(selected)]="objDet.desdeAnios"
+                          (selectedChange)="
+                            onChangeExpLabPublicoDesde($event, iCab, iDet)
+                          "
+                          size="tiny"
+                          placeholder="Desde"
+                          shape="rectangle"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <nb-select
+                          [(selected)]="objDet.hastaAnios"
+                          (selectedChange)="
+                            onChangeExpLabPublicoHasta($event, iCab, iDet)
+                          "
+                          size="tiny"
+                          placeholder="hasta"
+                          shape="rectangle"
+                          class="pl-3"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <nb-checkbox
+                          [checked]="objDet.requisitoMinimo"
+                          (checkedChange)="
+                            onCheckReqMinExpLabPublico($event, iCab, iDet)
+                          "
+                          class="custom-valign-center"
+                        >
+                        </nb-checkbox>
+                      </div>
+                      <div class="divTableCell">
+                        <input
+                          nbInput
+                          [value]="objDet.puntaje"
+                          (keypress)="keyPressNumbers($event)"
+                          (focusout)="
+                            actualizarPuntajeExpLabPublico($event, iCab, iDet)
+                          "
+                          fieldSize="small"
+                          type="text"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconRemove"
+                          *ngIf="isEnableAddExpEspPublico"
+                          (click)="removeExperienciaEspecPublica(iCab, iDet)"
+                        >
+                          <span class="material-icons custom-color">
+                            remove_circle_outline
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-2 col-2"></div>
+              <div
+                class="p-2 col-10 custom-vcenter"
+                *ngIf="isEnableAddExpEspPublico"
+              >
+                <div class="divTable rowData my-2">
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell w-40">
+                        <nb-select
+                          formControlName="expEspPubDesde"
+                          size="tiny"
+                          placeholder="Desde"
+                          shape="rectangle"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <nb-select
+                          formControlName="expEspPubHasta"
+                          size="tiny"
+                          placeholder="hasta"
+                          shape="rectangle"
+                          class="pl-3"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <nb-checkbox
+                          formControlName="expEspPubReqMin"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell">
+                        <input
+                          nbInput
+                          formControlName="expEspPubPuntaje"
+                          (keypress)="keyPressNumbers($event)"
+                          fieldSize="small"
+                          type="text"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconAdd"
+                          (click)="addExperienciaEspecPublica(iCab)"
+                        >
+                          <em class="material-icons custom-color">
+                            add_circle_outline
+                          </em>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-2 col-12 fs-13" *ngIf="isConfigEstrategico">
+                Años adicionales al mínimo requerido al sector público
+              </div>
+              <div class="p-2 col-2 fs-13" *ngIf="isConfigEstrategico">
+                Años adicionales al mínimo requerido
+              </div>
+              <div
+                class="p-2 col-10 custom-vcenter"
+                *ngIf="isConfigEstrategico"
+              >
+                <div
+                  class="divTable rowData my-2 bg-light"
+                  *ngFor="
+                    let objAnio of objExpPub.listModeloDetalleExperiencia;
+                    let iAnio = index
+                  "
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell w-55">
+                        <nb-select
+                          [(selected)]="objAnio.desdeAnios"
+                          size="tiny"
+                          placeholder="Desde"
+                          shape="rectangle"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <nb-select
+                          [(selected)]="objAnio.hastaAnios"
+                          size="tiny"
+                          placeholder="hasta"
+                          shape="rectangle"
+                          class="pl-3"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <label class="pl-4 text-info"
+                          >mínimo
+                          <span class="fs-16"
+                            >{{ objAnio.desdeAnios }} años</span
+                          >
+                          de experiencia</label
+                        >
+                      </div>
+                      <div class="divTableCell w-20">
+                        <input
+                          [value]="objAnio.puntaje"
+                          nbInput
+                          (keypress)="keyPressNumbers($event)"
+                          fieldSize="small"
+                          type="text"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconRemove"
+                          (click)="removeAniosExperienciaPublico(iCab, iAnio)"
+                        >
+                          <span class="material-icons custom-color">
+                            remove_circle_outline
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="divTable rowData my-2">
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell w-40">
+                        <nb-select
+                          size="tiny"
+                          formControlName="desdeAnio"
+                          placeholder="Desde"
+                          shape="rectangle"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <nb-select
+                          size="tiny"
+                          formControlName="hastaAnio"
+                          placeholder="hasta"
+                          shape="rectangle"
+                          class="pl-3"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                      </div>
+                      <div class="divTableCell w-15"></div>
+                      <div class="divTableCell w-20">
+                        <input
+                          nbInput
+                          formControlName="puntajeAnio"
+                          (keypress)="keyPressNumbers($event)"
+                          fieldSize="small"
+                          type="text"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconAdd"
+                          (click)="
+                            addAniosExperienciaPublica(
+                              objExpPub.confPerfExpeLaboralId,
+                              iCab
+                            )
+                          "
+                        >
+                          <em class="material-icons custom-color">
+                            add_circle_outline
+                          </em>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <mat-divider class="mx-3 my-2"></mat-divider>
+
+          <!-- >>> Experiencia Nivel Especifico -->
+          <div *ngIf="isConfigEstrategico">
+            <form [formGroup]="frmExperienciaNivelEspecifico">
+              <div class="row m-0 p-2 col-12 font-weight-bold">
+                Experiencia específica en el nivel específico
+              </div>
+              <div
+                class="row m-0 p-2 col-12"
+                *ngFor="
+                  let objNivEsp of lstExpNivelEspecifico;
+                  let iCab = index
+                "
+              >
+                <div class="p-2 col-2"></div>
+                <div class="p-2 col-10 custom-vcenter">
+                  <div
+                    class="divTable rowData my-2 bg-light"
+                    *ngFor="
+                      let objDet of objNivEsp.listDetalleExperiencia;
+                      let iDet = index
+                    "
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            [(selected)]="objDet.desdeAnios"
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            [(selected)]="objDet.hastaAnios"
+                            size="tiny"
+                            placeholder="Hasta"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-20">
+                          <nb-checkbox
+                            [checked]="objDet.requisitoMinimo"
+                            (checkedChange)="
+                              onCheckReqMinExpLabNivEspec($event, iCab, iDet)
+                            "
+                            class="custom-valign-center"
+                          ></nb-checkbox>
+                        </div>
+                        <div class="divTableCell">
+                          <input
+                            nbInput
+                            [value]="objDet.puntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            (focusout)="
+                              actualizarPuntajeExpLabNivEspec(
+                                $event,
+                                iCab,
+                                iDet
+                              )
+                            "
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-2 col-2"></div>
+                <div
+                  class="p-2 col-10 custom-vcenter"
+                  *ngIf="isEnableAddExpNivelEspecifico"
+                >
+                  <div class="divTable rowData my-2">
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            formControlName="expNivEspDesde"
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            formControlName="expNivEspHasta"
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-20">
+                          <nb-checkbox
+                            formControlName="expNivEspReqMin"
+                            class="custom-valign-center"
+                          ></nb-checkbox>
+                        </div>
+                        <div class="divTableCell">
+                          <input
+                            nbInput
+                            formControlName="expNivEspPuntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconAdd"
+                            (click)="addExperienciaNivelEspecifico(iCab)"
+                          >
+                            <em class="material-icons custom-color">
+                              add_circle_outline
+                            </em>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-divider class="mx-3 my-2"></mat-divider>
+
+                <div class="p-2 col-12 fs-13" *ngIf="isConfigEstrategico">
+                  Años adicionales al mínimo requerido de experiencia específica
+                  en el nivel específico
+                </div>
+                <div class="p-2 col-2 fs-13" *ngIf="isConfigEstrategico">
+                  Años adicionales al mínimo requerido
+                </div>
+                <div
+                  class="p-2 col-10 custom-vcenter"
+                  *ngIf="isConfigEstrategico"
+                >
+                  <div
+                    class="divTable rowData my-2 bg-light"
+                    *ngFor="
+                      let objAnio of objNivEsp.listModeloDetalleExperiencia;
+                      let iAnio = index
+                    "
+                  >
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-55">
+                          <nb-select
+                            [(selected)]="objAnio.desdeAnios"
+                            size="tiny"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            [(selected)]="objAnio.hastaAnios"
+                            size="tiny"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <label class="pl-4 text-info"
+                            >mínimo
+                            <span class="fs-16"
+                              >{{ objAnio.desdeAnios }} años</span
+                            >
+                            de experiencia</label
+                          >
+                        </div>
+                        <div class="divTableCell w-20">
+                          <input
+                            nbInput
+                            [value]="objAnio.puntaje"
+                            (keypress)="keyPressNumbers($event)"
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconRemove"
+                            (click)="
+                              removeAniosExperienciaNivelEspecifico(iCab, iAnio)
+                            "
+                          >
+                            <span class="material-icons custom-color">
+                              remove_circle_outline
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="divTable rowData my-2">
+                    <div class="divTableBody">
+                      <div class="divTableRow">
+                        <div class="divTableCell w-40">
+                          <nb-select
+                            size="tiny"
+                            formControlName="desdeAnio"
+                            placeholder="Desde"
+                            shape="rectangle"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                          <nb-select
+                            size="tiny"
+                            formControlName="hastaAnio"
+                            placeholder="hasta"
+                            shape="rectangle"
+                            class="pl-3"
+                          >
+                            <nb-option
+                              [value]="item.valor"
+                              *ngFor="let item of lstAniosExperienciaExp"
+                            >
+                              {{ item.descripcion }}
+                            </nb-option>
+                          </nb-select>
+                          <label class="label pl-1">Años</label>
+                        </div>
+                        <div class="divTableCell w-20"></div>
+                        <div class="divTableCell w-20">
+                          <input
+                            nbInput
+                            formControlName="puntajeAnio"
+                            (keypress)="keyPressNumbers($event)"
+                            fieldSize="small"
+                            type="text"
+                            maxlength='3'
+                          />
+                        </div>
+                        <div class="divTableCell w-20">
+                          <button
+                            mat-icon-button
+                            class="iconAdd"
+                            (click)="
+                              addAniosExperienciaNivelEspecifico(
+                                objNivEsp.confPerfExpeLaboralId,
+                                iCab
+                              )
+                            "
+                          >
+                            <em class="material-icons custom-color">
+                              add_circle_outline
+                            </em>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div
+            class="row m-0 p-2 col-12 font-weight-bold"
+            *ngIf="!isConfigEstrategico"
+          >
+            Experiencia específica Jefatural
+          </div>
+          <form
+            [formGroup]="frmExperienciaJefatural"
+            *ngIf="!isConfigEstrategico"
+          >
+            <div
+              class="row m-0 p-2 col-12"
+              *ngFor="let objExpJef of lstExpJefatural; let iCab = index"
+            >
+              <div class="p-2 col-2"></div>
+              <div class="p-2 col-10 custom-vcenter">
+                <div
+                  class="divTable rowData my-2 bg-light"
+                  *ngFor="
+                    let objDet of objExpJef.listDetalleExperiencia;
+                    let iDet = index
+                  "
+                >
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell w-40">
+                        <nb-select
+                          [(selected)]="objDet.desdeAnios"
+                          (selectedChange)="
+                            onChangeExpLabJefaturalDesde($event, iCab, iDet)
+                          "
+                          size="tiny"
+                          placeholder="Desde"
+                          shape="rectangle"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <nb-select
+                          [(selected)]="objDet.hastaAnios"
+                          (selectedChange)="
+                            onChangeExpLabJefaturalHasta($event, iCab, iDet)
+                          "
+                          size="tiny"
+                          placeholder="hasta"
+                          shape="rectangle"
+                          class="pl-3"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <nb-checkbox
+                          [checked]="objDet.requisitoMinimo"
+                          (checkedChange)="
+                            onCheckReqMinExpLabJefatural($event, iCab, iDet)
+                          "
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell">
+                        <input
+                          nbInput
+                          [value]="objDet.puntaje"
+                          (keypress)="keyPressNumbers($event)"
+                          (focusout)="
+                            actualizarPuntajeExpLabJefatural($event, iCab, iDet)
+                          "
+                          fieldSize="small"
+                          type="text"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconRemove"
+                          (click)="removeExperienciaJefatural(iCab, iDet)"
+                        >
+                          <span class="material-icons custom-color">
+                            remove_circle_outline
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="divTable rowData my-2">
+                  <div class="divTableBody">
+                    <div class="divTableRow">
+                      <div class="divTableCell w-40">
+                        <nb-select
+                          formControlName="expEspJefDesde"
+                          size="tiny"
+                          placeholder="Desde"
+                          shape="rectangle"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                        <nb-select
+                          formControlName="expEspJefHasta"
+                          size="tiny"
+                          placeholder="hasta"
+                          shape="rectangle"
+                          class="pl-3"
+                        >
+                          <nb-option
+                            [value]="item.valor"
+                            *ngFor="let item of lstAniosExperienciaExp"
+                          >
+                            {{ item.descripcion }}
+                          </nb-option>
+                        </nb-select>
+                        <label class="label pl-1">Años</label>
+                      </div>
+                      <div class="divTableCell w-20">
+                        <nb-checkbox
+                          formControlName="expEspJefReqMin"
+                          class="custom-valign-center"
+                        ></nb-checkbox>
+                      </div>
+                      <div class="divTableCell">
+                        <input
+                          nbInput
+                          formControlName="expEspJefPuntaje"
+                          (keypress)="keyPressNumbers($event)"
+                          fieldSize="small"
+                          type="text"
+                          maxlength='3'
+                        />
+                      </div>
+                      <div class="divTableCell w-20">
+                        <button
+                          mat-icon-button
+                          class="iconAdd"
+                          (click)="addExperienciaJefatural(iCab)"
+                        >
+                          <em class="material-icons custom-color">
+                            add_circle_outline
+                          </em>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="mx-3 my-2"></mat-divider>
+            </div>
+          </form>
+        </div>
+
+        <!-- >>> Investigación y publicaciones -->
+        <div class="pt-5">
+          <div class="row m-0 col-12 custom-header p-2 align-middle py-4">
+            <div class="col-8">Investigación y publicaciones</div>
+            <div class="col-2 text-center">Requisitos mínimos</div>
+            <div class="col-2 text-center fs-14"></div>
+          </div>
+          <div class="m-0 custom-body">
+            <div>
+              <form [formGroup]="frmExpLabInvestigacion">
+                <div
+                  class="row m-0 p-2 col-12"
+                  *ngIf="
+                    listaConfigInvestigacion.length <= 0 &&
+                    listaConfigPublicacion.length <= 0
+                  "
+                >
+                  <div class="p-2 col-2">No se encontraron registros</div>
+                </div>
+
+                <div
+                  class="row m-0 p-2 col-12"
+                  *ngFor="
+                    let objInvest of listaConfigInvestigacion;
+                    let iCab = index
+                  "
+                >
+                  <div class="p-2 col-2">{{ objInvest.tipoDescripcion }}</div>
+                  <div class="p-2 col-8 custom-vcenter">
+                    {{ objInvest.descripcion }}
+                  </div>
+                  <div class="p-2 col-2 custom-vcenter">
+                    <nb-checkbox
+                      formControlName="investigacionReqMin"
+                      (checkedChange)="onCheckReqMinInvestigacion($event, iCab)"
+                      class="custom-valign-center"
+                    >
+                    </nb-checkbox>
+                  </div>
+                  <mat-divider></mat-divider>
+                </div>
+
+                <div
+                  class="row m-0 p-2 col-12"
+                  *ngFor="
+                    let objPublic of listaConfigPublicacion;
+                    let iCab = index
+                  "
+                >
+                  <div class="p-2 col-2">{{ objPublic.tipoDescripcion }}</div>
+                  <div class="p-2 col-8 custom-vcenter">
+                    {{ objPublic.descripcion }}
+                  </div>
+                  <div class="p-2 col-2 custom-vcenter">
+                    <nb-checkbox
+                      formControlName="investigacionReqMin"
+                      (checkedChange)="onCheckReqMinPublicacion($event, iCab)"
+                      class="custom-valign-center"
+                    >
+                    </nb-checkbox>
+                  </div>
+                  <mat-divider></mat-divider>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-5">
+          <div class="row m-0 col-12 custom-header p-2 align-middle">
+            <div class="col-8">
+              Especificaciones de investigación y publicaciones (Opcional)
+            </div>
+            <div class="col-2 text-center">Pts. Ev. CURRICULAR</div>
+            <div class="col-2 text-center fs-14">
+              Peso en esta sección
+              <input
+                nbInput
+                fieldSize="medium"
+                (keypress)="keyPressNumbers($event)"
+                (focusout)="actualizarResumen($event, 5)"
+                [value]="pesoELInvestigacion"
+                placeholder="%"
+                [maxLength]="3"
+                type="text"
+                class="w-40 custom-input-border"
+              />
+            </div>
+          </div>
+          <div class="m-0 custom-body">
+            <div>
+              <div
+                class="row m-0 p-2 col-12"
+                *ngIf="
+                  listaConfigEspecifInvestigacion.length <= 0 &&
+                  listaConfigEspecifPublicacion.length <= 0
+                "
+              >
+                <div class="p-2 col-2">No se encontraron registros</div>
+              </div>
+              <form [formGroup]="frmExpLabEspecifInvestigacion">
+                <div
+                  class="row m-0 p-2 col-12"
+                  *ngFor="
+                    let objEspecInves of listaConfigEspecifInvestigacion;
+                    let iCab = index
+                  "
+                >
+                  <div class="p-2 col-2 custom-vcenter">
+                    {{ objEspecInves.tipoDescripcion }}
+                  </div>
+                  <div class="p-2 col-10 custom-vcenter">
+                    <div class="divTable rowData my-2 bg-light">
+                      <div class="divTableBody">
+                        <div class="divTableRow custom-vcenter">
+                          <div class="divTableCell w-40">
+                            <nb-select
+                              size="tiny"
+                              [(selected)]="objEspecInves.cantidad"
+                              placeholder="Desde"
+                              shape="rectangle"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperiencia"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Investigaciones</label>
+                          </div>
+                          <div class="divTableCell w-20">
+                            <nb-checkbox
+                              class="custom-valign-center"
+                              [checked]="objEspecInves.superior"
+                            >
+                            </nb-checkbox>
+                            a más
+                          </div>
+                          <div class="divTableCell">
+                            <input
+                              nbInput
+                              [value]="objEspecInves.puntaje"
+                              (keypress)="keyPressNumbers($event)"
+                              (focusout)="
+                                actualizarPuntajeExpLabEspecInvestigacion(
+                                  $event,
+                                  iCab
+                                )
+                              "
+                              fieldSize="small"
+                              type="text"
+                            />
+                          </div>
+                          <div class="divTableCell w-20">
+                            <button
+                              mat-icon-button
+                              class="iconRemove"
+                              (click)="
+                                removeExperienciaEspecInvestigacion(iCab)
+                              "
+                            >
+                              <span class="material-icons custom-color">
+                                remove_circle_outline
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row m-0 p-2 py-0 col-12">
+                  <div class="p-2 col-2 custom-vcenter">Investigación</div>
+                  <div class="p-2 col-10 custom-vcenter">
+                    <div class="divTable rowData">
+                      <div class="divTableBody">
+                        <div class="divTableRow custom-vcenter">
+                          <div class="divTableCell w-40">
+                            <nb-select
+                              size="tiny"
+                              formControlName="expEspecInvestCantidad"
+                              placeholder="Elegir"
+                              shape="rectangle"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperiencia"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Investigaciones</label>
+                          </div>
+                          <div class="divTableCell w-20">
+                            <nb-checkbox
+                              class="custom-valign-center"
+                              formControlName="expEspecInvestSuperior"
+                            >
+                            </nb-checkbox>
+                            a más
+                          </div>
+                          <div class="divTableCell">
+                            <input
+                              nbInput
+                              formControlName="expEspecInvestPuntaje"
+                              (keypress)="keyPressNumbers($event)"
+                              fieldSize="small"
+                              type="text"
+                            />
+                          </div>
+                          <div class="divTableCell w-20">
+                            <button
+                              mat-icon-button
+                              class="iconRemove"
+                              (click)="addExperienciaEspecInvestigacion(iCab)"
+                            >
+                              <span class="material-icons custom-color">
+                                add_circle_outline
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <mat-divider></mat-divider>
+
+              <form [formGroup]="frmExpLabEspecifPublicacion">
+                <div
+                  class="row m-0 p-2 col-12"
+                  *ngFor="
+                    let objEspecPublic of listaConfigEspecifPublicacion;
+                    let iCab = index
+                  "
+                >
+                  <div class="p-2 col-2 custom-vcenter">
+                    {{ objEspecPublic.tipoDescripcion }}
+                  </div>
+                  <div class="p-2 col-10 custom-vcenter">
+                    <div class="divTable rowData bg-light">
+                      <div class="divTableBody">
+                        <div class="divTableRow custom-vcenter">
+                          <div class="divTableCell w-40">
+                            <nb-select
+                              size="tiny"
+                              [(selected)]="objEspecPublic.cantidad"
+                              placeholder="Desde"
+                              shape="rectangle"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperiencia"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Publicaciones</label>
+                          </div>
+                          <div class="divTableCell w-20">
+                            <nb-checkbox
+                              class="custom-valign-center"
+                              [checked]="objEspecPublic.superior"
+                            >
+                            </nb-checkbox>
+                            a más
+                          </div>
+                          <div class="divTableCell">
+                            <input
+                              nbInput
+                              [value]="objEspecPublic.puntaje"
+                              (keypress)="keyPressNumbers($event)"
+                              (focusout)="
+                                actualizarPuntajeExpLabEspecPublicacion(
+                                  $event,
+                                  iCab
+                                )
+                              "
+                              fieldSize="small"
+                              type="text"
+                            />
+                          </div>
+                          <div class="divTableCell w-20">
+                            <button
+                              mat-icon-button
+                              class="iconRemove"
+                              (click)="removeExperienciaEspecPublicacion(iCab)"
+                            >
+                              <span class="material-icons custom-color">
+                                remove_circle_outline
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row m-0 p-2 py-0 col-12">
+                  <div class="p-2 col-2 custom-vcenter">Publicación</div>
+                  <div class="p-2 col-10 custom-vcenter">
+                    <div class="divTable rowData">
+                      <div class="divTableBody">
+                        <div class="divTableRow custom-vcenter">
+                          <div class="divTableCell w-40">
+                            <nb-select
+                              size="tiny"
+                              formControlName="expEspecPublicacionCantidad"
+                              placeholder="Elegir"
+                              shape="rectangle"
+                            >
+                              <nb-option
+                                [value]="item.valor"
+                                *ngFor="let item of lstAniosExperiencia"
+                              >
+                                {{ item.descripcion }}
+                              </nb-option>
+                            </nb-select>
+                            <label class="label pl-1">Publicaciones</label>
+                          </div>
+                          <div class="divTableCell w-20">
+                            <nb-checkbox
+                              class="custom-valign-center"
+                              formControlName="expEspecPublicacionSuperior"
+                            >
+                            </nb-checkbox>
+                            a más
+                          </div>
+                          <div class="divTableCell">
+                            <input
+                              nbInput
+                              formControlName="expEspecPublicacionPuntaje"
+                              (keypress)="keyPressNumbers($event)"
+                              fieldSize="small"
+                              type="text"
+                            />
+                          </div>
+                          <div class="divTableCell w-20">
+                            <button
+                              mat-icon-button
+                              class="iconRemove"
+                              (click)="addExperienciaEspecPublicacion(iCab)"
+                            >
+                              <span class="material-icons custom-color">
+                                add_circle_outline
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isStepOtrosReq" class="py-2 px-5 m-3">
+      <div class="row m-0">
+        <img
+          class="logo pl-2"
+          src="assets/images/icons/otros_requisitos.svg"
+          alt="Otros Requisitos"
+        />
+        <div class="h4 text-info align-self-center pl-3 pt-2">
+          Otros Requisitos
+        </div>
+      </div>
+      <div class="pt-3">
+        <div class="row m-0 col-12 custom-header p-4 align-middle">
+          <div class="col-8">Otros requisitos</div>
+          <div class="col-4 text-center">Requisitos mínimos</div>
+        </div>
+
+        <div class="m-0 custom-body pt-4">
+          <div
+            class="row p-2 m-0 px-2 col-12 custom-valign-center"
+            *ngIf="lstOtrosRequisitos.length <= 0"
+          >
+            No se encontraron registros
+          </div>
+          <div *ngFor="let item of lstOtrosRequisitos; let i = index">
+            <div class="row p-2 m-0 px-2 col-12">
+              <div class="col-4 font-weight-bold">{{ item.descripcion }}</div>
+              <div class="col-4 font-weight-bold"></div>
+              <div class="col-4 text-center">
+                <nb-checkbox
+                  [checked]="item.requisitoMinimo"
+                  (checkedChange)="onCheckReqMinOtrosRequisitos($event, i)"
+                  class="custom-valign-center"
+                ></nb-checkbox>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isStepDeclaracionJur" class="py-2 px-5 m-3">
+      <div class="row m-0">
+        <img
+          class="logo pl-2"
+          src="assets/images/icons/declaracion_jurada.svg"
+          alt="Declaración Jurada"
+        />
+        <div class="h4 text-info align-self-center pl-3 pt-2">
+          Declaraciones juradas
+        </div>
+      </div>
+      <div class="pt-3">
+        <div class="row m-0 col-12 custom-header p-4 align-middle">
+          <div class="col-8">Declaraciones juradas generales</div>
+          <div class="col-4 text-center">Requisitos mínimos</div>
+        </div>
+
+        <div class="m-0 custom-body pt-4">
+          <div *ngFor="let item of lstDDJJGeneral; let i = index">
+            <div class="row p-2 m-0 px-2 col-12">
+              <div class="col-2">Declaración</div>
+              <div class="col-5 font-weight-bold">
+                {{ i + 1 + '. ' }}{{ item.descripcion }}
+              </div>
+              <div class="col-2">
+                <mat-radio-group color="primary">
+                  <mat-radio-button
+                    value="0"
+                    [checked]="item.flagDDJJ === 0"
+                    (change)="onSelectRadioDDJJGeneral($event, i)"
+                    class="mx-2"
+                  >
+                    Sí
+                  </mat-radio-button>
+                  <mat-radio-button
+                    value="1"
+                    [checked]="item.flagDDJJ === 1"
+                    (change)="onSelectRadioDDJJGeneral($event, i)"
+                    class="mx-2"
+                  >
+                    No
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="col-2 text-center">
+                <nb-checkbox
+                  [checked]="item.requisitoMinimo"
+                  (checkedChange)="onCheckReqMinDDJJGeneral($event, i)"
+                  class="custom-valign-center"
+                ></nb-checkbox>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+          </div>
+          <div *ngIf="lstDDJJGeneral.length <= 0">
+            <div class="row p-2 m-0 px-2 col-12 c-text-center">
+              No existen declaraciones juradas generales registradas en el
+              sistema.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3">
+        <div class="row m-0 col-12 custom-header p-4 align-middle">
+          <div class="col-8">Declaraciones juradas específicas</div>
+          <div class="col-4 text-center">Requisitos mínimos</div>
+        </div>
+
+        <div class="m-0 custom-body pt-4">
+          <div *ngFor="let item of lstDDJJEspecifica; let i = index">
+            <div class="row p-2 m-0 px-2 col-12">
+              <div class="col-2">Declaración</div>
+              <div class="col-5 font-weight-bold">
+                {{ i + 1 + '. ' }}{{ item.descripcion }}
+              </div>
+              <div class="col-2">
+                <mat-radio-group color="primary">
+                  <mat-radio-button
+                    value="0"
+                    [checked]="item.flagDDJJ === 0"
+                    (change)="onSelectRadioDDJJEspecifica($event, i)"
+                    class="mx-2"
+                  >
+                    Sí
+                  </mat-radio-button>
+                  <mat-radio-button
+                    value="1"
+                    [checked]="item.flagDDJJ === 1"
+                    (change)="onSelectRadioDDJJEspecifica($event, i)"
+                    class="mx-2"
+                  >
+                    No
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="col-2 text-center">
+                <nb-checkbox
+                  [checked]="item.requisitoMinimo"
+                  (checkedChange)="onCheckReqMinDDJJEspecifica($event, i)"
+                  class="custom-valign-center"
+                ></nb-checkbox>
+              </div>
+            </div>
+
+            <mat-divider></mat-divider>
+          </div>
+          <div
+            *ngIf="lstDDJJEspecifica.length <= 0"
+          >
+            <div class="row p-2 m-0 px-2 col-12 c-text-center">
+              No existen declaraciones juradas específica registradas en el
+              sistema.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <footer class="footer">
+    <div class="row footer__content">
+      <div class="col-6 text-left">
+        <button
+          class="cancelButton mr-3"
+          (click)="atras()"
+          type="button"
+        >
+          Volver
+        </button>
+      </div>
+
+      <div class="col-6 text-right">
+        <button
+          type="button"
+          nbButton
+          shape="round"
+          status="primary"
+          class="px-5"
+          (click)="continuar()"
+        >
+          Continuar
+        </button>
+        <!-- <button
+          type="button"
+          nbButton
+          shape="round"
+          status="primary"
+          class="px-5"
+          (click)="continuarGuardar()"
+          *ngIf="isGuardarEnabled"
+        >
+          Continuar
+        </button> -->
+      </div>
+    </div>
+  </footer>
+</div>

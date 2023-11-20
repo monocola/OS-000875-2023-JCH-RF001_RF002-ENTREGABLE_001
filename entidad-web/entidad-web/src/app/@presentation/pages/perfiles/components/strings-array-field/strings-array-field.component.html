@@ -1,0 +1,112 @@
+<h6 class="d-flex">
+  <span [class]="textClass"> {{ title }}</span>
+  <serv-talento-btn-add
+    (clickEmitter)="addNewItem()"
+    [text]="addItemLabel"
+    [disableButton]="items.value?.length > 0"
+  >
+  </serv-talento-btn-add>
+</h6>
+
+<div
+  cdkDropList
+  class="example-list w-100 pr-2"
+  (cdkDropListDropped)="drop($event)"
+>
+  <div
+    class="flex-v-center w-100 my-1"
+    *ngFor="let item of itemsToShow(); let i = index"
+    cdkDrag
+  >
+    <div
+      class="handle_icon flex-v-center mx-2"
+      cdkDragHandle
+      title="Presionar y arrastrar"
+      *ngIf="orderable"
+    >
+      <span class="material-icons p-1"> drag_handle </span>
+    </div>
+
+    <div
+      class="handle_icon flex-v-center"
+      cdkDragHandle
+      title="Presionar y arrastrar"
+      style="width: 0; height: 0"
+      *ngIf="!orderable"
+    ></div>
+
+    <span class="ml-3 mr-2 fw-600" *ngIf="showNumbers"> {{ i + 1 }}. </span>
+
+    <div class="boxSelect pr-3" *ngIf="mode === 1">
+      <nb-select
+        placeholder="Elegir"
+        fullWidth="true"
+        shape="semi-round"
+        [(ngModel)]="item.extra"
+        class="ml-2"
+        (selectedChange)="this.items.markAsDirty()"
+        (selectedChange)="this.change.emit()"
+        (selectedChange)="this.validateItems(this.items)"
+        [status]="!item.extra && items.touched ? 'danger' : 'basic'"
+      >
+        <nb-option value="">Elige</nb-option>
+        <nb-option [value]="item.maeDetalleId" [disabled]="extraItemsMap.has (item.maeDetalleId) && noDuplicateItems" *ngFor="let item of extraItems">
+          {{ item.descripcion }}
+        </nb-option>
+      </nb-select>
+    </div>
+
+    <div class="flex-spacer" *ngIf="mode === 1"></div>
+
+    <input
+      type="text"
+      class="w-100 mr-4 ml-2"
+      [(ngModel)]="item.descripcion"
+      [placeholder]="placeholderItem"
+      nbInput
+      shape="semi-round"
+      [status]="item.descripcion === '' && items.touched ? 'danger' : 'basic'"
+      (change)="this.change.emit()"
+      (change)="this.clear($event, i)"
+      (change)="this.items.markAsDirty()"
+      (keyup)="this.change.emit()"
+      maxlength="250"
+      [disabled]="this.items.disabled"
+    />
+
+    <div class="flex-spacer"></div>
+
+    <div class="flex-v-center-right example-box">
+      <button
+        mat-icon-button
+        class="mr-2 iconAdd"
+        (click)="addNewItem()"
+        *ngIf="i == this.items.value?.length - 1"
+        [disabled]="this.items.value?.length >= maxItems || this.items.disabled"
+      >
+        <em class="material-icons"> add_circle_outline </em>
+      </button>
+
+      <button
+        mat-icon-button
+        class="mr-2 iconRemove"
+        (click)="removeItem(i)"
+        [disabled]="this.items.disabled"
+      >
+        <span class="material-icons"> remove_circle_outline </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="items.touched && items.invalid" class="invalid-text m-0">
+  <span
+    class="mt-n5"
+    *ngIf="items.value.length < minItems || items.errors?.pocasFilas"
+  >
+    Tiene que ingresar como mínimo {{ minItems }} filas.
+  </span>
+  <span class="mt-n5" *ngIf="items.errors?.dataFaltante">
+    Revise todos los campos marcados con rojo y complételo según sea el caso
+  </span>
+</div>

@@ -1,0 +1,32 @@
+.observacionDiv {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.observacionTexto {
+  width: 100%;
+  min-height: 5rem;
+  background-color: #fef5f5;
+  border: 1px solid #fbdddd;
+  border-radius: 4px;
+}
+
+.resueltoDiv {
+  background-color: #e9f7ef !important;
+  border: 1px solid #f8f0ee !important;
+}
+
+.observacionButton {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.porResolver {
+  color: #828282;
+}
+
+.resuelto {
+  color: #219653;
+}

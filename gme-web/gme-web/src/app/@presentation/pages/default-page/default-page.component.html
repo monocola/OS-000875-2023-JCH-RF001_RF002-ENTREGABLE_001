@@ -1,0 +1,48 @@
+<div class="m-1 p-1">
+  <div class="m-1 p-2">
+    <h5>¡Bienvenido(a): {{ user.nombres.split(' ')[0] | titlecase }}!</h5>
+  </div>
+</div>
+
+<div class="card-row ml-2 p-1">
+  <div class="box mt-1">
+    <div class='m-1'>
+      <nb-card class='card-col-small m-1 p-1'>
+        <nb-card-body class='m-0 p-0'>
+          <div class="flex-v-center item p-2">
+            <img alt="icon profile" [src]="url" class="rounded-circle" />
+          </div>
+          <div class="flex-v-center item py-1 px-1">
+            <div class="ml-2">
+              <div class="nameUser fw-700">{{ profile.nombres + ' ' + profile.apellidoPaterno + ' ' + profile.apellidoMaterno | titlecase}}</div>
+            </div>
+          </div>
+          <div class="flex-v-center item p-1">
+            {{ nombreRol }}
+          </div>
+          <div class="flex-v-center item pt-1 pb-1"></div>
+          <div class="flex-v-center item p-1">
+            <hr style='size: 20px; width: 100%; align-content: center;'>
+          </div>
+          <div class="flex-v-center item px-1 pb-3">
+            <div class='col-md-4 flex-v-center'>
+              <button class='bg-transparent border-0'>
+              <span class="material-icons gray00">face</span>
+              </button>0
+            </div>
+            <div class='col-md-4 flex-v-center'>
+              <button class='bg-transparent border-0'>
+              <span class="material-icons gray00">insert_drive_file</span>
+              </button>0
+            </div>
+            <div class='col-md-4 flex-v-center'>
+              <button class='bg-transparent border-0'>
+              <span class="material-icons gray00">message</span>
+              </button>0
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

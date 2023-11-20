@@ -1,0 +1,193 @@
+<nb-card class="m-0 p-0">
+  <nb-card-header class='px-1 py-2'>
+    <div class="row p-0 m-0 ">
+      <div class='col-10 font-weight-bold fs-18'>{{!data.isNew ? 'Editar gestor ORH' : 'Datos del gestor ORH'}}</div>
+      <div class="row col h-100 m-0 justify-content-end">
+        <nb-icon icon='close' class="mr-2 btnClose" (click)='dismiss(false)'></nb-icon>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="px-1 pb-3">
+    <form [formGroup]="frm">
+      <div class='m-0 p-0'>
+        <div *ngIf="!data.isNew" class='col-12 mb-4'>Edite los siguientes datos</div>
+        <div class='row col m-0 p-0'>
+          <div class='col-6 mb-2'>
+            <label>Tipo de documento</label>
+            <nb-form-field>
+              <nb-select formControlName="tipoDocumento" (selectedChange)="changeType($event)" placeholder="Seleccione" fullWidth="true" [size]="'large'"
+                shape="semi-round" [status]="f.tipoDocumento.invalid && f.tipoDocumento.touched ? 'danger' : 'basic' ">
+                <nb-option style="color: #a4a4a4;" value="0">Seleccione</nb-option>
+                <nb-option *ngFor="let cboTipDoc of tipoDocumento" [value]="cboTipDoc.codigoNumero">
+                  {{ cboTipDoc.valorTexto }}
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div>
+          <div class='col-6 mb-2'>
+            <label>N˚ de documento</label>
+            <input autocomplete="off" [simpleCharacteresAndNumber]="numeroDocumentoType" nbInput placeholder='Ingresar' [maxlength]="numeroDocumentoMaxlength" shape='semi-round' fullWidth formControlName='numeroDocumento'
+            [status]="
+            f.numeroDocumento.invalid && (f.numeroDocumento.dirty || f.numeroDocumento.touched)
+              ? 'danger'
+              : 'basic'
+          ">
+            <div *ngIf="
+            f.numeroDocumento.invalid && (f.numeroDocumento.dirty ||  f.numeroDocumento.touched)
+          " class="invalid-text flex-column">
+              <span *ngIf="f.numeroDocumento.errors.required">
+                El campo es obligatorio
+              </span>
+              <span *ngIf="f.numeroDocumento.errors.minlength && tipoDoc==false">
+                El texto introducido es muy corto min 8 caracteres
+              </span>
+              <span *ngIf="f.numeroDocumento.errors.minlength && tipoDoc==true">
+                El texto introducido es muy corto min 9 caracteres
+              </span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="data.isNew" class='row col m-0 p-0'>
+          <div class='col-6'>
+            <label>Nombres</label>
+            <input autocomplete="off" trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+              [status]="f.nombres.invalid && f.nombres.touched ? 'danger' : 'basic' " formControlName="nombres" />
+
+            <div *ngIf="f.nombres.invalid && f.nombres.touched" class="invalid-text flex-column">
+              <span *ngIf="f.nombres.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class='col-3'>
+            <label>Apellido Paterno</label>
+            <input autocomplete="off" trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+              [status]="f.apepaterno.invalid && f.apepaterno.touched ? 'danger' : 'basic' "
+              formControlName="apepaterno" />
+            <div *ngIf="f.apepaterno.invalid && f.apepaterno.touched" class="invalid-text flex-column">
+              <span *ngIf="f.apepaterno.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div class='col-3'>
+            <label>Apellido Materno</label>
+            <input autocomplete="off" trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+              [status]="f.apematerno.invalid && f.apematerno.touched ? 'danger' : 'basic' "
+              formControlName="apematerno" />
+
+            <div *ngIf="f.apematerno.invalid && f.apematerno.touched" class="invalid-text flex-column">
+              <span *ngIf="f.apematerno.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!data.isNew" class='row col m-0 p-0'>
+          <div class='col-6 mb-2'>
+            <label>Apellido paterno</label>
+            <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='apepaterno'>
+          </div>
+          <div class='col-6 mb-2'>
+            <label>Apellido materno</label>
+            <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='apematerno'>
+          </div>
+        </div>
+        <div *ngIf="!data.isNew" class='row col m-0 p-0'>
+          <div class='col-12 mb-2'>
+            <label>Nombres</label>
+            <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='nombres'>
+          </div>
+
+        </div>
+        <div class='row col m-0 p-0'>
+          <div [ngClass]="{'col-6': !data.isNew, 'col-4': data.isNew}" class='mb-2'>
+            <label>Fecha de nacimiento</label>
+            <nb-form-field>
+              <input #fechaNac formControlName="fechaNac" nbInput class='pointer' placeholder="dd/mm/aaaa"
+                [nbDatepicker]="dateTimePicker1" readonly fieldSize="large" shape="semi-round"
+                [status]="f.fechaNac.invalid && f.fechaNac.touched ? 'danger' : 'basic' ">
+              <nb-icon style="cursor: pointer;" nbSuffix class="mr-2 pointer" (click)='fechaNac.click()'
+                icon="calendar-outline">
+              </nb-icon>
+              <nb-datepicker #dateTimePicker1></nb-datepicker>
+            </nb-form-field>
+            <div *ngIf="f.fechaNac.invalid && f.fechaNac.touched" class="invalid-text flex-column">
+              <span *ngIf="f.fechaNac.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div [ngClass]="{'col-6': !data.isNew, 'col-4': data.isNew}" class='mb-2'>
+            <label>Correo electrónico</label>
+            <input autocomplete="off" trim="blur" type="email" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+              [status]="f.correo.invalid && f.correo.touched ? 'danger' : 'basic' " formControlName="correo" />
+
+            <div *ngIf="f.correo.invalid && f.correo.touched" class="invalid-text flex-column">
+              <span *ngIf="f.correo.errors.required">
+                El campo es obligatorio
+              </span>
+              <span *ngIf="f.correo.errors.email">
+                Debe ingresar un correo electrónico válido
+              </span>
+            </div>
+          </div>
+          <div *ngIf="data.isNew" class='col-4 mb-2'>
+            <label>Teléfono</label>
+            <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='telefono'
+              [status]="f.telefono.invalid && f.telefono.touched ? 'danger' : 'basic' ">
+            <div *ngIf="f.telefono.invalid && f.telefono.touched" class="invalid-text flex-column">
+              <span *ngIf="f.telefono.errors.required">
+                El campo es obligatorio
+              </span>
+            </div>
+          </div>
+          <div *ngIf="!data.isNew" class='row col-12 m-0 p-0'>
+            <div class='col-6 mb-2'>
+              <label>Teléfono</label>
+              <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='telefono'
+                [status]="f.telefono.invalid && f.telefono.touched ? 'danger' : 'basic' ">
+              <div *ngIf="f.telefono.invalid && f.telefono.touched" class="invalid-text flex-column">
+                <span *ngIf="f.telefono.errors.required">
+                  El campo es obligatorio
+                </span>
+              </div>
+            </div>
+            <div class='col-6 mb-2'>
+              <label>Anexo</label>
+              <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='anexo'>
+            </div>
+          </div>
+          <div *ngIf="!data.isNew" class='row col-12 m-0 p-0'>
+            <div class='col-6 mb-2'>
+              <label>Celular</label>
+              <input autocomplete="off" nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='celular'>
+            </div>
+          </div>
+          <div *ngIf="!data.isNew" class='row m-0 col-12 mt-1'>
+            <nb-toggle labelPosition="start" formControlName="estado" status='info'>Estado de gestor</nb-toggle>
+            <div class='ml-4 my-1' [ngClass]="this.frm.controls.estado.value ? 'activo' : 'inactivo' ">
+              <span class="dot2 mr-2"></span>{{this.frm.controls.estado.value ? 'Activo' : 'Inactivo' }}
+            </div>
+          </div>
+          <div class='col-4'>
+
+          </div>
+          <div class='col-4'>
+            <div class='p-0 col-10 mt-2 '>
+              <button nbButton status='success' shape='round' fullWidth (click)='save()'
+                [disabled]='frm.invalid'>Guardar</button>
+            </div>
+          </div>
+          <div class='col-4'>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </form>
+
+  </nb-card-body>
+</nb-card>

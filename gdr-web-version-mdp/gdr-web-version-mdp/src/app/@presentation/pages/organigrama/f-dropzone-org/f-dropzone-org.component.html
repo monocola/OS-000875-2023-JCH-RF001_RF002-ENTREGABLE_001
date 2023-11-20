@@ -1,0 +1,57 @@
+<div class="dropzone">
+    <div class="dropzone-file">
+      <div class="dropzone-button dropzone-label">
+        <ng-container *ngIf="fileName; else elseButton">
+            <ng-container *ngIf="previewUrl; else elseFile">
+                  <img class="dropzone-img" [src]="previewUrl">
+            </ng-container>
+            <ng-template #elseFile>
+              <i class="fas fa-file ifile"></i>
+            </ng-template>            
+        </ng-container>
+        <ng-template #elseButton >
+         
+           <div class="buttonArea px-1 py-2">
+                  <label
+                    class="btnUploadLogo flex-v-center"
+                    shape="round"
+                    status="primary"
+                    fullWidth
+                    for="file"
+                    nbButton
+                  >
+                    <span>Subir plantilla</span>
+                    <nb-icon icon="subir" class="ml-2 iconArrow"></nb-icon>
+                    
+                  </label>
+            </div>
+        </ng-template>
+
+      </div>
+      <input
+      id="file"
+      type="file"
+      onclick="this.value=null;"
+      [(ngModel)]="fileDataModel"
+      (change)="fileChangeEvent($event)"
+      />
+    </div>
+
+    <div class="botonesvd">
+        <div class="w-100 h-100">
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            class="button-val"
+            [disabled]="!fileOrgano"
+            (click)="uploadFile()"
+          >
+            Procesar
+          </button>
+        </div>
+    </div>
+  
+  </div>

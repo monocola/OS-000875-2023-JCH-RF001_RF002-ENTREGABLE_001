@@ -1,0 +1,14 @@
+<div class="tooltip-body">
+  <img alt="iconImage" src="assets/images/icons/info.png" class="mr-3" />
+  <span class="flex-spacer"></span>
+  <div class="flex-column popoverInfo">
+    <mat-progress-bar
+      style="height: 10px; width: 350px"
+      class="mt-3"
+      [value]="porcentaje"
+      mode="determinate"
+    ></mat-progress-bar>
+    <span>{{ fechaInicio }}</span>
+    <span style="float: right">{{ fechaFin }}</span>
+  </div>
+</div>

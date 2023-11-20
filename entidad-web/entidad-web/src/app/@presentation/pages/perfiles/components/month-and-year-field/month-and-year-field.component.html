@@ -1,0 +1,41 @@
+<label>{{ label }}</label>
+
+<div class="d-flex mt-2">
+  <div>
+    <label>Años</label>
+    <div class="flex-v-center-left">
+      <nb-form-field>
+        <nb-select id="exp_years" placeholder="Elige" fullWidth="true" [size]="'large'" shape="semi-round"
+          [formControl]="yearControl" [status]="
+            yearControl.touched && yearControl.invalid ? 'danger' : 'basic'
+          ">
+          <nb-option [value]="year" *ngFor="let year of yearsValue">
+            {{ year }}
+          </nb-option>
+        </nb-select>
+      </nb-form-field>
+      <span class="ml-2">año/s</span>
+    </div>
+  </div>
+
+  <div class="ml-5">
+    <label>Meses</label>
+    <div class="flex-v-center-left">
+      <nb-form-field>
+        <nb-select id="months" placeholder="Elige" fullWidth="true" [size]="'large'" shape="semi-round"
+          [formControl]="monthControl" [status]="
+            monthControl.touched && monthControl.invalid ? 'danger' : 'basic'
+          ">
+          <nb-option [value]="month" *ngFor="let month of months">
+            {{ month }}
+          </nb-option>
+        </nb-select>
+      </nb-form-field>
+      <span class="ml-2">mes/es</span>
+    </div>
+  </div>
+</div>
+
+<span class="invalid-text mt-2" *ngIf="validateFields()">
+  Ambos campos son obligatorios
+</span>

@@ -1,0 +1,52 @@
+<div class="row w-100">
+    <div class="col-4 mb-3">
+        <label for="dep">Departamento</label>
+        <nb-select id="dep" placeholder="---Seleccione---" fullWidth="true" (selectedChange)="cambioDept($event)"
+            [formControl]="departamentoControl" [size]="'large'" shape="semi-round"
+            [status]="departamentoControl.invalid && departamentoControl.touched? 'danger': 'basic'">
+            <nb-option value="">---Seleccione---</nb-option>
+            <nb-option *ngFor="let departamento of departamentos" [value]="departamento.ubigeoId">
+                {{departamento.nombre}}
+            </nb-option>
+        </nb-select>
+        <span *ngIf="departamentoControl.invalid && departamentoControl.touched" class="invalid-text">
+            <span *ngIf="departamentoControl.errors.required">
+                El campo es obligatorio
+            </span>
+        </span>
+    </div>
+
+    <div class="col-4 mb-3">
+        <label for="prov">Provincia</label>
+        <nb-select id="prov" placeholder="---Seleccione---" fullWidth="true" (selectedChange)="cambioProv($event)"
+            [formControl]="provinciaControl" [size]="'large'" shape="semi-round"
+            [status]="provinciaControl.invalid && provinciaControl.touched? 'danger': 'basic'">
+            <nb-option value="">---Seleccione---</nb-option>
+            <nb-option *ngFor="let provincia of provincias" [value]="provincia.ubigeoId">
+                {{provincia.nombre}}
+            </nb-option>
+        </nb-select>
+        <span *ngIf="provinciaControl.invalid && provinciaControl.touched" class="invalid-text">
+            <span *ngIf="provinciaControl.errors.required">
+                El campo es obligatorio
+            </span>
+        </span>
+    </div>
+
+    <div class="col-4 mb-3">
+        <label for="dist">Distrito</label>
+        <nb-select id="dist" placeholder="---Seleccione---" fullWidth="true" [formControl]="distritoControl"
+            [size]="'large'" shape="semi-round"
+            [status]="distritoControl.invalid && distritoControl.touched? 'danger': 'basic'">
+            <nb-option value="">---Seleccione---</nb-option>
+            <nb-option *ngFor="let distrito of distritos" [value]="distrito.ubigeoId">
+                {{distrito.nombre}}
+            </nb-option>
+        </nb-select>
+        <span *ngIf="distritoControl.invalid && distritoControl.touched" class="invalid-text">
+            <span *ngIf="distritoControl.errors.required">
+                El campo es obligatorio
+            </span>
+        </span>
+    </div>
+</div>

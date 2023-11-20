@@ -1,0 +1,50 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="px-3">
+  <div class="flex-v-center flex-column">
+    <img height="64px" src="assets/images/icons/info.png" alt="icon image" />
+    <h5 class="mt-3 titlePage">Evaluaciones</h5>
+  </div>
+
+  <table
+    aria-describedby="tabla de modalidades"
+    class="table table-borderless table-striped table-hover mat-elevation-z2 mt-3"
+  >
+    <thead class="">
+      <th scope="col" class="firstColumn">NOMBRE</th>
+      <th scope="col" class="secondColumn align-middle">DESCRIPCIÓN</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="fw-500">P/Mín.</td>
+        <td>Puntaje mínimo que se le asigna a una evaluación</td>
+      </tr>
+      <tr>
+        <td class="fw-500">P/Máx.</td>
+        <td>Puntaje máximo que se le asigna a una evaluación</td>
+      </tr>
+      <tr>
+        <td class="fw-500">Pct.</td>
+        <td>
+          Porcentaje, asegúrate que el peso total de las evaluaciones sume un
+          100%
+        </td>
+      </tr>
+      <tr>
+        <td class="fw-500">Posic.</td>
+        <td>
+          Posición, es el orden de como se ejectuará cada evaluación. (Presionar
+          y arrastrar)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

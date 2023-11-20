@@ -1,0 +1,174 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="bodyRegisterForm">
+  <div class="flex-v-center mt-0">
+    <img src="assets/images/icons/formulario.png" alt="formulario icon" />
+  </div>
+
+  <div class="flex-v-center mt-3">
+    <h5 *ngIf="data.createMode">Registro de contenido de tabla maestra</h5>
+    <h5 *ngIf="!data.createMode">Edición de contenido de tabla maestra</h5>
+  </div>
+
+  <div class="container-fluid pt-2 px-4">
+    <form class="row mt-2" [formGroup]="registerForm">
+      <div class="col-4">
+        <ng-container
+          *ngIf="!data.dataToEdit || data.dataToEdit.estadoRegistro === '1'"
+        >
+          <label>Estado</label>
+          <div class="w-100 flex-v-center-left mt-2 fs-17">Activo</div>
+        </ng-container>
+
+        <ng-container
+          *ngIf="data.dataToEdit && data.dataToEdit.estadoRegistro !== '1'"
+        >
+          <label>Estado</label>
+          <nb-select
+            placeholder="Elige una opción"
+            fullWidth="true"
+            [size]="'large'"
+            shape="semi-round"
+            formControlName="estado"
+            [status]="f.estado.invalid && f.estado.touched ? 'danger' : 'basic'"
+          >
+            <nb-option value="">---Seleccione---</nb-option>
+            <nb-option
+              [value]="item.codigoTexto"
+              *ngFor="let item of data.estados"
+            >
+              {{ item.valorTexto }}
+            </nb-option>
+          </nb-select>
+          <span
+            *ngIf="f.estado.invalid && f.estado.touched"
+            class="invalid-text"
+          >
+            <span *ngIf="f.estado.errors.required">
+              El campo es obligatorio
+            </span>
+          </span>
+        </ng-container>
+      </div>
+
+      <div class="col-8 mb-3">
+        <label>Tabla maestra</label>
+        <nb-form-field>
+          <nb-select
+            id="nombre-completo-detalleMaestra"
+            placeholder="Elegir tabla maestra"
+            fullWidth="true"
+            [size]="'large'"
+            shape="semi-round"
+            [status]="
+              f.tablaMaestra.invalid && f.tablaMaestra.touched
+                ? 'danger'
+                : 'basic'
+            "
+            fieldSize="large"
+            formControlName="tablaMaestra"
+          >
+            <nb-option value="">---Seleccione---</nb-option>
+            <nb-option
+              [value]="item.maeCabeceraId"
+              *ngFor="let item of data.tablaMaestra"
+            >
+              {{ item.descripcion }}
+            </nb-option>
+          </nb-select>
+        </nb-form-field>
+        <span
+          *ngIf="f.tablaMaestra.invalid && f.tablaMaestra.touched"
+          class="invalid-text"
+        >
+          <span *ngIf="f.tablaMaestra.errors.required">
+            El campo es obligatorio
+          </span>
+        </span>
+      </div>
+
+      <div class="col-8 mb-3">
+        <input-field
+          [label]="'Nombre completo'"
+          [control]="f.nombreCompleto"
+          [maxlength]="250"
+          [banKeyType]="6"
+        >
+        </input-field>
+      </div>
+
+      <div class="col-4 mb-3">
+        <input-field
+          [label]="'Nombre corto'"
+          [control]="f.nombreCorto"
+          [maxlength]="40"
+          [banKeyType]="6"
+        >
+        </input-field>
+      </div>
+
+      <div class="col-4 mb-3">
+        <input-field
+          [label]="'Sigla'"
+          [control]="f.sigla"
+          [maxlength]="15"
+          [banKeyType]="6"
+        >
+        </input-field>
+      </div>
+
+      <div class="col-8 mb-3">
+        <label>Descripción <strong>(opcional)</strong></label>
+        <input-field
+          [control]="f.referencia"
+          [maxlength]="250"
+          [banKeyType]="4"
+        >
+        </input-field>
+        <div class="flex-v-center-right fs-11">
+          <span *ngIf="!(f.referencia?.invalid && f.referencia?.touched)"
+            >{{ this.f.referencia.value?.length }}
+            /150
+          </span>
+        </div>
+      </div>
+
+      <div class="col-7"></div>
+
+      <div class="col-5 mb-3 mt-3">
+        <div class="w-100 h-100 btn_area">
+          <button
+            id="cancel-detalleMaestra"
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="onNoClick()"
+          >
+            Cancelar
+          </button>
+          <button
+            id="save-detalleMaestra"
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            [disabled]="this.registerForm.invalid"
+            (click)="this.data.dataToEdit ? editMaestra() : saveMaestra()"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

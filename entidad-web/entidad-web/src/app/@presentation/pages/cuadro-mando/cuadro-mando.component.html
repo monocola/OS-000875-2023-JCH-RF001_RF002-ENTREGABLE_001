@@ -1,0 +1,35 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Cuadro de Mando</h3>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="container-fluid">
+    <div style="height: 200px">
+      <div style="text-align: center; margin-top: 50px">
+        <H1>Elegir una vista para mostrar el Cuadro de Mando.</H1>
+      </div>
+      <div class="mb-3 col-md-4" style="margin: 4% 0 0 35%">
+        <div class="w-100 h-100 btn_area">
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="router.navigateByUrl('pages/cuadromando/gestor')"
+          >
+            Gestor
+          </button>
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="router.navigateByUrl('pages/cuadromando/coordinador')"
+          >
+            Coordinador
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

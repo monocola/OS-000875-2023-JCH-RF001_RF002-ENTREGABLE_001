@@ -1,0 +1,37 @@
+@import '_colors';
+
+* {
+  font-size: 0.75rem;
+}
+
+.color-primary {
+  color: #0dacbc;
+}
+
+.fb,
+.yt,
+.tw,
+.li {
+  color: #0dacbc;
+  transition: 0.25s;
+}
+
+.fb:hover {
+  color: #3b5998;
+}
+.yt:hover {
+  color: red;
+}
+.tw:hover {
+  color: #1da1f2;
+}
+.li:hover {
+  color: #0077b5;
+}
+
+.box_icons {
+  & > a > .icon {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+  }
+}

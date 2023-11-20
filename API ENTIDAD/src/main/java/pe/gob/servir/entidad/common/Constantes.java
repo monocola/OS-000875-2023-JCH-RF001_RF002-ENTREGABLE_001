@@ -1,0 +1,662 @@
+package pe.gob.servir.entidad.common;
+
+public class Constantes {
+	
+	private Constantes () {
+		super();
+	}
+		
+	public static final String OPERACION_EXITOSA = "operación exitosa";
+
+	public static final String ERROR_VALIDACION = "error de validación";
+	
+	public static final String ERROR_INTERNO = "error interno";
+	
+	public static final String PKG_GESTION = "PKG_GESTION";
+
+	public static final String PKG_ORGANIGRAMA = "PKG_ORGANIGRAMA";
+	
+	public static final String SP_OBTENER_PUESTOS = "SP_OBTENER_PUESTOS";
+	
+	public static final String SP_ALTA_SERVIDORES_CIVILES = "SP_ALTA_SERVIDORES_CIVILES";
+	
+	public static final String SP_BUSCAR_CORREO_EXISTENTE_SERVIDOR_CIVIL = "SP_BUSCAR_CORREO_EXISTENTE_SERVIDOR_CIVIL";
+	
+	public static final String BUSCAR_ADMINISTRADORES_FILTRO = "BUSCAR_ADMINISTRADORES_FILTRO";
+			
+	public static final String CORREO_CONTACTO_PROPERTY = "CORREO_CONTACTO"; 
+	
+	public static final String CORREO_CODIGO_CONFIRMACION = "CODIGO_CONFIRMACION";
+
+	public static final String ASUNTO_CREAR_SOLICITUD ="NOTIFICACION DEL SISTEMA SERVIR";
+	
+	public static final String ASUNTO_CONFIRMACION_DE_CORREO ="CONFIRMACION DE CORREO DEL SISTEMA SERVIR";
+	
+	public static final String ASUNTO_CREAR_USUARIO ="Bienvenido al Sistema";
+	
+	public static final String PLANTILLA_CREAR_SOLICITUD = "CREA_SOLI";
+
+	public static final String PLANTILLA_CONFIRMACION_DE_CORREO = "CONF_CORRE";
+	
+	public static final String ENDPOINT_ENVIAR_CORREO = "/v1/email/enviar";
+	
+	public static final String PARAMETROS = "parametros";
+	
+	public static final String CORREOS_ENVIO = "correosEnvio";
+	
+	public static final String CORREOS_COPIA = "correosCopia";
+	
+	public static final String CORREOS_COPIA_OCULTA = "correosCopiaOculta";
+	
+	public static final String FORMATO_TIMEZONE = "UTC";
+	
+	public static final String FORMATO_FECHA_AUDITORIA = "yyyy-MM-dd HH:mm:ss";
+	
+	public static final String BEARER_JWT = "bearer-key";
+	
+	public static final String AUTHORIZATION = "authorization";
+	
+	public static final String SUM_OBT_LIST = "Obtiene una Lista de ";
+	
+	public static final String SERVER_200 = "200";
+	
+	public static final String SERVER_500 = "500";
+	
+	public static final String SERVER_400 = "400";
+	
+	public static final String BASE_ENDPOINT = "{access:private|public}/v1";
+	
+	public static final String CONSTANTE_OK = "OK";
+	
+	public static final String RESPONSE_MESSAGE = "Debe ingresar el campo valor.";
+	
+	public static final String ENDPOINT_TIPO_PARAMETRO = "/v1/tiposparametro/{tipoParametro}/parametros";
+	
+	public static final String ENDPOINT_OBTENER_PERSONA_BY_DOCUMENTO = "/v1/personas/documentoQuery";
+	
+	public static final String ENDPOINT_OBTENER_PERSONA_BY_DOCUMENTO_V3 = "/v3/personas/documentoQuery";
+	
+	public static final String FORMATO_FECHA_DD_MM_YYYY = "dd/MM/yyyy";
+	
+	public static final String ENDPOINT_INS_PERSONA_JURIDICA = "/v1/personas/juridicas";
+	
+	public static final String ENDPOINT_INS_PERSONA_NATURAL = "/v1/personas/naturales";
+	
+	public static final String ENDPOINT_VAL_PERSONA_NATURAL = "/v1/personas/naturalesValidate";
+
+	public static final String ENDPOINT_BUSCAR_PERSONA_CORREO = "/v1/find/correos";
+	
+	public static final String ENDPOINT_CREAR_USUARIO = "/v1/usuarios";
+	
+	public static final String ENDPOINT_OBTENER_USUARIO = "/v1/usuarios/{usuarioId}";
+	
+	public static final String ENDPOINT_ASIGNAR_ROLES = "/v1/usuarios/roles";
+	
+	public static final String ENDPOINT_BUSCAR_ROLES_USUARIO = "/v1/usuarios/{usuarioId}/roles";
+	
+	public static final String ENDPOINT_BUSCAR_USUARIO_FILTRO = "/v1/usuarios/query";
+	
+	public static final String ENDPOINT_BUSCAR_USUARIO_FILTRO_EQ = "/v1/usuarios/equalquery";
+	
+	public static final String ENDPOINT_OBTENER_ROLES_APLICACION = "/V1/aplicaciones/{aplicacionId}/roles"; 
+	
+	public static final String TIPO_TELEFONO_CASA = "CAS";
+	
+	public static final String TIPO_TELEFONO_CELULAR = "CEL";
+	
+	// public static final String TIPO_TELEFONO_PRINCIPAL = "PRINC";
+
+	public static final String TIPO_CORREO_PRINCIPAL = "PRINC";
+
+	public static final String TIPO_CORREO_ALTERNO = "ALTER";
+
+	public static final int TIPO_DOCUMENTO_RUC = 6;
+	
+	public static final int TIPO_PERSONA_JURIDICO = 34;
+	
+	public static final int TIPO_PERSONA_NATURAL = 33;
+
+	public static final String ENDPOINT_CREAR_TELEFONO = "/v1/personas/{personaId}/telefonos";
+	
+	public static final String ENDPOINT_CREAR_CORREO = "/v1/personas/{personaId}/correos";
+	
+	public static final String ENDPOINT_TELEFONO = "/v1/telefonos/{telefonoId}";
+	
+	public static final String ENDPOINT_CORREO = "/v1/correos/{correoId}";
+	
+	public static final String SP_BUSCAR_EMAIL = "SP_BUSCAR_EMAIL";
+	
+	 public static final String SP_BUSCAR_TELEFONO = "SP_BUSCAR_TELEFONO";
+
+	public static final String ESTADO_ACTIVO = "1";
+	
+	public static final String COD_PLANTILLA_CREATE_USER_MAESTRA_TALENTO = "INS_US_ENT";
+	
+	public static final String SP_VALIDAR_ROL_USUARIO = "SP_VALIDAR_ROL_USUARIO";
+	
+	public static final String ENDPOINT_SUBIR_ARCHIVO = "/v1/file/upload";
+	
+	public static final String FLAG_ESTADO_VALIDADO = "1";
+		
+	public static final String ENDPOINT_USUARIO_ENTIDAD = "/v1/entidades/{entidadId}/usuarios";
+	
+	public static final String PKG_GENERAL = "PKG_GENERAL";
+	
+	public static final String SP_BUSCAR_PARAMETRO = "SP_BUSCAR_PARAMETRO";
+	
+	public static final String RUTA_FILE_SERVER_ENTIDAD = "RUTA_FILE_SERVER_ENTIDAD";
+	
+	public static final String RUTA_FILE_SERVER_SERVIR = "RUTA_FILE_SERVER_SERVIR";
+	
+	public static final String RUTA_FILE_SERVER_PERSONA = "RUTA_FILE_SERVER_PERSONA";
+
+	public static final String REG_SOL_ENT_EXT = "REG_SOL_ENT_EXT";
+
+	public static final String ENDPOINT_ACTUALIZAR_ESTADO_ROL = "v1/usuarioRoles/{usuarioRolId}";
+
+	public static final String ENDPOINT_UPLOAD_FILE_ALFRESCO = "/v1/uploadFile/alfresco";
+
+	public static final String PARAM_EXTENSIONES_SOL_EXTER = "EXTENSIONES_REG_SOL_ENT_EXTERN";
+
+	public static final String ALFRESCO_FILE_PATH_SOL_EXT = "alfresco.file.path.sol.ext";
+
+	public static final String ENDPOINT_ENVIO_CORRO = "/v1/email";
+
+	public static final String ENDPOINT_PLANIFICACION = "/v1/email";
+
+	public static final String ENDPOINT_ENVIO_CORREO_CRENDENCIALES = "/v1/enviarCorreo";
+
+	public static final String RUTA_GDR_FILES_MAESTRA = "alfresco.image.path.sol.ext";
+
+	public static final Double RATIO_CAMBIO_GDR      = 0.6;
+
+	public static final String CODIGO_ALFRESCO = "ALFRESCO";
+
+	public static final String SP_ROL_USUARIO = "SP_ROL_USUARIO";
+	
+	public static final String SP_BUSCAR_ROL_CUENTA = "SP_BUSCAR_ROL_CUENTA";
+	
+	public static final String ESTADO_ACTIVACION_USUARIO = "1";
+	
+	public static final String ESTADO_INACTIVACION_USUARIO = "0";
+	
+	public static final String SP_BUSCAR_CUENTA_CLIENTE =  "SP_BUSCAR_CUENTA_CLIENTE";
+	
+	public static final String SP_BUSCAR_USUARIOS_POR_ROL_ENT = "SP_BUSCAR_USUARIOS_POR_ROL_ENT";
+	
+	public static final Integer ESTADO_SOLICITUD_NUEVO = 53;
+	
+	public static final Integer ESTADO_SOLICITUD_APROBADO = 54;
+	
+	public static final Integer ESTADO_SOLICITUD_OBSERVADO = 55;
+	
+	public static final String DESCRIPCION_SOLICITUD_APROBADO = "APROBADO";
+	
+	public static final Integer TIPO_VALIDACION_SUNAT = 79;
+	
+	public static final Integer TIPO_VALIDACION_RENIEC = 78;
+	
+	public static final String PATH_ENTIDAD = "{entidadId}";
+	
+	public static final String PATH_PERSONA = "{personaId}";
+	
+	public static final String PLANTILLA_USUARIO_EXISTENTE = "USER_EXIST";
+	
+	public static final String ENDPOINT_INS_IMAGEN = "/v2/file/upload";
+	
+	public static final String DESCRIPCION_SOLICITUD_OBSERVADO = "OBSERVADO";
+	
+	public static final String ENVIO_CORREO = "1";
+	
+	public static final String NO_ENVIO_CORREO = "0";
+	
+	public static final String ENDPOINT_OBTENER_PERSONA_BY_ID = "/v1/personas/{personaId}";
+			
+	public static final String CODIGO_PLANTILLA_SOLICITUD_OBSV = "OBS_SOL";
+	
+	public static final String CODIGO_PARAMETRO_OBSERVACION = "OBSERV_ENTIDAD";
+	
+	public static final String DEBE_INGRESAR = "DEBE INGRESAR";
+	
+	public static final String ENDPOINT_ASIGNAR_USUARIO_ENTIDAD = "/v1/entidades/{entidadId}/usuarios/{usuarioId}/estado/{estadoRegistro}";	
+	
+	public static final String SP_BUSCAR_CUENTAS_ASOCIADAS = "SP_BUSCAR_CUENTAS_ASOCIADAS"; 	
+
+	public static final String ENDPOINT_ASIGNA_GRUPO_ENTIDAD= "/v1/entidades/{entidadId}/grupos/{grupoId}/usuarios/{usuarioId}";
+	
+	public static final String PARAMETRO_NIVEL_GOBIERNO = "ENT_NIVEL_GOBIERNO";
+	
+	public static final String PARAMETRO_SECTOR = "ENT_SECTOR";
+	
+	public static final String PARAMETRO_SEXO = "PER_SEXO";
+	
+	public static final String ENDPOINT_PAIS_QUERY = "/v1/pais/query";
+	
+	public static final String PARAMETRO_TIPO_DOC = "PER_TIPO_DOCUMENTO";
+	
+	public static final String PARAMETRO_TIPO_ORG = "TIPO_ORGANO";
+	
+	public static final String TIPO_REGIMEN_LABORAL = "TIPO_REGIMEN_LABORAL";
+	
+	public static final String PER_SINDICATO = "PER_SINDICATO";
+	
+	public static final String ESTADO_SERVIDOR_CIVIL = "ESTADO_SERVIDOR_CIVIL";
+	
+	public static final String CESADO = "CESADO";
+
+	public static final String SERVIDOR_CIVIL_ESTADO_CESADO = "3";
+
+	public static final String SP_BUSCAR_ENTIDAD = "SP_BUSCAR_ENTIDAD";
+	
+	public static final String SP_BUSCAR_ENTIDAD_FILT = "SP_BUSCAR_ENTIDAD_FILT";
+
+	public static final String SP_BUSCAR_SERVIDORES_RECTORES = "SP_BUSCAR_SERVIDORES_RECTORES";
+
+	public static final String SP_BUSCAR_UNIDADES_ORGANICAS_X_SERVIDOR_CIVIL = "SP_BUSCAR_UNIDADES_ORGANICAS_X_SERVIDOR_CIVIL";
+
+	public static final String SP_BUSCAR_UO_X_SERVIDOR_CIVIL = "SP_BUSCAR_UO_X_SERVIDOR_CIVIL";
+
+	public static final String SP_BUSCAR_ENTIDADES_ACTIVAS = "SP_BUSCAR_ENTIDADES_ACTIVAS";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES = "SP_RESUMEN_SERVIDORES_CIVILES";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_GDR = "SP_RESUMEN_SERVIDORES_CIVILES_GDR";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_TIPO_ORGANO = "SP_RESUMEN_SERVIDORES_CIVILES_TIPO_ORGANO";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_SINDICALIZADOS_GDR = "SP_RESUMEN_SERVIDORES_CIVILES_SINDICALIZADOS_GDR";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_POR_SEGMENTO_GDR = "SP_RESUMEN_SERVIDORES_CIVILES_X_SEGMENTO_GDR";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_CARRERAS_ESPECIALES_GDR = "SP_RESUMEN_SERVIDORES_CIVILES_X_CARRERAS_ESPECIALES";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_REGIMEN_LABORAL_GDR = "SP_RESUMEN_SERVIDORES_CIVILES_REGIMEN_LABORAL_GDR";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_SEGUN_TIPO_ORGANO_GDR = "SP_RESUMEN_SERVIDORES_CIVILES_TIPO_ORGANO_GDR";
+	
+	public static final String SP_RESUMEN_SERVIDORES_CIVILES_REGIMEN_LABORAL = "SP_RESUMEN_SERVIDORES_CIVILES_REGIMEN_LABORAL";
+
+	public static final String SP_BUSCAR_ENTIDADES_POR_IDS = "SP_BUSCAR_ENTIDADES_POR_IDS";
+	
+	public static final String FLAG_ACTUALIZACION_ENTIDAD = "1";
+	
+	public static final String ENDPOINT_OBTENER_TELEFONO_BY_PERSONAID = "/v1/personas/{personaId}/telefonos";
+	
+	public static final String ENDPOINT_OBTENER_CORREO_BY_PERSONAID = "/v1/personas/{personaId}/correos"; 
+
+	public static final String FLAG_NO_ACTUALIZO_ENTIDAD = "0";
+	
+	public static final String FLAG_SI_ACTUALIZO_ENTIDAD = "1";
+	
+	public static final String SP_VALIDAR_USUARIO = "SP_VALIDAR_USUARIO";
+	
+	public static final String SP_BUSCAR_ROLES = "SP_BUSCAR_ROLES"; 
+
+	public static final String SP_BUSCAR_ORGANIGRAMA = "SP_BUSCAR_ORGANIGRAMA";
+	
+	public static final String SP_VALIDAR_TAREAS_CTA_ASOCIADA = "SP_VALIDAR_TAREAS_CTA_ASOCIADA";
+
+	public static final String ES_OBLIGATORIO = "es obligatorio";
+	
+	public static final String CAMPO = "Campo";
+	
+	public static final String ES_INVALIDO = "es inválido"; 
+	
+	public static final String CARACTERES = "caracteres";	
+
+	public static final String SP_VALIDA_CTA_ASOCIADA = "SP_VALIDA_CTA_ASOCIADA";
+
+	public static final Integer ESTADO_BAJA = 97;
+	
+	public static final String SP_PERSONA_ORGANIGRAMA = "SP_PERSONA_ORGANIGRAMA";
+	
+	public static final String SP_PERSONA_ENTIDAD = "SP_PERSONA_ENTIDAD";
+	
+	public static final String MSJ_ENTIDAD = "LA PERSONA YA EXISTE EN UNA ENTIDAD ";
+	
+	public static final String NO_ROL = "NO SE ENCONTRO EL ROL";
+	
+	public static final String SP_BUSCAR_UNIDAD_ORGANICA = "SP_BUSCAR_UNIDAD_ORGANICA";
+	
+	public static final String SP_BUSCAR_ORGANIGRAMA_PADRE = "SP_BUSCAR_ORGANIGRAMA_PADRE";
+	
+	public static final String SP_BUSCAR_ORGANIGRAMA_HIJO = "SP_BUSCAR_ORGANIGRAMA_HIJO";
+	
+	public static final String SP_BUSCAR_PERSONA_ORGANIGRAMA = "SP_BUSCAR_PERSONA_ORGANIGRAMA";
+	
+	public static final String ESTADO_REGISTRO = "ESTADO_REGISTRO";
+	
+	public static final String NIVEL_ORGANO = "NIVEL_ORGANO";
+	
+	public static final String TIPO_NATURALEZA = "TIPO_NATURALEZA";
+	
+	public static final String SP_BUSCAR_PAISES = "SP_BUSCAR_PAISES";
+	
+	public static final String SELECCIONAR = "Seleccionar";
+	
+	public static final String ENTIDADID ="entidadId";
+	
+	public static final String PERSONAID = "personaId";
+	
+	public static final String TIPOORGANOID = "tipoOrganoId";
+
+	public static final String UNIDADORGANICASUPERIORID = "unidadOrganicaSuperiorId";
+
+	public static final String UNIDADORGANICAID = "unidadOrganicaId";
+
+	public static final String REGIMENLABORALID = "regimenLaboralId";
+
+	public static final String TIPODOCUMENTOID = "tipoDocumentoId";
+
+	public static final String DATOSSERVCIVIL = "datosServCivil";
+
+	public static final String NUMERODOCUMENTO = "numeroDocumento";
+
+	public static final String ORGANIGRAMAID = "organigramaId";
+
+	public static final String ESTADOID = "estadoId";
+
+	public static final String PERSONAEVALUADORID = "personaEvaluadorId";
+	
+	public static final String ESTADO = "estado";
+	
+	public static final String UNIDADID = "unidadId";
+	
+	public static final String MENSAJE = "mensaje";
+	
+	public static final String OBJDETALLEUO = "objDetalleUO";
+	
+	public static final String OBJPUESTO = "objPuesto";
+	
+	public static final String OBSERVACION = "observacion";
+	
+	public static final String LIMIT_MASIVO ="LIMIT_MASIVO";
+	
+	public static final String MENSAJE_LIMITE_MASIVO ="El limite de registros permitidos son ";
+	
+	public static final String VACIO ="";
+	
+	public static final String NIVEL_2 ="Nivel 2";
+	
+	public static final String NIVEL_1 ="Nivel 1";
+	
+	public static final String NIVEL_3 ="Nivel 3";
+	
+	public static final String SP_BUSCA_SEDE ="SP_BUSCA_SEDE";
+	
+	public static final String ENTIDAD_RATIO_DE_CAMBIO_LOGO = "ENTIDAD_RATIO_DE_CAMBIO_LOGO";
+	
+	public static final String ENTIDAD_RATIO_DE_CAMBIO_PORTADA = "ENTIDAD_RATIO_DE_CAMBIO_PORTADA";
+	
+	public static final String PERSONA_RATIO_DE_CAMBIO_FOTO = "0.65";
+	
+	public static final String SP_BUSCAR_UNIDADES_ORGANICAS_ENTIDAD = "SP_BUSCAR_UNIDADES_ORGANICAS_ENTIDAD";
+	
+	public static final String SP_BUSCAR_UNIDADES_ORGANICAS_SUPERIOR_ENTIDAD = "SP_BUSCAR_UNIDADES_ORGANICAS_SUPERIOR_ENTIDAD";
+	
+	public static final String SP_BUSCAR_PUESTOS_ENTIDAD = "SP_BUSCAR_PUESTOS_ENTIDAD";
+	
+	public static final String SP_FILTRAR_PUESTOS = "SP_FILTRAR_PUESTOS";
+	
+	public static final String SP_BUSCAR_SERVIDORES_CIVILES = "SP_BUSCAR_SERVIDORES_CIVILES";
+	
+	public static final String SP_BUSCAR_ORGANO_PADRE = "SP_BUSCAR_ORGANO_PADRE"; 
+	
+	public static final String SP_BUSCAR_ORGANO_HIJO = "SP_BUSCAR_ORGANO_HIJO";
+
+	public static final String SP_SEL_SERVIDORES_CIVILES = "SP_SEL_SERVIDORES_CIVILES";
+	
+	public static final String SP_SEL_GESTION_ORGANIGRAMAS = "SP_SEL_GESTION_ORGANIGRAMAS";
+	
+	public static final String SP_OBTENER_PARAMETROS = "SP_OBTENER_PARAMETROS";
+	
+	public static final String SP_VALIDA_ORGANIGRAMA = "SP_VALIDA_ORGANIGRAMA"; 
+	
+	public static final String SP_OBTENER_DATOS_PERSONALES_SERVIDOR_CIVIL = "SP_OBTENER_DATOS_PERSONALES_SERVIDOR_CIVIL";
+	
+	public static final String SP_OBTENER_PUESTO_UO_SERVIDOR_CIVIL = "SP_OBTENER_PUESTO_UO_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PERSONAS_PUESTO_UO_SERVIDOR_CIVIL = "SP_BUSCAR_PERSONAS_PUESTO_UO_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_SERVIDOR_CIVIL_NOACTIVOS = "SP_BUSCAR_PARTICIPANTES_SERVIDOR_CIVIL_NOACTIVOS";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_SEGMENTOS_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_SEGMENTOS_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADORES_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_EVALUADORES_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PERSONAS_SERVIDOR_CIVIL = "SP_BUSCAR_PERSONAS_SERVIDOR_CIVIL";	
+	
+	public static final String SP_BUSCAR_CORREO_PERSONA = "SP_BUSCAR_CORREO_PERSONA";	
+	
+	public static final String SP_BUSCAR_CORREO_PERSONA_GESTOR = "SP_BUSCAR_CORREO_PERSONA_GESTOR";	
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_MANDO_MEDIO_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_MANDO_MEDIO_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADOR_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADOR_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_NO_MANDO_MEDIO_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_NO_MANDO_MEDIO_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADOR_MANDO_MEDIO_SERVIDOR_CIVIL = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADOR_MANDO_MEDIO_SERVIDOR_CIVIL";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_MANDO_MEDIO = "SP_BUSCAR_PARTICIPANTES_MANDO_MEDIO";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADORES = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADORES";
+	
+	public static final String SP_DATOS_EVALUADOR_Y_EVALUADO = "SP_DATOS_EVALUADOR_Y_EVALUADO";
+	
+	public static final String SP_DATOS_PARTICIPANTE = "SP_DATOS_PARTICIPANTE";
+	
+	public static final String SP_LISTAR_PUESTOS = "SP_LISTAR_PUESTOS";
+	
+	public static final String SI = "SI";
+	
+	public static final String NO = "NO";
+	
+	public static final Long SEGMENTO_GDR_MANDO_MEDIO = 3L;
+	
+	public static final Long TIPO_ROL_EVALUADOR = 1L;
+	
+	public static final Long TIPO_ROL_EVALUADO = 2L;
+
+	public static final Long TIPO_GESTOR_GDR = 1L;
+	
+	public static final Long TIPO_GESTOR_ORH = 2L;
+	
+	public static final Long TIPO_ROL_EVALUADOR_Y_EVALUADO = 3L;
+	
+	public static final Integer TIPO_ASIGNACION_PRINCIPAL = 1;
+	
+	public static final Integer TIPO_ASIGNACION_ENCARGATURA = 2;
+	
+	public static final String TIPO_CORREO_PRINC = "PRINC";
+	
+	public static final String TIPO_CORREO_ALTER = "ALTER";
+	
+	public static final String ESTADO_ES_VALIDO = "SI"; 
+	
+	public static final String ESTADO_NO_ES_VALIDO = "NO";
+	
+	public static final String ES_RESPONSABLE_S = "S";
+	
+	public static final String ES_RESPONSABLE_N = "N";
+	
+	public static final String CARACTER_VACIO = " ";
+	
+	public static final Long VALIDACION_CESE_SERVIDOR = (long) 1 ;
+	
+	public static final String ERROR_ACTUALIZAR = "No se actualizó registro" ;
+	
+	public static final String  NO_ENCONTRADO = "No se encontro registro" ;
+	
+	public static final String NO_APLICA = "NO APLICA";
+
+	public static final String TIPO_ORGANO = "TIPO_ORGANO";
+	public static final String TIPO_UNIDAD_ORGANICA = "TIPO_UNIDAD_ORGANICA";
+
+	public static final String LOG_BEAN = "[bean: ] ";
+	
+	public static final String LOG_SERVCIVIL = "[servCivil: ] ";
+	
+	public static final String LOG_RESPONSE = "[response: ] ";
+	
+	public static final String LOG_RESPONSESERVIDORES = "[responseServidores: ] ";
+	
+	public static final String LOG_PERSONAUPDATE = "[personaUpdate: ] ";
+	
+	public static final String MSG_NO_EXISTE_EL_ORGANIGRAMAID_INGRESADO = "No Existe el organigramaId Ingresado";
+	
+	public static final String MSG_NO_SE_ENCONTRO_LA_PERSONA_EN_EL_SERVIDOR_CIVIL = " NO SE ENCONTRO LA PERSONA EN EL SERVIDOR CIVIL";
+	
+	public static final String PLANTILLA_NOTIFICACION_CAMBIO_PWD = "NOT_C_PASS";
+	
+	public static final String ASUNTO_NOTIFICACION_CAMBIO_PWD ="CONFIRMACION DE CAMBIO DE CONTRASEÑA DEL SISTEMA SERVIR";
+	
+	
+	public static final String MENSAJE_EXITOSO_REGISTRO_PUESTO ="SE REGISTRO CORRECTAMENTE EL PUESTO";
+
+	public static final Long ESTADO_GDR_DEFAULT = 4L;
+
+	public static final Long TIPO_DOCUMENTO_CE = 4L;
+	
+	public static final String MENSAJE_ERROR_REGISTRO_PUESTO ="ERROR AL REGISTRARSE EL PUESTO";
+	
+	public static final String MSG_NO_EXISTE_EL_PUESTO_INGRESADO = "NO EXISTE REGISTRO DE PUESTO";
+	
+	public static final String MSG_YA_EXISTE_PUESTO_REGISTRADO_MISMA_DESC = "Debe modificar algún campo del puesto seleccionado";
+	
+
+	
+	public static final String MENSAJE_EXITOSO_EDITAR_PUESTO = "SE EDITO CORRECTAMENTE EL REGISTRO DE PUESTO";
+	
+	public static final int HOJA_EXCEL_CERO = 0;
+	public static final int HOJA_EXCEL_UNO = 1;
+	public static final int HOJA_EXCEL_DOS = 2;
+
+	public static final String ES_JEFE_UO = "ES_JEFE_UO";
+
+	public static final Long CERO = (long) 0;
+
+	public static final String SELECCIONAR_UNIDAD_ORGANICA = "Debe seleccionar una unidad organica valida, ";
+
+	public static final String SELECCIONAR_RESPONSABLE = "Debe seleccionar responsable, ";
+
+	public static final String REGISTRAR_PUESTO = "Debe registrar un puesto, ";
+	
+	public static final Integer ESTADO_PENDIENTE_SOL = 1;
+
+	public static final String NO_SE_INGRESO_DATOS = "No se ha ingresado datos";
+	public static final String TIPO_PNG = "png";
+
+	public static final String TIPO_JPEG = "jpeg";
+
+	public static final String TIPO_JPG = "jpg";
+
+	public static final String EXTENSION_PNG = ".png";
+
+	public static final String EXTENSION_JPG = ".jpg";
+	
+	public static final String SP_LISTAR_GESTORES_ORH = "SP_LISTAR_GESTORES_ORH";
+	
+	public static final String SP_BUSCAR_TIPO_RUC = "SP_BUSCAR_TIPO_RUC";
+	
+	public static final String ASG_GESTOR_ORH = "ASG_GESTOR_ORH";
+	
+	public static final String EXI_GESTOR_ORH = "EXI_GESTOR_ORH";
+	
+	public static final String SP_BUSCA_SOLICITUD_BY_NRO = "SP_BUSCA_SOLICITUD_BY_NRO";
+
+	public static final String SP_FILTRAR_SOLICITUD_EXTERNA = "SP_FILTRAR_SOLICITUD_EXTERNA";
+	
+	public static final String SP_BUSCAR_GESTOR_ORH = "SP_BUSCAR_GESTOR_ORH";
+	
+	public static final String SP_BUSCAR_ANIO_SOLEXT = "SP_BUSCAR_ANIO_SOLEXT";
+	
+	public static final String SP_VALIDAR_ROL_USUARIO_ENTIDAD = "SP_VALIDA_ROL_USUARIO_ENTIDAD";
+	
+	public static final String SP_VALIDAR_ROL_ENTIDAD = "SP_VALIDA_ROL_ENTIDAD";
+	
+	public static final String ENDPOINT_ACTUALIZAR_ESTADO_ROL_USUARIO = "v1/usuarioRoles/{usuarioRolId}/estado";
+	
+	public static final String ENDPOINT_ACTUALIZAR_ESTADO_ROL_USUARIO_SOLICITUD = "v1/usuarioRoles/{usuarioRolId}";
+	
+	public static final String ENDPOINT_UPDATE_FECHANAC = "/v1/personas/{personaId}";
+	
+// 	public static final String ENDPOINT_UPDATE_PER_JURIDICA = "/v1/personas/juridica/{personaId}";
+
+public static final String ENDPOINT_UPDATE_PERSONAS_JURIDICA = "/v1/personas/juridica/{personaId}";
+	
+	public static final String SP_LISTAR_USUARIO_ROL_X_ENTIDAD = "SP_LISTAR_USUARIO_ROL_X_ENTIDAD";
+	
+	public static final String SP_VALIDA_USUARIO_PERSONA_ID = "SP_VALIDA_USUARIO_PERSONA_ID";
+	
+	public static final Integer SOLICITUD_EXTERNA_PENDIENTE_ID = 1;
+	
+	public static final Integer SOLICITUD_EXTERNA_OBSERVADO_ID = 2;
+	
+	public static final Integer SOLICITUD_EXTERNA_RECHAZADO_ID = 3;
+	
+	public static final String ASG_JEFE_ORH = "ASG_JEFE_ORH";
+	
+	public static final String EXI_JEFE_ORH = "EXI_JEFE_ORH";
+	
+	public static final String MSG_SOLICITUD_RECHAZADA = "SOLICITUD EXTERNA - RECHAZADA";
+	
+	public static final String OBS_SOL_ENT_EXT = "OBS_SOL_ENT_EXT";
+	
+	public static final String CAN_SOL_ENT_EXT = "CAN_SOL_ENT_EXT";
+	
+	public static final String APR_SOL_ENT_EXT = "APR_SOL_ENT_EXT";
+	
+	public static final String ENDPOINT_USUARIO_ENTIDAD_SOLI_EXTERNA = "/v1/entidades/{entidadId}/usuarios/{nameUsuario}/SolicitudExterna";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADORES_ENTIDAD = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADORES_ENTIDAD";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADORES_Y_SIN_EVALUADORES_ENTIDAD = "SP_BUSCAR_PARTICIPANTES_EVALUADORES_Y_SIN_EVALUADORES_ENTIDAD";
+	
+	public static final String SP_VALIDA_UPD_TELEFONO_PERSONA = "SP_VALIDA_UPD_TELEFONO_PERSONA";
+	
+ 	public static final String SP_BUSCANDO_TELEFONO = "SP_BUSCANDO_TELEFONO";
+	
+	public static final String ENDPOINT_USUARIO_ENTIDAD_SOLICITUDEXT = "/v1/entidades/{entidadId}/usuarios/solicitudExt";
+	
+	public static final String ENDPOINT_ENVIO_CORREO_NOTI_EXT = "/v1/email";
+	
+	public static final String SUBJECT_OBS_SOL_ENT_EXT = "Observación de Solicitud Externa";
+	
+	public static final String SUBJECT_CAN_SOL_ENT_EXT = "Cancelación de Solicitud Externa";
+	
+	public static final String SUBJECT_APR_SOL_ENT_EXT = "Aprobación de Solicitud Externa";
+	
+	public static final String SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL_ENTIDAD = "SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL_ENTIDAD";
+	
+	public static final Long PAIS_DEFAULT = 11L;
+	
+	public static final String SP_OBTENER_PERFIL_USUARIO = "SP_OBTENER_PERFIL_USUARIO";
+	
+	public static final String SP_OBTENER_DATOS_PARTICIPANTE = "SP_OBTENER_DATOS_PARTICIPANTE";
+	
+	public static final String RUTA_GME_CARGA_MAS_SERV_CIVIL = "alfresco.file.path.carga.mas.serv.civ";
+	
+	public static final Long TIPO_PROCESO_ASIN_CARGA_MASIVA_SERV_CIVIL = 1L;
+
+	public static final Long ESTADO_PROCESO_ASINCR_PENDIENTE = 0L;
+
+	public static final Long ESTADO_PROCESO_ASINCR_EN_EJECUCION = 1L;
+
+	public static final Long ESTADO_PROCESO_ASINCR_PROCESADO_OK = 2L;
+
+	public static final Long ESTADO_PROCESO_ASINCR_PROCESADO_ERROR = 9L;
+
+	public static final String ENDPOINT_BAJAR_ARCHIVO = "/v1/file/downloadBase64";
+	
+	public static final String ENDPOINT_GET_TOKEN = "/v1/oauth2/tokens";
+
+	public static final String EXTENSION_FILE_CARGA_MAS_SERV_CIVIL = ".xlsm";
+	
+	public static final String PREFIJO_FILE_CARGA_MAS_SERV_CIVIL = "arerr";
+	
+}

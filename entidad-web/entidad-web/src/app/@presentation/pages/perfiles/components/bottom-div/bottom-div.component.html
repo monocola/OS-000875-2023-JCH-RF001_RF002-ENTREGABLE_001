@@ -1,0 +1,36 @@
+<div class="divbottom px-5" [ngStyle]="{ width: bodySize }">
+  <button class="cancelButton mr-3" (click)="cancelClick.emit()" type="button">
+    Cancelar
+  </button>
+  <div class="flex-spacer"></div>
+  <button
+    type="button"
+    class="cancelButton mr-3"
+    (click)="previousStep.emit()"
+    *ngIf="this.indexStepper > 0"
+  >
+    Retroceder
+  </button>
+  <button
+    type="button"
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="nextStep.emit()"
+    *ngIf="this.indexStepper < numberOfSteps - 1"
+  >
+    Siguiente
+  </button>
+  <button
+    type="button"
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="createProfile.emit()"
+    *ngIf="this.indexStepper === numberOfSteps - 1"
+  >
+    {{ createMode ? 'Finalizar registro' : 'Guardar cambios' }}
+  </button>
+</div>

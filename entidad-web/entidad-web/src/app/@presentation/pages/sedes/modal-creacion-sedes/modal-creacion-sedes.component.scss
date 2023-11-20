@@ -1,0 +1,14 @@
+@import '_colors';
+
+h5 {
+    color: $primary-color;
+}
+
+.bodyRegisterForm {
+    width: 65.625rem;
+}
+
+.container-fluid {
+    border: 1px solid $light-gray;
+    border-radius: 0.625rem;
+}

@@ -1,0 +1,164 @@
+<div [class.padding-body]="usePaddingBody == true">
+  <div class="flex-v-center w-100">
+    <div class="fw-600 fs-16">{{ title }}</div>
+
+    <span class="flex-spacer"></span>
+
+    <serv-talento-paginator
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      showFirstLastButtons
+      [length]="length"
+      (page)="getDataEvent($event)"
+    >
+    </serv-talento-paginator>
+  </div>
+
+  <div class="card mat-elevation-z3">
+    <div>
+      <table
+        *ngIf="data.length > 0"
+        aria-describedby="tabla organigrama"
+        [nbTreeGrid]="dataSource"
+        [nbSort]="dataSource"
+        (sort)="updateSort($event)"
+      >
+        <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+        <tr
+          nbTreeGridRow
+          [clickToToggle]="false"
+          *nbTreeGridRowDef="let row; columns: allColumns"
+        ></tr>
+
+        <ng-container [nbTreeGridColumnDef]="customColumn4">
+          <th
+            style="width: 20%"
+            scope="col"
+            nbTreeGridHeaderCell
+            *nbTreeGridHeaderCellDef
+          >
+            ETAPA
+          </th>
+          <td
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            class="py-2"
+            [ngClass]="{
+              'row0 fw-600': row.level === 0,
+              'row1 fw-500': row.level === 1,
+              'row2 fw-500': row.level === 2
+            }"
+          >
+            <nb-tree-grid-row-toggle
+              class="toggle fs-24"
+              *ngIf="row.children"
+              [expanded]="row.expanded"
+            >
+            </nb-tree-grid-row-toggle>
+            {{ row.data['descripcion'] }}
+          </td>
+        </ng-container>
+
+        <ng-container
+          *ngFor="let column of defaultColumns; let index = index"
+          [nbTreeGridColumnDef]="column"
+          [showOn]="getShowOn(index)"
+        >
+          <th
+            [ngClass]="{
+              rowPeriodo: index == 2,
+              'text-center': index != 2
+            }"
+            scope="col"
+            nbTreeGridHeaderCell
+            [nbSortHeader]="getSortDirection(column)"
+            *nbTreeGridHeaderCellDef
+          >
+            {{ defaultColumnsNames[index] }}
+          </th>
+          <td
+            class="text-center"
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            [ngClass]="{
+              'row0 fw-600': row.level === 0,
+              'row1 fw-500': row.level === 1,
+              'row2 fw-500': row.level === 2
+            }"
+          >
+            {{
+              row.data[column] ? row.data[column] : row.level != 3 ? '' : '-'
+            }}
+          </td>
+        </ng-container>
+
+        <ng-container [nbTreeGridColumnDef]="customColumn2">
+          <th
+            style="width: 12%"
+            class="text-center"
+            scope="col"
+            nbTreeGridHeaderCell
+            *nbTreeGridHeaderCellDef
+          >
+            ACCIONES
+          </th>
+          <td
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            [ngClass]="{
+              'row0 fw-700': row.level === 0,
+              'row1 fw-600': row.level === 1,
+              'row2 fw-500': row.level === 2
+            }"
+          >
+            <div class="w-100 h-100 flex-v-center-right pr-4">
+              <button
+                matRipple
+                title="Editar etapa"
+                class="btnEdit ml-2"
+                (click)="editAction(row)"
+                *ngIf="row.level !== 0 && showEdit == true"
+              >
+                <em class="ent-web-edit"></em>
+              </button>
+              <button
+                matRipple
+                title="Eliminar actividad"
+                class="btnEdit ml-2"
+                (click)="deleteAction(row)"
+                *ngIf="row.level !== 0 && validarDeleteVisible(row) && showDelete == true"
+              >
+                <em class="ent-web-eliminar"></em>
+              </button>
+              <button
+                matRipple
+                title="Eliminar tipo de acceso"
+                class="btnEdit ml-2"
+                (click)="deleteAction(row)"
+                *ngIf="!servirMode && row.level === 2"
+              >
+                <em class="ent-web-eliminar"></em>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+      </table>
+
+      <div class="p-2" *ngIf="data.length <= 0">
+        <em>No se encontraron resultados.</em>
+      </div>
+    </div>
+  </div>
+  <div class="flex-v-center mt-3">
+    <div class="flex-spacer"></div>
+    <button
+      class="btn-excel px-4 py-2"
+      mat-stroked-button
+      (click)="exportData()"
+      [disabled]="data.length <= 0"
+    >
+      Descargar Excel
+      <nb-icon icon="descargar"></nb-icon>
+    </button>
+  </div>
+</div>

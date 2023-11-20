@@ -1,0 +1,138 @@
+@import '../../../@common-components/material-table/material-table.component.scss';
+@import 'colors';
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.primary-color {
+  color: $primary-color;
+}
+
+.calendar-icon {
+  font-size: 16px;
+  color: $primary-color;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.add-icon {
+  font-size: 16px;
+  color: $primary-color;
+}
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+}
+
+.btn-excel {
+  background-color: white !important;
+  border: 1px solid #3b3a3c !important;
+  border-radius: 0.5rem !important;
+  &:disabled {
+    border: 1px solid #ccc !important;
+  }
+}
+
+th,
+td {
+  vertical-align: middle;
+  width: auto;
+  padding: 0.01rem 0.25rem !important;
+  &:first-child {
+    padding-left: 1rem !important;
+  }
+}
+
+th {
+  vertical-align: middle !important;
+}
+
+th {
+  width: 6.25rem;
+  background-color: #3b3a3c;
+  color: white;
+  text-transform: uppercase;
+  &:first-child {
+    border-top-left-radius: 0.5rem;
+  }
+  &:last-child {
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+.template-body {
+  padding: 6px;
+}
+
+.table-color {
+  border: 1px solid rgb(180 180 219 / 48%);
+  border-radius: 9px 9px 6px 6px;
+}
+
+.table-header {
+  margin: 0;
+  border-radius: 6px 6px 0 0;
+  background: #333;
+  color: #fff;
+  .col-6 {
+    padding: 0;
+    width: 96px;
+    text-align: center;
+  }
+}
+
+.perfiles {
+  text-align: left !important;
+  padding-left: 16px !important;
+}
+
+.vacantes {
+  border-left: 1px solid #fff;
+}
+
+.table-content {
+  margin-left: 12px !important;
+  margin-right: 12px !important;
+ }
+
+.border-bottom {
+  border-bottom: 1px solid grey;
+}
+
+.statusProceso {
+  background-color: #51B7F0;
+  color: white;
+}
+
+.statusDesierta {
+  background-color: #9c8686;
+  color: #fff;
+}
+
+.statusCancelado {
+  background-color: #777777;
+  color: #fff;
+}
+
+.statusCulminado {
+  background-color: #b9b9b9;
+  color: #fff;
+}
+
+.statusGenerado {
+  background-color: #a2aaf7;
+  color: #fff;
+}
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}

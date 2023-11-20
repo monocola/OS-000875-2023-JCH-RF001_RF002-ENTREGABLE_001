@@ -1,0 +1,192 @@
+<div class="body">
+  <div class="d-flex align-items-center mb-4">
+    <serv-talento-back-button routerLink="../../"></serv-talento-back-button>
+    <h3 class="page-title mb-0">Historial de Reuniones de {{nombreEvaluado}}</h3>
+    <span class="ml-auto text-secondary pt-2 font-weight-bold">Ciclo {{cicloDefaultDesc}}</span>
+  </div>
+
+  <mat-divider></mat-divider>
+  <br>
+  <div>
+    <div class="d-flex justify-content-between">
+      <ng-container>
+        <nb-form-field *ngIf="isFilterable" style="width: 40%;">
+          <nb-icon icon="search" nbSuffix></nb-icon>
+          <input type="text" placeholder="{{holderText}}" nbInput shape="semi-round" fieldSize="medium"
+                 maxlength="70" (keyup)="applyFilter($event)"/>
+        </nb-form-field>
+      </ng-container>
+      <nb-button-group status="primary" >
+        <button nbButtonToggle class="status-primary shape-semi-round"  (click)="openNewReunion()" *ngIf="showDownloadReport">Agregar reunión</button>
+      </nb-button-group>
+
+    </div>
+    <br>
+    <ng-container>
+      <!--<div class="mat-elevation-z1">-->
+      <table aria-describedby="material-table" class="mat-elevation-z2 mt-2" mat-table [dataSource]="dataSource"
+             matSort>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef style='width: 5%; position: center;'>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row" style='width: 5%; position: center;'>
+            <div *ngIf="!(row.estadoReunion=='4' || row.estadoReunion=='3')">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </div>
+          </td>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="numero">
+          <th mat-header-cell *matHeaderCellDef
+              style='width: 10%; position: center; text-align: center; color: #000000; font-weight: bold;'> Nº
+          </th>
+          <td mat-cell style='width: 10%; text-align: center;' *matCellDef="let element; index as i"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef
+              style='width: 20%; position: center; color: #000000; font-weight: bold;'> Fecha
+          </th>
+          <td mat-cell style='width: 20%; position: center;' *matCellDef="let element">
+            <div class="p-2">
+              <nb-form-field>
+                <input #fechaTable nbInput placeholder="dd/mm/aaaa" value={{element.fechaReunion}} disabled
+                       [nbDatepicker]="dateTimePickerTable" fieldSize="large" shape="semi-round">
+                <nb-icon (click)="fechaTable.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                         icon="calendar-outline">
+                </nb-icon>
+                <nb-datepicker #dateTimePickerTable></nb-datepicker>
+              </nb-form-field>
+            </div>
+          </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="hora">
+          <th mat-header-cell *matHeaderCellDef
+              style='width: 15%; position: center; color: #000000; font-weight: bold;'> Hora
+          </th>
+          <td mat-cell style='width: 15%; position: center;' *matCellDef="let element">
+            <div class="p-2">
+              <nb-form-field>
+                <input #horaTable nbInput twelveHoursFormat placeholder="--:--" value={{element.horaReunion}} disabled
+                       [nbTimepicker]="timepickerTable" fieldSize="large" shape="semi-round">
+                <nb-icon (click)="horaTable.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                         icon="clock-outline">
+                </nb-icon>
+                <nb-timepicker #timepickerTable></nb-timepicker>
+              </nb-form-field>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="duracion">
+          <th mat-header-cell *matHeaderCellDef
+              style='width: 15%; position: center; color: #000000; font-weight: bold;'> Duración
+          </th>
+          <td mat-cell style='width: 15%; position: center;' *matCellDef="let element">
+            <div class="p-2">
+              <nb-form-field>
+                <input #dura1Table nbInput twelveHoursFormat placeholder="--:--" disabled
+                       value={{duracionString(element.duracion)}} [nbTimepicker]="duracionTable" fieldSize="large"
+                       shape="semi-round">
+                <nb-icon (click)="dura1Table.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                         icon="clock-outline">
+                </nb-icon>
+                <nb-timepicker #duracionTable></nb-timepicker>
+              </nb-form-field>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef
+              style='width: 15%; position: center; color: #000000; font-weight: bold;'> Estado
+          </th>
+          <td mat-cell style='width: 15%; position: center;' *matCellDef="let element">
+                     <span style="color : {{colorEstado(element.estadoReunion)}}">
+                        <span class="material-icons fs-20 mr-1"
+                              style=" font-size: 1.0rem !important;">brightness_1</span>
+                       {{nameEstado(element.estadoReunion)}}
+                     </span>
+          </td>
+        </ng-container>
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="acciones" justify="end">
+          <th mat-header-cell *matHeaderCellDef
+              style='width: 25%; position: center;  color: #000000; font-weight: bold;'>
+            Acciones
+          </th>
+          <td mat-cell *matCellDef="let element" style='width: 25%;position: center;'>
+            <div *ngIf="!(element.estadoReunion=='4' || element.estadoReunion=='3')">
+              <button *ngIf="showDownloadReport" nbButton ghost (click)="openModalNotifacion('N')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
+                    fill="#8191A4" />
+                </svg>
+              </button>
+              <button nbButton ghost (click)="openEditReunion(element)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M3 17.2501V21.0001H6.75L17.81 9.94006L14.06 6.19006L3 17.2501ZM20.71 7.04006C21.1 6.65006 21.1 6.02006 20.71 5.63006L18.37 3.29006C17.98 2.90006 17.35 2.90006 16.96 3.29006L15.13 5.12006L18.88 8.87006L20.71 7.04006Z"
+                    fill="#8191A4"/>
+                </svg>
+              </button>
+              <button nbButton ghost (click)="modalDeleteReunion(element)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M6 19C6 20.1 6.9 21 8 21H16C17.1 21 18 20.1 18 19V7H6V19ZM8 9H16V19H8V9ZM15.5 4L14.5 3H9.5L8.5 4H5V6H19V4H15.5Z"
+                    fill="#8191A4"/>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            [class.bg-gray]="row.estadoReunion=='4' || row.estadoReunion=='3'">
+        </tr>
+      </table>
+      <div *ngIf="this.dataSource.filteredData.length === 0" class="p-3 mat-elevation-z1"
+           style="background-color: white;">
+        No se encontraron resultados
+      </div>
+    </ng-container>
+    <!--< </div>-->
+    <br>
+    <div class="d-flex justify-content-end  ">
+      <mat-paginator *ngIf="isPageable" [pageSizeOptions]="paginationSizes" [pageSize]="defaultPageSize"
+                     showFirstLastButtons aria-label="Select page">
+      </mat-paginator>
+    </div>
+    <br>
+    <br>
+    <div class="mb-3 col-12">
+      <div class="w-100 text-center">
+        <button nbButton shape="round" size="small" status="info" class="mr-3 button-panel-1 py-2 px-4"
+                style="height: 40px; width: 160px;">
+          Enviar correos
+        </button>
+        <button nbButton shape="round" size="small" status="info" outline class="mr-3 button-panel-1">
+          <mat-icon aria-hidden="false" class="mr-2 mf-1" aria-label="Example home icon">cloud_download
+          </mat-icon>
+          Descargar reporte
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

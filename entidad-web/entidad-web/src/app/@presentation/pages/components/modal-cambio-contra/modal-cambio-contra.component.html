@@ -1,0 +1,127 @@
+<nb-card class="parent-card">
+  <nb-card-body class="body-card">
+    <div class="titleDiv flex-v-center-column text-center">
+      <img src="assets/images/icons/lock-password.png" alt="" />
+      <div class="py-2">Cambia tu contraseña</div>
+      <span>Para ayudarte de manera segura necesitamos que</span>
+      <span>ingreses tu correo con el que te registraste</span>
+    </div>
+
+    <div class="form-control-group py-2 pt-4" [formGroup]="form">
+      <div class="form-control-group">
+        <label for="pass">Contraseña actual</label>
+        <nb-form-field class="w-100">
+          <nb-icon nbPrefix icon="padlock"></nb-icon>
+          <input [type]="showPassword ? 'text' : 'password'" nbInput fullWidth placeholder="******"
+            formControlName="actualPassword" shape="semi-round" fieldSize="large" maxlength="20" [status]="
+              f.actualPassword.invalid && f.actualPassword.touched
+                ? 'danger'
+                : 'basic'
+            " />
+          <nb-icon nbSuffix role="button" (click)="toggleShowPassword()"
+            [icon]="showPassword ? 'eyes-open' : 'eyes-close'"
+            [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+          </nb-icon>
+        </nb-form-field>
+        <div *ngIf="f.actualPassword.invalid && f.actualPassword.touched" class="invalid-text flex-column">
+          <span *ngIf="f.actualPassword.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.actualPassword.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.actualPassword.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+
+      <div class="form-control-group">
+        <label for="mail">Contraseña nueva</label>
+        <nb-form-field class="w-100">
+          <nb-icon nbPrefix icon="padlock"></nb-icon>
+          <input [type]="showNewPassword ? 'text' : 'password'" nbInput fullWidth placeholder="******"
+            formControlName="newPassword" shape="semi-round" fieldSize="large" [status]="
+              f.newPassword.invalid && f.newPassword.touched
+                ? 'danger'
+                : 'basic'
+            " maxlength="20" />
+          <nb-icon nbSuffix role="button" (click)="toggleNewPassword()"
+            [icon]="showNewPassword ? 'eyes-open' : 'eyes-close'" [attr.aria-label]="
+              showNewPassword ? 'hide password' : 'show password'
+            ">
+          </nb-icon>
+        </nb-form-field>
+        <div *ngIf="f.newPassword.invalid && f.newPassword.touched" class="invalid-text flex-column">
+          <span *ngIf="f.newPassword.errors.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.newPassword.errors.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.newPassword.errors.maxlength">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+
+      <div class="form-control-group">
+        <label for="mail">Repetir contraseña nueva</label>
+        <nb-form-field class="w-100">
+          <nb-icon nbPrefix icon="padlock"></nb-icon>
+          <input [type]="showNewPassword2 ? 'text' : 'password'" nbInput fullWidth placeholder="******"
+            formControlName="newPasswordRepeated" shape="semi-round" fieldSize="large" [status]="
+              f.newPasswordRepeated.invalid && f.newPasswordRepeated.touched
+                ? 'danger'
+                : 'basic'
+            " />
+          <nb-icon nbSuffix role="button" (click)="toggleNewPassword2()" maxlength="20"
+            [icon]="showNewPassword2 ? 'eyes-open' : 'eyes-close'" [attr.aria-label]="
+              showNewPassword2 ? 'hide password' : 'show password'
+            ">
+          </nb-icon>
+        </nb-form-field>
+        <div *ngIf="
+            (f.newPasswordRepeated.invalid && f.newPasswordRepeated.touched) ||
+            this.form.errors
+          " class="invalid-text flex-column">
+          <span *ngIf="f.newPasswordRepeated.errors?.required">
+            El campo es obligatorio
+          </span>
+          <span *ngIf="f.newPasswordRepeated.errors?.minlength">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.newPasswordRepeated.errors?.maxlength">
+            El texto introducido es muy largo
+          </span>
+          <span *ngIf="this.form.errors?.passwordDuplicated">
+            Las contraseñas no coinciden
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      <p class="text-center">
+        Recuerda, tu nueva contraseña, debe tener como <span class="primary-color">mínimo 8 caracteres</span> entre
+        mayúsculas, minúsculas, número y al menos 1 carácter especial.
+      </p>
+    </div>
+
+    <div class="endSection pt-4" style="align-self: center;">
+      <div class="flex-v-center">
+        <div class="col-5">
+          <button nbButton shape="round" status="primary" (click)="changePassword()" [disabled]="!this.form.valid">
+            Cambiar contraseña
+          </button>
+        </div>
+        <div class="col-5">
+          <button nbButton shape="round" status="primary" (click)="onNoClick()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </nb-card-body>
+</nb-card>

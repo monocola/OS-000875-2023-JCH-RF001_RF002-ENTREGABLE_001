@@ -1,0 +1,987 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">
+      Cuentas asociadas
+      <button class="openModal" (click)="openRoleModal()">
+        <nb-icon icon="info" status="control" class="tooltip-info"></nb-icon>
+      </button>
+    </h3>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <nb-tabset class="mt-3">
+    <nb-tab
+      class="tab__cuentas_asociadas"
+      [active]="!isReasignable"
+      tabTitle="Registro de cuentas"
+      [disabled]="isReasignable"
+    >
+      <div class="row m-0 p-0" [formGroup]="cuentasForm">
+        <div class="row mt-1 w-100">
+          <div class="col">
+            <select-field
+              [label]="'Tipo de documento'"
+              [control]="f.typeDocument"
+              [items]="typeDocuments"
+              [value]="'codigoNumero'"
+              [valueToShow]="'valorTexto'"
+              (selectedChange)="changeTypeDocument()"
+            >
+            </select-field>
+          </div>
+
+          <div class="col">
+            <label>N° de documento</label>
+            <nb-form-field>
+              <input
+                id="numberDocumentCuentasAsociadasRegister"
+                placeholder="Ingrese documento"
+                type="text"
+                formControlName="numberDocument"
+                nbInput
+                fullWidth
+                [readOnly]="searchDocumentCompleate"
+                [maxlength]="numeroDocumentoMaxlength"
+                [simpleCharacteresAndNumber]="numeroDocumentoType"
+                shape="semi-round"
+                fieldSize="large"
+                aria-label="Nro doc registrar cuenta asociada"
+                [status]="
+                  f.numberDocument.invalid && f.numberDocument.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+              <button
+                nbSuffix
+                nbButton
+                ghost
+                (click)="
+                  searchDocumentCompleate ? limpiarTodo() : verificarDocumento()
+                "
+                [disabled]="!validEnableSearchButtom()"
+                size="large"
+                shape="semi-round"
+                aria-label="botón buscar documento al registrar"
+                [status]="
+                  f.numberDocument.invalid && f.numberDocument.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              >
+                <nb-icon
+                  nbSuffix
+                  [icon]="searchDocumentCompleate ? 'close' : 'buscar'"
+                ></nb-icon>
+              </button>
+            </nb-form-field>
+            <div
+              *ngIf="f.numberDocument.invalid && f.numberDocument.touched"
+              class="invalid-text flex-columns"
+            >
+              <span *ngIf="f.numberDocument.errors.required"
+                >El campo es obligatorio</span
+              >
+              <span *ngIf="f.numberDocument.errors.minlength"
+                >El número de documento es muy corto</span
+              >
+              <span *ngIf="f.numberDocument.errors.maxlength"
+                >El número de documento es muy largo</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <input-field
+              [label]="'Nombres'"
+              [control]="f.name"
+              [placeholder]="'Nombres'"
+              [banKeyType]="3"
+              [upperCase]="true"
+            >
+            </input-field>
+          </div>
+
+          <div class="col">
+            <input-field
+              [label]="'Apellido paterno'"
+              [control]="f.fatherName"
+              [placeholder]="'Apellido paterno'"
+              [banKeyType]="3"
+              [upperCase]="true"
+            >
+            </input-field>
+          </div>
+
+          <div class="col">
+            <input-field
+              [label]="'Apellido materno'"
+              [control]="f.motherName"
+              [placeholder]="'Apellido materno'"
+              [banKeyType]="3"
+              [upperCase]="true"
+            >
+            </input-field>
+          </div>
+        </div>
+
+        <div class="row mt-3 w-100">
+          <div class="col" *ngIf="this.f.typeDocument.value === 4">
+            <label>País</label>
+            <nb-form-field>
+              <input
+                aria-label="Pais para cuentas asociadas - Registro"
+                #inputCountry
+                nbInput
+                type="text"
+                fullWidth
+                (input)="onChange()"
+                placeholder="Indicar país"
+                [nbAutocomplete]="auto"
+                formControlName="country"
+                (blur)="verifyCountry()"
+                shape="semi-round"
+                fieldSize="large"
+                [status]="
+                  f.country.invalid && f.country.touched ? 'danger' : 'basic'
+                "
+                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+              />
+              <nb-icon nbSuffix icon="buscar"></nb-icon>
+            </nb-form-field>
+            <nb-autocomplete
+              #auto
+              (selectedChange)="onSelectionChange($event)"
+              aria-label="Objetos para autocompletad de paises - Cuenta Asoc"
+            >
+              <nb-option
+                *ngFor="let option of filteredOptions$ | async"
+                [value]="option.nombrePais"
+              >
+                {{ option.nombrePais }}
+              </nb-option>
+            </nb-autocomplete>
+            <div
+              *ngIf="f.country.invalid && f.country.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.country.errors.required"
+                >El país es obligatorio</span
+              >
+              <span *ngIf="f.country.errors.notfound"
+                >Tiene que seleccionar un país de la lista</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Correo laboral</label>
+            <nb-form-field>
+              <input
+                aria-label="Correo Laboral registro cuenta asociada"
+                placeholder="usuario@empresa.com"
+                type="email"
+                nbInput
+                fullWidth
+                formControlName="email"
+                #correo
+                shape="semi-round"
+                fieldSize="large"
+                [value]="correo.value.toLowerCase()"
+                [status]="
+                  f.email.invalid && f.email.touched ? 'danger' : 'basic'
+                "
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.email.invalid && f.email.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.email.errors?.required"
+                >El correo es obligatorio </span
+              >
+              <span *ngIf="f.email.errors?.pattern"
+                >Formato de correo inválido </span
+              >
+              <span *ngIf="f.email.errors?.minlength"
+                >El texto introducido es muy corto </span
+              >
+              <span *ngIf="f.email.errors?.maxlength"
+                >El texto introducido es muy largo </span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <input-field
+              [label]="'Teléfono'"
+              [control]="f.phone"
+              [maxlength]="9"
+              [minlength]="6"
+              [banKeyType]="2"
+              [placeholder]="'015679988'"
+            >
+            </input-field>
+          </div>
+
+          <div class="col">
+            <input-field
+              [label]="'Anexo'"
+              [placeholder]="'000'"
+              [control]="f.anexo"
+              [maxlength]="5"
+              [minlength]="1"
+              [banKeyType]="1"
+              simpleCharacteresAndNumber="integer"
+            >
+            </input-field>
+          </div>
+
+          <div class="col">
+            <input-field
+              [label]="'Puesto'"
+              [control]="f.puesto"
+              [maxlength]="150"
+              [banKeyType]="3"
+            >
+            </input-field>
+          </div>
+
+          <div class="col">
+            <select-field
+              [label]="'Estado de cuenta'"
+              [control]="f.stateCuentas"
+              [items]="estadosRegistro"
+              [value]="'parametroId'"
+              [valueToShow]="'valorTexto'"
+            >
+            </select-field>
+          </div>
+        </div>
+
+        <div class="row mt-3 w-100">
+          <div class="col-20-100">
+            <label>Rol a asignar</label>
+            <nb-form-field>
+              <nb-select
+                placeholder="Elije el rol"
+                fullWidth="true"
+                multiple
+                formControlName="rol"
+                [size]="'large'"
+                shape="semi-round"
+                [status]="f.rol.invalid && f.rol.touched ? 'danger' : 'basic'"
+                (selectedChange)="cambioRoles($event)"
+              >
+                <nb-select-label> Roles seleccionados: </nb-select-label>
+                <nb-option>Elije el rol</nb-option>
+                <nb-option
+                  *ngFor="let rolUsuario of roleslist"
+                  [value]="rolUsuario.rolId"
+                  [disabled]="isDisabled(rolUsuario)"
+                  >{{ rolUsuario.nombre }}
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+            <div
+              *ngIf="f.rol.invalid && f.rol.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.rol.errors.required">El rol es obligatorio</span>
+            </div>
+          </div>
+          <div class="col-40-100 buttomagregar">
+            <mat-chip-list>
+              <mat-chip *ngFor="let rolUsuario of roleslistSelect">{{
+                rolUsuario.nombre
+              }}</mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="col-20-100 buttomagregar">
+            <button
+              nbButton
+              outline
+              shape="round"
+              status="primary"
+              fullWidth
+              (click)="limpiarTodo()"
+            >
+              Cancelar
+            </button>
+          </div>
+          <div class="col-20-100 buttomagregar">
+            <button
+              nbButton
+              shape="round"
+              status="primary"
+              fullWidth
+              [disabled]="!cuentasForm.valid"
+              (click)="isUpdate ? updateCuenta() : createCuenta()"
+            >
+              {{ isUpdate ? 'Actualizar' : 'Agregar cuenta' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </nb-tab>
+
+    <nb-tab
+      tabTitle="Reasignación de cuentas"
+      [active]="isReasignable"
+      [disabled]="!isReasignable"
+    >
+      <div class="row m-0 p-0" [formGroup]="cuentasForm">
+        <div class="row mt-3 w-100">
+          <div class="col">
+            <label>Tipo de documento</label>
+            <nb-form-field>
+              <nb-select
+                placeholder="Selecciona documento"
+                fullWidth="true"
+                formControlName="typeDocument"
+                (selectedChange)="changeTypeDocument()"
+                [size]="'large'"
+                shape="semi-round"
+                [status]="
+                  f.typeDocument.invalid && f.typeDocument.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              >
+                <nb-option>Selecciona documento</nb-option>
+                <nb-option
+                  *ngFor="let documents of typeDocuments"
+                  [value]="documents.codigoNumero"
+                >
+                  {{ documents.valorTexto }}</nb-option
+                >
+              </nb-select>
+            </nb-form-field>
+            <div
+              *ngIf="f.typeDocument.invalid && f.typeDocument.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.typeDocument.errors.required"
+                >Seleccione un documento</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>N° de documento</label>
+            <nb-form-field>
+              <input
+                placeholder="Ingrese documento"
+                type="text"
+                formControlName="numberDocument"
+                nbInput
+                fullWidth
+                [readOnly]="searchDocumentCompleate"
+                maxlength="12"
+                minlength="8"
+                shape="semi-round"
+                fieldSize="large"
+                [status]="
+                  f.numberDocument.invalid && f.numberDocument.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              />
+              <button
+                nbSuffix
+                nbButton
+                ghost
+                (click)="
+                  searchDocumentCompleate ? limpiarTodo() : verificarDocumento()
+                "
+                [disabled]="!validEnableSearchButtom()"
+                size="large"
+                shape="semi-round"
+                [status]="
+                  f.numberDocument.invalid && f.numberDocument.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              >
+                <nb-icon
+                  nbSuffix
+                  [icon]="searchDocumentCompleate ? 'close' : 'buscar'"
+                ></nb-icon>
+              </button>
+            </nb-form-field>
+            <div
+              *ngIf="f.numberDocument.invalid && f.numberDocument.touched"
+              class="invalid-text flex-columns"
+            >
+              <span *ngIf="f.numberDocument.errors.required"
+                >El campo es obligatorio</span
+              >
+              <span *ngIf="f.numberDocument.errors.minlength"
+                >El número de documento es muy corto</span
+              >
+              <span *ngIf="f.numberDocument.errors.maxlength"
+                >El número de documento es muy largo</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Nombres</label>
+            <nb-form-field>
+              <input
+                placeholder="Nombres"
+                type="text"
+                formControlName="name"
+                nbInput
+                fullWidth
+                #shortName
+                [value]="shortName.value.toUpperCase()"
+                maxlength="30"
+                shape="semi-round"
+                fieldSize="large"
+                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+                [status]="f.name.invalid && f.name.touched ? 'danger' : 'basic'"
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.name.invalid && f.name.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.name.errors.required"
+                >Los nombres son obligatorios</span
+              >
+              <span *ngIf="f.name.errors.pattern">Solo se admiten letras</span>
+              <span *ngIf="f.name.errors.minlength"
+                >El texto introducido es muy corto</span
+              >
+              <span *ngIf="f.name.errors.maxlength"
+                >El texto introducido es muy largo</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Apellido paterno</label>
+            <nb-form-field>
+              <input
+                placeholder="Apellido paterno"
+                type="text"
+                formControlName="fatherName"
+                #fatherName
+                [value]="fatherName.value.toUpperCase()"
+                maxlength="30"
+                shape="semi-round"
+                fieldSize="large"
+                [status]="
+                  f.fatherName.invalid && f.fatherName.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+                nbInput
+                fullWidth
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.fatherName.invalid && f.fatherName.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.fatherName.errors.required"
+                >El apellido paterno es obligatorio</span
+              >
+              <span *ngIf="f.fatherName.errors.pattern"
+                >Solo se admiten letras</span
+              >
+              <span *ngIf="f.fatherName.errors.minlength"
+                >El texto introducido es muy corto</span
+              >
+              <span *ngIf="f.fatherName.errors.maxlength"
+                >El texto introducido es muy largo</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Apellido materno</label>
+            <nb-form-field>
+              <input
+                placeholder="Apellido materno"
+                type="text"
+                formControlName="motherName"
+                #motherName
+                [disabled]="!editNames"
+                [value]="motherName.value.toUpperCase()"
+                maxlength="30"
+                [status]="
+                  f.motherName.invalid && f.motherName.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+                nbInput
+                fullWidth
+                shape="semi-round"
+                fieldSize="large"
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.motherName.invalid && f.motherName.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.motherName.errors?.required"
+                >El apellido materno es obligatorio</span
+              >
+              <span *ngIf="f.motherName.errors?.pattern"
+                >Solo se admiten letras</span
+              >
+              <span *ngIf="f.motherName.errors?.minlength"
+                >El texto introducido es muy corto</span
+              >
+              <span *ngIf="f.motherName.errors?.maxlength"
+                >El texto introducido es muy largo</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3 w-100">
+          <div class="col" *ngIf="this.f.typeDocument.value === 4">
+            <label>País</label>
+            <nb-form-field>
+              <input
+                #inputCountry2
+                nbInput
+                type="text"
+                fullWidth
+                (input)="onChange()"
+                placeholder="Indicar país"
+                [nbAutocomplete]="auto"
+                formControlName="country"
+                (blur)="verifyCountry()"
+                [status]="
+                  f.country.invalid && f.country.touched ? 'danger' : 'basic'
+                "
+                shape="semi-round"
+                fieldSize="large"
+                oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+              />
+              <nb-icon nbSuffix icon="buscar"></nb-icon>
+            </nb-form-field>
+            <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+              <nb-option
+                *ngFor="let option of filteredOptions$ | async"
+                [value]="option.nombrePais"
+              >
+                {{ option.nombrePais }}
+              </nb-option>
+            </nb-autocomplete>
+            <div
+              *ngIf="f.country.invalid && f.country.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.country.errors.required"
+                >El país es obligatorio</span
+              >
+              <span *ngIf="f.country.errors.notfound"
+                >Tiene que seleccionar un país de la lista</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Correo laboral</label>
+            <nb-form-field>
+              <input
+                placeholder="correo@gmail.com"
+                type="email"
+                nbInput
+                fullWidth
+                formControlName="email"
+                email='true'
+                #correo
+                [value]="correo.value.toLowerCase()"
+                [status]="
+                  f.email.invalid && f.email.touched ? 'danger' : 'basic'
+                "
+                shape="semi-round"
+                fieldSize="large"
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.email.invalid && f.email.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.email.errors?.required"
+                >El correo es obligatorio </span
+              >
+              <span *ngIf="f.email.errors?.pattern"
+                >Formato de correo inválido </span
+              >
+              <span *ngIf="f.email.errors?.minlength"
+                >El texto introducido es muy corto </span
+              >
+              <span *ngIf="f.email.errors?.maxlength"
+                >El texto introducido es muy largo </span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Teléfono</label>
+            <nb-form-field>
+              <input
+                placeholder="01 567 9988"
+                type="text"
+                nbInput
+                fullWidth
+                formControlName="phone"
+                [status]="
+                  f.phone.invalid && f.phone.touched ? 'danger' : 'basic'
+                "
+                maxlength='9'
+                minlength='6'
+                shape="semi-round"
+                fieldSize="large"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.phone.invalid && f.phone.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.phone.errors.required"
+                >El teléfono es obligatorio</span
+              >
+              <span *ngIf="f.phone.errors.pattern"
+                >Solo se aceptan números</span
+              >
+              <span *ngIf="f.phone.errors.minlength"
+                >El texto introducido es muy corto</span
+              >
+              <span *ngIf="f.phone.errors.maxlength"
+                >El texto introducido es muy largo</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Anexo</label>
+            <nb-form-field>
+              <input
+                placeholder="000"
+                type="text"
+                nbInput
+                fullWidth
+                formControlName="anexo"
+                maxlength="5"
+                shape="semi-round"
+                fieldSize="large"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+              />
+            </nb-form-field>
+          </div>
+
+          <div class="col">
+            <label>Puesto</label>
+            <nb-form-field>
+              <input
+                placeholder=""
+                type="text"
+                nbInput
+                fullWidth
+                formControlName="puesto"
+                shape="semi-round"
+                fieldSize="large"
+                [status]="
+                  f.puesto.invalid && f.puesto.touched ? 'danger' : 'basic'
+                "
+              />
+            </nb-form-field>
+            <div
+              *ngIf="f.puesto.invalid && f.puesto.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.puesto.errors?.required"
+                >El puesto es obligatorio</span
+              >
+              <span *ngIf="f.puesto.errors?.minlength"
+                >El puesto introducido es muy corto</span
+              >
+              <span *ngIf="f.puesto.errors?.maxlength"
+                >El puesto introducido es muy largo</span
+              >
+            </div>
+          </div>
+
+          <div class="col">
+            <label>Estado de cuenta</label>
+            <nb-form-field>
+              <nb-select
+                placeholder="Estado"
+                fullWidth="true"
+                formControlName="stateCuentas"
+                [size]="'large'"
+                shape="semi-round"
+                (selectedChange)="
+                  isUpdate ? cambiarEstado(+f.cuentaId.value, $event) : null
+                "
+                [status]="
+                  f.stateCuentas.invalid && f.stateCuentas.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+              >
+                <nb-option>Estado</nb-option>
+                <nb-option
+                  *ngFor="let documents of estadosRegistro"
+                  [value]="documents.parametroId"
+                >
+                  {{ documents.valorTexto }}</nb-option
+                >
+              </nb-select>
+            </nb-form-field>
+            <div
+              *ngIf="f.stateCuentas.invalid && f.stateCuentas.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.stateCuentas.errors.required"
+                >Seleccione un estado</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3 w-100">
+          <div class="col-20-100">
+            <label>Rol a asignar</label>
+            <nb-form-field>
+              <nb-select
+                placeholder="Elije el rol"
+                fullWidth="true"
+                multiple
+                formControlName="rol"
+                disabled
+                [size]="'large'"
+                shape="semi-round"
+                [status]="f.rol.invalid && f.rol.touched ? 'danger' : 'basic'"
+                (selectedChange)="cambioRolesToogle($event)"
+              >
+                <nb-select-label> Roles seleccionados: </nb-select-label>
+                <nb-option>Elije el rol</nb-option>
+                <nb-option
+                  *ngFor="let rolUsuario of roleslistReasing"
+                  [value]="rolUsuario.rolId"
+                  >{{ rolUsuario.nombre }}
+                </nb-option>
+              </nb-select>
+            </nb-form-field>
+            <div
+              *ngIf="f.rol.invalid && f.rol.touched"
+              class="invalid-text flex-column"
+            >
+              <span *ngIf="f.rol.errors.required">El rol es obligatorio</span>
+            </div>
+          </div>
+          <div class="col-80-100 buttomagregar">
+            <label class="color-medio"
+              >¿Cuál es el motivo de la reasignación de la cuenta
+              asociada?</label
+            >
+            <textarea
+              #coment
+              nbInput
+              fullWidth
+              maxlength="150"
+              formControlName="comment"
+              [status]="
+                f.comment.invalid && f.comment.touched ? 'danger' : 'basic'
+              "
+              placeholder="Ingrese una breve descripción"
+            ></textarea>
+            <div class="contador-comment">{{ coment.value.length }} / 150</div>
+          </div>
+        </div>
+        <div class="row mt-3 ml-3 mr-3 w-100">
+          <div class="col-60-100 buttomagregar">
+            <mat-chip-list>
+              <mat-chip *ngFor="let rolUsuario of roleslistSelectReasing">{{
+                rolUsuario.nombre
+              }}</mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="col-20-100 buttomagregar">
+            <button
+              nbButton
+              outline
+              shape="round"
+              status="primary"
+              fullWidth
+              (click)="obtenerDataGrilla()"
+            >
+              Cancelar
+            </button>
+          </div>
+          <div class="col-20-100 buttomagregar">
+            <button
+              nbButton
+              shape="round"
+              status="primary"
+              fullWidth
+              [disabled]="!cuentasForm.valid"
+              (click)="reasignarCuenta()"
+            >
+              Reasignar
+            </button>
+          </div>
+        </div>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+</div>
+
+<div class="container-fluid padding-body">
+  <div class="px-2">
+    <div class="w-100 mb-3 flex-v-center">
+      <div>
+        <label class="search-label" for="search">Buscar:</label>
+        <nb-form-field>
+          <input
+            id="search"
+            type="text"
+            nbInput
+            (keyup)="buscarCuentas($event)"
+            fieldSize="large"
+            shape="semi-round"
+          />
+          <button
+            nbSuffix
+            nbButton
+            ghost
+            (click)="(null)"
+            size="large"
+            shape="semi-round"
+          >
+            <nb-icon nbSuffix icon="buscar"></nb-icon>
+          </button>
+        </nb-form-field>
+      </div>
+      <span class="flex-spacer"></span>
+
+      <serv-talento-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="getDataEvent($event)"
+      >
+      </serv-talento-paginator>
+    </div>
+
+    <div class="card mat-elevation-z3">
+      <table
+        aria-describedby="tabla cuentas asociadas"
+        [nbTreeGrid]="dataSource"
+        [nbSort]="dataSource"
+        (sort)="updateSort($event)"
+      >
+        <tr
+          nbTreeGridHeaderRow
+          *nbTreeGridHeaderRowDef="allColumns"
+          class="table-header"
+        ></tr>
+        <tr
+          nbTreeGridRow
+          [clickToToggle]="false"
+          *nbTreeGridRowDef="let row; columns: allColumns"
+        ></tr>
+        <ng-container [nbTreeGridColumnDef]="customColumn">
+          <th
+            scope="col"
+            nbTreeGridHeaderCell
+            [nbSortHeader]="getSortDirection(customColumn)"
+            *nbTreeGridHeaderCellDef
+            style="border: 1px solid transparent !important;"
+          >
+            {{ nameHeaders[customColumn] }}
+          </th>
+          <td nbTreeGridCell *nbTreeGridCellDef="let row">
+            <nb-tree-grid-row-toggle
+              *ngIf="row.level == 0"
+              [expanded]="row.expanded"
+            ></nb-tree-grid-row-toggle>
+            {{ row.data[customColumn] }}
+          </td>
+        </ng-container>
+
+        <ng-container
+          *ngFor="let column of defaultColumns; let index = index"
+          [nbTreeGridColumnDef]="column"
+          [showOn]="getShowOn(index)"
+        >
+          <th
+            scope="col"
+            nbTreeGridHeaderCell
+            [nbSortHeader]="getSortDirection(column)"
+            *nbTreeGridHeaderCellDef
+            style="border: 1px solid transparent !important;"
+          >
+            {{ nameHeaders[column] }}
+          </th>
+          <td
+            nbTreeGridCell
+            *nbTreeGridCellDef="let row"
+            [class.table-acciones]="column === 'acciones'"
+          >
+            <div *ngIf="column === 'acciones'; else databox">
+              <em
+                class="ent-web-edit fs-26"
+                *ngIf="
+                  row.level == 0 &&  row.data.estadoId == '1'"
+                (click)="row.data.editable ? editData(row) : null"
+                [ngStyle]="{
+                  cursor: row.data.editable ? 'pointer' : 'auto',
+                  color: row.data.editable ? '#0d88bc' : '#c3e2ef',
+                  'font-size': '2rem !important'
+                }"
+              ></em>
+              <nb-toggle
+                #toggle
+                *ngIf="row.data.rolId !== const.R_ADMIN_ENTIDAD"
+                class="ml-4"
+                (checkedChange)="
+                  cambiarEstadoToogle(
+                    row.data,
+                    $event,
+                    toggle,
+                    row.level != 0,
+                    row.data.listaRoles != null &&
+                      row.data.listaRoles.length != 0
+                      ? row.data.listaRoles[0]
+                      : null
+                  )
+                "
+                [disabled]="!row.data.editable"
+                [checked]="+row.data.estadoId == 1"
+              ></nb-toggle>
+            </div>
+            <ng-template #databox>
+              <div>{{ row.data[column] }}</div>
+            </ng-template>
+          </td>
+        </ng-container>
+      </table>
+    </div>
+
+    <div class="flex-v-center mt-3">
+      <div class="flex-spacer"></div>
+      <button
+        class="btn-excel px-4 py-2"
+        mat-stroked-button
+        (click)="exportData()"
+      >
+        Descargar Excel
+        <nb-icon icon="descargar"></nb-icon>
+      </button>
+    </div>
+  </div>
+</div>

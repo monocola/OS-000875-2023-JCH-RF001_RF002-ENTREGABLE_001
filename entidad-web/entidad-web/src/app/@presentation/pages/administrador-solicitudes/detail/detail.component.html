@@ -1,0 +1,341 @@
+<div
+  class="body"
+  style="position: relative !important; padding-bottom: 6.25rem !important"
+>
+  <div class="flex-v-center">
+    <h3 class="titlePage">
+      <nb-icon
+        class="mr-2 buttonIcon"
+        nbSuffix
+        icon="back"
+        [routerLink]="['/pages/gestionsolicitud']"
+      >
+      </nb-icon>
+      Entidad
+    </h3>
+
+    <span class="flex-spacer"></span>
+
+    <button
+      nbButton
+      shape="rectangle"
+      outline
+      status="primary"
+      class="mr-3 px-5"
+      (click)="verifyReniec()"
+      [disabled]="verifyBtnUpdateData()"
+    >
+      Validar datos
+    </button>
+
+    <button
+      nbButton
+      shape="round"
+      status="primary"
+      class="px-5"
+      [disabled]="verifyBtnVerificationModal()"
+      (click)="openVerificationModal()"
+    >
+      Verificación de contenido
+    </button>
+  </div>
+
+  <hr />
+
+  <!---------------------------------------------------------------------->
+  <!------ Datos de la entidad ------>
+  <!---------------------------------------------------------------------->
+
+  <h6 class="mt-4">Datos de la entidad</h6>
+
+  <div class="mt-4">
+    <div class="row">
+      <div class="col-3">
+        <label>Número de RUC</label>
+        <span>{{ entity?.personaJuridica.numeroDocumento }}</span>
+      </div>
+      <div class="col-9">
+        <label>Razón social</label>
+        <span [ngClass]="{ error: errorSunat }">{{
+          entity?.personaJuridica.razonSocial
+        }}</span>
+        <span class="invalid-text" *ngIf="errorSunat">{{
+          this.correctNameEntity
+        }}</span>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-3">
+        <label>Sector</label>
+        <span>{{ entity?.solicitudEntidad.descripcionSector }}</span>
+      </div>
+      <div class="col-3 flex-column">
+        <label>Nivel de gobierno</label>
+        <span>{{ entity?.solicitudEntidad.descripcionNivelGobierno }}</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+
+  <!---------------------------------------------------------------------->
+  <!------ Datos del administrador ------>
+  <!---------------------------------------------------------------------->
+  <div class="flex-v-center">
+    <h6 class="mt-4">
+      Datos del administrador
+      <nb-icon
+        class="ml-2 buttonIcon"
+        *ngIf="errorReniec || errorGenre"
+        nbSuffix
+        icon="edit"
+        (click)="editAdministrator()"
+      ></nb-icon>
+    </h6>
+    <span class="flex-spacer"></span>
+    <div *ngIf="editMode" class="errorInfo">
+      <span style="color: #eb5757" *ngIf="errorReniec">
+        Nombre correspondiente al DNI/CE:
+        <strong>{{ correctNamePerson }}</strong>
+      </span>
+      <span style="color: #eb5757" *ngIf="errorGenre">
+        Sexo correcto:
+        <strong>{{ correctGenreDescription }}</strong>
+      </span>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-3 flex-column">
+      <label>Tipo de documento</label>
+      <span>{{ entity?.personaNatural.descripcionTipoDoc || '-' }}</span>
+    </div>
+    <div class="col-3 flex-column">
+      <label>N° de documento</label>
+      <span>{{ entity?.personaNatural?.numeroDocumento }}</span>
+    </div>
+    <ng-container *ngIf="!editMode || (editMode && !errorReniec)">
+      <div class="col-6 flex-column">
+        <label>Nombres/apellidos</label>
+        <span [ngClass]="{ error: errorReniec }">{{
+          entity?.personaNatural.getFullNameAdmin()
+        }}</span>
+        <span class="invalid-text" *ngIf="errorReniec">{{
+          this.correctNamePerson
+        }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="editMode && errorReniec" [formGroup]="updateNameForm">
+      <div class="col-md-2">
+        <label>Nombres</label>
+        <nb-form-field>
+          <input
+            trim="blur"
+            type="text"
+            placeholder="Ingrese nombres"
+            fullWidth
+            nbInput
+            shape="semi-round"
+            fieldSize="large"
+            #name
+            [value]="name.value.toUpperCase()"
+            formControlName="name"
+            [status]="f.name.invalid && f.name.touched ? 'danger' : 'basic'"
+            maxlength="30"
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          />
+        </nb-form-field>
+        <div *ngIf="f.name.invalid && f.name.touched" class="flex-column">
+          <span *ngIf="f.name.errors.required" class="invalid-text">
+            Los nombres son obligatorios
+          </span>
+          <span *ngIf="f.name.errors.minlength" class="invalid-text">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.name.errors.maxlength" class="invalid-text">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+      <div class="col-2 flex-column">
+        <label>Apellido Paterno</label>
+        <nb-form-field>
+          <input
+            trim="blur"
+            type="text"
+            placeholder="Ingrese apellido paterno"
+            fullWidth
+            nbInput
+            formControlName="fatherName"
+            shape="semi-round"
+            fieldSize="large"
+            #fatherName
+            [value]="fatherName.value.toUpperCase()"
+            maxlength="30"
+            [status]="
+              f.fatherName.invalid && f.fatherName.touched ? 'danger' : 'basic'
+            "
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.fatherName.invalid && f.fatherName.touched"
+          class="flex-column"
+        >
+          <span *ngIf="f.fatherName.errors.required" class="invalid-text">
+            El apellido paterno es obligatorio
+          </span>
+          <span *ngIf="f.fatherName.errors.minlength" class="invalid-text">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.fatherName.errors.maxlength" class="invalid-text">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+      <div class="col-2 flex-column">
+        <label>Apellido Materno</label>
+        <nb-form-field>
+          <input
+            trim="blur"
+            type="text"
+            placeholder="Ingrese apellido materno"
+            fullWidth
+            nbInput
+            formControlName="motherName"
+            shape="semi-round"
+            fieldSize="large"
+            #motherName
+            [value]="motherName.value.toUpperCase()"
+            maxlength="30"
+            [status]="
+              f.motherName.invalid && f.motherName.touched ? 'danger' : 'basic'
+            "
+            oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          />
+        </nb-form-field>
+        <div
+          *ngIf="f.motherName.invalid && f.motherName.touched"
+          class="flex-column"
+        >
+          <span *ngIf="f.motherName.errors?.required" class="invalid-text">
+            El apellido materno es obligatorio
+          </span>
+          <span *ngIf="f.motherName.errors?.minlength" class="invalid-text">
+            El texto introducido es muy corto
+          </span>
+          <span *ngIf="f.motherName.errors?.maxlength" class="invalid-text">
+            El texto introducido es muy largo
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-3 flex-column">
+      <label>Correo laboral</label>
+      <span>{{ entity?.personaNatural.correoLaboral }}</span>
+    </div>
+    <div class="col-3 flex-column">
+      <label>Correo laboral (Opc.)</label>
+      <span>{{ entity?.personaNatural.correoSecundario || '-' }}</span>
+    </div>
+    <div class="col-2 flex-column">
+      <label>Celular</label>
+      <span>{{ entity?.personaNatural.celularPrincipal }}</span>
+    </div>
+    <div class="col-2 flex-column">
+      <label>Celular (Opc.)</label>
+      <span>{{ entity?.personaNatural.celularSecundario || '-' }}</span>
+    </div>
+    <div class="col-2 flex-column">
+      <label>Fecha nac.</label>
+      <span>{{ entity?.personaNatural.fechaNacimiento }}</span>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-3 flex-column">
+      <label>País</label>
+      <span>{{ entity?.personaNatural.descripcionPais || '-' }}</span>
+    </div>
+    <ng-container *ngIf="!editMode || (editMode && !errorGenre)">
+      <div class="col-2 flex-column">
+        <label>Sexo</label>
+        <span [ngClass]="{ error: errorGenre }">{{
+          entity?.personaNatural.getSexo()
+        }}</span>
+        <span class="invalid-text" *ngIf="errorGenre">{{
+          this.correctGenreDescription
+        }}</span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="editMode && errorGenre" [formGroup]="updateNameForm">
+      <div class="col-md-2 flex-column">
+        <label class="label">Sexo</label>
+        <nb-select
+          fullWidth
+          placeholder="Elige"
+          formControlName="genre"
+          [size]="'large'"
+          shape="semi-round"
+          [status]="f.genre.invalid && f.genre.touched ? 'danger' : 'basic'"
+        >
+          <nb-option [value]="item.codigoTexto" *ngFor="let item of genres">
+            {{ item.valorTexto }}
+          </nb-option>
+        </nb-select>
+        <div
+          *ngIf="f.genre.invalid && f.genre.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.genre.errors"> El campo es obligatorio </span>
+        </div>
+      </div>
+    </ng-container>
+    <div class="col-3 flex-column">
+      <label>Puesto</label>
+      <span>{{ entity?.personaNatural.descripcionCargo || '-' }}</span>
+    </div>
+    <div class="col-3 flex-column">
+      <label>Documento sustentatorio</label>
+      <button
+        class="btnDocument flex-v-center"
+        nbButton
+        shape="rectangle"
+        outline
+        status="basic"
+        (click)="viewFile()"
+      >
+        <nb-icon class="mr-2 documentIcon" nbSuffix icon="documento"></nb-icon>
+        <span>
+          {{ entity?.archivoSolicitud.nombreRealArchivo }}
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="divbottom px-5" *ngIf="editMode">
+  <button
+    nbButton
+    outline
+    shape="round"
+    status="primary"
+    class="px-5 mr-3"
+    (click)="editMode = !editMode"
+  >
+    Cancelar
+  </button>
+  <button
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="saveData()"
+  >
+    Guardar
+  </button>
+</div>

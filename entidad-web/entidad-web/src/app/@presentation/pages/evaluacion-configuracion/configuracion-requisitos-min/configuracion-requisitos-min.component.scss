@@ -1,0 +1,232 @@
+@import '_colors';
+
+.custom-resumen {
+  background: #C2E6F6;
+  text-align: center;
+  display:table;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.c-text-center {
+  justify-content: center;
+}
+
+.material-icons {
+  font-family: 'Material Icons', sans-serif !important;
+  font-size: 15px !important;
+  color: white !important;
+}
+.custom-color {
+  color: #0D88BC !important;
+  font-size: 24px !important;
+}
+
+.custom-resumen-center {
+  display:table-cell;
+  vertical-align:middle;
+}
+
+.logo {
+  height: max-content;
+}
+
+.logoStep {
+  width: 20px;
+}
+
+.max-width {
+  max-width: 16rem;
+}
+
+.center-div {
+  margin: auto;
+}
+
+.center-row {
+  place-content: center;
+}
+
+.custom-detail-resumen {
+  align-self: center;
+  text-align: center;
+}
+
+.custom-header {
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+  background-color: #3B3A3C;
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid #C4C4C4;
+  align-items: center;
+}
+
+.custom-body {
+  border-left: 1px solid #C4C4C4;
+  border-right: 1px solid #C4C4C4;
+  border-bottom: 1px solid #C4C4C4;
+  border-bottom-left-radius: 0.5rem !important;
+  border-bottom-right-radius: 0.5rem !important;
+}
+
+.custom-input-border {
+  border: 1px solid #49A6CD;
+  background: white;
+  color: #49A6CD !important;
+  border-radius: 0.25rem !important;
+  font-size: larger !important;
+  text-align: center;
+}
+
+input[type="text"]::placeholder {
+  font-size: larger !important;
+  color: #49A6CD !important;
+}
+.custom-vcenter {
+  align-self: center;
+}
+
+.custom-valign-center {
+  vertical-align: middle;
+}
+
+.iconAdd,
+.iconRemove {
+  user-select: none;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1.75rem;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.mw-10-rem {
+  max-width: 10rem !important;
+}
+
+.border-input {
+  border-color: #CDCDCD !important;
+}
+
+div.rowData {
+  border: 1px solid #E8E8E8;
+  border-radius: 0.5rem !important;
+  text-align: center;
+  width: 100%;
+}
+
+.divTable.rowData .divTableCell, .divTable.rowData .divTableHead {
+  vertical-align: middle;
+  padding: 3px 2px;
+}
+
+.divTable.rowData .divTableBody .divTableCell {
+  font-size: 13px;
+}
+
+.rowData .tableFootStyle {
+  font-size: 14px;
+}
+
+.rowData .tableFootStyle .links {
+	 text-align: right;
+}
+
+.rowData .tableFootStyle .links a {
+  display: inline-block;
+  background: #1C6EA4;
+  color: #FFFFFF;
+  padding: 2px 8px;
+  // border-radius: 5px;
+}
+
+.rowData.outerTableFooter {
+  border-top: none;
+}
+
+.rowData.outerTableFooter .tableFootStyle {
+  padding: 3px 5px;
+}
+
+.divTable { display: table; }
+
+.divTableRow {
+  display: table-row;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+
+.divTableHeading { display: table-header-group;}
+
+.divTableCell {
+  display: table-cell;
+  padding: 0.5rem !important;
+}
+
+
+.divTableFoot { display: table-footer-group;}
+
+.divTableBody { display: table-row-group;}
+
+::ng-deep .mat-step-header > div[class="mat-step-icon mat-step-icon-state-edit"] {
+  background: green !important;
+}
+
+.stepper {
+  background-color: #f5f5f5;
+}
+
+.divbottom {
+  z-index: 0;
+  transition: 0.2s;
+  -webkit-box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  -moz-box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  box-shadow: 0 -4px 9px -1px rgba(0, 0, 0, 0.64);
+  height: 5rem;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.cancelButton {
+  color: $primary-color;
+  border: none;
+  background: none;
+  text-decoration: underline;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+.footer {
+  height: 60px;
+  line-height: 60px;
+  margin-left: 0;
+  position: sticky;
+  bottom: 0;
+  width: 99%;
+  background: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.footer__content {
+  padding: 0 3rem;
+}

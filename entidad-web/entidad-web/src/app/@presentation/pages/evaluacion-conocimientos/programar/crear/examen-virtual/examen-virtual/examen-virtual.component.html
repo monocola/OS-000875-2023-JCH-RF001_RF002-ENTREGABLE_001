@@ -1,0 +1,74 @@
+<div class="body">
+  <div class="title row">
+    <h4 class="titlePage">Evaluación de Conocimiento</h4>
+    <h4 class="categoria-sub">{{ f.examen.value }}</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="title-container" style="height: 80px">
+    <div class="etiqueta-busqueda">
+      Pregunta {{ numeropregunta }} de {{ cantidadpreguntas }}
+    </div>
+    <!-- <div class="crear-categoria">
+      Tiempo restante: <br />
+      <em class="ent-web-time fs-24"></em> {{ tiempopregunta }}
+    </div> -->
+  </div>
+
+  <div style="padding-left: 10%; padding-right: 10%; margin-top: 2px">
+    <p>
+      <strong>{{ descpregunta }}</strong>
+    </p>
+    <ng-container *ngIf="tipopregunta === 'CERRADA SIMPLE'.toUpperCase()">
+      <div *ngFor="let enum of respuestas">
+        <label
+          for="enum_answer_{{ enum.idAlternativa }}"
+          style="margin-top: 20px"
+        >
+          <input
+            id="enum_answer_{{ enum.idAlternativa }}"
+            [value]="enum.idAlternativa"
+            type="radio"
+            name="enums"
+            [(ngModel)]="radioSelected"
+          />
+          {{ enum.descripcion }}
+        </label>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="tipopregunta === 'CERRADA MÚLTIPLE'.toUpperCase()">
+      <div *ngFor="let object of respuestas">
+        <input
+          type="checkbox"
+          style="margin-top: 20px"
+          [(ngModel)]="checkboxes[object.idAlternativa]"
+        />
+        {{ object.descripcion }}
+      </div>
+    </ng-container>
+    <button
+      *ngIf="contador !== 0"
+      style="margin-top: 40px"
+      matRipple
+      type="button"
+      nbButton
+      shape="round"
+      status="primary"
+      class="px-5"
+      (click)="preguntaAnterior()"
+    >
+      Pregunta Anterior
+    </button>
+    <button
+      style="margin-top: 40px; margin-left: 20px"
+      matRipple
+      type="button"
+      nbButton
+      shape="round"
+      status="primary"
+      class="px-5"
+      (click)="siguientePreguta()"
+    >
+      Siguiente Pregunta
+    </button>
+  </div>
+</div>

@@ -1,0 +1,217 @@
+<form [formGroup]="helperService.form5" class="px-5">
+  <ng-container *ngIf="helperService.observaciones[4].description">
+    <serv-talento-observacion-base-div
+      [observacion]="helperService.observaciones[4]"
+      (editEmitter)="helperService.editObservacion()"
+      (deleteEmitter)="helperService.deleteObservacion()"
+      (resolverEmitter)="helperService.resolverObservacion()"
+      [showButtons]="helperService.estadoBase !== const.ETA_BASE_OBSERVADO"
+      [onlyShow]="
+        helperService.estadoBase == const.ETA_BASE_OBSERVADO &&
+        (authRepository.isCoordinador() || authRepository.isSuperAdminEntidad())
+      "
+    ></serv-talento-observacion-base-div>
+  </ng-container>
+  <h6>Etapas</h6>
+
+  <div class="row mt-3">
+    <div class="mb-3 col-md-3">
+      <select-field
+        label="Etapa del Proceso"
+        [control]="f.etapa"
+        [items]="helperService.etapas"
+        value="value"
+        valueToShow="valueToShow"
+      >
+      </select-field>
+    </div>
+    <div class="mb-3 col-md-3">
+      <select-field
+        label="Evaluacion"
+        [control]="f.evaluacion"
+        [items]="this.helperService.listaDeEvaluaciones"
+        value="tipoEvaluacionId"
+        valueToShow="descripcion"
+        [disabled]="validarEtapaEvaluacion()"
+      >
+      </select-field>
+    </div>
+    <div class="mb-3 col-md-6">
+      <input-field
+        [control]="f.responsable"
+        [label]="'Responsable'"
+        [placeholder]="'Ingresar un responsable'"
+        [maxlength]="100"
+        [banKeyType]="5"
+        [minlength]="0"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-4 col-md-3">
+      <label>Fecha de Inicio</label>
+      <nb-form-field>
+        <input
+          nbInput
+          readonly
+          [placeholder]="'Fecha y hora Inicio'"
+          [ngxMatDatetimePicker]="pickerFecIni"
+          [formControl]="f.fechaInicio"
+          shape="semi-round"
+          fieldSize="large"
+          [status]="
+            f.fechaInicio.value === null && helperService.form5.touched
+              ? 'danger'
+              : 'basic'
+          "
+          [disabled]="false"
+        />
+
+        <mat-datepicker-toggle
+          nbSuffix
+          [for]="pickerFecIni"
+        ></mat-datepicker-toggle>
+
+        <ngx-mat-datetime-picker
+          #pickerFecIni
+          [showSpinners]="true"
+          [showSeconds]="false"
+          [disableMinute]="false"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [touchUi]="true"
+          [enableMeridian]="true"
+        >
+        </ngx-mat-datetime-picker>
+      </nb-form-field>
+      <mat-error *ngIf="f.fechaInicio.invalid && f.fechaInicio.touched">
+        <span class="invalid-text m-0">El campo es obligatorio</span>
+      </mat-error>
+    </div>
+    <div class="mb-4 col-md-3">
+      <label>Fecha de Fin</label>
+      <nb-form-field>
+        <input
+          nbInput
+          readonly
+          [placeholder]="'Fecha y hora Fin'"
+          [ngxMatDatetimePicker]="pickerFecFin"
+          [formControl]="f.fechaFin"
+          shape="semi-round"
+          fieldSize="large"
+          [status]="
+            f.fechaFin.value === null && helperService.form5.touched
+              ? 'danger'
+              : 'basic'
+          "
+          [disabled]="false"
+        />
+
+        <mat-datepicker-toggle
+          nbSuffix
+          [for]="pickerFecFin"
+        ></mat-datepicker-toggle>
+
+        <ngx-mat-datetime-picker
+          #pickerFecFin
+          [showSpinners]="true"
+          [showSeconds]="false"
+          [disableMinute]="false"
+          [stepHour]="1"
+          [stepMinute]="1"
+          [stepSecond]="1"
+          [touchUi]="true"
+          [enableMeridian]="true"
+        >
+        </ngx-mat-datetime-picker>
+      </nb-form-field>
+      <mat-error *ngIf="f.fechaFin.invalid && f.fechaFin.touched">
+        <span class="invalid-text m-0">El campo es obligatorio</span>
+      </mat-error>
+    </div>
+
+    <div class="mb-6 col-md-6">
+      <label> Actividad</label>
+      <textarea
+        shape="semi-round"
+        fieldSize="medium"
+        [rows]="2"
+        maxlength="200"
+        nbInput
+        fullWidth
+        placeholder="Descripción de la Pregunta"
+        [formControl]="f.actividad"
+        [status]="
+          f.actividad?.invalid && f.actividad?.touched ? 'danger' : 'basic'
+        "
+      ></textarea>
+      <div class="d-flex w-100">
+        <div
+          *ngIf="f.actividad?.invalid && f.actividad?.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.actividad.errors?.required">
+            El campo es obligatorio
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-8"></div>
+    <div class="col-4">
+      <div class="w-100 h-100 btn_area">
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          outline
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          (click)="validarEtapa()"
+        >
+          Agregar Etapa
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="padding-body">
+  <div
+    class="flex-v-center flex-column"
+    *ngIf="this.helperService.listaCronogramas.length === 0"
+  >
+    <img
+      width="70px"
+      alt="imagen bandeja"
+      src="assets/images/icons/bandeja.png"
+      class="my-3"
+    />
+    <span class="fs-13">No tienes registros creados.</span>
+    <span class="fs-13">
+      Para crearlos da <strong>click</strong> al botón
+      <strong>"Agregar etapa"</strong>
+    </span>
+  </div>
+
+  <div *ngIf="this.helperService.listaCronogramas.length > 0">
+    <serv-talento-table-cronograma
+      [data]="this.helperService.listaCronogramas"
+      (editEmitter)="edit($event)"
+      (deleteEmmiter)="remove($event)"
+      [showEdit]="!helperService.disableAllFields"
+    >
+    </serv-talento-table-cronograma>
+  </div>
+</div>

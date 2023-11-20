@@ -1,0 +1,57 @@
+<script src="../../@common-components/material-table/material-table.component.ts"></script>
+<div class='col-12 row m-0 p-0 justify-content-left'>
+  <div class="p-6 col-md-12 col-12">
+    <div class="d-flex">
+      <h3 class="titlePage">Configuración</h3>
+      <span class="flex-spacer"></span>
+    </div>
+    <div [formGroup]="frm">
+      <nb-card class='filter'>
+        <nb-card-body class='px-2'>
+          <div class='row col-12 justify-content-left m-0 p-0 align-items-end'>
+              <div class="col-8">
+                <autocomplete
+                  class='col-md-12 m-0 p-0'
+                  [label]="'Buscar usuario rector'"
+                  [placeholder]="'Ingresar'"
+                  [control]="f?.userRector"
+                  [fieldToShow]="'nombresApellidos'"
+                  [items]="listaUsuarios"
+                  [requiredField]="true"
+                  [size]='fieldsize'
+                ></autocomplete>
+              </div>
+              <div class="col-4 row m-0 p-0">
+                <div class="col-6">
+                  <button nbButton shape="round" size="medium" status="info" fullWidth outline (click)='clear()'>
+                    Limpiar
+                  </button>
+                </div>
+                <div class="col-6">
+                  <button nbButton shape="round" size="medium" status='info' fullWidth (click)='buscar()'>
+                    Asignar
+                  </button>
+                </div>
+              </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <div class="row mt-1">
+        <ng-container>
+          <serv-talento-table class='col-12' holderText="Buscar por Rector, entidades"
+          [tableData]="this.lstUsuarioRector"
+          [tableColumns]="this.tableColumns" [isFilterable]="true"
+          [isPageable]="true"
+          [paginationSizes]="[5, 10, 20, 50, 100]" [defaultPageSize]="10"
+          [acciones]="true" [showTitle]='false'
+          custom1BtnTitle="Asignar Entidades" custom1BtnIcon="ent-web-house-add" custom1BtnClass='accion-house-add'
+          [custom1BtnShow]="true" (custom1BtnOnClick)="asignar($event)" custom2BtnTitle="Notificar"
+          custom2BtnIcon="ent-web-mail-lleno" custom2BtnClass='accion-notification' [custom2BtnShow]="true"
+          (custom2BtnOnClick)="notificar($event)" [showDownloadButton]='false'>
+          </serv-talento-table>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

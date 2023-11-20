@@ -1,0 +1,321 @@
+<form [formGroup]="frm">
+  <div class="body">
+    <section class="d-flex">
+      <div class="flex-v-center-left">
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="['/pages/home']"
+          class="btn_back"
+        >
+          <nb-icon nbSuffix class="back__arrow" icon="arrow-ios-back-outline"></nb-icon>
+        </button>
+        <h5 class="titlePage">Perfil de usuario</h5>
+      </div>
+    </section>
+
+    
+    <div class="col-md-12 row p-1 m-1">
+      <div class="col-md-4">
+        <mat-card class="mat-card m-1 p-1 border-primary mr-2">
+          <mat-card-content>
+            <div class="col-md-12 p-0 m-0">
+              <div class="w-100 px-2 py-1" style="background-color: white">
+                <label
+                  class="btnUploadLogo flex-v-center"
+                  style="background-color: #0dacbc; color: white"
+                  for="file-upload"
+                >
+                  <span class="material-icons pr-2">account_circle</span>
+                  Subir foto
+                </label>
+                <input
+                  id="file-upload"
+                  type="file"
+                  (change)="fileLogoEvent($event)"
+                />
+                <div class="divLogoImg mt-1" *ngIf="logoProfile || imgData64">
+                  <img alt="logo_entidad" [src]="logoProfile || imgData64" />
+                  <div
+                    class="btnClearImage flex-v-center mat-elevation-z7"
+                    (click)="clearImage()"
+                  >
+                    <nb-icon
+                      class="documentIcon"
+                      nbSuffix
+                      icon="close"
+                    ></nb-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-v-center item p-1">
+                <div class="ml-3">
+                  <div class="nameUser fw-700">
+                    <!-- {{ profile.nombreCompleto }} -->
+                    {{ correoInst }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex-v-center item p-1">
+                {{ profile.correo }}
+              </div>
+            </div>
+            <div class="flex-v-center item p-1">
+              <hr style="size: 20px; width: 100%; align-content: center" />
+            </div>
+            <div class="flex-v-center item p-1">
+              <div class="col-md-4 flex-v-center">
+                <button class="bg-transparent border-0">
+                  <span class="material-icons gray00">face</span></button
+                >10
+              </div>
+              <div class="col-md-4 flex-v-center">
+                <button class="bg-transparent border-0">
+                  <span class="material-icons gray00"
+                    >insert_drive_file</span
+                  ></button
+                >10
+              </div>
+              <div class="col-md-4 flex-v-center">
+                <button class="bg-transparent border-0">
+                  <span class="material-icons gray00">message</span></button
+                >10
+              </div>
+            </div>
+            <div class="flex-v-center">
+              <span class="flex-spacer item p-1"></span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-8">
+        <mat-card class="mat-card m-1 p-1 border-primary mr-3">
+          <mat-card-content class="col-md-12 m-0 p-0">
+            <div class="p-0 m-0 col-md-12">
+              <nb-card
+                class="col-md-12 m-0 p-0"
+                style="width: 100%; border: #2aa1c0"
+              >
+                <nb-card-body class="mt-4 mb-0 p-0 col-md-12">
+                  <div class="row mt-4 m-0 p-0">
+                    <div class="mb-2 col-md-3">
+                      <label for="genero">Género</label>
+                      <nb-form-field>
+                        <input
+                          id="genero"
+                          nbInput
+                          fullWidth="true"
+                          fieldSize="large"
+                          shape="semi-round"
+                          value='{{ genero }}'
+                          [disabled]="generoDisabled"
+                        />
+                      </nb-form-field>
+                    </div>
+                    <div class="mb-3 col-md-4">
+                      <label>Fecha de nacimiento</label>
+                      <nb-form-field>
+                        <input
+                          nbInput
+                          fieldSize="large"
+                          shape="semi-round"
+                          value='{{ fechaNac }}'
+                          [disabled]="fechaNacDisabled"
+                        />
+                        <nb-icon
+                          style="cursor: pointer"
+                          nbSuffix
+                          class="mr-2"
+                          icon="calendar-outline"
+                        >
+                        </nb-icon>
+                      </nb-form-field>
+                    </div>
+
+                    <div class="mb-2 col-md-5">
+                      <label>Correo institucional</label>
+                      <nb-form-field>
+                        <input
+                          nbInput
+                          fieldSize="large"
+                          shape="semi-round"
+                          value='{{ correoInst }}'
+                          [disabled]="correoInstDisabled"
+                        />
+                      </nb-form-field>
+                    </div>
+
+                    <div class="mb-3 col-md-3">
+                      <label>Teléfono</label>
+
+                      <nb-form-field>
+                        <input
+                          formControlName="telefono"
+                          nbInput
+                          placeholder="Ingresar"
+                          fieldSize="large"
+                          shape="semi-round"
+                          minlength="7"
+                          maxlength="9"
+                          #telefono
+                          [value]="this.telefono.value.toUpperCase()"
+                          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                          [status]="
+                            f.telefono.invalid && f.telefono.touched
+                              ? 'danger'
+                              : 'basic'
+                          "
+                        />
+                      </nb-form-field>
+                      <div
+                        *ngIf="f.telefono.invalid && f.telefono.touched"
+                        class="invalid-text flex-column"
+                      >
+                        <span *ngIf="f.telefono.errors.required">
+                          El campo es obligatorio
+                        </span>
+                        <span *ngIf="f.telefono.errors.pattern">
+                          Solo se aceptan números
+                        </span>
+                        <span *ngIf="f.telefono.errors.minlength">
+                          El teléfono es muy corto
+                        </span>
+                        <span *ngIf="f.telefono.errors.maxlength">
+                          El teléfono es muy largo
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="mb-3 col-md-6">
+                      <label>Correo alternativo</label>
+                      <nb-form-field>
+                        <input
+                          formControlName="correoAlt"
+                          nbInput
+                          placeholder="Ingresar"
+                          fieldSize="large"
+                          shape="semi-round"
+                          maxlength="50"
+                          [status]="
+                            f.correoAlt.invalid && f.correoAlt.touched
+                              ? 'danger'
+                              : 'basic'
+                          "
+                        />
+                      </nb-form-field>
+                      <div
+                        *ngIf="f.correoAlt.invalid && f.correoAlt.touched"
+                        class="invalid-text flex-column"
+                      >
+                        <span *ngIf="f.correoAlt.errors?.email">
+                          Formato de correo inválido
+                        </span>
+                        <span
+                          *ngIf="
+                            !f.correoAlt.errors?.email &&
+                            f.correoAlt.errors?.pattern
+                          "
+                        >
+                          Formato de correo inválido
+                        </span>
+                        <span *ngIf="f.correoAlt.errors?.required">
+                          El campo es obligatorio
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-3 m-0 mb-3 row">
+                      <label for="sindicato">Sindicato laboral</label>
+                      <nb-select
+                        id="sindicato"
+                        formControlName="sindicato"
+                        placeholder="Seleccione"
+                        fullWidth="true"
+                        shape="semi-round"
+                        [selected]="sindicato"
+                        size="large"
+                        [status]="
+                          f.sindicato.invalid && f.sindicato.touched
+                            ? 'danger'
+                            : 'basic'
+                        "
+                      >
+                        <nb-option
+                          *ngFor="let sindicato of sindicatoList; let i = index"
+                          [value]="sindicato.codigoNumero"
+                        >
+                          {{ sindicato.valorTexto }}
+                        </nb-option>
+                      </nb-select>
+                      <div
+                        *ngIf="f.sindicato.invalid && f.sindicato.touched"
+                        class="invalid-text flex-column"
+                      >
+                        <span *ngIf="f.sindicato.errors?.required">
+                          El campo es obligatorio
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 m-0 mb-3 row">
+                      <label class="pt-3 mr-3">Regimen Laboral </label>
+                      <nb-form-field>
+                        <input
+                          nbInput
+                          fieldSize="large"
+                          shape="semi-round"
+                          value='{{ regimenLab }}'
+                          [disabled]="regimenLabDisabled"
+                        />
+                      </nb-form-field>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mt-4 mb-3 row">
+                    <div class="col-md-3 offset-md-5">
+                      <button
+                        nbButton
+                        class="btn-login px-5"
+                        shape="round"
+                        size="large"
+                        style="background-color: #0dacbc; color: white"
+                        fullWidth
+                        (click)="modProfile()"
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="m-2 p-2"></div>
+
+    <ng-container>
+      <serv-talento-table
+        [holderText]="this.holderText"
+        [tableData]="this.lstPuestos"
+        [tableColumns]="ordersTableColumns"
+        [isFilterable]="false"
+        [isPageable]="false"
+        [paginationSizes]="[5, 10, 15]"
+        [defaultPageSize]="10"
+        (sort)="sortData($event)"
+        [acciones]="false"
+        [showTitle]="true"
+        [title]="'Historial de puestos'"
+        [btnEditEnabled]="false"
+        (editAction)="editSede($event)"
+        [editTitle]="'Editar sede'"
+        [btnDeleteEnabled]="false"
+        (deleteAction)="removeSede($event)"
+        [deleteTitle]="'Inactivar sede'"
+        [showDownloadButton]="false"
+        [dataExport]="getDataExport()"
+      >
+      </serv-talento-table>
+    </ng-container>
+  </div>
+</form>

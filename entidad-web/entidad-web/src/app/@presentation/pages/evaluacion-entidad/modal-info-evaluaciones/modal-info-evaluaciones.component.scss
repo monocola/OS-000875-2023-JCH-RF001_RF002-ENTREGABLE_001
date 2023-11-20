@@ -1,0 +1,42 @@
+@import '_colors';
+
+h5 {
+  color: $primary-color;
+}
+
+.firstColumn {
+  width: 20% !important;
+}
+
+table {
+  border-radius: 0.625rem;
+}
+
+th {
+  background-color: $dark-gray;
+  color: white;
+  font-weight: 400;
+  font-size: 0.75rem !important;
+  position: relative;
+  &:first-child {
+    border-top-left-radius: 0.625rem;
+    width: 8rem;
+    &::after {
+      content: '';
+      right: 0;
+      top: 10%;
+      position: absolute;
+      height: 80%;
+      width: 0.125rem;
+      background-color: #ccc;
+    }
+  }
+  &:last-child {
+    border-top-right-radius: 0.625rem;
+    width: 30rem;
+  }
+}
+
+td {
+  font-size: 0.813rem !important;
+}

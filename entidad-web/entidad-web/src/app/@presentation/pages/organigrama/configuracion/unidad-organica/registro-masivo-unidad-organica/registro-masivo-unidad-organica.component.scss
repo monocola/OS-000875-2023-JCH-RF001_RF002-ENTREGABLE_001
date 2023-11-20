@@ -1,0 +1,46 @@
+@import '_colors';
+
+.buttonArea {
+    & > button {
+        font-size: 0.875rem;
+        font-weight: 400;
+        & > .iconArrow {
+            font-size: 1.125rem;
+        }
+    }
+}
+
+.sectionFile {
+    height: 3.125rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    margin-top: 0.625rem;
+}
+
+.btnRemoveFile {
+    font-size: 1rem;
+    color: black !important;
+}
+
+.btnFileUpload {
+    user-select: none;
+    border: 1px solid #ccc;
+    border-radius: 0.625rem;
+    padding: 0.563rem;
+    cursor: pointer;
+    transition: 0.2s;
+    &:hover {
+        background-color: #eee;
+    }
+}
+
+.erroresContainer {
+    border: 1px dashed #ccc;
+    max-height: 11.875rem;
+    overflow: auto;
+    padding: 0.625rem;
+}
+
+.mat-list-icon {
+    color: $red;
+}

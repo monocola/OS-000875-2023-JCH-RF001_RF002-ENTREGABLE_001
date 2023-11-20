@@ -1,0 +1,40 @@
+@import "../../@common-components/material-table/material-table.component.scss";
+
+.body {
+    background-color: #fbfbfb;
+}
+
+.container-fluid {
+    background-color: #fff;
+    padding-bottom: 15px;
+    border-radius: 10px;
+}
+
+.panel-tab {
+    background: #ffffff;
+    box-shadow: 0 0 7px rgba(129, 145, 164, 0.17);
+    border-radius: 10px;
+}
+
+.label-header {
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    color: #000000 !important;
+}
+
+.back-arrow {
+    color: #024487;
+}
+
+.row {
+    margin-right: 0;
+}
+
+.titlePage {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+}

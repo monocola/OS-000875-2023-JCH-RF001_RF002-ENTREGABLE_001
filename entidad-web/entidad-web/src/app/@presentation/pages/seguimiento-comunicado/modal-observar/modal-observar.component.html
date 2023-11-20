@@ -1,0 +1,56 @@
+<div class="d-flex w-100">
+    <span class="flex-spacer"></span>
+    <nb-icon
+      class="mr-2 btnClose"
+      nbSuffix
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-icon>
+  </div>
+  
+  <div class="mb-12 col-md-12 divHeaderMargin">
+    <div class="flex-v-center flex-column">
+      <img
+        src="assets/images/icons/observado.png"
+        style="height: 50px; width: 55px"
+        alt="Logo"
+      />
+      <h6 class="mt-3">{{ title }}</h6>
+    </div>
+  </div>
+  
+  <div class="py-2 mx-2 container-fluid divMargin">
+    <form [formGroup]="Form" class="row">
+
+        <textarea class="observacionStyle" placeholder="Ingrese su observación" formControlName="observadorText"></textarea>  
+    </form>
+  </div>
+  
+  <div style="align-self: center; margin-top: 15px">
+    <div class="flex-v-center">
+      <div class="col-5">
+        <button
+          nbButton
+          outline
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="onNoClick()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div class="col-5">
+        <button
+          nbButton
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="GuardarComunicado()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+  

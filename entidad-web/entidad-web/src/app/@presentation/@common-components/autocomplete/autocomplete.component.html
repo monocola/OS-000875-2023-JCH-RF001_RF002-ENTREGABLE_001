@@ -1,0 +1,37 @@
+<label for="dep" *ngIf="label">{{ label }}</label>
+<nb-form-field>
+  <input
+    type="text"
+    [placeholder]="placeholder"
+    fullWidth
+    nbInput
+    shape="semi-round"
+    [fieldSize]="size"
+    maxlength="60"
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    [status]="
+      (control?.invalid && control?.touched) || invalidFlag ? 'danger' : 'basic'
+    "
+    (keyup)="this.keyup.emit()"
+  />
+  <nb-icon nbSuffix icon="buscar"></nb-icon>
+</nb-form-field>
+<mat-autocomplete
+  autoActiveFirstOption
+  #auto="matAutocomplete"
+  [displayWith]="displayFn.bind(this)"
+>
+  <mat-option *ngFor="let item of itemsFiltrados" [value]="item">
+    {{ item[fieldToShow] }}
+  </mat-option>
+</mat-autocomplete>
+<div
+  *ngIf="control.invalid && control.touched"
+  class="invalid-text flex-column"
+>
+  <span *ngIf="control.errors.required"> El campo es obligatorio. </span>
+  <span *ngIf="control.errors.notfound">
+    No se encontraron coincidencias.
+  </span>
+</div>

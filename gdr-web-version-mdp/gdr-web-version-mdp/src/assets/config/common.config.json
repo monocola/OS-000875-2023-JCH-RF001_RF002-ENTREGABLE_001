@@ -1,0 +1,8 @@
+{
+  "public_base_url_maestra": "http://10.240.132.31:8080/maestra/api/public/",
+  "public_base_url_persona": "http://10.240.132.31:8080/persona/api/public/",
+  "public_base_url_seguridad": "http://10.240.132.31:8080/seguridad/api/public/",
+  "public_base_url_entidad": "http://10.240.132.34:8080/entidad/api/public/",
+  "public_base_url_planificacion": "http://10.240.132.34:8088/planificacion/api/public/",
+  "public_base_url_file_server": "http://10.240.132.49:9095/app/img/"
+}

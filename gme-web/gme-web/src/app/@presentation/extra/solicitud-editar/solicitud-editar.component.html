@@ -1,0 +1,421 @@
+<div class="w-100 row m-0 p-3">
+  <div class="col-12">
+    <h3 class="fs-24 mb-0">
+      <nb-icon (click)="regresar()" icon="arrow_back" pack="entweb" status="primary" class="mt-1 mr-3 fs-24">
+      </nb-icon>
+      Solicitud de registro de entidad
+    </h3>
+  </div>
+  <div class="col-12 mt-4">
+    <nb-stepper #stepper orientation="vertical" [disableStepNavigation]="true">
+      <nb-step label="Datos generales" [stepControl]="firstForm">
+        <form [formGroup]="searchForm">
+          <div class="w-100 row m-0 p-0">
+            <div class="col-12 row m-0 p-0">
+              <div class="col-6 font-weight-bold fs-18 align-self-center">
+                Datos de Entidad
+              </div>
+              <div class="col-6 row m-0 align-items-center">
+                <div class="col">Buscar por RUC</div>
+                <div class="col">
+                  <input nbInput fullWidth placeholder="Ingresar" shape="semi-round" formControlName="rucEntidad"
+                    maxlength="11" (keypress)="numberOnly($event)" style="display: none;"/>
+                </div>
+                <div class="col">
+                  <input nbInput fullWidth placeholder="Ingresar" shape="semi-round" formControlName="rucEntidadSearch"
+                    maxlength="11" (keypress)="numberOnly($event)"/>
+                </div>
+                <div class="col">
+                  <button nbButton shape="round" outline status="info" fullWidth [disabled]="fff.rucEntidadSearch.invalid"
+                    (click)="buscarRuc()">
+                    Buscar
+                  </button>
+                  <button (click)="buscarRucPrueba()"  id="myRuc" class="hidden" style="display: none;">
+                  Buscar
+                </button>
+                 
+                </div>
+                <div *ngIf="fff.rucEntidadSearch.invalid && fff.rucEntidadSearch.touched" class="invalid-text flex-column">
+                  <span *ngIf="fff.rucEntidadSearch.errors.required">
+                    El campo es obligatorio
+                  </span>
+                  <span *ngIf="fff.rucEntidadSearch.errors.maxlength">
+                    El texto permitido es de 11 caracteres
+                  </span>
+                  <span *ngIf="fff.rucEntidadSearch.errors.minlength">
+                    El texto permitido es de 11 caracteres
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form [formGroup]='firstForm'>
+          <div class='w-100 row m-0 p-0'>
+            <mat-divider class="col-12 m-3"></mat-divider>
+            <div class="col-12 row m-0">
+              <div style="width: 275px">
+                <div class="w-100 m-0 p-2 uplogo">
+                  <div class="w-100" *ngIf="foto==false">
+                    <div class="col-12 firts-box inactivo fs-12 text-center">
+                      Ingreso de archivo (opcional)
+                    </div>
+
+                    <label class="btnUploadLogo flex-v-center" style="background-color: #0dacbc; color: white"
+                      for="file-upload">Subir Logotipo</label>
+                    <input id="file-upload" type="file" (change)="fileLogoEvent($event)"
+                      formControlName="base64Image" />
+                    <div class="col-12 mt-2 inactivo text-center fs-24">
+                      <p class="inactivo">Tamaño permitido:</p>
+                      <p class="inactivo">400 x 400 px</p>
+                      <p class="inactivo">500 Kb</p>
+                    </div>
+                    <div
+                      class="col-12 inactivo text-center fs-12 row m-0 p-0 mt-3 align-items-end justify-content-center"
+                      style="height: 74px">
+                      <div>Formatos permitidos <b>JPG, PNG, JPEG</b></div>
+                    </div>
+                  </div>
+                  <div class="w-100 h-100 m-0 row" *ngIf="foto==true">
+                    <div class="divLogoImg mt-1 align-self-center" >
+                      <img id="logoProfile" alt="logo_entidad" [src]="logoProfile || imgData64" />
+                      <div class="btnClearImage flex-v-center mat-elevation-z7" (click)="clearImage()">
+                        <nb-icon class="documentIcon" nbSuffix icon="close"></nb-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col row m-0 px-3 box">
+                <div class="col-12">
+                  <label>Nombre de entidad (Razón Social)</label>
+                  <input nbInput shape="semi-round" fullWidth formControlName="razonSocial"
+                   class="razonSocial"
+                    [status]="ff.razonSocialSearch.invalid && ( ff.razonSocialSearch.dirty ||  ff.razonSocialSearch.touched) ? 'danger' : 'basic' " />
+                  <div *ngIf="ff.razonSocialSearch.invalid && ( ff.razonSocialSearch.dirty ||  ff.razonSocialSearch.touched)"
+                    class="invalid-text flex-column">
+                    <span *ngIf="ff.razonSocialSearch.errors.required">
+                      El campo es obligatorio
+                    </span>
+
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Nombre abreviado de la entidad</label>
+                  <input nbInput placeholder="Ingrese" shape="semi-round" fullWidth formControlName="abreviaturaEntidad"
+                    [status]="ff.abreviaturaEntidad.invalid && ( ff.abreviaturaEntidad.dirty ||  ff.abreviaturaEntidad.touched) ? 'danger' : 'basic' " />
+                  <div *ngIf="
+                      ff.abreviaturaEntidad.invalid &&
+                      ( ff.abreviaturaEntidad.dirty ||  ff.abreviaturaEntidad.touched)
+                    " class="invalid-text flex-column">
+                    <span *ngIf="ff.abreviaturaEntidad.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="ff.abreviaturaEntidad.errors.maxlength">
+                      El texto introducido es muy largo max 10 caracteres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Nivel de gobierno (opcional)</label>
+                  <nb-form-field>
+                    <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="nivelGobiernoId">
+                      <nb-option>Seleccione</nb-option>
+                      <nb-option *ngFor="let nivel of cboNivel" [value]="nivel.parametroId">
+                        {{ nivel.valorTexto }}
+                      </nb-option>
+                    </nb-select>
+                  </nb-form-field>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Tipo de entidad (opcional)</label>
+                  <nb-form-field>
+                    <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="tipoEntidadId">
+                      <nb-option>Seleccione</nb-option>
+                      <nb-option *ngFor="let tipoPub of cboTipoEntPub" [value]="tipoPub.parametroId">
+                        {{ tipoPub.valorTexto }} 
+                      </nb-option>
+                     </nb-select>
+                  </nb-form-field>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Sector (opcional)</label>
+                  <nb-form-field>
+                    <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="sectorId">
+                      <nb-option>Seleccione</nb-option>
+                      <nb-option *ngFor="let sector of cboSector" [value]="sector.parametroId">
+                        {{ sector.valorTexto }}
+                      </nb-option>
+                    </nb-select>
+                  </nb-form-field>
+                </div>
+                <div class='col-6 mt-3'>
+                  <label>Sindicato (opcional)</label>
+                  <input nbInput placeholder='Ingrese' shape='semi-round' fullWidth formControlName='sindicato'
+                    maxlength='500' min="0" type='number'>
+                </div>
+                <div class="col-6 mt-3 align-self-end text-right">
+                  <button class="px-2" type="button" nbButton shape="round" status="info" (click)="validacion()">
+                    Siguiente<nb-icon class="text-white" icon="row-rigth" pack="entweb"></nb-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+      <nb-step label="Jefe ORH" [stepControl]="frm">
+        <form [formGroup]="frm">
+          <div class="w-100 row m-0 p-0">
+            <div class="col-12 row m-0 p-0">
+              <div class="col-12 font-weight-bold fs-18 align-self-center">
+                Datos del jefe ORH <span class="inactivo fs-14 ml-3"></span>
+              </div>
+            </div>
+            <mat-divider class="col-12 m-3"></mat-divider>
+            <div class="col-12 row m-0">
+              <div class="col-6 row m-0">
+                <div class="col-6">
+                  <label>Tipo de documento</label>
+                  <nb-form-field>
+                    <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="tipoDocumento" (selectedChange)="changeType($event)"
+                      [status]="
+                        f.tipoDocumento.invalid && ( f.tipoDocumento.dirty || f.tipoDocumento.touched)
+                          ? 'danger'
+                          : 'basic'
+                      ">
+                      <nb-option>Seleccione</nb-option>
+                      <nb-option *ngFor="let tipoDoc of cboTipoDocumento" [value]="tipoDoc.codigoNumero">
+                        {{ tipoDoc.valorTexto }}
+                      </nb-option>
+                    </nb-select>
+                    <div *ngIf="f.tipoDocumento.invalid && (f.tipoDocumento.dirty ||  f.tipoDocumento.touched)"
+                      class="invalid-text flex-column">
+                      <span *ngIf="f.tipoDocumento.errors.required">
+                        El campo es obligatorio
+                      </span>
+                    </div>
+                  </nb-form-field>
+                </div>
+                <div class="col-6">
+                  <label>Número de documento</label>
+                  <input nbInput [simpleCharacteresAndNumber]="numeroDocumentoType" placeholder="Seleccione"
+                    shape="semi-round" fullWidth formControlName="numeroDocumento"
+                    [maxlength]="numeroDocumentoMaxlength" [status]="
+                      f.numeroDocumento.invalid && (f.numeroDocumento.dirty || f.numeroDocumento.touched)
+                        ? 'danger'
+                        : 'basic'
+                    " />
+
+                  <div *ngIf="
+                      f.numeroDocumento.invalid && (f.numeroDocumento.dirty ||  f.numeroDocumento.touched)
+                    " class="invalid-text flex-column">
+                    <span *ngIf="f.numeroDocumento.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="f.numeroDocumento.errors.maxlength">
+                      El texto introducido es muy largo max 15 caracteres
+                    </span>
+                    <span *ngIf="f.numeroDocumento.errors.minlength && tipoDoc==false">
+                      El texto introducido es muy corto min 8 caracteres
+                    </span>
+                    <span *ngIf="f.numeroDocumento.errors.minlength && tipoDoc==true">
+                      El texto introducido es muy corto min 9 caracteres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Apellido paterno</label>
+                  <input nbInput placeholder="Ingrese" shape="semi-round" fullWidth maxlength="200"
+                    formControlName="apellidoPaterno" [status]="
+                      f.apellidoPaterno.invalid && (f.apellidoPaterno.dirty || f.apellidoPaterno.touched)
+                        ? 'danger'
+                        : 'basic'
+                    " />
+                  <div *ngIf="
+                      f.apellidoPaterno.invalid && (f.apellidoPaterno.dirty || f.apellidoPaterno.touched)
+                    " class="invalid-text flex-column">
+                    <span *ngIf="f.apellidoPaterno.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="f.apellidoPaterno.errors.maxlength">
+                      El texto introducido es muy largo max 250 caracteres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Apellido materno</label>
+                  <input nbInput maxlength="200" placeholder="Ingrese" shape="semi-round" fullWidth
+                    formControlName="apellidoMaterno" [status]="
+                      f.apellidoMaterno.invalid && (f.apellidoMaterno.dirty || f.apellidoMaterno.touched)
+                        ? 'danger'
+                        : 'basic'
+                    " />
+                  <div *ngIf="
+                      f.apellidoMaterno.invalid && (f.apellidoMaterno.dirty || f.apellidoMaterno.touched)
+                    " class="invalid-text flex-column">
+                    <span *ngIf="f.apellidoMaterno.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="f.apellidoMaterno.errors.maxlength">
+                      El texto introducido es muy largo max 250 caracteres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-12 mt-3">
+                  <label>Nombres</label>
+                  <input nbInput placeholder="Ingrese" shape="semi-round" fullWidth maxlength="200"
+                    formControlName="nombres" [status]="
+                      f.nombres.invalid && (f.nombres.dirty || f.nombres.touched)
+                        ? 'danger'
+                        : 'basic'
+                    " />
+                  <div *ngIf="f.nombres.invalid && (f.nombres.dirty || f.nombres.touched)"
+                    class="invalid-text flex-column">
+                    <span *ngIf="f.nombres.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="f.nombres.errors.maxlength">
+                      El texto introducido es muy largo max 250 caracteres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Fecha de nacimiento</label>
+                  <nb-form-field>
+                    <input #fechaNacimiento id="fechaNacimiento" formControlName="fechaNacimiento" nbInput type="text"
+                      class="pointer date-format" placeholder="dd/mm/aaaa" [nbDatepicker]="dateTimePicker1"
+                      fieldSize="large" shape="semi-round" [status]="
+                        f.fechaNacimiento.invalid && (f.fechaNacimiento.dirty || f.fechaNacimiento.touched)
+                          ? 'danger'
+                          : 'basic'
+                      " />
+                    <nb-icon style="cursor: pointer" nbSuffix class="mr-2 pointer" (click)="fechaNacimiento.click()"
+                      icon="calendar-outline">
+                    </nb-icon>
+                    <nb-datepicker #dateTimePicker1></nb-datepicker>
+                    <div *ngIf="
+                        f.fechaNacimiento.invalid && (f.fechaNacimiento.dirty || f.fechaNacimiento.touched)
+                      " class="invalid-text flex-column">
+                      <span *ngIf="f.fechaNacimiento.errors.required">
+                        El campo es obligatorio
+                      </span>
+                    </div>
+                  </nb-form-field>
+                </div>
+
+                <div class='col-6 mt-3'>
+                  <label>Correo electrónico</label>
+                  <input nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='correoElectronico'
+                    type='email'
+                    [status]="f.correoElectronico.invalid && (f.correoElectronico.dirty ||  f.correoElectronico.touched)  ? 'danger' : 'basic' ">
+                  <div
+                    *ngIf="f.correoElectronico.invalid && (f.correoElectronico.dirty ||  f.correoElectronico.touched)"
+                    class="invalid-text flex-column">
+                    <span *ngIf="f.correoElectronico.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="f.correoElectronico.errors.email">
+                      El email no es valido
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Teléfono fijo</label>
+                  <input nbInput placeholder="75737010" shape="semi-round" fullWidth formControlName="telefonoFijo"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    [status]="f.telefonoFijo.invalid && ( f.telefonoFijo.dirty ||  f.telefonoFijo.touched) ? 'danger' : 'basic'"
+                    (keyup)="validarCamposObligatoriosDown($event)" />
+                  <div *ngIf="f.telefonoFijo.invalid && ( f.telefonoFijo.dirty || f.telefonoFijo.touched)"
+                    class="invalid-text flex-column">
+                    <span *ngIf="f.telefonoFijo.errors.required">
+                      El campo es obligatorio
+                    </span>
+                    <span *ngIf="f.telefonoFijo.errors.maxlength">
+                      El texto introducido es muy largo max 20 caracteres
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Anexo (opcional)</label>
+                  <input nbInput placeholder="757-7010" shape="semi-round" fullWidth
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" formControlName="anexo" maxlength="10" />
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Celular</label>
+                  <input nbInput placeholder="975737010" shape="semi-round" fullWidth
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" formControlName="celular" maxlength="10"
+                    [status]="f.celular.invalid && ( f.celular.dirty ||  f.celular.touched) ? 'danger' : 'basic' "
+                    (keyup)="validarCamposObligatoriosDown($event)" />
+                  <div *ngIf="f.celular.invalid && ( f.celular.dirty ||  f.celular.touched)"
+                    class="invalid-text flex-column">
+                    <span *ngIf="f.celular.errors.required">
+                      El campo es obligatorio
+                    </span>
+                  </div>
+                </div>
+                <div class="col-12 mt-3">
+                  <label>Correo electrónico GDR(opcional)</label>
+                  <input nbInput placeholder="Ingresar" shape="semi-round" fullWidth
+                    formControlName="correoElectronicoGestor" type="email" />
+                </div>
+              </div>
+              <div class="col-6 row m-0">
+                <mat-divider [vertical]="true"></mat-divider>
+                <div class="col m-0 p-0">
+                  <div class="col-12">
+                    <label>Subir documento de asignación</label>
+                  </div>
+                  <div class="col-12">
+                    
+                    <div class="dropzone" *ngIf="!file"  ngx-dropzone   (change)="archiveSelection($event)" accept="application/pdf" >
+               
+                      <label for="fileDropRef" style="height: 120px; width: 100%; padding-top: 1rem">
+                        <div class="etiqueta mb-1">
+                          Arrastra y suelta tu archivo aquí <br />
+                          <div class="etiqueta mt-2">ó</div>
+                        </div>
+
+                        <button nbButton shape="round" size="medium" status="info" outline (change)="archiveSelection($event)" 
+                          class="py-2 px-5">
+                          Subir archivo
+                        </button>
+                      </label>
+                    </div>
+
+                    <div class="col-12 m-0 p-3 box" *ngIf="file">
+                      <div class="row col-md-12 m-0 p-0 font-weight-bold">
+                        <div class="col-10 p-0 fs-12 text-left">
+                          {{ file.name }}
+                        </div>
+                        <div class="col-2 m-0 p-0">
+                          <nb-action class="p-0 justify-content-end" icon="clean" (click)="deleteFile()"></nb-action>
+                        </div>
+                      </div>
+                    </div> 
+                    <div class="col-12 row m-0 p-0">
+                      <div class="col-6 fs-11 mt-2">
+                        Peso máximo de archivo 5 MB
+                      </div>
+                      <div class="col-6 fs-11 mt-2 text-right">Formato PDF</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button (click)="buscarRucPrueba()"  id="myPantalla" class="hidden" style="display: none;">
+              Buscar
+            </button>
+            <div class="col-12 text-center mt-4">
+              <button class="px-5 mr-2" type="button" nbButton shape="round" nbButton (click)="resetStep2()" nbStepperPrevious>Atrás</button>
+              <button class="px-5" nbButton type="button" shape="round" (click)="enviar()" status="info">
+                Enviar solicitud
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-step>
+    </nb-stepper>
+  </div>
+</div>
+

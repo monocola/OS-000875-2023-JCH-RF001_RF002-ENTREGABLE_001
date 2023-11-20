@@ -1,0 +1,233 @@
+<div class="body" (resized)="onResized($event)">
+  <section class="d-flex pb-3">
+    <div class="flex-v-center-left">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/pages/gestionevaluaciones-entidad']"
+      >
+        <nb-icon nbSuffix class="back__arrow" icon="back"></nb-icon>
+      </button>
+      <h5 class="pl-2 titlePage">Gestión de evaluaciones</h5>
+    </div>
+  </section>
+
+  <section class="row px-5 mt-3">
+    <div class="d-flex flex-column col-3">
+      <span>Régimen laboral</span>
+      <span class="fw-600 mt-2">
+        {{ helperService.dataToEdit?.regimen?.descripcionCorta }}
+      </span>
+    </div>
+    <div class="d-flex flex-column col-5 border-left">
+      <span>Modalidad</span>
+      <span class="fw-600 mt-2">
+        {{ helperService.dataToEdit?.modalidad?.descripcionCorta }}
+      </span>
+    </div>
+    <div class="d-flex flex-column col-4 border-left">
+      <span>Tipo</span>
+      <span class="fw-600 mt-2">
+        {{ helperService.dataToEdit?.tipo?.descripcionCorta }}
+      </span>
+    </div>
+  </section>
+
+  <div class="px-5">
+    <hr />
+  </div>
+
+  <main class="w-100 flex-v-center">
+    <section>
+      <div class="flex-v-center">
+        <span class="fw-500">Lista de evaluaciones</span>
+        <nb-icon
+          icon="info"
+          nbPopoverPlacement="right"
+          nbPopoverTrigger="hint"
+          class="popoverTrigger ml-2"
+          (click)="openModalInfo()"
+        >
+        </nb-icon>
+
+        <button
+          nbButton
+          [appearance]="'ghost'"
+          shape="round"
+          status="primary"
+          class="mx-5 fw-400"
+          size="small"
+          (click)="addEvaluacion()"
+        >
+          Añadir evaluación/es
+          <span class="material-icons fs-20 ml-2"> add_circle </span>
+        </button>
+
+        <div class="flex-spacer"></div>
+      </div>
+      <div class="fs-13 msgDivError w-100 px-3 text-right" *ngIf="!correcto">
+        {{ this.msgError || 'Revise los campos en rojo por favor' }}
+      </div>
+
+      <div class="container-box mt-1">
+        <div class="flex-v-center-bottom w-100">
+          <div
+            cdkDropList
+            class="example-list w-100 py-2 px-2"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <ng-container *ngFor="let evaluacion of evaluaciones; index as k">
+              <div
+                class="example-box mat-elevation-z2 py-2 px-3"
+                cdkDrag
+                cdkDragHandle
+              >
+                <div class="drag-index fw-600 fs-16 ml-1">
+                  {{ k + 1 }}
+                </div>
+
+                <div class="flex-v-center-left">
+                  <span class="material-icons mr-2"> insert_drive_file </span>
+
+                  <div class="evaluacion">
+                    <span class="ml-3" *ngIf="evaluacion.evaluacionOrigenId">
+                      {{ evaluacion.detalleEvaluacion }}
+                    </span>
+                    <nb-form-field *ngIf="!evaluacion.evaluacionOrigenId">
+                      <nb-select
+                        [placeholder]="'Elige'"
+                        fullWidth="true"
+                        [size]="'large'"
+                        shape="semi-round"
+                        [(ngModel)]="evaluacion.tipoEvaluacionId"
+                        (selectedChange)="verifyRow(k)"
+                      >
+                        <nb-option value=""> Elige </nb-option>
+                        <nb-option
+                          *ngFor="let item of getEvaluacionesWRepeat(k)"
+                          [value]="item.maeDetalleEntidadId"
+                        >
+                          {{ item.descripcion }}
+                        </nb-option>
+                      </nb-select>
+                    </nb-form-field>
+                  </div>
+                </div>
+
+                <div class="pmin">
+                  <div>
+                    <span>P/</span>
+                    <span>Mín</span>
+                  </div>
+                  <mat-form-field>
+                    <input
+                      type="number"
+                      class="fs-16"
+                      matInput
+                      max="100"
+                      min="0"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                      (keyup)="verifyRow(k)"
+                      (change)="verifyRow(k)"
+                      onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}"
+                      [(ngModel)]="evaluaciones[k].puntajeMinimo"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <div class="pmax">
+                  <div>
+                    <div>P/</div>
+                    <div>Máx</div>
+                  </div>
+                  <mat-form-field>
+                    <input
+                      type="number"
+                      class="fs-16"
+                      matInput
+                      maxlength="3"
+                      [(ngModel)]="evaluacion.puntajeMaximo"
+                      min="0"
+                      max="100"
+                      (keyup)="verifyRow(k)"
+                      (change)="verifyRow(k)"
+                      onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    />
+                  </mat-form-field>
+                </div>
+
+                <div class="ppor">
+                  <div>
+                    <span>Pct. </span>
+                  </div>
+                  <mat-form-field>
+                    <input
+                      type="number"
+                      class="fs-16"
+                      matInput
+                      [(ngModel)]="evaluacion.peso"
+                      required
+                      maxlength="3"
+                      min="0"
+                      max="100"
+                      (keyup)="verifyRow(k)"
+                      (change)="verifyRow(k)"
+                      onKeyUp="if(this.value>100){this.value='100';}else if(this.value<0){this.value='0';}"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    />
+                    <span
+                      mat-button
+                      matSuffix
+                      mat-icon-button
+                      class="fw-600 fs-20"
+                    >
+                      %
+                    </span>
+                  </mat-form-field>
+                </div>
+
+                <div class="ml-4 btn-evaluation-section">
+                  <em
+                    mat-icon-button
+                    class="status-ok animate__animated animate__bounceIn"
+                    *ngIf="evaluacion.correcto"
+                  >
+                    <mat-icon> done </mat-icon>
+                  </em>
+
+                  <em
+                    *ngIf="!evaluacion.correcto"
+                    class="status-bad animate__animated animate__bounceIn"
+                  >
+                    <mat-icon> clear </mat-icon>
+                  </em>
+
+                  <button
+                    mat-icon-button
+                    [disabled]="evaluacion.evaluacionOrigenId"
+                    class="remove-icon"
+                    (click)="removeEvaluacion(k)"
+                  >
+                    <mat-icon> remove_circle_outline </mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="ml-4 fs-12 px-3 mb-3 mt-n2 msgDivError text-right w-100"
+                *ngIf="!evaluacion.correcto"
+              >
+                {{ evaluacion.msgError }}
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<serv-talento-bottom-div-entidad
+  [bodySize]="bodySize"
+  (saveEmitter)="save()"
+  [disabledSave]="false"
+></serv-talento-bottom-div-entidad>

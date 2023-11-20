@@ -1,0 +1,284 @@
+<div class="body" style="background-color: #fbfbfb;">
+
+  <div class="d-flex">
+    <p class="titlePage"> Mi entidad </p>
+    <span class="flex-spacer">
+    </span>
+  </div>
+  
+  <div class="container alineacionContainer">
+    <div class="row">
+      <div class="col-12">
+        <nb-card class='card-col-small m-1 p-1'>
+          <nb-card-body class='m-0 p-0'>
+            <div class="row">
+              <div class="col-2 contenedor-columnas">
+                <div class="columx2">
+                  <div class="columna">
+                    <div class="pleca2">
+                      <img alt="" [src]="this.imgEntidad" class="rounded-circle" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-8">
+
+                <div class="card-header-ps">
+                  <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                    <h6>{{entity.razonSocial}}</h6>
+                  </div>
+                </div>
+                <div class="">
+                  <table class="align-middle mb-0 table table-borderless">
+                    <caption></caption>
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>    
+                        <td class="text-left text-muted" style="width: 5%;"> Nombre abreviado </td>
+                        <td class="text-left" style="width: 28%;">{{entity.sigla}} </td>
+                        <td class="text-left text-muted" style="width: 5%;">R.U.C</td>
+                        <td class="text-left" style="width: 28%;"> {{entity.numeroDocumento}}</td>
+                        <td class="text-left text-muted" style="width: 5%;">Nivel de gobierno</td>
+                        <td class="text-left" style="width: 28%;"> {{entity.nivelGobierno}} </td>
+                      </tr>
+                      <tr>
+                        <td class="text-left text-muted" style="width: 5%;">Tipo de entidad</td>
+                        <td class="text-left" style="width: 28%;"> {{entity.tipoEntidadPub}} </td>
+                        <td class="text-left text-muted" style="width: 5%;"> Sector </td>
+                        <td class="text-left" style="width: 28%;">  {{entity.sector}} </td>
+                        <td class="text-left text-muted" style="width: 5%;"> Nº de sindicatos </td>
+                        <td class="text-left" style="width: 28%;"> {{entity.nroSindicatos}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+              <div class="col-2">
+                <table class="align-middle text-truncate mb-0 table table-borderless">
+                  <caption></caption>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-left text-muted" style="width: 80px;">
+                        <button class="mb-2 mr-2 btn-transition btn btn-outline-primary btnEditar"
+                          (click)='editar(true)'>Editar
+                          <em class="ent-web-edit"></em>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-left text-muted" style="width: 80px;"> </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+
+  <div class='mb-4 p-0'></div>
+
+  <div class="container alineacionContainer">
+    <mat-divider></mat-divider>
+  </div>
+
+  <div class='mb-4 p-0'></div>
+
+  <div class="d-flex container">
+    <p class="titlePage"> Resumen de Servidores civiles </p>
+    <span class="flex-spacer">
+    </span>
+  </div>
+
+  <div class="row no-margin container">
+    <carousel [overflowCellsLimit]="3" [cellsToShow]="3.5" style="z-index: 1; width: 95% !important;">
+
+      <div class="carousel-cell">
+        <nb-card>
+          <nb-card-header class="totalservidores" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+          </nb-card-header>
+          <nb-card-body>
+            <div>
+              <h5>{{resumenServidoresCiviles?.totalEntidad}}</h5>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                Total de servidores
+              </div>
+              <div class="col-sm-4">
+                <nb-icon icon="people" nbSuffix></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="carousel-cell">
+        <nb-card>
+          <nb-card-header class="carrerasespeciales"
+            style="border-top-left-radius: 16px;border-top-right-radius: 16px;"></nb-card-header>
+          <nb-card-body>
+            <div>
+              <h5>{{resumenServidoresCiviles?.totalCarrerasEspeciales}}</h5>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                Con carreras especiales
+              </div>
+              <div class="col-sm-4">
+                <nb-icon icon="people" nbSuffix></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="carousel-cell">
+        <nb-card>
+          <nb-card-header class="sindicalizados" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+          </nb-card-header>
+          <nb-card-body>
+            <div>
+              <h5>{{resumenServidoresCiviles?.totalSindicalizados}}</h5>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                Sindicalizados
+              </div>
+              <div class="col-sm-4">
+                <nb-icon icon="people" nbSuffix></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="carousel-cell">
+        <nb-card>
+          <nb-card-header class="totaljefes" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+          </nb-card-header>
+          <nb-card-body>
+            <div>
+              <h5>{{resumenServidoresCiviles?.totalResponsablesOOUSUBOU}}</h5>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                Responsables de un O/UO/SUBUO
+              </div>
+              <div class="col-sm-4">
+                <nb-icon icon="people" nbSuffix></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="carousel-cell">
+        <nb-card>
+          <nb-card-header class="modalidad" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+          </nb-card-header>
+          <nb-card-body>
+            <div>
+              <h5>{{resumenServidoresCiviles?.totalModalidadFormativaSimilares}}</h5>
+            </div>
+            <div class="row">
+              <div class="col-sm-9">
+                Por modalidad formativa y similares
+              </div>
+              <div class="col-sm-3">
+                <nb-icon icon="people" nbSuffix></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="carousel-cell">
+        <nb-card>
+          <nb-card-header class="encargados" style="border-top-left-radius: 16px;border-top-right-radius: 16px;">
+          </nb-card-header>
+          <nb-card-body>
+            <div>
+              <h5>{{resumenServidoresCiviles?.totalEncargadosOOUSUBOU}}</h5>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                Encargados de un O/UO/SUBUO
+              </div>
+              <div class="col-sm-4">
+                <nb-icon icon="people" nbSuffix></nb-icon>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+    </carousel>
+  </div>
+
+  <div class="container alineacionContainer">
+    <div class="row">
+      <div class="col-sm-6">
+        <nb-card>
+          <nb-card-header> Servidores Civiles según tipo de Órgano</nb-card-header>
+          <nb-card-body>
+            <div id="chart">
+                <apx-chart *ngIf="chartOptionsTipoOrgano!==undefined"
+                [series]="chartOptionsTipoOrgano.series"
+                [chart]="chartOptionsTipoOrgano.chart"
+                [labels]="chartOptionsTipoOrgano.labels"
+                [dataLabels]="chartOptionsTipoOrgano.dataLabels"
+                [states]="chartOptionsTipoOrgano.states"
+                [plotOptions]="chartOptionsTipoOrgano.plotOptions"
+                [stroke]="chartOptionsTipoOrgano.stroke"
+                [theme]="chartOptionsTipoOrgano.theme"
+                [responsive]="chartOptionsTipoOrgano.responsive">
+              </apx-chart>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-sm-6">
+        <nb-card>
+          <nb-card-header> Servidores por régimen laboral</nb-card-header>
+          <nb-card-body>
+            <div id="chart">
+              <apx-chart *ngIf="chartOptionsServidoresRegimenLaboral!==undefined"
+                [series]="chartOptionsServidoresRegimenLaboral.series"
+                [chart]="chartOptionsServidoresRegimenLaboral.chart"
+                [labels]="chartOptionsServidoresRegimenLaboral.labels"
+                [dataLabels]="chartOptionsServidoresRegimenLaboral.dataLabels"
+                [states]="chartOptionsServidoresRegimenLaboral.states"
+                [plotOptions]="chartOptionsServidoresRegimenLaboral.plotOptions"
+                [stroke]="chartOptionsServidoresRegimenLaboral.stroke"
+                [theme]="chartOptionsServidoresRegimenLaboral.theme"
+                [responsive]="chartOptionsServidoresRegimenLaboral.responsive">
+              </apx-chart>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+
+</div>

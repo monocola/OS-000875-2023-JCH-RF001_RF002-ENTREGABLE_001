@@ -1,0 +1,25 @@
+@import '_colors';
+
+.bodyModal {
+  width: 31.25rem;
+}
+
+.title {
+  color: $primary-color;
+  font-size: 1.25rem;
+}
+
+.input__textarea {
+  textarea {
+    width: 100%;
+    border-radius: 9px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  textarea:focus {
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
+  .number {
+    text-align: end;
+    color: rgba(0, 0, 0, 0.12);
+  }
+}

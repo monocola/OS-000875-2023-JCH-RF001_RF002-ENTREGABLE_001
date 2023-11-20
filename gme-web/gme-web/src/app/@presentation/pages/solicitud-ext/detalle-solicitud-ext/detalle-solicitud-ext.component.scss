@@ -1,0 +1,155 @@
+@import "../../@theme/styles/themes";
+@import "_colors";
+.filter {
+  box-shadow: 0 0 7px rgb(129 145 164 / 17%);
+  border-radius: 10px;
+  border: none !important;
+}
+
+.cards-container {
+  width: 47%;
+  //max-width: 500px;
+  position: relative;
+  box-shadow: 0 0 7px rgb(129 145 164 / 17%);
+  border-radius: 10px;
+  border: none !important;
+  padding: 10px 10px 30px;
+  margin: 10px;
+  height: 50%;
+  height: 250px;
+
+}
+label#labelDisabled {
+
+  color: black !important;
+    font-weight: bold !important;
+    font-size: small !important;
+
+}
+
+.card-item {
+  padding: 3px;
+}
+
+.material-icons.blue {
+  color: #0DACBC;
+}
+
+.texto {
+  color: #0DACBC;
+  font-weight: bold;
+  font-size: medium;
+  vertical-align: text-bottom;
+}
+.estado {
+  vertical-align: text-bottom;
+  border: none !important;
+  font-weight: normal;
+  color: #0DACBC;
+  display: inline-block;
+  position: absolute;
+  right: 1%;
+  font-size: medium;
+}
+
+.material-icons.small {
+  color: #0DACBC;
+}
+
+.my-button {
+  width: 150px;
+  height: 30px;
+  border: none #0DACBC;
+  border-radius: 10px;
+  background-color: #e1fcff !important;
+  color: #0DACBC;
+  font-weight: bold;
+  margin:0;
+  padding: 0;
+  text-align: center;
+  display: block;
+  position: absolute;
+  right: 0;
+}
+
+.icon-pull-right {
+  float: right;
+}
+.outer-estado {
+  width: 150px;
+  height: 25px;
+  border: 1px #0DACBC !important;
+  border-radius: 10px;
+  background: transparent;
+  font-weight: bold;
+  position: center;
+  margin: 2px;
+  padding: 1px;
+  text-align: center;
+  display: block;
+  box-shadow: 0 0 5px rgb(129 145 164 / 17%);
+}
+.recuadro {
+  color: #0DACBC;
+  font-weight: normal;
+  font-size: small;
+  vertical-align: text-bottom;
+
+}
+.etiqueta {
+  color: black;
+  font-weight: bold;
+  font-size: small;
+
+}
+
+.btnValidar {
+  margin: 5px;
+  color: #ffffff;
+  background-color: #0DACBC;
+  font-weight: normal;
+  font-size: small;
+  border: 1px #0DACBC !important;
+  border-radius: 20px;
+  width: 100px;
+  height: 30px;
+}
+
+.btnObservar {
+  margin: 5px;
+
+  color: #0DACBC;
+  background-color: transparent;
+  font-weight: normal;
+  font-size: small;
+  border: 5px #0DACBC !important;
+  border-radius: 20px;
+  width: 100px;
+  height: 30px;
+  //box-shadow: 0 0 5px rgb(129 145 164 / 17%);
+  box-shadow: 0 0 5px #0DACBC;
+}
+
+.btnRechazar {
+  margin: 5px;
+  color: #ffffff;
+  background-color: #003a70;
+  font-weight: normal;
+  font-size: small;
+  border: 1px #0DACBC !important;
+  border-radius: 20px;
+  width: 100px;
+  height: 30px;
+
+}
+
+.cajaTexto {
+  width: 100%;
+  background-color: transparent;
+  border: 0 #0DACBC !important;
+}
+.cajaTexto:focus {
+  background-color: transparent;
+  border: 0 #0DACBC !important;
+  outline: none;
+}

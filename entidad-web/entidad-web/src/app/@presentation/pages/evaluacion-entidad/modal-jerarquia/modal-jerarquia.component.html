@@ -1,0 +1,108 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="flex-v-center flex-column">
+  <img
+    height="64px"
+    src="assets/images/icons/formulario.png"
+    alt="icon image"
+  />
+  <h6 class="text-center mt-4">Registro de jerarquías</h6>
+</div>
+
+<div class="px-4">
+  <div class="row mt-3">
+    <div class="col-3 mb-3">
+      <select-field
+        [label]="'Régimen laboral'"
+        [control]="f.regimen"
+        [items]="regimenes"
+        [valueToShow]="'descripcion'"
+        (selectedChange)="changeRegimen()"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-4 mb-3">
+      <select-field
+        [label]="'Modalidad de acceso'"
+        [control]="f.modalidad"
+        [items]="modalidades"
+        [valueToShow]="'descripcion'"
+        (selectedChange)="changeModalidad()"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-3 mb-3">
+      <select-field
+        [label]="'Tipo de acceso'"
+        [control]="f.tipo"
+        [items]="tiposToShow"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-2 mb-3">
+      <div class="w-100 pt-2 align-items-end d-flex">
+        <button
+          type="button"
+          nbButton
+          shape="semi-round"
+          size="small"
+          status="primary"
+          (click)="addJerarquia()"
+          class="w-100 mt-4"
+          [disabled]="!f.regimen.value || !f.modalidad.value || !f.tipo.value"
+        >
+          <em class="material-icons mr-2"> add_circle_outline </em>
+          Añadir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="px-4 pb-3">
+  <serv-talento-table
+    [title]="'Lista de plantillas'"
+    [tableData]="this.jerarquias"
+    [tableColumns]="jerarquiasColumn"
+    [isFilterable]="false"
+    [isPageable]="true"
+    [paginationSizes]="[5]"
+    [defaultPageSize]="5"
+    (sort)="sortData($event)"
+    [acciones]="true"
+    [btnEditEnabled]="false"
+    [fontSize]="'fs-14'"
+    [btnDeleteEnabled]="true"
+    (deleteAction)="removeJerarquia($event)"
+    [deleteTitle]="'Inactivar perfil'"
+    [showDownloadButton]="false"
+  >
+  </serv-talento-table>
+</div>
+
+<div class="col-12 d-flex px-4">
+  <div class="flex-spacer"></div>
+  <button
+    type="button"
+    nbButton
+    shape="round"
+    size="medium"
+    status="primary"
+    class="px-5 fs-15"
+    (click)="generarJerarquias()"
+  >
+    Generar
+  </button>
+</div>

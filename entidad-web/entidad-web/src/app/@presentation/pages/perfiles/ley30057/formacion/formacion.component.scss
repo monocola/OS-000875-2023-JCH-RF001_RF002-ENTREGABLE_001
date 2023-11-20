@@ -1,0 +1,42 @@
+@import '_colors';
+
+.rectangleTest {
+    background-color: rgb(138, 136, 136);
+    height: 6.25rem;
+}
+
+.iconAdd {
+    color: $primary-color;
+}
+
+.iconRemove {
+    color: $red;
+}
+
+.iconAdd,
+.iconRemove {
+    user-select: none;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 1.75rem;
+    &:hover {
+        transform: scale(1.2);
+    }
+}
+
+.boxHours {
+    border: 1px solid #e4e9f2;
+    padding: 0.313rem 0.75rem;
+    border-radius: 0.75rem;
+}
+
+.boxRadioGroup {
+    border: 1px solid #e4e9f2;
+    padding: 0.563rem 0.75rem;
+    border-radius: 0.75rem;
+}
+
+::ng-deep .radio > .mat-radio-label {
+    margin: 0 !important;
+}
+

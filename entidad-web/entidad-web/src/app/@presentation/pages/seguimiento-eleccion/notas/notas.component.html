@@ -1,0 +1,39 @@
+<div>
+  <table
+    aria-describedby="mydesc"
+    mat-table
+    [dataSource]="notas"
+    class="mat-elevation-z7 mt-2"
+  >
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef id="thdesc">Resultado</th>
+      <td mat-cell *matCellDef="let element" id="desc">
+        <span style="color: #50b0d2; font-weight: bold">{{
+          element.descripcion
+        }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nota">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        id="thpunMi"
+        style="text-align: center"
+      >
+        <span style="font-size: xx-large">{{ this.nota }}</span>
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        id="punMi"
+        style="text-align: center"
+      >
+        {{ element.notasEval }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

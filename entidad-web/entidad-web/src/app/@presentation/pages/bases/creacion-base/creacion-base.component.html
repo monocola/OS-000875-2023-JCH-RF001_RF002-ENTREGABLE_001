@@ -1,0 +1,214 @@
+<div (resized)="onResized($event)">
+  <header class="parentBox">
+    <div class="firstBox px-4" [ngStyle]="{ width: bodySize }">
+      <div
+        class="title pr-4 m-0"
+        [ngClass]="{ selected: mode === 0 }"
+        (click)="changeMode(0)"
+      >
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="router.navigateByUrl('pages/gestionbases')"
+        >
+          <nb-icon nbSuffix icon="back"></nb-icon>
+        </button>
+        <span
+          *ngIf="
+            !this.helperService.duplicarMode &&
+            !this.helperService.disableAllFields
+          "
+        >
+          {{ this.helperService.createMode ? 'Crear base' : 'Editar base' }}
+        </span>
+        <span *ngIf="this.helperService.duplicarMode"> Duplicar Base </span>
+        <span *ngIf="this.helperService.disableAllFields"> Ver Base </span>
+      </div>
+      <div class="flex-spacer"></div>
+      <div class="flex-v-center">
+        <div class="fs-14 px-3 fw-600">
+          {{ helperService.jerarquiaSelected.regimen.descripcion }}
+        </div>
+
+        <div
+          class="fs-12 px-3"
+          style="border-left: 1px solid #ddd;"
+          *ngIf="helperService.jerarquiaSelected.modalidad?.descripcion"
+        >
+          Modalidad:
+          <span class="fs-14 fw-600">
+            {{ helperService.jerarquiaSelected.modalidad.descripcion }}
+          </span>
+        </div>
+
+        <div
+          class="fs-12 px-3"
+          style="border-left: 1px solid #ddd;"
+          *ngIf="helperService.jerarquiaSelected.tipo?.descripcion"
+        >
+          Tipo:
+          <span class="fs-14 fw-600">
+            {{ helperService.jerarquiaSelected.tipo.descripcion }}
+          </span>
+        </div>
+
+        <button
+          type="button"
+          nbButton
+          shape="round"
+          status="primary"
+          class="px-4 ml-3 btnSaveObsCorregidas"
+          *ngIf="
+            (helperService.estadoBase === const.ETA_BASE_OBSERVADO &&
+            this.authenticationRepository.getCurrentUserValue?.rolId ===
+              const.R_GESTOR_ORH) || (helperService.estadoBase === const.ETA_BASE_OBSERVADO &&
+              this.authenticationRepository.getCurrentUserValue?.rolId ===
+                const.R_SUPER_ADMIN_ENTIDAD)
+          "
+          (click)="saveObservacionesCorregidas()"
+          [disabled]="returnObs()"
+        >
+          Guardar Observaciones
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main *ngIf="this.mode === 0">
+    <div class="steps-box" [ngStyle]="{ width: this.bodySize }">
+      <mat-horizontal-stepper
+        class="stepper"
+        labelPosition="bottom"
+        #stepper
+        [(selectedIndex)]="helperService.indexStepper"
+        (selectionChange)="change($event)"
+        [linear]="this.helperService.createMode ? true : false"
+      >
+        <mat-step
+          [completed]="this.helperService.idStep1"
+          [hasError]="!this.helperService.observaciones[0].resuelto"
+        >
+          <ng-template matStepLabel aria-label="Datos del concurso">
+            Datos del concurso
+          </ng-template>
+        </mat-step>
+
+        <mat-step
+          [completed]="
+            this.helperService.form2.get('vacantes').value.length > 0
+          "
+          [hasError]="!this.helperService.observaciones[1].resuelto"
+        >
+          <ng-template matStepLabel aria-label="Perfiles">
+            Perfil/es
+          </ng-template>
+        </mat-step>
+
+        <mat-step (click)='this.helperService.valCrear(this.helperService.idBase)'
+          [completed]="this.helperService.idStep3"
+          [hasError]="!this.helperService.observaciones[2].resuelto"
+        >
+          <ng-template matStepLabel aria-label="Requisitos generales">
+            Requisitos generales
+          </ng-template>
+        </mat-step>
+
+        <mat-step
+          [completed]="this.helperService.idStep4"
+          [hasError]="!this.helperService.observaciones[3].resuelto"
+        >
+          <ng-template matStepLabel aria-label="Evaluaciones">
+            Evaluaciones
+          </ng-template>
+        </mat-step>
+
+        <mat-step
+          [completed]="this.helperService.idStep5"
+          [hasError]="!this.helperService.observaciones[4].resuelto"
+        >
+          <ng-template matStepLabel aria-label=" Etapas y cronograma">
+            Etapas y cronograma
+          </ng-template>
+        </mat-step>
+
+        <mat-step
+          [completed]="this.helperService.idStep6"
+          [hasError]="!this.helperService.observaciones[5].resuelto"
+        >
+          <ng-template matStepLabel aria-label="Información complementaria">
+            Información complementaria
+          </ng-template>
+        </mat-step>
+
+        <!-- Icon overrides. -->
+        <ng-template matStepperIcon="error">
+          <mat-icon>error</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="info">
+          <mat-icon>priority_high</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="icon_1"> 1 </ng-template>
+        <ng-template matStepperIcon="icon_2"> 2 </ng-template>
+        <ng-template matStepperIcon="icon_3"> 3 </ng-template>
+        <ng-template matStepperIcon="icon_4"> 4 </ng-template>
+        <ng-template matStepperIcon="icon_5"> 5 </ng-template>
+        <ng-template matStepperIcon="icon_6"> 6 </ng-template>
+      </mat-horizontal-stepper>
+    </div>
+
+    <div class="contentToRender">
+      <serv-talento-step1
+        [hidden]="helperService.indexStepper !== 0"
+      ></serv-talento-step1>
+
+      <serv-talento-step2
+        [hidden]="helperService.indexStepper !== 1"
+      ></serv-talento-step2>
+
+      <serv-talento-step3
+        [hidden]="helperService.indexStepper !== 2"
+      ></serv-talento-step3>
+
+      <serv-talento-step4
+        [hidden]="helperService.indexStepper !== 3"
+      ></serv-talento-step4>
+
+      <serv-talento-step5
+        [hidden]="helperService.indexStepper !== 4"
+      ></serv-talento-step5>
+
+      <serv-talento-step6
+        [hidden]="helperService.indexStepper !== 5"
+      ></serv-talento-step6>
+    </div>
+  </main>
+</div>
+
+<serv-talento-bottom-div-bases
+  [indexStepper]="helperService.indexStepper"
+  [bodySize]="bodySize"
+  (previousStep)="previousStep()"
+  (observarClick)="observarStep()"
+  (nextStep)="nextStep()"
+  (createProfile)="saveOrUpdateForm6(helperService.form6)"
+  [createMode]="this.helperService.createMode"
+  [numberOfSteps]="6"
+  [helper]="helperService"
+  [observaciones]="this.helperService.observaciones"
+  [showObservarButton]="
+    (this.helperService.estadoBase === const.ETA_BASE_POR_REVISAR ||
+    this.helperService.estadoBase === const.ETA_BASE_REVISADO ||
+      this.helperService.estadoBase === const.ETA_BASE_POR_PUBLICAR) &&
+    (this.authenticationRepository.getCurrentUserValue?.rolId ===
+      const.R_COORDINADOR || this.authenticationRepository.getCurrentUserValue?.rolId === const.R_SUPER_ADMIN_ENTIDAD)
+  "
+  [showEndButton]="
+    !this.helperService.disableAllFields ||
+    ((this.authenticationRepository.getCurrentUserValue?.rolId === const.R_SUPER_ADMIN_ENTIDAD || this.authenticationRepository.getCurrentUserValue?.rolId ===
+      const.R_COORDINADOR) &&
+      (this.helperService.estadoBase === const.ETA_BASE_POR_REVISAR ||
+      this.helperService.estadoBase === const.ETA_BASE_REVISADO ||
+        this.helperService.estadoBase === const.ETA_BASE_POR_PUBLICAR))
+  "
+>
+</serv-talento-bottom-div-bases>

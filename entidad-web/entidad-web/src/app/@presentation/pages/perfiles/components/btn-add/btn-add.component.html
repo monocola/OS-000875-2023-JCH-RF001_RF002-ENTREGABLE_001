@@ -1,0 +1,12 @@
+<button
+  class="btnAddFunction ml-2"
+  (click)="addFunction()"
+  [disabled]="disableButton"
+>
+  <span *ngIf="this.text">
+    {{ this.text }}
+  </span>
+  <em class="material-icons" [ngClass]="{ 'ml-2': this.text.length > 0 }">
+    add_circle_outline
+  </em>
+</button>

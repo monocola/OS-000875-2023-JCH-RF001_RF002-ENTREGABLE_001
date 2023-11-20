@@ -1,0 +1,44 @@
+<div class="mt-3">
+  <label class="flex-v-center-left">
+    <h6 class="d-flex">
+      <span [class]="textClass"> {{ title }}</span>
+      <serv-talento-btn-add (clickEmitter)="addItems()" [text]="addItemLabel"
+        [disableButton]="control.value.length > 0">
+      </serv-talento-btn-add>
+    </h6>
+  </label>
+
+  <div cdkDropList class="example-list">
+    <div class="flex-v-center w-100 my-1" *ngFor="let item of control.value; let i = index">
+
+      <input *ngIf="mode === 0" type="text" [(ngModel)]="item.nombre" [placeholder]="placeholderItem" nbInput
+        shape="semi-round" class="input" maxlength="100" />
+
+      <div *ngIf="mode === 1" style="width: 100%">
+        <autocomplete [placeholder]="'Elegir'" [fieldToShow]="'descripcion'" [items]="items"
+          [control]="item.descripcion" [size]="'medium'" [requiredField]="false"
+          [invalidFlag]="!item.descripcion.value && control.touched" (selectedChange)="this.validateItems(this.control)"
+          (keyup)="this.validateItems(this.control)" [uniqueValue]="true" maxlength="250">
+        </autocomplete>
+      </div>
+
+      <div class="flex-spacer"></div>
+
+
+      <div class="flex-v-center-right boxButtons">
+        <button mat-icon-button class="mr-2 iconAdd" (click)="addItems()" *ngIf="i == control.value.length - 1"
+          [disabled]="control.value.length >= maxItems">
+          <em class="material-icons"> add_circle_outline </em>
+        </button>
+
+        <button mat-icon-button class="mr-2 iconRemove" (click)="removeItem(i)">
+          <span class="material-icons"> remove_circle_outline </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="invalid-text" *ngIf="control.invalid && control.touched">
+  Complete los campos en rojo según sea el caso
+</div>

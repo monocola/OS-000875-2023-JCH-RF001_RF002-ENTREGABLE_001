@@ -1,0 +1,55 @@
+<div class="flex-v-center">
+  <nb-icon icon="menu" class="mr-2 iconMenu" (click)="clickBar()"></nb-icon>
+
+  <div class="logo">
+    <img
+      class="ml-4"
+      alt="logo talento web"
+      src="assets/images/logo.png"
+      height="44px"
+    />
+  </div>
+
+  <span style="flex: 1 0"></span>
+
+  <div
+    class="flex-v-center menuProfileTrigger mr-5 px-3"
+    [matMenuTriggerFor]="menu"
+  >
+    <div class="menuDiv flex-v-center-column">
+      <span class="fs-14">
+        {{ profile.nombres.split(' ')[0] + ' ' + profile.apellidoPaterno }}
+      </span>
+      <span class="fs-12 roleName">{{ nombreRol }}</span>
+    </div>
+    <nb-icon icon="usuario" class="mx-2 iconProfile"></nb-icon>
+  </div>
+</div>
+
+<mat-menu #menu="matMenu" class="flex-v-center w-100 p-2">
+  <div class="flex-v-center item p-2">
+    <img alt="icon profile" [src]="url" class="rounded-circle" />
+    <div class="ml-3">
+      <div class="nameUser fw-500">{{ profile.nombreCompleto }}</div>
+      <div class="redirectProfile" [routerLink]="['/pages/profile']">
+        Ver mi perfil
+      </div>
+    </div>
+    <span class="flex-spacer"></span>
+    <div class="px-4"></div>
+  </div>
+
+  <hr />
+  <div class="flex-v-center-left item__option p-2 w-100" (click)="changepswd()">
+    <div class="flex-v-center item__option__icon mr-3">
+      <fa-icon class="icon li fs-20" [icon]="icon"></fa-icon>
+    </div>
+    <span class="fs-16"> Actualizar contraseña </span>
+  </div>
+  <div class="flex-v-center-left item__option p-2 w-100" (click)="logout()">
+    <div class="flex-v-center item__option__icon mr-3">
+      <fa-icon class="icon li fs-20" [icon]="iconOut"></fa-icon>
+    </div>
+    <span class="fs-16"> Salir </span>
+  </div>
+</mat-menu>

@@ -1,0 +1,267 @@
+@import "../../@common-components/material-table/material-table.component.scss";
+
+.body {
+  background-color: #fbfbfb;
+}
+
+.container-fluid {
+  background-color: #fff;
+  padding-bottom: 15px;
+  border-radius: 10px;
+}
+
+.monitoreo {
+  pointer-events: none!important;
+}
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}
+
+.statusInProcess {
+  background-color: #6fcf97;
+  color: #000;
+}
+
+.statusPassed {
+  background-color: #2d9cdb;
+  color: white;
+}
+
+.statusPassing {
+  background-color: #a7dbf1;
+}
+
+.statusObserved {
+  background-color: #f2994a;
+  color: white;
+}
+
+.statusInactivo {
+  background-color: #bdbdbd;
+  color: white;
+}
+
+.statusRevisado {
+  background-color: #a5dcf0;
+  color: #000;
+}
+
+.statusPorRevisar {
+  background-color: #a5dcf0;
+  color: #000;
+}
+
+.statusPorPublicar {
+  background-color: #2b9ce0;
+  color: #fff;
+}
+
+.statusPublicado {
+  background-color: #f2c94d;
+  color: #fff;
+}
+
+.statusFinished {
+  background-color: #51b7f0;
+  color: white;
+}
+
+.btnUploadLogo {
+  background-color: $primary_color;
+  border-radius: 2.125rem;
+  padding: 0.375rem 1.125rem;
+  width: 20%;
+  cursor: pointer;
+  transition: 0.2s;
+  color: white !important;
+  & > .documentIcon {
+    font-size: 1.75rem !important;
+  }
+  &:hover {
+    background-color: #259acc;
+  }
+  margin-left: 620px;
+}
+
+.buttonArea {
+  & > button {
+    font-size: 0.875rem;
+    font-weight: 400;
+    & > .iconArrow {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.buttomagregar {
+  align-self: flex-end;
+}
+
+button[nbTreeGridRowToggle] {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.button-val {
+  margin-bottom: 5px;
+  width: 150px;
+  display: block;
+}
+
+.dropzone-label {
+  background: #efefef;
+  width: 100%;
+  margin: -120px 0 0;
+}
+
+.botonesvd {
+  position: absolute;
+  left: 830px;
+  top: 220px;
+}
+
+.dropzone1 {
+  border: dotted 3px lightgray;
+  opacity: 0.5;
+  color: #666;
+  text-align: center;
+}
+
+.btnFileUpload {
+  /*   margin: auto; */
+  user-select: none;
+  border: 1px solid #ccc;
+  border-radius: 0.625rem;
+  padding: 0.563rem;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+/*Haciendo para el arrastrar*/
+
+$danger: red;
+$primary: #2665c5;
+
+.dropzone {
+  width: 100%;
+  margin-bottom: 16px;
+  &-file {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    border-style: dashed;
+    border-width: 3px;
+    border-color: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.02);
+    input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+  }
+  &-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    margin-bottom: 16px;
+  }
+  small {
+    color: $danger;
+    margin-top: 16px;
+  }
+  &-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    i-file {
+      font-size: 40px;
+      color: rgba(0, 0, 0, 0.15);
+    }
+    p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 250px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+    }
+  }
+  .file-uploaded {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    i {
+      color: $danger;
+      margin-left: 16px;
+      font-size: 22px;
+      &:hover {
+        opacity: 0.75;
+        cursor: pointer;
+      }
+    }
+    p.uploaded {
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+    }
+  }
+  label {
+    z-index: 1;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-radius: 4px;
+    background: $primary;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    &:hover {
+      opacity: 0.75;
+      cursor: pointer;
+    }
+  }
+}
+
+.button-val {
+  margin-bottom: 10px;
+  width: 150px;
+  display: block;
+}
+
+.botonesvd {
+  position: absolute;
+  left: 830px;
+  top: 220px;
+  margin-top: 50px;
+}
+
+.titlePage {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+
+.titleCiclo {
+  color: #0dacbc !important;
+  font-weight: normal;
+  font-size: small;
+}
+

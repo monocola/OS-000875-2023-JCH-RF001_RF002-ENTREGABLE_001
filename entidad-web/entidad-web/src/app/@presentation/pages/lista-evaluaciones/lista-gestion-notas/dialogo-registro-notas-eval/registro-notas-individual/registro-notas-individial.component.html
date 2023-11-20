@@ -1,0 +1,115 @@
+<div [formGroup]="filterForm" class="body">
+  <div class="row col-12 mb-3">
+    <div class="col-3">
+      <label>Perfil del puesto</label>
+      <nb-form-field>
+        <nb-select placeholder="Seleccione perfil" fullWidth shape="rectangle" formControlName="perfilId" size="large"
+          (selectedChange)="cambioPerfil($event)">
+          <nb-option value="">---Todos---</nb-option>
+          <nb-option *ngFor="let item of lstPerfil" [value]="item.idPerfil">{{
+            item.desPerfil
+            }}</nb-option>
+        </nb-select>
+      </nb-form-field>
+    </div>
+    <div class="col-3">
+      <nb-form-field>
+        <label>Grupo</label>
+        <input #inputGrupo formControlName="desGrupo" id="desGrupo" nbInput type="text" fullWidth placeholder="Grupo"
+          maxlength="120" (input)="onChangeGrupo()" [nbAutocomplete]="autoGrupo" shape="semi-round" fieldSize="large" />
+        <nb-icon class="icon__search" nbSuffix icon="buscar"></nb-icon>
+      </nb-form-field>
+
+      <nb-autocomplete #autoGrupo (selectedChange)="onSelectionChangeGrupo($event)" formControlName="programacionId"
+        ngDefaultControl>
+        <nb-option *ngFor="let option of filteredOptionsGrupo$ | async" [value]="option.desGrupo">
+          {{ option.desGrupo }}
+        </nb-option>
+      </nb-autocomplete>
+    </div>
+    <div class="col-6">
+      <nb-form-field>
+        <label>Postulante</label>
+        <input #inputPostulante formControlName="desPostulante" id="desPostulante" nbInput type="text" fullWidth placeholder="Postulante"
+          maxlength="120" (input)="onChangePostulante()" [nbAutocomplete]="autoPostulante" shape="semi-round" fieldSize="large" />
+        <nb-icon class="icon__search" nbSuffix icon="buscar"></nb-icon>
+      </nb-form-field>
+
+      <nb-autocomplete #autoPostulante (selectedChange)="onSelectionChangePostulante($event)" formControlName="postulanteId"
+        ngDefaultControl>
+        <nb-option *ngFor="let option of filteredOptionsPostulante$ | async" [value]="option.nombreApellido">
+          {{ option.nombreApellido }}
+        </nb-option>
+      </nb-autocomplete>
+    </div>
+  </div>
+
+  <div class="row col-12 mb-3">
+    <div class="col-3">
+      <label>Estado</label>
+      <nb-form-field>
+        <nb-select placeholder="SELECCIONE" fullWidth shape="rectangle" formControlName="situacionId" size="medium">
+          <nb-option value="1">CALIFICA</nb-option>
+          <nb-option value="0">NO CALIFICA</nb-option>
+          <nb-option value="2">DESCALIFICADO</nb-option>
+          <nb-option value="3">NO ASISTIÓ</nb-option>
+        </nb-select>
+      </nb-form-field>
+    </div>
+    <div class="col-3">
+      <label>Nota de evaluación</label>
+      <nb-form-field>
+        <input nbInput fullWidth
+               placeholder="Ingrese puntaje"
+               formControlName="puntaje"
+               (keypress)="keyPressNumbers($event)"
+               minlength='1'
+               maxlength='3'
+        />
+      </nb-form-field>
+    </div>
+    <div class="col-6">
+      <label>Documento de sustento</label>
+      <button *ngIf="document == null" (click)="cleanAndClick(inputfile)" nbButton outline status="primary" size="small"
+        fullWidth>
+        <nb-icon class="fs-15" icon="subir"></nb-icon> Subir documento
+      </button>
+      <nb-form-field *ngIf="document != null">
+        <input readonly fullWidth size="small" nbInput [value]="document.name" disabled>
+        <button nbSuffix nbButton ghost (click)="cleanFileSelect()">
+          <nb-icon class="fs-15" icon="clean">
+          </nb-icon>
+        </button>
+      </nb-form-field>
+    </div>
+  </div>
+
+  <div class="row col-12 mb-3">
+    <div class="col-3">
+      <label>Código</label>
+      <nb-form-field>
+        <input nbInput fullWidth placeholder="Código único" formControlName="codigo" maxlength="30" />
+      </nb-form-field>
+    </div>
+  </div>
+
+  <div class="row col-12">
+    <div class="col-12">
+      <label>Observación (opcional)</label>
+      <nb-form-field>
+        <textarea nbInput fullWidth placeholder="Ingrese una breve observación"
+          formControlName="observacion"></textarea>
+      </nb-form-field>
+    </div>
+  </div>
+  <input hidden #inputfile type="file" (change)="onFileChange($event)" />
+
+  <div class="col-12 pt-3">
+    <div class="custom-row-buttons">
+      <button nbButton shape="round" size="small" status="primary" class="w-30" outline (click)="dismiss(false)"
+        >Cancelar</button>
+      <button nbButton shape="round" size="small" status="primary" class="ml-2 w-30" [disabled]="!filterForm.valid"
+        (click)="guardar()">Guardar</button>
+    </div>
+  </div>
+</div>

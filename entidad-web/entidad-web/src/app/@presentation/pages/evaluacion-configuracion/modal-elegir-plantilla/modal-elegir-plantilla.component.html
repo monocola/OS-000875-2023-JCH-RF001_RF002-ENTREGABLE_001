@@ -1,0 +1,43 @@
+<nb-card class="my-0">
+  <nb-card-body class="my-0 py-0">
+    <div class="row h-100 p-0 m-0 justify-content-end">
+      <nb-actions size="small" style="place-content: flex-end;" class="position-absolute">
+        <nb-action class="control-item p-0" icon="close" (click)="dismiss(false)"></nb-action>
+      </nb-actions>
+    </div>
+    <div class="row col-12 pt-4 m-0 hcenter">
+      <img class="logo" src="assets/images/icons/creado.png" alt="Elegir plantilla de configuración">
+
+    </div>
+    <div class="content row mt-4 py-2 align-items-baseline">
+        <div class="col-12 col-sm-12 text-center fs-14 px-1">
+            <div class="text-info fs-20 font-weight-bold">Elegir plantilla de configuración</div>
+        </div>
+        <div class="col-12 col-sm-12 fs-14 px-1 pt-4">
+          <div class="col-12">Plantilla de configuración</div>
+          <div class="col-12">
+            <form [formGroup]="frmElegirPlantilla">
+              <nb-select fullWidth formControlName="selPlantilla" size="small" placeholder="Elegir plantilla" shape="rectangle" >
+                <nb-option value="">--Elegir--</nb-option>
+                <nb-option [value]="item.codProg" *ngFor="let item of lstPlantillas">{{item.descripcion}}</nb-option>
+
+              </nb-select>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-6 mt-4">
+            <button nbButton class="px-5" shape="round" size="medium" fullWidth status="primary" outline
+                (click)="dismiss(false)">
+                Cancelar
+            </button>
+        </div>
+        <div class="col-6 py-2">
+            <button nbButton class="px-5" shape="round" size="medium" fullWidth
+                status="primary" (click)="aceptar()">
+                Aceptar
+            </button>
+        </div>
+    </div>
+  </nb-card-body>
+</nb-card>

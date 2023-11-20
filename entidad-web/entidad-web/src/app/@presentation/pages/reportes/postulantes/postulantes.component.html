@@ -1,0 +1,440 @@
+<div class="body">
+  <div class="mt-3" [formGroup]="filterForm">
+    <div class="subtitle">Filtros de búsqueda</div>
+
+    <div class="row mt-3" style="background-color: #f4fcff; padding-top: 1em;">
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Nombre/Apellido</label>
+          <!--  <nb-select
+            formControlName="nombre"
+            placeholder="Buscar"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of lstPostulantes"
+              [value]="item.idPostulante"
+              >{{ item.nombreCompleto }}</nb-option
+            >
+          </nb-select>
+          -->
+          <input
+            #inputPost
+            formControlName="nombre"
+            fullWidth
+            nbInput
+            type="search"
+            placeholder="Buscar"
+            shape="semi-round"
+            maxlength="120"
+            class="cursor-pointer"
+            autocomplete="off"
+            [nbAutocomplete]="codigoPost"
+            fieldSize="large"
+            (input)="onChangePost()"
+          />
+          <nb-icon nbSuffix icon="buscar" class="pt-3 cursor-pointer"></nb-icon>
+        </nb-form-field>
+        <nb-autocomplete
+          #codigoPost
+          (selectedChange)="onSelectionChangePost($event)"
+          formControlName="postulanteId"
+          ngDefaultControl
+        >
+          <nb-option
+            *ngFor="let item of filteredOptionsPost$ | async"
+            [value]="item.nombreCompleto"
+          >
+            {{ item.nombreCompleto }}
+          </nb-option>
+        </nb-autocomplete>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Tipo documento</label>
+          <nb-select
+            formControlName="tipoDocumento"
+            placeholder="Elegir"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of lstTipoDocumento"
+              [value]="item.codigoNumero"
+              >{{ item.descripcion }}</nb-option
+            >
+          </nb-select>
+        </nb-form-field>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <label>N°. Documento</label>
+        <nb-form-field>
+          <input
+            nbInput
+            fullWidth
+            placeholder="Ingrese número"
+            formControlName="nroDocumento"
+            NumberOnly
+          />
+        </nb-form-field>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <label>Periodo</label>
+        <nb-form-field>
+          <input
+            formControlName="periodo"
+            nbInput
+            placeholder="Periodo"
+            [nbDatepicker]="formpicker"
+            fieldSize="large"
+            shape="semi-round"
+            [status]="rangePickerStatus"
+            (ngModelChange)="validRangeDateFormat($event)"
+          />
+          <nb-icon
+            style="cursor: pointer;"
+            nbSuffix
+            class="mr-2"
+            icon="calendario"
+          >
+          </nb-icon>
+          <nb-rangepicker #formpicker></nb-rangepicker>
+        </nb-form-field>
+        <div
+          *ngIf="f.periodo.invalid && f.periodo.touched"
+          class="invalid-text m-0"
+        >
+          <span *ngIf="f.periodo.errors?.required">
+            El campo es obligatorio
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Departamento</label>
+          <nb-select
+            formControlName="departamento"
+            placeholder="Elegir"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of lstDepartamentos"
+              [value]="item.ubigeoId"
+              >{{ item.nombre }}</nb-option
+            >
+          </nb-select>
+        </nb-form-field>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Código de conv./bases</label>
+
+          <input
+            #inputCodigo
+            formControlName="codConvDesc"
+            fullWidth
+            nbInput
+            type="search"
+            placeholder="Buscar"
+            shape="semi-round"
+            maxlength="120"
+            class="cursor-pointer"
+            autocomplete="off"
+            [nbAutocomplete]="autoCodigo"
+            fieldSize="large"
+            (input)="onChangeCodigo()"
+          />
+          <nb-icon nbSuffix icon="buscar" class="pt-3 cursor-pointer"></nb-icon>
+        </nb-form-field>
+
+        <nb-autocomplete
+          #autoCodigo
+          (selectedChange)="onSelectionChangeCodigo($event)"
+          formControlName="convocatoriaId"
+          ngDefaultControl
+        >
+          <nb-option
+            *ngFor="let item of filteredOptionsCodigo$ | async"
+            [value]="item.codigoConvocatoria"
+          >
+            {{ item.codigoConvocatoria }}
+          </nb-option>
+        </nb-autocomplete>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Nombre de perfil</label>
+          <!--
+          <nb-select
+            formControlName="perfil"
+            placeholder="Buscar"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of lstPerfiles"
+              [value]="item.perfilId"
+              >{{ item.nombrePuesto }}</nb-option
+            >
+          </nb-select>
+          -->
+          <input
+            #inputPerfil
+            formControlName="perfilDesc"
+            fullWidth
+            nbInput
+            type="search"
+            placeholder="Buscar"
+            shape="semi-round"
+            maxlength="120"
+            class="cursor-pointer"
+            autocomplete="off"
+            [nbAutocomplete]="autoPerfil"
+            fieldSize="large"
+            (input)="onChangePerfil()"
+          />
+          <nb-icon nbSuffix icon="buscar" class="pt-3 cursor-pointer"></nb-icon>
+        </nb-form-field>
+        <nb-autocomplete
+          #autoPerfil
+          (selectedChange)="onSelectionChangePerfil($event)"
+          formControlName="perfilId"
+          ngDefaultControl
+        >
+          <nb-option
+            *ngFor="let item of filteredOptionsPerfil$ | async"
+            [value]="item.nombrePuesto"
+          >
+            {{ item.nombrePuesto }}
+          </nb-option>
+        </nb-autocomplete>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Etapa del proceso</label>
+          <nb-select
+            formControlName="etapa"
+            placeholder="Elegir"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of lstEtapas"
+              [value]="item.maeDetalleId"
+              >{{ item.descripcion }}</nb-option
+            >
+          </nb-select>
+        </nb-form-field>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Rango salarial</label>
+          <nb-select
+            formControlName="rango"
+            placeholder="Elegir"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option value="1">De 800 a 1,500</nb-option>
+            <nb-option value="2">De 1,501 a 3,000</nb-option>
+            <nb-option value="3">De 3,001 a 5,000</nb-option>
+            <nb-option value="*">Todos</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Duración del contrato</label>
+          <nb-select
+            formControlName="duracion"
+            placeholder="Elegir"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option value="1">De 1 a 6 meses</nb-option>
+            <nb-option value="2">De 7 a 11 meses</nb-option>
+            <nb-option value="+">De 12 meses a más</nb-option>
+            <nb-option value="*">Todos</nb-option>
+          </nb-select>
+        </nb-form-field>
+      </div>
+      <!--
+      <div class="col-md-2 mb-3">
+        <nb-form-field>
+          <label>Estado</label>
+          <nb-select
+            formControlName="estado"
+            placeholder="Elegir"
+            fullWidth
+            shape="rectangle"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of lstEstadoConvocatoria"
+              [value]="item.maeDetalleId"
+              >{{ item.descripcion }}</nb-option
+            >
+          </nb-select>
+        </nb-form-field>
+      </div>
+      -->
+      <div class="col-md-2 mb-3">
+        <div class="w-100 h-100 btn_area">
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="limpiar()"
+          >
+            Limpiar
+          </button>
+          <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="buscar()"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+<div class="table bg-gray m-0 justify-content-center p-0 pb-4">
+  <div class="row p-0 m-0">
+    <div class="col-10 m-0 p-0 pl-3">
+      <div class="row list__calificado py-2">
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Periodo</div>
+          <img
+            src="assets/images/icons/users-validacion_positiva.svg"
+            alt="validacion-positiva"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.periodoInicio }} {{ dataHeader?.setPeriodoFin }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Departamento</div>
+          <img
+            src="assets/images/icons/users-validacion_negativa.svg"
+            alt="validacion-negativa"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.departamento }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Cant.Conv.</div>
+          <img
+            src="assets/images/icons/users-validacion_negativa.svg"
+            alt="validacion-negativa"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.cantConvocatoria }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Cant.postulantes</div>
+          <img
+            src="assets/images/icons/users-validacion_negativa.svg"
+            alt="validacion-negativa"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.cantPostulantes }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Cant.perfiles</div>
+          <img
+            src="assets/images/icons/users-validacion_negativa.svg"
+            alt="validacion-negativa"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.cantPerfiles }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Califican</div>
+          <img
+            src="assets/images/icons/users-validacion_negativa.svg"
+            alt="validacion-negativa"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.califican }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">No califican</div>
+          <img
+            src="assets/images/icons/users-validacion_negativa.svg"
+            alt="validacion-negativa"
+          />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ dataHeader?.noCalifican }}
+        </div>
+      </div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+  <div class="row mb-4 mt-4">
+    <div class="col-12">
+      <ng-container>
+        <serv-talento-table-reporte-postulante
+          [tableColumns]="this.columns"
+          [title]="'Lista de Postulantes'"
+          [tableData]="this.data"
+          [isFilterable]="true"
+          [isPageable]="true"
+          [pageIndex]="this.page"
+          [paginationSizes]="[20, 50, 100]"
+          [defaultPageSize]="20"
+          [dataExport]="getDataExport()"
+          (pageEvent)="getPaginado($event)"
+          (sort)="sortData($event)"
+
+        ><!--(procesoAction)="verMensaje($event)"-->
+        </serv-talento-table-reporte-postulante>
+      </ng-container>
+    </div>
+  </div>
+</div>

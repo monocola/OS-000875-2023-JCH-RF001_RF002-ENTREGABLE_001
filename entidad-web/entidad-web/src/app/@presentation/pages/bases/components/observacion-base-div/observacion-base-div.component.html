@@ -1,0 +1,45 @@
+<div class="observacionDiv">
+  <div class="observacionTexto px-3 py-2" [ngClass]="{resueltoDiv: observacion.resuelto}">
+    {{ observacion.description || '' }}
+  </div>
+
+  <div *ngIf="!onlyShow">
+    <div class="observacionButton" *ngIf="showButtons">
+      <button
+        mat-icon-button
+        matRipple
+        title="Editar"
+        (click)="this.editEmitter.emit()"
+      >
+        <nb-icon icon="edit" status="primary"></nb-icon>
+      </button>
+      <button
+        mat-icon-button
+        matRipple
+        title="Eliminar"
+        (click)="deleteObservacion()"
+      >
+        <nb-icon icon="eliminar" status="danger"></nb-icon>
+      </button>
+    </div>
+    <div class="observacionButton" *ngIf="!showButtons">
+      <div class="fs-14 mt-3">Resuelto</div>
+      <button
+        mat-icon-button
+        matRipple
+        title="Resolver Observacion"
+        (click)="this.resolverEmitter.emit()"
+      >
+      <span
+        class="material-icons"
+        [ngClass]="{
+          porResolver: !observacion.resuelto,
+          resuelto: observacion.resuelto
+        }"
+      >
+        check_circle
+      </span>
+      </button>
+    </div>
+  </div>
+</div>

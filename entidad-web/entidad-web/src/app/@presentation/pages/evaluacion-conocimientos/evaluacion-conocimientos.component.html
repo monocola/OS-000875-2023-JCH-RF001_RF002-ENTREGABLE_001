@@ -1,0 +1,169 @@
+<div class="body">
+  <div class="title">
+    <h4 class="titlePage">Evaluaciones de Conocimiento</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="main-container">
+    <div class="left-section">
+      <div class="banco-preguntas-title-container">
+        <img src="assets/images/icons/formulario.png" alt="Logo" />
+        <span class="titlePage banco-preguntas-title">Banco de Preguntas</span>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div class="item-card" style="max-width: 320px; width: 100%;" *ngFor="let item of categorias">
+          <div style="
+              width: 70%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+            ">
+            <div style="
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+                margin-top: -4px;
+                font-weight: 500;
+                color: #0d88bc;
+              ">
+              {{ item.descripcion }}
+            </div>
+            <div style="font-size: 1rem;">
+              {{ getPreguntasLabel(item.preguntas) }}
+            </div>
+          </div>
+          <div style="
+              width: 30%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            ">
+            <button matRipple title="Configurar" class="btn-card" (click)="editarCategoria(item)">
+              <em class="ent-web-edit"></em>
+            </button>
+            <button matRipple title="Eliminar" class="btn-card" style="color: #eb5757;"
+              (click)="this.eliminarCategoria(item.categoriaId)">
+              <em class="ent-web-eliminar"></em>
+            </button>
+          </div>
+        </div>
+
+        <button matRipple class="btnAdd" routerLink="categorias/addcategorias">
+          <em class="material-icons"> add_circle_outline </em>
+          <span> Añadir Categoria </span>
+        </button>
+      </div>
+      <div class="banco-preguntas-ver-lista">
+        <button matRipple type="button" nbButton shape="round" status="primary" class="px-5" routerLink="categorias">
+          Ver Lista Completa
+        </button>
+      </div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="right-section">
+      <div class="top-right-section-container">
+        <div class="top-right-section">
+          <!-- <div class="right-section-top-container"> -->
+          <div class="row m-0 pb-3">
+            <div class="col-5 right-section-title-container">
+              <img src="assets/images/icons/formulario.png" alt="Logo" />
+              <span class="titlePage right-section-title">Programaciones</span>
+            </div>
+            <div class="col-6 right-section-ver-lista">
+              <button matRipple type="button" nbButton shape="round" status="primary" class="px-4"
+                routerLink="programar">
+                Programaciones
+              </button>
+              <button matRipple type="button" nbButton shape="round" status="primary" class="px-4 ml-2 "
+                routerLink="examenes">
+                Exámenes
+              </button>
+            </div>
+          </div>
+          <div *ngFor="let item of examenes" class="item-card">
+            <!--<div style="
+                width: 35%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              ">
+              <div style="
+                  font-size: 0.75rem;
+                  font-weight: 500;
+                  margin-bottom: 4px;
+                  margin-top: -4px;
+                ">
+                {{ item.cod }}
+              </div>
+              <div style="
+                  display: inline;
+                  text-align: center;
+                  font-size: 0.9rem;
+                  line-height: 1;
+                ">
+                {{
+                item.nombrePuesto !== 'Pendiente de programación'
+                ? (item.nombrePuesto | titlecase | slice: 0:32) +
+                (item.nombrePuesto.length > 32 ? '...' : '')
+                : item.nombrePuesto
+                }}
+              </div>
+            </div>-->
+            <div style="
+                width: 45%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                text-align: center;
+              ">
+              {{
+              (item.nombreExamen | slice: 0:32) +
+              (item.nombreExamen.length > 32 ? '...' : '')
+              }}
+            </div>
+            <div style="
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              ">
+              <div style="
+                  font-size: 0.75rem;
+                  margin-bottom: 4px;
+                  margin-top: -4px;
+                  color: gray;
+                ">
+                Preguntas
+              </div>
+              <div style="font-size: 1rem; font-weight: bold;">
+                {{ item.preguntas }}
+              </div>
+            </div>
+
+            <div style="
+                width: 20%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              ">
+              <button matRipple title="Configurar" class="btn-card" (click)="this.editExamen(item)">
+                <em class="ent-web-edit"></em>
+              </button>
+              <button matRipple title="Eliminar" class="btn-card" style="color: #eb5757;"
+                (click)="this.eliminarExamen(item.examenId)">
+                <em class="ent-web-eliminar"></em>
+              </button>
+            </div>
+          </div>
+
+          <button matRipple class="btnAdd" routerLink="examenes/crear-registro">
+            <em class="material-icons"> add_circle_outline </em>
+            <span> Añadir Examen </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

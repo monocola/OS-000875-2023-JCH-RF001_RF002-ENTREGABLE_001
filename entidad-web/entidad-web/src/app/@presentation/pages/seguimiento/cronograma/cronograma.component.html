@@ -1,0 +1,123 @@
+<div class="body">
+  <div class="d-flex">
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="router.navigateByUrl('pages/seguimientoconvocatoria')"
+    >
+      <nb-icon nbSuffix icon="back"></nb-icon>
+    </button>
+
+    <h3 class="titlePage">Etapa, Evaluaciones y Cronograma</h3>
+    <span class="flex-spacer"></span>
+
+    <h3 class="titlePage">Duración de proceso: {{ totaldias }} Días</h3>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col-md-9 col-12">
+      <div class="text-center mb-3">
+        <h4>Leyenda</h4>
+        <span class="badge badge-pill legend-blog text-light mr-2"
+          >Difusión</span
+        >
+        <span class="badge badge-pill legend-video text-light mr-2"
+          >Reclutamiento</span
+        >
+        <span class="badge badge-pill legend-streaming text-light mr-2"
+          >Evaluación</span
+        >
+
+        <span class="badge badge-pill legend-udemy text-light mr-2"
+          >Elección</span
+        >
+      </div>
+      <full-calendar
+        *ngIf="!calendarioActivo"
+        id="myCalendar"
+        [options]="calendarOptions"
+      ></full-calendar>
+    </div>
+    <div class="col-md-3 col-12">
+      <full-calendar
+        *ngIf="!calendarioActivo"
+        [options]="calendarList"
+      ></full-calendar>
+    </div>
+
+    <div class="col-12">
+      <serv-talento-table-cronograma
+        [data]="lista"
+        title=""
+        [showAcciones]="showAcciones"
+        usePaddingBody="false"
+      >
+      </serv-talento-table-cronograma>
+    </div>
+
+    <div class="col-12">
+      <h4>Historico</h4>
+      <div class="row mt-3">
+        <div class="mb-3 col-md-3">
+          <select-field
+            label="Etapa del Proceso"
+            [control]="f.etapa"
+            [items]="etapas"
+            value="value"
+            valueToShow="valueToShow"
+          >
+          </select-field>
+        </div>
+
+        <div class="mb-4 col-md-3">
+          <label for="dep">Fecha / Periodo de cronograma</label>
+          <nb-form-field [formGroup]="filterForm">
+            <input
+              formControlName="rangoFechas"
+              [nbDatepicker]="rangepicker"
+              nbInput
+              fullWidth
+              class="cursor-pointer"
+              format="DD/MM/YYYY"
+              placeholder="Elegir rango"
+              fieldSize="large"
+            />
+            <nb-icon nbSuffix icon="calendar"></nb-icon>
+            <nb-rangepicker #rangepicker></nb-rangepicker>
+          </nb-form-field>
+        </div>
+
+        <div class="mb-3 col-md-3 filtrar_buttons">
+          <button
+            class="col-6"
+            nbButton
+            outline
+            shape="round"
+            status="primary"
+            (click)="limpiar()"
+          >
+            Limpiar
+          </button>
+          &nbsp; &nbsp;&nbsp; &nbsp;
+          <button
+            class="col-6"
+            nbButton
+            shape="round"
+            status="primary"
+            (click)="filtrarHistorico()"
+          >
+            Filtrar
+          </button>
+        </div>
+      </div>
+
+      <serv-talento-table-cronograma
+        [data]="listaCronogramas"
+        title=""
+        [showAcciones]="showAcciones"
+        usePaddingBody="false"
+      >
+      </serv-talento-table-cronograma>
+    </div>
+  </div>
+</div>

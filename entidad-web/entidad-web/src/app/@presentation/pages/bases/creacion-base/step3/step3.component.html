@@ -1,0 +1,133 @@
+<form [formGroup]="helperService.form3" class="px-5 pb-3">
+  <ng-container *ngIf="helperService.observaciones[2].description">
+    <serv-talento-observacion-base-div
+      [observacion]="helperService.observaciones[2]"
+      (editEmitter)="helperService.editObservacion()"
+      (deleteEmitter)="helperService.deleteObservacion()"
+      (resolverEmitter)="helperService.resolverObservacion()"
+      [showButtons]="helperService.estadoBase !== const.ETA_BASE_OBSERVADO"
+      [onlyShow]="
+        helperService.estadoBase == const.ETA_BASE_OBSERVADO &&
+        (authRepository.isCoordinador() || authRepository.isSuperAdminEntidad())
+      "
+    ></serv-talento-observacion-base-div>
+  </ng-container>
+
+  <div>
+    <h6 class="d-flex">Requisitos generales</h6>
+  </div>
+
+  <ng-container>
+    <strong class="mt-1">Declaraciones establecidas por SERVIR</strong>
+    <div class="w-100 row m-0 my-3">
+      <input
+        *ngFor="let item of helperService.decJuradasServir"
+        fullWidth
+        type="text"
+        class="my-1"
+        shape="semi-round"
+        nbInput
+        [value]="item.descripcion"
+        disabled
+      />
+    </div>
+  </ng-container>
+  <ng-container>
+    <div class="row m-0 w-100">
+      <div class="col-12 p-0">
+        <strong class="mt-1"
+          >Declaraciones establecidas por Entidad - (Opcional)</strong
+        >
+        <button
+          class="ml-2"
+          nbButton
+          status="primary"
+          ghost
+          (click)="addDeclaration(true)"
+          [disabled]="
+            declaracionFormGroups.length > 0 ||
+            this.helperService.idBase == null
+          "
+        >
+          Añadir declaración<nb-icon class="fs-20" icon="mas_rounded"></nb-icon>
+        </button>
+      </div>
+      <form class="col-12 row m-0 p-0 mt-3">
+        <div
+          class="col-12 row m-0 my-0 px-0"
+          *ngFor="let item of declaracionFormGroups; let i = index"
+        >
+          <div class="col pl-0 align-self-center" [formGroup]="item">
+            <nb-form-field>
+              <nb-icon nbSuffix icon="buscar"></nb-icon>
+              <input
+                type="text"
+                shape="semi-round"
+                nbInput
+                formControlName="name"
+                fullWidth
+                [status]="
+                  declaracionFormGroups[i].errors?.errorCorrectData &&
+                  declaracionFormGroups[i].controls.name.touched
+                    ? 'danger'
+                    : 'basic'
+                "
+                [nbAutocomplete]="autoEntidad"
+                focusInputOnValueChange="false"
+              />
+              <nb-autocomplete
+                #autoEntidad
+                (selectedChange)="autocompletData(i, $event)"
+              >
+                <nb-option
+                  *ngFor="let option of filteredDeclaracionOptions | async"
+                  [value]="option.descripcion"
+                >
+                  {{ option.descripcion }}
+                </nb-option>
+              </nb-autocomplete>
+            </nb-form-field>
+          </div>
+          <div class="row m-0 p-0">
+            <button
+              nbButton
+              ghost
+              size="large"
+              status="primary"
+              (click)="addNewAndCancelEdit(i)"
+              [class.item-collapse]="
+                this.declaracionFormGroups[i].controls.name.disabled &&
+                !(this.declaracionFormGroups.length < i + 2)
+              "
+              [disabled]="declaracionFormGroups[i].errors?.errorCorrectData"
+            >
+              <nb-icon class="fs-24" icon="mas_rounded"></nb-icon>
+            </button>
+            <button
+              [class.item-collapse]="
+                this.declaracionFormGroups[i].controls.name.disabled &&
+                !(this.declaracionFormGroups.length < i + 2)
+              "
+              nbButton
+              ghost
+              size="large"
+              status="danger"
+              (click)="deleteDeclaration(i)"
+            >
+              <nb-icon class="fs-24" icon="remove_circle_outline"></nb-icon>
+            </button>
+          </div>
+          <div
+            class="col-12 p-0 invalid-text"
+            *ngIf="
+              declaracionFormGroups[i].errors?.errorCorrectData &&
+              declaracionFormGroups[i].controls.name.touched
+            "
+          >
+            No se encontraron coincidencias.
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</form>

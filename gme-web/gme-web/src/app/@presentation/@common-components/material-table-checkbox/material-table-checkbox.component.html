@@ -1,0 +1,92 @@
+<ng-container>
+
+
+  <div style="display: flex">
+    <ng-container >
+      <span style="font-size: 14px; width: 30%; padding-top: 20px;" >Lista de Preguntas ({{ cantidadList }})</span>
+    </ng-container>
+
+    <span style="flex: 1 0"></span>
+
+    <mat-paginator
+      *ngIf="isPageable"
+      [pageSizeOptions]="paginationSizes"
+      [pageSize]="defaultPageSize"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+  </div>
+  <table
+    aria-describedby="material-table"
+    class="mat-elevation-z7 mt-2"
+    mat-table
+    [dataSource]="tableDataSource"
+    matSort
+    (matSortChange)="sortTable($event)"
+  >
+    <ng-container [matColumnDef]="'Acciones'">
+      <th scope="col" mat-header-cell *matHeaderCellDef class="text-center">
+        Acciones
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element; let index = index"
+        class="text-center"
+      >
+
+      </td>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let tableColumn of tableColumns"
+      [matColumnDef]="tableColumn.name"
+    >
+
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [class.text-right]="tableColumn.position == 'right'"
+        [ngStyle]="{ height: rowHeight }"
+      >
+
+        <div class="item-card-input">
+          <label class="control control-checkbox">
+            <!-- {{ tableColumn.descripcion }} -->
+            {{ element | dataPropertyGetter: tableColumn.descripcion }}
+            <input
+              type="checkbox"
+              [checked]="element.flagSeleccion"
+              (change)="emitCheckItem(element,$event)"
+            />
+            <div class="control_indicator"></div>
+          </label>
+        </div>
+
+      </td>
+    </ng-container>
+
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <div
+    *ngIf="this.tableDataSource.filteredData.length === 0"
+    class="p-3 mat-elevation-z1"
+    style="background-color: white"
+  >
+    No se encontraron resultados
+  </div>
+
+  <div class="row px-3 mt-3" *ngIf="showDownloadButton">
+    <span style="flex: 1 0"></span>
+    <button
+      class="btn-excel px-4 py-1"
+      mat-stroked-button
+      outline
+      (click)="exportData()"
+      [disabled]="this.tableDataSource.filteredData.length === 0"
+    >
+      <span> Descargar Excel </span>
+      <nb-icon icon="descargar"></nb-icon>
+    </button>
+  </div>
+</ng-container>

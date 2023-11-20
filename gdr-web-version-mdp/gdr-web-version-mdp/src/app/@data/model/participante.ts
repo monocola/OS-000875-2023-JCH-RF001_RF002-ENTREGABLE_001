@@ -1,0 +1,39 @@
+export interface IParticipanteEvaluador {
+    indicadorMeta?: number;
+    detUnidadOrganicaId?: number;
+    uoId?: number;
+    personaId?: number;
+    apellidosNombres?: string;
+    puestoId?: number;
+    puesto?: string;
+    segmentoId?: number;
+    segmento?: string;
+    rolId?: number;
+    descripcionRoles?: string;
+    urlFoto?: string;
+    cantidadEvaluados?: number;
+    personaEvaluadorId?: number;
+    documentoIdentidad?: string;
+    esJefeUo?: string;
+    estado?: string;
+    estadoGME?: number;
+    estadoSerCivGdrId?: number;
+    siglaUO?: string;
+    tipoAsignacion?: string;
+    unidadOrganicaId?: number;
+    accedioDirecto?: boolean;
+    vieneDeParticipantes?: boolean;
+    pesoToTal?: number;
+    metaId?: number;
+    cicloId?: number;
+    detaUoId?: number;
+    estadoMeta?: string;
+    colorEstado?: string;
+    segmentoCorto?: string;
+    flagEvaluador?: boolean;
+    areaAbreviado?: string;
+    esJefe?: string;
+    esResponsable?: string;
+    uoPadreId?: number;
+
+}

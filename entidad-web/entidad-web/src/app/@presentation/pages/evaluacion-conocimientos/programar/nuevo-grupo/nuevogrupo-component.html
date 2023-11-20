@@ -1,0 +1,61 @@
+<div class="body">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-4"></div>
+      <div class="col-4 center-text">
+        <img alt="imagen" src="assets/images/undraw_calendar.svg" class="" />
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-3"></div>
+      <div class="col-6 center-text">
+        <h6 class="">Empecemos a CREAR grupos de evaluaciones</h6>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-2"></div>
+      <div class="col-8 center-text">
+        <h4 class="titlePage">
+          Para inciar debes elegir el código de una convocatoria
+        </h4>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-4"></div>
+      <div class="col-4">
+        <select-field [label]="'Convocatoria'" [control]="f.convocatoria">
+        </select-field>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-4"></div>
+      <div class="col-4" style="margin-top: 20px">
+        <div class="w-100 h-100 btn_area">
+          <button
+            matRipple
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+          >
+            Cancelar
+          </button>
+          <button
+            matRipple
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            routerLink="grupos"
+          >
+            Crear grupos
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

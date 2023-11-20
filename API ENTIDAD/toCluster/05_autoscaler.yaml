@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: entidad-env
+  name: entidad-env
+spec:
+  scaleTargetRef:
+    apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    name: entidad-env
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80

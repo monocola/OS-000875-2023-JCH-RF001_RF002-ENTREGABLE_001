@@ -1,0 +1,176 @@
+<div class="body">
+  <div class="d-flex align-items-center mb-4">
+    <serv-talento-back-button (click)='back()'></serv-talento-back-button>
+    <h3 class="page-title mb-0">Registrar Meta</h3>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form class="container-fluid row " [formGroup]='form'>
+    <div class="mb-3 col-md-12 mt-3">
+      <label>Fuente</label>
+      <nb-form-field>
+        <input
+          nbInput
+          formControlName="fuente"
+          fieldSize="medium"
+          maxlength='500'
+          shape="semi-round"
+        />
+      </nb-form-field>
+    </div>
+    <div class="mb-3 col-md-12">
+      <label>Prioridad</label>
+      <nb-form-field>
+        <input
+          formControlName="prioridad"
+          nbInput
+          maxlength='500'
+          fieldSize="medium"
+          shape="semi-round"
+        />
+      </nb-form-field>
+    </div>
+    <div class="mb-3 col-md-8">
+      <nb-radio-group class='inline-radio' name='tipo' formControlName='tipo'>
+        <nb-radio [value]="0">Indicador</nb-radio>
+        <nb-radio [value]="1">Producto</nb-radio>
+      </nb-radio-group>
+
+      <nb-form-field>
+        <textarea
+          formControlName="detalle"
+          nbInput
+          maxlength='500'
+          style="overflow:hidden"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="3"
+          cdkAutosizeMaxRows="9"
+          shape="semi-round">
+        </textarea>
+      </nb-form-field>
+      <div *ngIf="form.controls.peso.errors?.pesoValid" class='fs-12' style='color: transparent'>
+        &nbsp;
+      </div>
+    </div>
+    <div class="mb-4 col-2 align-self-end">
+      <label>Valor Meta</label>
+      <nb-form-field>
+        <input
+          formControlName="valor_meta"
+          nbInput
+          onlyNumber
+          [decimal]="true"
+          pattern='[0-9]*.[0-9][0-9]|[0-9]*'
+          fieldSize="medium"
+          shape="semi-round"
+          maxlength='8'
+        />
+      </nb-form-field>
+      <div *ngIf="form.controls.peso.errors?.pesoValid" class='fs-12' style='color: transparent'>
+        &nbsp;
+      </div>
+    </div>
+    <div class="mb-4 col-2 align-self-end">
+      <label>Peso</label>
+      <nb-form-field>
+        <nb-icon nbSuffix icon="porcentaje" pack="entweb"></nb-icon>
+        <input
+          formControlName="peso"
+          nbInput
+          onlyNumber
+          fieldSize="medium"
+          shape="semi-round"
+          maxlength='8'
+        />
+      </nb-form-field>
+      <div *ngIf="form.controls.peso.errors?.pesoValid" class='fs-12' style='color: red'>
+        El peso ingresado supera el límite de {{100 - participante.pesoToTal}}
+      </div>
+    </div>
+    <div class="mb-3 offset-8 col-2" *ngIf='form.controls.tipo.value === 0'>
+      <nb-radio-group class='inline-radio justify-content-center' name='tipo_valor' formControlName='tipo_valor'>
+        <nb-radio [value]="0">%</nb-radio>
+        <nb-radio [value]="1">Numérico</nb-radio>
+      </nb-radio-group>
+    </div>
+  </form>
+
+  <div class='m-1 p-1'></div>
+
+  <div class="row m-0 p-0">
+    <div class="col-6 subtitle align-self-center">Registro de evidencias </div>
+    <div class="col-6 row m-0 justify-content-end">
+      <button
+        nbButton
+        outline
+        status='primary'
+        shape="round"
+        size="medium"
+        class="mr-2"
+        (click)="nuevaEvidencia()"
+      >
+        <nb-icon icon="suma" pack='entweb'></nb-icon>
+        Nueva Evidencia
+      </button>
+    </div>
+
+  </div>
+
+  <div class="mat-elevation-z8 m-2">
+    <table aria-describedby="material-table" class="mat-elevation-z7 mt-2" mat-table
+           [dataSource]="dataSource" matSort>
+
+            <!-- Nuemero Column -->
+      <ng-container matColumnDef="numeracion">
+          <th id="numeracion" mat-header-cell *matHeaderCellDef style='width: 0.2% !important;'> Nº. </th>
+          <td mat-cell *matCellDef="let element"> {{element.numeracion}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="evidencia">
+        <th id="evidencia" mat-header-cell *matHeaderCellDef style='width: 10%;'> Evidencia </th>
+        <td mat-cell *matCellDef="let element" style='overflow-wrap: anywhere !important;'> {{element.evidencia}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="plazo">
+        <th id="plazo" mat-header-cell *matHeaderCellDef style='width: 0.8%;'> Plazo </th>
+        <td mat-cell *matCellDef="let element"> {{element.plazo}} </td>
+      </ng-container>
+
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="acciones">
+        <th id="acciones" mat-header-cell *matHeaderCellDef style='width: 0.8%; position: center;'> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <span class="material-icons fs-20 mr-2" style="cursor: pointer;" (click)='editEvidencia(element)'> edit</span>
+          <span class="material-icons fs-20 mr-2" style="cursor: pointer;" (click)='deleteEvidencia(element)'> delete </span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+    <div *ngIf="this.dataSource.filteredData.length === 0" class="p-3 mat-elevation-z1"
+         style="background-color: white;">
+      No se encontraron resultados
+    </div>
+  </div>
+
+  <div class="mb-3 offset-3"></div>
+  <div class='col-md-12'>
+    <div class="w-100 h-100 btn-area col-md-12 m-0 p-0">
+      <button
+        nbButton
+        shape="round"
+        size="medium"
+        status='info'
+        [disabled]='!form.valid'
+        (click)='guardarMetas()'
+      >
+        Guardar meta
+      </button>
+    </div>
+  </div>
+
+</div>

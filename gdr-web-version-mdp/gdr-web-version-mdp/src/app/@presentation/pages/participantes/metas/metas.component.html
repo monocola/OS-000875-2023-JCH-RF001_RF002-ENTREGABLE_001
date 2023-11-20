@@ -1,0 +1,776 @@
+<div class="body">
+  <div class="d-flex align-items-center mb-4">
+    <serv-talento-back-button
+      routerLink="../"
+      *ngIf="
+        !(participante.accedioDirecto === true) &&
+        !participante.vieneDeParticipantes
+      "
+    >
+    </serv-talento-back-button>
+    <serv-talento-back-button
+      routerLink="../../"
+      *ngIf="participante.vieneDeParticipantes"
+    >
+    </serv-talento-back-button>
+    <h3 class="page-title mb-0">
+      {{
+        participante.accedioDirecto === true
+          ? 'Factores de Evaluación'
+          : 'Metas y Compromisos'
+      }}
+    </h3>
+    <span class="ml-auto text-secondary pt-2 font-weight-bold"
+      >Ciclo {{ cicloDefaultDesc }}</span
+    >
+  </div>
+
+  <div class="m-2 p-2"></div>
+
+  <div class="d-flex justify-content-end">
+    <button
+      [disabled]="validEnableDownloadButtom()"
+      nbButton
+      shape="round"
+      size="medium"
+      status="info"
+      class="pt-1 pb-1 text-light-blue ml-3"
+      outline
+      (click)="actionDocumentoShowPDF()"
+    >
+      <span>
+        <img
+          class="m-1 p-0 img-grande"
+          alt="banner"
+          src="./assets/images/icons/cloud-down0.png"
+        />
+      </span>
+      Descargar reporte
+    </button>
+    <button
+      *ngIf="this.rolId == 2 || this.rolId == 3; else ''"
+      [disabled]="!validEnableSearchButtomSubirDoc()"
+      nbButton
+      shape="round"
+      size="medium"
+      status="info"
+      class="pt-1 pb-1 ml-3"
+      outline
+      style="color: #024487; background-color: white; border-color: #024487"
+      (click)="uploadDocumento()"
+    >
+      <span>
+        <img
+          class="m-1 p-0 img-grande"
+          alt="banner"
+          src="./assets/images/icons/cloud-up.png"
+        />
+      </span>
+      Subir documento
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-start" style="margin-top: -42px">
+    <div class="m-2 p-2"></div>
+    <!-- listaEvaluados?.length > 0 -->
+    <personal-card
+      *ngIf="!(listaEvaluados?.length > 1)"
+      [urlImagen]="participante.urlFoto"
+      [nombre]="participante.apellidosNombres"
+      [cargo]="participante.puesto"
+      [nivel]="participante.segmento"
+    >
+    </personal-card>
+
+    <div class="d-flex justify-content-start">
+      <serv-talento-simple-pager
+        *ngIf="listaEvaluados?.length > 1"
+        [totalItems]="listaEvaluados?.length"
+        (pageChanged)="pageChangedEvaluado($event)"
+      >
+        <personal-card
+          [urlImagen]="participante.urlFoto"
+          [nombre]="participante.apellidosNombres"
+          [cargo]="participante.puesto"
+          [nivel]="participante.segmento"
+        >
+        </personal-card>
+      </serv-talento-simple-pager>
+    </div>
+  </div>
+
+  <!--Incio -  Peso total  para otro Roles -->
+  <div
+    *ngIf="this.rolId == 2 || this.rolId == 3; else positionPeso"
+    class="d-flex align-items-right"
+    style="margin-bottom: -55px; margin-top: 70px; margin-left: 66%"
+  >
+    <div class="">
+      <span class="text-secondary sm">Peso Total</span>
+      <div
+        class="porcentajePaso"
+        *ngIf="pesoToTal < 100; else otherpeso"
+        style="color: #ef2235"
+      >
+        <span class="w-75 text-right">{{ pesoToTal }} %</span>
+      </div>
+
+      <div *ngIf="pesoToTal < 100">
+        <span class="alert-text">La suma de pesos debe ser de 100%</span>
+      </div>
+
+      <ng-template #otherpeso>
+        <div class="porcentaje">
+          <span class="w-75 text-right">{{ pesoToTal }} %</span>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <!--Fin -  Peso total  para otro Roles -->
+
+  <!--Inicio - Peso total para Rol "1"-->
+  <ng-template #positionPeso>
+    <div
+      class="d-flex align-items-right"
+      style="margin-bottom: 0; margin-top: 70px; margin-left: 72%"
+    >
+      <div class="">
+        <span class="text-secondary sm">Peso Total</span>
+        <div
+          class="porcentajePaso"
+          *ngIf="pesoToTal < 100; else otherpeso"
+          style="color: #ef2235"
+        >
+          <span class="w-75 text-right">{{ pesoToTal }} %</span>
+        </div>
+
+        <div *ngIf="pesoToTal < 100">
+          <span class="alert-text">La suma de pesos debe ser de 100%</span>
+        </div>
+
+        <ng-template #otherpeso>
+          <div class="porcentaje">
+            <span class="w-75 text-right">{{ pesoToTal }} %</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+  <!--Fin - Peso total para Rol "1"-->
+
+  <div
+    class="d-flex align-items-right mb-4"
+    *ngIf="this.rolId == 2 || this.rolId == 3"
+    else
+    ocultarBtnNuevaMeta
+  >
+    <div class="w-100 text-right">
+      <button
+        class="btn btn-info pr-4 pl-4 pt-2 pb-2 mr-3 round"
+        [disabled]="!validEnableSearchButtom()"
+        (click)="agregarMetas()"
+      >
+        Nueva meta
+      </button>
+    </div>
+  </div>
+
+  <ng-template #ocultarBtnNuevaMeta>
+    <div
+      class="d-flex align-items-right mb-4"
+      *ngIf="this.rolId == 1"
+      style="display: hidden"
+    >
+      <div class="w-100 text-right">
+        <button
+          class="btn btn-info pr-4 pl-4 pt-2 pb-2 mr-3 round"
+          [disabled]="!validEnableSearchButtom()"
+          (click)="agregarMetas()"
+        >
+          Nueva metas
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!--Inicio - Para  rol "1" -------------------------------------------------------------------------->
+  <ng-container *ngIf="this.rolId == 1; else otrosRoles">
+    <div class="mat-elevation-z8 m-2">
+      <table
+        aria-describedby="material-table"
+        class="mat-elevation-z7 mt-2"
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+      >
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th
+            id="select"
+            mat-header-cell
+            *matHeaderCellDef
+            style="width: 5%; position: center"
+          >
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              (click)="$event.preventDefault()"
+            >
+            </mat-checkbox>
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            style="width: 5%; position: center"
+          >
+            <mat-checkbox
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+              [class.mat-checkbox-disabled]="row.estadoMeta == '1'"
+              [disabled]="row.estadoMeta == '1'"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Nuemero Column -->
+        <ng-container matColumnDef="numeracion">
+          <th
+            id="numeracion1"
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              width: 10%;
+              position: center;
+              color: #000000;
+              font-weight: bold;
+            "
+          >
+            Nº.
+          </th>
+          <td mat-cell style="width: 10%" *matCellDef="let element">
+            {{ element.numeracion }}
+          </td>
+        </ng-container>
+
+        <!-- Indicador Column -->
+        <ng-container matColumnDef="indicador">
+          <th
+            id="indicador1"
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              width: 50%;
+              position: center;
+              color: #000000;
+              font-weight: bold;
+            "
+          >
+            Indicador
+          </th>
+          <td
+            mat-cell
+            style="width: 50%; position: center"
+            *matCellDef="let element"
+          >
+            {{ element.indicador }}
+          </td>
+        </ng-container>
+
+        <!-- Valor Meta Column -->
+        <ng-container matColumnDef="valorMeta">
+          <th
+            id="valorMeta1"
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              width: 10%;
+              position: center;
+              color: #000000;
+              font-weight: bold;
+            "
+          >
+            Valor Meta
+          </th>
+          <td
+            mat-cell
+            style="width: 10%; position: center"
+            *matCellDef="let element"
+          >
+            {{ element.datoValorMeta }}
+          </td>
+        </ng-container>
+
+        <!-- Peso Column -->
+        <ng-container matColumnDef="peso">
+          <th
+            id="peso1"
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              width: 10%;
+              position: center;
+              color: #000000;
+              font-weight: bold;
+            "
+          >
+            Peso
+          </th>
+          <td
+            mat-cell
+            style="width: 10%; position: center"
+            *matCellDef="let element"
+          >
+            {{ element.datoPeso }}
+          </td>
+        </ng-container>
+
+        <!-- Estado Column -->
+        <ng-container matColumnDef="descripcionEstado">
+          <th
+            id="descripcionEstado1"
+            mat-header-cell
+            *matHeaderCellDef
+            style="
+              width: 10%;
+              position: center;
+              color: #000000;
+              font-weight: bold;
+            "
+          >
+            Estado
+          </th>
+          <td
+            mat-cell
+            style="width: 10%; position: center"
+            *matCellDef="let element"
+          >
+            <span
+              class="material-icons fs-20 mr-3"
+              style="font-size: 1rem !important; color:{{
+                element.colorEstadoMeta
+              }};"
+            >
+              brightness_1
+            </span>
+            {{ element.descripcionEstado }}
+          </td>
+        </ng-container>
+
+        <!-- Acciones Column 
+        <ng-container matColumnDef="acciones">
+          <th
+            id="acciones1"
+            mat-header-cell
+            *matHeaderCellDef
+            style="position: center; color: #000000; font-weight: bold"
+           
+          >
+            Acciones
+          </th>
+          <td
+            mat-cell
+            style="width: 10%; position: center"
+            *matCellDef="let element"
+          ></td>
+        </ng-container>-->
+          <ng-container matColumnDef="validadoEvaluador">
+            <th
+              id="validadoEvaluador1"
+              mat-header-cell
+              *matHeaderCellDef
+              style="width: 10%; position: start"
+            >Acciones</th>
+            <td
+              mat-cell
+              style="width: 10%; position: center"
+              *matCellDef="let element"
+            >
+              <div
+                class="material-icons fs-20 mr-3"
+                *ngIf="
+                  element.validadoGestor == 1 ||
+                    element.estadoMeta == '1' ||
+                    element.estadoMeta !== '3';
+                  else thumb_up_disable
+                "
+                style="color: rgba(129, 145, 164, 0.4)"
+                ng-disabled="disable"
+              >
+                thumb_up
+              </div>
+
+              <ng-template #thumb_up_disable>
+                <div
+                  class="material-icons fs-20 mr-1"
+                  *ngIf="element.validadoGestor == 0 && this.rolId == 1"
+                  style="color: #8191a4; cursor: pointer"
+                  ng-disabled="!disable"
+                  (click)="modalValidarMeta(element, true)"
+                >
+                  thumb_up
+                </div>
+              </ng-template>
+            </td>
+          </ng-container>
+        
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns1; let entry"
+          [ngClass]="{ hightLigth: entry.estadoMeta == 3 }"
+        ></tr>
+      </table>
+      <div
+        *ngIf="this.dataSource.filteredData.length === 0"
+        class="p-3 mat-elevation-z1"
+        style="background-color: white"
+      >
+        No se encontraron resultados
+      </div>
+
+      <mat-paginator
+        *ngIf="isPageable"
+        [pageSizeOptions]="paginationSizes"
+        [pageSize]="defaultPageSize"
+        showFirstLastButtons
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </ng-container>
+  <!--Fin - Para  rol "1" -------------------------------------------------------------------------->
+
+  <!--Inicio - Para "otros" roles -------------------------------------------------------------------------->
+  <ng-template #otrosRoles>
+    <ng-container>
+      <div class="mat-elevation-z8 m-2">
+        <table
+          aria-describedby="material-table"
+          class="mat-elevation-z7 mt-2"
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+        >
+          <!-- Nuemero Column -->
+          <ng-container matColumnDef="numeracion">
+            <th
+              id="numeracion"
+              mat-header-cell
+              *matHeaderCellDef
+              style="
+                width: 10%;
+                position: center;
+                color: #000000;
+                font-weight: bold;
+              "
+            >
+              Nº.
+            </th>
+            <td mat-cell style="width: 10%" *matCellDef="let element">
+              {{ element.numeracion }}
+            </td>
+          </ng-container>
+
+          <!-- Indicador Column -->
+          <ng-container matColumnDef="indicador">
+            <th
+              id="indicador"
+              mat-header-cell
+              *matHeaderCellDef
+              style="
+                width: 50%;
+                position: center;
+                color: #000000;
+                font-weight: bold;
+              "
+            >
+              Indicador
+            </th>
+            <td
+              mat-cell
+              style="width: 50%; position: center"
+              *matCellDef="let element"
+            >
+              {{ element.indicador }}
+            </td>
+          </ng-container>
+
+          <!-- Valor Meta Column -->
+          <ng-container matColumnDef="valorMeta">
+            <th
+              id="valorMeta"
+              mat-header-cell
+              *matHeaderCellDef
+              style="
+                width: 10%;
+                position: center;
+                color: #000000;
+                font-weight: bold;
+              "
+            >
+              Valor Meta
+            </th>
+            <td
+              mat-cell
+              style="width: 10%; position: center"
+              *matCellDef="let element"
+            >
+              {{ element.datoValorMeta }}
+            </td>
+          </ng-container>
+
+          <!-- Peso Column -->
+          <ng-container matColumnDef="peso">
+            <th
+              id="peso"
+              mat-header-cell
+              *matHeaderCellDef
+              style="
+                width: 10%;
+                position: center;
+                color: #000000;
+                font-weight: bold;
+              "
+            >
+              Peso
+            </th>
+            <td
+              mat-cell
+              style="width: 10%; position: center"
+              *matCellDef="let element"
+            >
+              {{ element.datoPeso }}
+            </td>
+          </ng-container>
+
+          <!-- Estado Column -->
+          <ng-container matColumnDef="descripcionEstado">
+            <th
+              id="descripcionEstado"
+              mat-header-cell
+              *matHeaderCellDef
+              style="
+                width: 15%;
+                position: center;
+                color: #000000;
+                font-weight: bold;
+              "
+            >
+              Estado
+            </th>
+            <td
+              mat-cell
+              style="width: 15%; position: center"
+              *matCellDef="let element"
+            >
+              <span
+                class="material-icons fs-20 mr-3"
+                style="font-size: 1rem !important; color:{{
+                  element.colorEstadoMeta
+                }};"
+              >
+                brightness_1
+              </span>
+              {{ element.descripcionEstado }}
+            </td>
+          </ng-container>
+
+          <!-- Acciones Column -->
+          <ng-container matColumnDef="acciones">
+            <th
+              id="acciones"
+              mat-header-cell
+              *matHeaderCellDef
+              style="position: center; color: #000000; font-weight: bold; text-align: center;"
+             
+            >
+              Acciones
+            </th>
+            <td
+              mat-cell
+              style="width: 10%; position: center"
+              *matCellDef="let element"
+            >
+            <div style="display:flex;">
+            <div class="item-editar">
+              <button
+                class="btnEdit fs-20 mr-1"
+                (click)="edit(element.metaId)"
+                *ngIf="
+                  element.estadoMeta == 1 ||
+                    (element.estadoMeta == 5 &&
+                      (this.rolId == 2 || this.rolId == 3));
+                  else disableBtnEdit
+                "
+                style="color: #8191a4; cursor: pointer"
+                ng-disabled="!disable"
+              >
+                <em class="ent-web-edit"></em>
+              </button>
+              <ng-template #disableBtnEdit>
+                <button
+                  class="btnEditDis fs-20 mr-1"
+                  *ngIf="element.estadoMeta == 2 || element.estadoMeta == 3"
+                  style="color: rgba(129, 145, 164, 0.4)"
+                  ng-disabled="disable"
+                >
+                  <em class="ent-web-edit"></em>
+                </button>
+              </ng-template>
+            </div>
+            <div
+            class="container"
+            style="
+              padding-right: 12px;
+              margin-right: 12px;
+              padding-left: 34px;
+              margin-left: 0;
+            "
+          >
+            <div class="row justify-content-center">
+              <div class="col-1">
+                <div
+                  class="material-icons fs-20 mr-1"
+                  *ngIf="
+                    (element.validadoEvaluador == 0 && this.rolId == 3) ||
+                      (element.validadoEvaluado == 0 &&
+                        element.validadoEvaluador == 1 &&
+                        this.rolId == 2 &&
+                        element.estadoMeta == 5);
+                    else thumb_up
+                  "
+                  style="color: #8191a4; cursor: pointer"
+                  ng-disabled="!disable"
+                  (click)="modalValidarMeta(element, true)"
+                >
+                  thumb_up
+                </div>
+
+                <ng-template #thumb_up>
+                  <div
+                    class="material-icons fs-20 mr-3"
+                    *ngIf="
+                      element.validadoEvaluador !== 0 &&
+                      element.estadoMeta !== 2
+                    "
+                    style="color: rgba(129, 145, 164, 0.4)"
+                    ng-disabled="disable"
+                  >
+                    thumb_up
+                  </div>
+                </ng-template>
+              </div>
+
+              <div class="col-1" *ngIf="this.rolId == 2; else ''">
+                <div
+                  class="material-icons fs-20 mr-1"
+                  *ngIf="
+                    this.rolId == 2 &&
+                      element.validadoEvaluado == 0 &&
+                      element.validadoEvaluador == 1 &&
+                      element.estadoMeta == 5;
+                    else thumb_down
+                  "
+                  style="color: #8191a4; cursor: pointer"
+                  ng-disabled="!disable"
+                  (click)="modalObservarMeta(element, true)"
+                >
+                  thumb_down
+                </div>
+
+                <ng-template #thumb_down>
+                  <div
+                    class="material-icons fs-20 mr-3"
+                    *ngIf="
+                      element.validadoEvaluado !== 0 &&
+                      this.rolId == 2 &&
+                      element.estadoMeta !== 2
+                    "
+                    style="color: rgba(129, 145, 164, 0.4)"
+                    ng-disabled="disable"
+                  >
+                    thumb_down
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="mr-2">
+            <div class="row">
+              <div class="">
+                <button
+                  class="btnDelete fs-20 mr-3"
+                  *ngIf="element.estadoMeta == 1; else deleteDisabled"
+                  style="color: #8191a4; cursor: pointer"
+                  ng-disabled="!disable"
+                  (click)="modalEliminarMeta(element, true)"
+                >
+                  <em class="ent-web-eliminar"></em>
+                </button>
+
+                <ng-template #deleteDisabled>
+                  <button
+                    class="btnDeleteDis fs-20 mr-3"
+                    style="color: rgba(129, 145, 164, 0.4)"
+                    ng-disabled="disable"
+                  >
+                    <em class="ent-web-eliminar"></em>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </div></div></td>
+
+            
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns; let entry"
+            [ngClass]="{ hightLigth: entry.estadoMeta == 3 }"
+          >
+            <!--(click)="selection.toggle(row)"-->
+          </tr>
+        </table>
+        <div
+          *ngIf="this.dataSource.filteredData.length === 0"
+          class="p-3 mat-elevation-z1"
+          style="background-color: white"
+        >
+          No se encontraron resultados
+        </div>
+
+        <mat-paginator
+          *ngIf="isPageable"
+          [pageSizeOptions]="paginationSizes"
+          [pageSize]="defaultPageSize"
+          showFirstLastButtons
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </ng-container>
+  </ng-template>
+  <!--Fin - Para "otros" roles -------------------------------------------------------------------------->
+
+  <div class="d-flex justify-content-center mt-5">
+    <button
+      *ngIf="this.rolId == 1; else ''"
+      [disabled]="selection.selected.length == 0"
+      nbButton
+      shape="round"
+      size="large"
+      status="info"
+      class="pt-1 pb-1 text-light-blue ml-3"
+      outline
+      (click)="habilitar()"
+    >
+      Habilitar edición
+    </button>
+  </div>
+</div>

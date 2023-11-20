@@ -1,0 +1,89 @@
+<div>
+  <div class="d-flex w-100">
+    <span class="flex-spacer"></span>
+    <nb-icon
+      class="mr-2 btnClose"
+      nbSuffix
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-icon>
+  </div>
+
+  <div class="flex-v-center flex-column">
+    <img
+      height="64px"
+      src="assets/images/icons/formulario.png"
+      alt="icon image"
+    />
+    <h5 class="text-center mt-4">Registro de bonificación</h5>
+  </div>
+
+  <form [formGroup]="modalCreacionForm" class="row mt-4 px-4">
+    <div class="col-12 mb-3">
+      <textarea-field
+        [control]="f.descripcion"
+        [label]="'Descripcion'"
+        [placeholder]="'Ingrese texto'"
+        [maxlength]="200"
+        [banKeyType]="5"
+        [minlength]="1"
+      >
+      </textarea-field>
+    </div>
+    <div class="mb-3 col-md-4">
+      <select-field
+        [label]="'Niveles'"
+        [control]="f.niveles"
+        [items]="returnNiveles()"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+    <div class="mb-3 col-md-5">
+      <select-field
+        [label]="'Aplica sobre'"
+        [control]="f.aplicaSobre"
+        [items]="this.helperService.aplicaSobre"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+    <div class="mb-3 col-md-3">
+      <input-field
+        [control]="f.porcentaje"
+        [label]="'% de bonificación'"
+        [placeholder]="'%'"
+        [maxlength]="4"
+        [banKeyType]="2"
+        [minlength]="1"
+        (keyup)="validatePercentage()"
+        (blur)="validatePercentage()"
+      >
+      </input-field>
+    </div>
+  </form>
+
+  <div class="flex-v-center-right px-4">
+    <button
+      class="mt-4 px-5 mr-4"
+      nbButton
+      outline
+      shape="round"
+      size="medium"
+      status="primary"
+      (click)="this.onNoClick()"
+    >
+      Cancelar
+    </button>
+    <button
+      class="mt-4 px-5"
+      nbButton
+      shape="round"
+      size="medium"
+      status="primary"
+      (click)="this.saveBonificacion()"
+    >
+      Guardar
+    </button>
+  </div>
+</div>

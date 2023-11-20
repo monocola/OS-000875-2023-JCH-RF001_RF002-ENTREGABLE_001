@@ -1,0 +1,119 @@
+<nb-card class="m-0 p-0">
+  <nb-card-header class='px-2 py-3'>
+    <div class="row p-0 m-0 ">
+      <div class='col-10 font-weight-bold fs-18'>{{isEdit ? 'Editar' : 'Agregar'}} gestor GDR</div>
+      <div class="row col h-100 m-0 justify-content-end">
+        <nb-icon icon='close' class='text-black pointer fs-24' (click)='dismiss(false)'></nb-icon>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="px-2 pb-4">
+    <form [formGroup]="formSearch">
+      <div class='row m-0 p-0' *ngIf='!isEdit'>
+        <div class='col-12 mb-4'>Ingrese los siguientes datos</div>
+        <div class='row col m-0 p-0'>
+          <div class='col-6'>
+            <label>Tipo de documento</label>
+            <nb-form-field>
+              <nb-select placeholder="Seleccionar" shape="semi-round" fullWidth formControlName='typedocument'>
+                <nb-option *ngFor='let item of typeDocuments' [value]='item.value'>{{item.description}}</nb-option>
+              </nb-select>
+            </nb-form-field>
+          </div>
+          <div class='col-6'>
+            <label>N˚ de documento</label>
+            <input nbInput placeholder='Ingresar' shape='semi-round' fullWidth formControlName='nrodocument'>
+          </div>
+        </div>
+        <div class='p-0 col-3 align-self-end'>
+          <button nbButton status='success' shape='round' fullWidth (click)='search()' [disabled]='formSearch.invalid'>Buscar</button>
+        </div>
+      </div>
+    </form>
+    <form [formGroup]="frmSuperior">
+      <div class='row m-0 p-0' *ngIf='showResult'>
+        <div class='col-12 mt-4 mb-3' *ngIf='!isEdit'>
+          <mat-divider></mat-divider>
+        </div>
+        <div class='col-12'>
+          <label>Nombres y Apellidos</label>
+          <input nbInput shape='semi-round' fullWidth formControlName="nombreCompleto">
+        </div>
+        <div class='col-6 mt-3'>
+          <label>O / UO</label>
+          <nb-form-field>
+            <nb-select formControlName="unidadOrganica" shape="semi-round" fullWidth>
+              <nb-option *ngFor='let item of unidadesOrganicas' [value]='item.value'>{{item.description}}</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class='col-6 mt-3'>
+          <label>Puesto</label>
+          <nb-form-field>
+            <nb-select formControlName="puesto" shape="semi-round" fullWidth>
+              <nb-option *ngFor='let item of puestos' [value]='item.value'>{{item.description}}</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class='col-12 mt-3'>
+          <label>Correo electrónico</label>
+          <input nbInput shape='semi-round' fullWidth formControlName="correo">
+        </div>
+        <div class='row m-0 col-12 mt-3'  *ngIf='isEdit'>
+          <nb-toggle labelPosition="start" formControlName="estado" status='info'>Estado de usuario</nb-toggle>
+          <div class='ml-4 my-1' [ngClass]="this.frmSuperior.controls.estado.value ? 'activo' : 'inactivo' ">
+            <span class="dot2 mr-2"></span>{{this.frmSuperior.controls.estado.value ? 'Activo' : 'Inactivo' }}</div>
+        </div>
+        <div class='col-12 fs-14 mt-3 font-weight-bold'>Subir doc. asignación</div>
+        <div class='col-12 mt-3'>
+          <!-- -------------------------------- Inicio - Drag and Drop ---------------------------- -->
+
+          <div class="dropzone" *ngIf='!file'>
+            <input type='file' #fileDropRef id='fileDropRef'
+                   accept='application/pdf'
+                   (change)='archivoSeleccionado($event)'>
+            <h6 class="mb-1">Arrastra y suelta tu archivo aquí</h6>
+            <h6 class="mb-2">ó</h6>
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status='info'
+              outline
+              class="py-2 px-5">
+              Subir archivo
+            </button>
+          </div>
+
+          <div class="col-12 m-0 p-3 box" *ngIf='file'>
+            <div class='row col-md-12 m-0 p-0 font-weight-bold'>
+              <div class='col-10 p-0 fs-12 text-left'>
+                {{file.name}}
+              </div>
+              <div class='col-2 m-0 p-0'>
+                <nb-action
+                  class="control-item p-0 justify-content-end"
+                  icon="close-circle"
+                  (click)='deleteFile()'
+                ></nb-action>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class='fs-11 mt-2 row col-md-12'>
+              <div class='col-md-10 m-0 p-0'>Peso máximo de archivo 1 MB</div>
+              <div class='col-md-2 m-0 p-0'>Formato PDF</div>
+            </div>
+          </div>
+
+
+          <!---------------------------------- Inicio - Drag and Drop ------------------------------>
+
+        </div>
+        <div class='col-12 mt-3 align-self-end text-center'>
+          <button nbButton shape='round' status='info' class='px-5' (click)='grabar()' [disabled]='validateDisable()'>Grabar</button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

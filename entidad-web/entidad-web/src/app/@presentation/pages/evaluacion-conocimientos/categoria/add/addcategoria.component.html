@@ -1,0 +1,220 @@
+<div class="body">
+  <div class="title row">
+    <h4 class="titlePage">Evaluaciones de Conocimiento</h4>
+    <h4 class="categoria-sub">Banco de Preguntas</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="title-container" style="height: 80px">
+    <div class="etiqueta-busqueda">
+      <form [formGroup]="helperService.form" class="px-5">
+        <strong style="float: left; margin-left: -45px; margin-right: 12px"
+          >Categoría:
+        </strong>
+        <input
+          *ngIf="activarCategoria"
+          placeholder="Nombre de categoría"
+          style="float: left"
+          [style.width.ch]="
+            this.f.categoria.value.length !== 0
+              ? this.f.categoria.value.length + 3
+              : 21
+          "
+          formControlName="categoria"
+          required
+        />
+        <input
+          *ngIf="!activarCategoria"
+          style="border: 0; float: left; background-color: white"
+          [style.width.ch]="
+            this.f.categoria.value.length !== 0
+              ? this.f.categoria.value.length + 3
+              : 21
+          "
+          disabled
+          formControlName="categoria"
+          placeholder="Nombre de categoría"
+        />
+
+        <button
+          *ngIf="!activarCategoria"
+          matRipple
+          title="Editar"
+          class="btn-card"
+          (click)="activar()"
+          style="float: left; margin-top: -5px"
+        >
+          <em class="ent-web-edit fs-24"></em>
+        </button>
+        <button
+          *ngIf="activarCategoria"
+          matRipple
+          title="Guardar"
+          class="btn-card"
+          (click)="guardarCategoria()"
+          style="float: left"
+        >
+          <em class="ent-web-save fs-24"></em>
+        </button>
+        <button
+          *ngIf="activarCategoria"
+          matRipple
+          title="Cancelar"
+          class="btn-card"
+          (click)="cancelar()"
+          style="float: left"
+        >
+          <em class="ent-web-clean fs-24"></em>
+        </button>
+        <div
+          *ngIf="f.categoria.invalid && activarCategoria && f.categoria.touched"
+        >
+          <span class="invalid-text m-0">El campo es obligatorio</span>
+        </div>
+      </form>
+    </div>
+
+    <div class="crear-categoria">
+      <button
+        matRipple
+        type="button"
+        nbButton
+        shape="round"
+        status="primary"
+        class="px-5"
+        (click)="this.openModalCrearPregunta()"
+      >
+        Crear Pregunta
+      </button>
+      <button
+        matRipple
+        type="button"
+        nbButton
+        shape="round"
+        status="primary"
+        class="px-5 ml-3"
+        (click)="this.openModalRegistroMasivo()"
+      >
+        Registro masivo
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div
+    class="title-container"
+    *ngIf="this.helperService.preguntas.length > 0 || searchMode"
+  >
+    <div class="etiqueta-busqueda">
+      <strong>Filtros de búsqueda</strong>
+    </div>
+  </div>
+  <div
+    style="padding-left: 10%; padding-right: 10%; margin-top: 2px"
+    *ngIf="this.helperService.preguntas.length > 0 || searchMode"
+  >
+    <div class="row mt-3">
+      <div class="col-4">
+        <input-field
+          [control]="f.txtDescripcion"
+          [label]="'Descripción'"
+          [placeholder]="'Buscar Descripción'"
+          [maxlength]="45"
+          [banKeyType]="5"
+          [minlength]="0"
+        >
+        </input-field>
+      </div>
+      <div class="col-4">
+        <select-field
+          [label]="'Tipo de Pregunta'"
+          [control]="f.txtTipoPregunta"
+          [items]="tipoPreguntas"
+          [value]="'idMaeDuracion'"
+          [valueToShow]="'descrDuracion'"
+        >
+        </select-field>
+      </div>
+      <div class="col-4">
+        <div class="w-100 h-100 btn_area">
+          <button
+            matRipple
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="clear()"
+          >
+            Limpiar
+          </button>
+          <button
+            matRipple
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="getBandeja()"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!searchMode" class="flex-v-center flex-column py-5">
+    <img
+      width="70px"
+      alt="imagen bandeja"
+      src="assets/images/icons/bandeja.png"
+      class="my-3"
+    />
+    <span class="fs-13"
+      >Aqui podrás visualizar todas las Preguntas y Respuestas que vayas
+      creando.</span
+    >
+    <span class="fs-13">Aún no has creado nada </span>
+  </div>
+
+  <div
+    style="padding: 1rem !important; padding-top: 2rem !important"
+    class="row mb-4"
+  >
+    <div class="col-1"></div>
+    <div class="col-10">
+      <ng-container
+        *ngIf="this.helperService.preguntas.length > 0 || searchMode"
+      >
+        <div class="subtitle">Lista de Preguntas</div>
+        <serv-talento-table
+          [showDownloadButton]="true"
+          [tableColumns]="this.preguntasColumns"
+          [tableData]="this.helperService.preguntas"
+          [dataExport]="getDataExport()"
+          [isFilterable]="true"
+          (sort)="sortData($event)"
+          [isPageable]="true"
+          [paginationSizes]="[5, 10, 15]"
+          [defaultPageSize]="5"
+          [acciones]="true"
+          [btnImageEnabled]="true"
+          (imageAction)="this.VerImagen($event)"
+          [imageTitle]="'Ver imagen'"
+          [acciones]="true"
+          [btnViewEnabled]="true"
+          (viewAction)="this.openModalDetallePregunta($event)"
+          [viewTitle]="'Ver Detalle'"
+          [acciones]="true"
+          [btnEditEnabled]="true"
+          (editAction)="this.openModalEditarPregunta($event)"
+          [editTitle]="'Editar Pregunta'"
+          [btnDeleteEnabled]="true"
+          (deleteAction)="EliminarPregunta($event)"
+          [deleteTitle]="'Eliminar Pregunta'"
+          title="Lista de Preguntas"
+          fontSize="fs-14"
+          rowHeight="64px"
+        >
+        </serv-talento-table>
+      </ng-container>
+    </div>
+  </div>
+</div>

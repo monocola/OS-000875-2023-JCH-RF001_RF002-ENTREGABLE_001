@@ -1,0 +1,16 @@
+@import '_colors';
+
+h5 {
+  color: $primary-color;
+}
+
+.body {
+  border: 1px solid #e2e2e2;
+  border-radius: 0.5rem;
+}
+
+.carreras__selected__wrapper {
+  max-height: 8rem !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

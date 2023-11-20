@@ -1,0 +1,24 @@
+.change {
+    display: grid;
+    grid-template-columns: 120px;
+    grid-gap: 10px;
+}
+.bandejaChange {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #F5F5F5;
+  margin-right: -27px;
+  margin-left: -28px;
+  height: 42vh;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.icon-buttom {
+  margin: 0 0.4rem !important;
+  cursor: pointer;
+}
+
+

@@ -1,0 +1,16 @@
+{
+  "public_base_url_maestra": "https://uatapp02.servir.gob.pe/maestra/api/public/",
+  "public_base_url_persona": "https://uatapp02.servir.gob.pe/persona/api/public/",
+  "public_base_url_seguridad": "https://uatenvapp02.servir.gob.pe/seguridad/api/public/",
+
+  "_public_base_url_entidad": "https://uatenvapi1.servir.gob.pe/entidad/api/public/",
+
+  "public_base_url_entidad": "http://localhost:8080/entidad/api/public/",
+
+  "public_base_url_convocatoria": "https://uatapi1.servir.gob.pe/convocatoria/api/public/",
+  "public_base_url_evaluacion": "https://uatapi1.servir.gob.pe/evaluacion/api/public/",
+  "public_base_url_seleccion": "https://uatapi1.servir.gob.pe/seleccion/api/public/",
+  "public_base_url_reporte": "https://uatapi1.servir.gob.pe/reporte/api/public/",
+  "public_base_url_postulante": "https://uatapi1.servir.gob.pe/postulante/api/public/",
+  "public_base_url_file_server": "https://qasimagen.servir.gob.pe/file/"
+}

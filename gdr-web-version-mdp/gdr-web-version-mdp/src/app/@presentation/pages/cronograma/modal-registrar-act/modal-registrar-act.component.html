@@ -1,0 +1,243 @@
+<div class="col-md-12 row h-100 p-0 m-0" *ngIf="createMode">
+  <h6>Registrar Actividad</h6>
+  <span class="flex-spacer"></span>
+  <nb-actions
+    size="small"
+    style="place-content: flex-end"
+    class="col-md-12 position-absolute"
+  >
+    <nb-action
+      class="control-item p-0 justify-content-end"
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-action>
+  </nb-actions>
+</div>
+<div class="col-md-12 row h-100 p-0 m-0" *ngIf="!createMode">
+  <h6>Editar Actividad</h6>
+  <span class="flex-spacer"></span>
+  <nb-actions
+    size="small"
+    style="place-content: flex-end"
+    class="col-md-12 position-absolute"
+  >
+    <nb-action
+      class="control-item p-0 justify-content-end"
+      icon="close"
+      (click)="onNoClick()"
+    ></nb-action>
+  </nb-actions>
+</div>
+
+<div class="bodyRegisterForm">
+  <div class="container-fluid pt-2 px-5">
+    <form class="row mt-2" [formGroup]="filterForm">
+      <div class="mb-3 col-md-6">
+        <label>Etapa</label>
+        <nb-select
+          formControlName="etapa"
+          placeholder="Seleccione"
+          fullWidth="true"
+          [size]="'medium'"
+          shape="semi-round"
+          [status]="f.etapa.invalid && f.etapa.touched ? 'danger' : 'basic'"
+        >
+          <nb-option
+            *ngFor="let cboEtapa of etapa"
+            [value]="cboEtapa.codigoNumero"
+          >
+            {{ cboEtapa.valorTexto }}
+          </nb-option>
+        </nb-select>
+        <div
+          *ngIf="f.etapa.invalid && f.etapa.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.etapa.errors.required"> El campo es obligatorio </span>
+        </div>
+      </div>
+
+      <!-- -------------------------------- Inicio- selección multiple---------------------------- -->
+      <div class="mb-3 col-md-6">
+        <div class="col-100">
+          <label>Responsables</label>
+          <nb-form-field>
+            <nb-select
+              placeholder="Elije el responsable"
+              fullWidth="true"
+              multiple
+              formControlName="responsables"
+              [size]="'medium'"
+              shape="semi-round"
+              [status]="
+                f.responsables.invalid && f.responsables.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              selectionModel="listResponsableEdit"
+              (selectedChange)="cambioResponsables($event)"
+            >
+              <nb-select-label> Responsable seleccionados: </nb-select-label>
+              <nb-option>Elije el responsable</nb-option>
+              <nb-option
+                *ngFor="let cboResponsable of responsable"
+                [value]="cboResponsable.codigoNumero"
+              >
+                {{ cboResponsable.valorTexto }}
+              </nb-option>
+            </nb-select>
+          </nb-form-field>
+          <div
+            *ngIf="f.responsables.invalid && f.responsables.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.responsables.errors.required"
+              >El campo es obligatorio</span
+            >
+          </div>
+        </div>
+        <div class="mt-2 buttomagregar">
+          <mat-chip-list style="flex-wrap: nowrap">
+            <mat-chip *ngFor="let cboResponsable of responsableslistSelect">{{
+              cboResponsable.valorTexto
+            }}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+      <!-- -------------------------------- Fin- selección multiple---------------------------- -->
+
+      <div class="col-md-6 mb-3">
+        <label>Fecha de Inicio</label>
+        <nb-form-field>
+          <input
+            id="fechaInicio"
+            #fechaInicio
+            formControlName="fechaInicio"
+            nbInput
+            class="pointer"
+            placeholder="dd/mm/aaaa"
+            [nbDatepicker]="formpickerFechInicio"
+            fieldSize="medium"
+            shape="semi-round"
+            [status]="
+              f.fechaInicio.invalid && f.fechaInicio.touched
+                ? 'danger'
+                : 'basic'
+            "
+          />
+          <nb-icon
+            style="cursor: pointer"
+            nbSuffix
+            class="mr-2 pointer"
+            icon="calendar-outline"
+            (click)="fechaInicio.click()"
+          >
+          </nb-icon>
+          <nb-datepicker #formpickerFechInicio></nb-datepicker>
+        </nb-form-field>
+        <div
+          *ngIf="f.fechaInicio.invalid && f.fechaInicio.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.fechaInicio.errors.required">
+            El campo es obligatorio
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label>Fecha de Fin</label>
+        <nb-form-field>
+          <input
+            id="fechaFin"
+            #fechaFin
+            formControlName="fechaFin"
+            nbInput
+            class="pointer"
+            placeholder="dd/mm/aaaa"
+            [nbDatepicker]="formpickerFechFin"
+            fieldSize="medium"
+            shape="semi-round"
+            [status]="
+              f.fechaFin.invalid && f.fechaFin.touched ? 'danger' : 'basic'
+            "
+          />
+          <nb-icon
+            style="cursor: pointer"
+            nbSuffix
+            class="mr-2"
+            icon="calendar-outline"
+            (click)="fechaFin.click()"
+          >
+          </nb-icon>
+          <nb-datepicker #formpickerFechFin></nb-datepicker>
+        </nb-form-field>
+        <div
+          *ngIf="f.fechaFin.invalid && f.fechaFin.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.fechaFin.errors.required">
+            El campo es obligatorio
+          </span>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-12">
+        <label>Descripción de la actividad</label>
+        <input
+          trim="blur"
+          placeholder="Ingrese descripción"
+          type="text"
+          nbInput
+          shape="semi-round"
+          fullWidth
+          formControlName="descripcion"
+          fieldSize="large"
+          [status]="
+            f.descripcion.invalid && f.descripcion.touched ? 'danger' : 'basic'
+          "
+        />
+
+        <div
+          *ngIf="f.descripcion.invalid && f.descripcion.touched"
+          class="invalid-text flex-column"
+        >
+          <span *ngIf="f.descripcion.errors.required">
+            El campo es obligatorio
+          </span>
+        </div>
+      </div>
+
+      <div class="col-12"></div>
+
+      <div class="col-12 my-3" *ngIf="createMode">
+        <div class="w-100 h-100 text-center">
+          <button
+            class="btn_area"
+            nbButton
+            shape="round"
+            size="medium"
+            style="color: white; background-color: #0dacbc"
+            (click)="this.data.dataToEdit ? editActividad() : saveActividad()"
+          >
+            Registrar Actividad
+          </button>
+        </div>
+      </div>
+      <div class="col-12 my-3" *ngIf="!createMode">
+        <div class="w-100 h-100 text-center">
+          <button
+            class="btn_area"
+            nbButton
+            shape="round"
+            size="medium"
+            style="color: white; background-color: #0dacbc"
+            (click)="this.data.dataToEdit ? editActividad() : saveActividad()"
+          >
+            Guardar cambios
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

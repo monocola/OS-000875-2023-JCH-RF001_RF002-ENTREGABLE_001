@@ -1,0 +1,14 @@
+<div class="divbottom px-5" [ngStyle]="{ width: bodySize }">
+  <div class="flex-spacer"></div>
+  <button class="cancelButton mr-3" (click)="goBack()">Cancelar</button>
+  <button
+    nbButton
+    shape="round"
+    status="primary"
+    class="px-5"
+    (click)="save()"
+    [disabled]="disabledSave"
+  >
+    Guardar
+  </button>
+</div>

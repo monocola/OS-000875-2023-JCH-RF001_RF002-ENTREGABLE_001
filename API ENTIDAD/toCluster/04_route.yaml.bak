@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: entidad-dev
+  name: entidad-dev
+spec:
+  host: entidad-mdp-dev.ocdev.ansc.gob.pe
+  path: /
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: entidad-mdp-dev
+    weight: 100
+  wildcardPolicy: None

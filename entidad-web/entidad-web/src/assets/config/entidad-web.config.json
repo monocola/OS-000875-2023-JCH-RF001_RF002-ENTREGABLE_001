@@ -1,0 +1,148 @@
+{
+  "client_id": "e6124b33-c304-4ab3-be71-e97bfc18599f",
+  "client_secret": "cd9bbaf5-4abe-483d-b8f7-3cb789c52fef",
+  "aplicacion_id": 5,
+  "ent_estado_pendiente": 41,
+  "tipo_persona_juridica": 23,
+  "tipo_persona_natural": 22,
+  "tipo_organo" : 92,
+  "tipo_organo_unidad_organica" : 94,
+  "roles": {
+    "admin_servir": 18,
+    "admin_entidad": 19,
+    "gestor_orh": 21,
+    "coordinador": 20,
+    "configurador": 22,
+    "postulante": 23,
+    "super_admin_entidad": 39
+  },
+  "activo": "1",
+  "inactivo": "0",
+  "maestraDetalle": {
+    "ley30057": "1",
+    "dl276": "2",
+    "dl728": "3",
+    "dl1401": "4",
+    "dl1057": "5",
+
+    "mod_no_aplica": "4",
+    "tipo_no_aplica": "7",
+
+    "pract_preprofesional": "2",
+    "pract_profesional": "1",
+
+    "egresado": "2",
+    "estudiante": "1",
+
+    "sit_acad_egresado": "1",
+    "sit_acad_bachiller": "2",
+    "sit_acad_titulo_lic": "3",
+    "sit_acad_maestria": "4",
+    "sit_acad_doctorado": "5",
+    "sit_acad_no_aplica": "6",
+    "diplomado": "2",
+    "taller": "1",
+    "curso": "3",
+
+    "cod_con_con_tec": "1",
+    "cod_con_cur_esp": "2",
+    "cod_con_pro_esp": "3",
+    "cod_con_con_ofi": "4",
+    "cod_con_con_idio": "5",
+
+    "nvl_edu_pri": 50,
+    "nvl_edu_sec": 49,
+    "nvl_edu_tec_bas": 48,
+    "nvl_edu_tec_sup": 47,
+    "nvl_edu_uni": 46
+  },
+  "informes": {
+    "base_legal": "1",
+    "bonificaciones": "2",
+    "declara_jurada": "3",
+    "crit_evaluacion": "4",
+    "base_legal_esp": "8"
+  },
+  "etapa_base": {
+    "proceso": "1",
+    "aprobado": "2",
+    "completado": "3",
+    "observado": "4",
+    "enviado": "5",
+
+    "por_revisar": "2",
+    "revisado": "3",
+    "publicado": "5",
+    "por_publicar": "6",
+    "eliminado": "7"
+  },
+  "comunicado": {
+    "proceso": "1",
+    "observado": "2",
+    "por_revisar": "3",
+    "aprobado": "4",
+    "publicado": "5"
+  },
+  "contrato": {
+    "creado": "2",
+    "pendiente": "1",
+    "suscrito": "3",
+    "anulado": "4"
+  },
+  "etapa_cronograma": {
+    "difusion": "1",
+    "reclutamiento": "2",
+    "evaluacion": "3",
+    "eleccion": "4"
+  },
+  "criterio_evaluacion": 4,
+  "maestra_tipo_conocimiento": {
+    "cod_conocimientos_tecnicos": 159,
+    "cod_cursos_especializacion": 160,
+    "cod_programas_especializacion": 161,
+    "cod_conocimientos_ofimatica": 162,
+    "cod_conocimientos_idioma": 163
+  },
+  "etapa_evaluacion": {
+    "no_califica": 0,
+    "califica": 1,
+    "descalificado": 2,
+    "no_asistio": 3
+  },
+  "tipo_files_perf_reg_mas": [
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.ms-excel.sheet.macroEnabled.12"
+  ],
+  "perfiles_estado_revisado": {
+    "por_revisar": 1,
+    "revisado": 2
+  },
+  "perfiles_origen": {
+    "individual": "1",
+    "masivo": "2"
+  },
+  "etapa_convocatoria":{
+    "en_proceso": 167,
+    "desierta": 168,
+    "cancelada": 169,
+    "culminada": 170,
+    "generado": 171
+  },
+  "perfil_idiomas": {
+    "basico": 1,
+    "intermedio": 2,
+    "avanzado": 3
+  },
+  "tipo_comunicado": {
+    "cronograma": 172,
+    "fe_de_erratas": 173,
+    "desierta": 174,
+    "acta_resultados": 175,
+    "cancelada": 219
+  },
+  "perfil_office": {
+    "basico": 1,
+    "intermedio": 2,
+    "avanzado": 3
+  }
+}

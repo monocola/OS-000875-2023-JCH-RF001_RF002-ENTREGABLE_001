@@ -1,0 +1,14 @@
+<form [formGroup]="this.helper1401Service.funcionesForm" class="px-5">
+  <div class="w-100">
+    <serv-talento-strings-array-field
+      [title]="'Actividades del practicante'"
+      [addItemLabel]="'Añadir actividad'"
+      [items]="f.funciones"
+      [placeholderItem]="'Ingrese actividad'"
+      [maxItems]="15"
+      [minItems]="5"
+      [deletedItems]="helper1401Service.funcionesToDelete"
+    >
+    </serv-talento-strings-array-field>
+  </div>
+</form>

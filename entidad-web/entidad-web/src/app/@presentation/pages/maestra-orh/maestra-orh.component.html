@@ -1,0 +1,67 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Gestión de tablas de convocatoria</h3>
+    <span class="flex-spacer"></span>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-tab-group
+    class="mt-3"
+    mat-align-tabs="start"
+    dynamicHeight
+    (selectedTabChange)="changeTab($event)"
+  >
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Tablas maestras servir
+        <nb-icon
+          [nbPopover]="templateRef"
+          icon="info"
+          nbPopoverPlacement="right"
+          nbPopoverTrigger="hint"
+          class="popoverTrigger fs-18 ml-2"
+        >
+        </nb-icon>
+        <ng-template #templateRef>
+          <serv-talento-tooltip-info
+            [message]="this.firstMessageTooltip"
+          ></serv-talento-tooltip-info>
+        </ng-template>
+      </ng-template>
+
+      <serv-talento-servir-section
+        [cabecerasMaestra]="arrayMaestras"
+        [changeValue]="changeTrigger0"
+        (changeDetected)="handleEmitServir()"
+      >
+      </serv-talento-servir-section>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Tablas maestras entidad
+        <nb-icon
+          [nbPopover]="templateRef"
+          icon="info"
+          nbPopoverPlacement="right"
+          nbPopoverTrigger="hint"
+          class="popoverTrigger fs-18 ml-2"
+        >
+        </nb-icon>
+        <ng-template #templateRef>
+          <serv-talento-tooltip-info
+            [message]="this.secondMessageTooltip"
+          ></serv-talento-tooltip-info>
+        </ng-template>
+      </ng-template>
+
+      <serv-talento-entidad-section
+        [cabecerasMaestra]="arrayMaestras"
+        [changeValue]="changeTrigger1"
+        (changeDetected)="handleEmitEntidad()"
+      >
+      </serv-talento-entidad-section>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,0 +1,183 @@
+<div class="body">
+  <div class="d-flex justify-content-between">
+    <h3 class="titlePage">Registro de puestos</h3>
+    <div>
+      <button
+        nbButton
+        shape="round"
+        size="medium"
+        status="success"
+        class="py-2"
+        (click)="openModalRegister()"
+      >
+        Registro de puestos
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="mb-4 p-0"></div>
+  <mat-tab-group
+    mat-align-tabs="end"
+    (selectedIndexChange)="onTabChanged($event)"
+  >
+    <mat-tab label="Registro individual">
+      <div class="bg-card m-1" [formGroup]="frm">
+        <div class="row mt-3">
+          <div class="mb-3 col-lg-6">
+            <label class="font-weight-bold">Órgano / UO / Sub UO</label>
+            <nb-select
+              formControlName="unidadOrganicaID"
+              placeholder="Seleccione"
+              fullWidth="true"
+              shape="semi-round"
+              [size]="'large'"
+              (selectedChange)="unidaOrganicaChange($event)"
+            >
+              <nb-option style="color: #a4a4a4;">{{ seleccionado }}</nb-option>
+              <nb-option
+                *ngFor="let uo of listUnidadesOrganicas"
+                [value]="uo.id"
+              >
+                {{ uo.sigla }} - {{ uo.descripcion }}
+              </nb-option>
+            </nb-select>
+          </div>
+          <div class="mb-3 col-lg-3 col-md-6">
+            <label class="font-weight-bold">Puesto</label>
+            <nb-select
+              formControlName="puestoId"
+              placeholder="Seleccione"
+              fullWidth="true"
+              shape="semi-round"
+              [size]="'large'"
+            >
+              <nb-option style="color: #a4a4a4;">Seleccione</nb-option>
+              <nb-option
+                *ngFor="let uo of listPuestosCbo"
+                [value]="uo.puestoId"
+              >
+                {{ uo.nombrePuesto }}
+              </nb-option>
+            </nb-select>
+          </div>
+          <div class="mb-3 col-lg-3 col-md-6">
+            <label class="font-weight-bold">¿Es jefe?</label>
+            <nb-select
+              formControlName="esJefe"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+            >
+              <nb-option style="color: #a4a4a4;">Seleccione</nb-option>
+              <nb-option value="S"> Si </nb-option>
+              <nb-option value="N"> No </nb-option>
+            </nb-select>
+          </div>
+        </div>
+        <div class="mb-3 offset-1"></div>
+        <div class="mb-3 d-flex justify-content-end">
+          <div class="btn-area m-0 p-0">
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              style="color: #0dacbc; background-color: white;"
+              (click)="clear()"
+              class="bg-white text-light-blue px-5 mr-3"
+            >
+              Limpiar
+            </button>
+            <button
+              nbButton
+              shape="round"
+              size="medium"
+              (click)="searchPuesto()"
+              class="background-light-blue text-white px-5 mr-3"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="mt-3 mx-1 mb-1">
+        <ng-container *ngIf="this.puestos.length > 0">
+          <gme-web-table
+            [holderText]="this.holderText"
+            [tableData]="this.puestos"
+            [tableColumns]="ordersTableColumns"
+            [isFilterable]="true"
+            [isPageable]="true"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            (sort)="sortData($event)"
+            [acciones]="true"
+            [title]="'Lista de  Gestión de Organigrama'"
+            [btnEditEnabled]="true"
+            (editAction)="editUO($event)"
+            [editTitle]="'Editar'"
+            [btnDeleteEnabled]="true"
+            (deleteAction)="removeGO($event)"
+            [deleteTitle]="'Eliminar'"
+            [showDownloadButton]="false"
+          ></gme-web-table>
+        </ng-container>
+
+        <ng-container *ngIf="this.puestos.length === 0">
+          <gme-web-table
+            [holderText]="this.holderText"
+            [tableData]="this.puestos"
+            [tableColumns]="ordersTableColumns"
+            [isFilterable]="true"
+            [isPageable]="true"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            (sort)="sortData($event)"
+            [acciones]="true"
+            [title]="'Lista de  Gestión de Organigrama'"
+            [btnEditEnabled]="true"
+            (editAction)="editUO($event)"
+            [editTitle]="'Editar'"
+            [btnDeleteEnabled]="true"
+            (deleteAction)="removeGO($event)"
+            [deleteTitle]="'Eliminar'"
+            [showDownloadButton]="false"
+          ></gme-web-table>
+        </ng-container>
+      </div>
+
+      <div class="mb-4"></div>
+      <div class="d-flex justify-content-center">
+        <div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Registro masivo">
+      <div class="bg-card py-2 m-1">
+        <h5>Registro masivo de puestos</h5>
+        <p>
+          Para importar el archivo debe considerar los siguientes pasos: <br />
+          1. Descargue la plantilla. <br />
+          2. No modificar los títulos de los campos de la primera fila ni
+          agregar columnas. <br />
+          3. Registrar y seleccionar los datos a importar en las siguientes
+          filas. <br />
+          4. Subir el archivo en formato Excel.
+        </p>
+        <br />
+        <br />
+        <gme-web-file-dropzone
+          (upload)="upload($event)"
+          (downloadPlanilla)="downloadFormatPuesto()"
+          [acepttFile]="['xlsx', 'XLSX']"
+          [menssageFile]="['xlsx y XlSX']"
+        >
+        </gme-web-file-dropzone>
+      </div>
+      <br />
+    </mat-tab>
+  </mat-tab-group>
+</div>

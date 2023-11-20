@@ -1,0 +1,148 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Áreas</h3>
+    <span class="flex-spacer"></span>
+  </div>
+
+  <div class='mb-1 pb-1'>
+    <div class='titleCiclo mx-1 px-1 flex-v-center-right'>Ciclo {{cicloDefaultDesc}} </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- <mat-tab-group mat-align-tabs="end">
+    <mat-tab label="Búsqueda individual"> -->
+      <div class="bg-card m-1" [formGroup]="filterForm">
+        <br>
+        <!-- <div class="w-100 h-100 btn_area">
+        </div> -->
+          <div class="w-100 h-100 m-10 flex-v-bottom-right">
+            <button
+              nbButton
+              outline
+              shape="semi-round"
+              size="medium"
+              status="basic"
+              class="mr-3 btnOrganigrama"
+              [routerLink]="['vista']"
+            >
+              Ver organigrama
+            </button>
+          </div>
+
+        <div class="mt-3 subtitle"></div>
+
+        <div class="row mt-3">
+          <div class="mb-3 col-md-3">
+            <label>Tipo de Órgano</label>
+            <nb-select
+              formControlName="tipoOrganoId"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+              (selectedChange)="tipoOrganoChange($event)"
+            >
+              <nb-option style="color: #a4a4a4">Seleccione</nb-option>
+              <nb-option
+                *ngFor="let cboOrgano of organos"
+                [value]="cboOrgano.parametroId"
+              >
+                {{ cboOrgano.valorTexto }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="mb-3 col-md-3">
+            <label>Órgano / UO Superior</label>
+            <nb-select
+              formControlName="unidadOrganicaSuperiorId"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+              (selectedChange)="unidadOrganicaSuperiorChange($event)"
+            >
+            <nb-option vstyle="color: #a4a4a4">Seleccione</nb-option>
+              <nb-option
+                *ngFor="let unidadSup of unidadOrganicaSup"
+                [value]="unidadSup.id"
+              >
+                {{ unidadSup.descripcion }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="mb-3 col-md-3">
+            <label>Órgano / UO  / Sub UO</label>
+            <nb-select
+              formControlName="unidadOrganicaId"
+              placeholder="Seleccione"
+              fullWidth="true"
+              [size]="'large'"
+              shape="semi-round"
+            >
+            <nb-option style="color: #a4a4a4">Seleccione</nb-option>
+              <nb-option
+                *ngFor="let unidadCbo of unidadOrganicaCbo"
+                [value]="unidadCbo.id"
+              >
+                {{ unidadCbo.descripcion }}
+              </nb-option>
+            </nb-select>
+          </div>
+ 
+          <div class="mb-3 col-md-3"></div>
+          <div class="mb-3 col-md-9"></div>
+          <div class="mb-3 col-md-9"></div>
+          <div class="mb-3 col-md-3">
+            <div class="w-100 h-100 btn_area">
+              <button
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              outline
+              (click)='clear()'
+            >
+              Limpiar 
+            </button>
+              <button
+              nbButton
+              shape="round"
+              size="medium"
+              style='color: white; background-color: #0dacbc;'
+              (click)='search()'
+            >
+              Buscar
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+          <div class="subtitle">Lista de Gestión de organigrama</div>
+          <serv-talento-table
+            [tableData]="this.organigrama"
+            [tableColumns]="ordersTableColumns"
+            [isFilterable]="true"
+            [isPageable]="true"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            (sort)="sortData($event)"
+            [title]="'Lista de  Gestión de Organigrama'"
+            [btnEditEnabled]="true"
+            (editAction)="editUO($event)"
+            [editTitle]="'Editar Gestión de Organigrama'"
+            [btnDeleteEnabled]="true"
+            (deleteAction)="removeGO($event)"
+            [deleteTitle]="'Inactivar Gestión de Organigrama'"
+            [showDownloadButton]='false'
+
+          >
+          </serv-talento-table>
+        <!-- </ng-container> [acciones]="true"-->
+
+</div>
+

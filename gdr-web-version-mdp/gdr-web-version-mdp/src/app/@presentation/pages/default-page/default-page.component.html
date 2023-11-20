@@ -1,0 +1,107 @@
+<div class="m-1 p-1">
+  <div class="m-1 p-2">
+    <div class="d-flex">
+    <h5>¡Bienvenido(a): {{ user.nombres.split(' ')[0] | titlecase }}!</h5>
+    <span class="flex-spacer"></span>
+ 
+      <div class='flex-v-center-right'>
+        <label
+          for="ciclo"
+          class='titleCiclo m-1 p-1'
+        >Ciclo </label>
+        <nb-select 
+          id="ciclo"
+          placeholder='Sin Registro'
+          [disabled] ="disabled"
+          fullWidth="true"
+          shape="semi-round"
+          size='small'
+          [(selected)]='cicloDefault'
+          (selectedChange)='cambiaCiclo($event)'
+        >
+          <nb-option
+            class='dropdown-item'
+            *ngFor="let ciclo of lstCiclos"
+            [value]="ciclo.cicloId"
+          > 
+            {{ ciclo.anioString }}
+          </nb-option>
+      </nb-select>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card-row m-0 p-0">
+  <div class="card-col">
+      <img class='m-0 p-0 img-grande' alt='banner'
+           src='assets/images/Frame%209.png'/>
+    <nb-card size="tiny" class='card-col-small'>
+      <mat-tab-group>
+        <mat-tab label="Reconocimiento">
+          <div class='m-0 p-4 col-md-12 align-content-center'>
+            <div class='align-content-center col-md-6 offset-3 fs-14 box'>
+              Oh, No se encontraron reconocimientos por hoy
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Mensajes">
+          <div class='m-0 p-4 col-md-12 align-content-center'>
+            <div class='align-content-center col-md-6 offset-3 fs-14 box'>
+              Oh, No se encontraron mensajes por hoy
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Alertas">
+          <div class='m-0 p-4 col-md-12 align-content-center'>
+            <div class='align-content-center col-md-6 offset-3 fs-14 box'>
+              Oh, No se encontraron alertas por hoy
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </nb-card>
+  </div>
+  <div class="card-col mt-1">
+    <div class='m-1'>
+      <nb-card class='card-col-small'>
+        <nb-card-body class='m-0 p-0'>
+          <div class="flex-v-center item p-3">
+            <img alt="icon profile" [src]="url" class="rounded-circle" />
+          </div>
+          <div class="flex-v-center item py-3 px-2">
+            <div class="ml-3">
+              <div class="nameUser fw-700">{{ profile.nombres + ' ' + profile.apellidoPaterno + ' ' + profile.apellidoMaterno | titlecase }}</div>
+            </div>
+          </div>
+          <div class="flex-v-center item p-2">
+            {{ nombreRol }}
+          </div>
+          <div class="flex-v-center item pt-3 pb-4"></div>
+          <div class="flex-v-center item p-1">
+            <hr style='size: 20px; width: 100%; align-content: center;'>
+          </div>
+          <div class="flex-v-center item px-2 pb-3">
+            <div class='col-md-4 flex-v-center'>
+              <button class='bg-transparent border-0'>
+              <span class="material-icons gray00">face</span>
+              </button>10
+            </div>
+            <div class='col-md-4 flex-v-center'>
+              <button class='bg-transparent border-0'>
+              <span class="material-icons gray00">insert_drive_file</span>
+              </button>10
+            </div>
+            <div class='col-md-4 flex-v-center'>
+              <button class='bg-transparent border-0'>
+              <span class="material-icons gray00">message</span>
+              </button>10
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

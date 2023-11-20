@@ -1,0 +1,109 @@
+<div class="body">
+    <div class="title row">
+        <h4 class="titlePage">Evaluaciones de Conocimiento</h4>
+        <h4 class="categoria-sub">Banco de Preguntas</h4>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="title-container">
+
+        <div class="etiqueta-busqueda" >
+            Filtros de búsqueda
+        </div>
+
+      <div class="crear-categoria">
+        <button
+          matRipple
+          type="button"
+          nbButton
+          shape="round"
+          status="primary"
+          class="px-5"
+          routerLink="addcategorias"
+        >
+          Añadir categoria
+        </button>
+      </div>
+    </div>
+
+    <div style="padding-left: 10%; padding-right: 10%; margin-top: 2px">
+
+      <div class="row mt-3">
+        <div class="col-5">
+          <input-field
+          [control]="f.txtCategoria"
+          [label]="'Categoria'"
+          [placeholder]="'Buscar categoria'"
+          [maxlength]="60"
+          [banKeyType]="5"
+          [minlength]="0"
+        >
+        </input-field>
+        </div>
+        <div class="col-3">
+
+        </div>
+        <div class="col-4">
+          <div class="w-100 h-100 btn_area">
+            <button
+              matRipple
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              outline
+              (click)="clear()"
+            >
+              Limpiar
+            </button>
+            <button
+              matRipple
+              nbButton
+              shape="round"
+              size="medium"
+              status="primary"
+              (click)="getBuscarCategoria()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="padding: 1rem !important; padding-top: 2rem !important; " class="row mb-4">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <ng-container >
+          <div class="subtitle">Lista de Categorias</div>
+          <serv-talento-table
+            [tableData]="this.categorias"
+            [tableColumns]="this.categoriasColumns"
+            [showDownloadButton]="true"
+            [dataExport]="getDataExport()"
+
+            [isFilterable]="true"
+            (sort)="sortData($event)"
+
+            [isPageable]="true"
+            [paginationSizes]="[5 ,10 ,15]"
+            [defaultPageSize]="5"
+
+            [acciones]="true"
+            [btnEditEnabled]="true"
+            (editAction)="configCategoria($event)"
+            [editTitle]="'Editar categoria'"
+
+            [btnDeleteEnabled]="true"
+            (deleteAction)="removeCategoria($event)"
+            [deleteTitle]="'Inactivar categoria'"
+
+            title="Lista de Categorias"
+            fontSize="fs-14"
+            rowHeight="64px"
+          >
+          </serv-talento-table>
+        </ng-container>
+      </div>
+    </div>
+  </div>

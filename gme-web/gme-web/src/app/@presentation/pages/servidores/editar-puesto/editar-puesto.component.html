@@ -1,0 +1,229 @@
+<div class="d-flex w-100 header-modal">
+  Actualizar datos de puesto
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="cerrar()"
+  ></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+<form [formGroup]="registerForm">
+  <div class="row">
+    <label class="col-12">Modifique los siguientes datos permitidos</label>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <label>Órgano / UO / Sub UO</label>
+      <nb-select
+        formControlName="organo"
+        placeholder="Seleccione"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        [status]="f.organo.invalid && f.organo.touched ? 'danger' : 'basic'"
+        (selectedChange)="onSelectionChangeUO($event)"
+      >
+        <nb-option value="">Seleccione</nb-option>
+        <nb-option *ngFor="let uo of unidadesOrganicas" [value]="uo.id"
+          >{{ uo.sigla }} - {{ uo.descripcion }}</nb-option
+        >
+      </nb-select>
+
+      <div
+        *ngIf="f.organo.invalid && f.organo.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.organo.errors.required"> El campo es obligatorio </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <label>Puesto</label>
+      <nb-select
+        formControlName="puesto"
+        placeholder="Seleccione"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        [status]="f.puesto.invalid && f.puesto.touched ? 'danger' : 'basic'"
+      >
+        <nb-option value="">Seleccione</nb-option>
+        <nb-option *ngFor="let uo of listaPuestos" [value]="uo.puestoId">{{
+          uo.nombrePuesto
+        }}</nb-option>
+      </nb-select>
+
+      <div
+        *ngIf="f.puesto.invalid && f.puesto.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.puesto.errors.required"> El campo es obligatorio </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <label>Tipo de asignación</label>
+      <nb-select
+        formControlName="tipoAsignacion"
+        placeholder="Seleccione"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        [status]="
+          f.tipoAsignacion.invalid && f.tipoAsignacion.touched
+            ? 'danger'
+            : 'basic'
+        "
+        (selectedChange)="onSelectionChangeTipoAsignacion($event)"
+      >
+        <nb-option value="">Seleccione</nb-option>
+        <nb-option
+          *ngFor="let ta of tiposAsignacion"
+          [value]="ta.codigoNumero"
+          >{{ ta.valorTexto }}</nb-option
+        >
+      </nb-select>
+
+      <div
+        *ngIf="f.tipoAsignacion.invalid && f.tipoAsignacion.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.tipoAsignacion.errors.required">
+          El campo es obligatorio
+        </span>
+      </div>
+    </div>
+    <div
+      class="col-sm-6"
+      *ngIf="f.tipoAsignacion.value == TIPO_ASIGNACION_ENCARGADO"
+    >
+      <label>Motivo </label>
+      <nb-select
+        formControlName="motivoId"
+        placeholder="Seleccione"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        [status]="f.motivoId.invalid && f.motivoId.touched ? 'danger' : 'basic'"
+      >
+        <nb-option value="">Seleccione</nb-option>
+        <nb-option
+          *ngFor="let ta of listMotivosEncarturas"
+          [value]="ta.codigoNumero"
+          >{{ ta.valorTexto }}</nb-option
+        >
+      </nb-select>
+
+      <div
+        *ngIf="f.motivoId.invalid && f.motivoId.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.motivoId.errors.required">
+          El campo es obligatorio
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <label>Fecha de inicio</label>
+      <nb-form-field>
+        <input
+          id="fechaInicioNuevo"
+          #fechaInicioNuevo
+          formControlName="fechaInicio"
+          nbInput
+          placeholder="dd/mm/aaaa"
+          [nbDatepicker]="formPickerInicio"
+          fieldSize="large"
+          shape="semi-round"
+          [status]="
+            f.fechaInicio.invalid && f.fechaInicio.touched ? 'danger' : 'basic'
+          "
+        />
+
+        <nb-icon
+          style="cursor: pointer"
+          nbSuffix
+          class="mr-2"
+          icon="calendar-outline"
+          (click)="fechaInicioNuevo.click()"
+        >
+          <span class="material-icons gray00">face</span>
+        </nb-icon>
+        <nb-datepicker #formPickerInicio></nb-datepicker>
+      </nb-form-field>
+
+      <div
+        *ngIf="f.fechaInicio.invalid && f.fechaInicio.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.fechaInicio.errors.required">
+          El campo es obligatorio
+        </span>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <label>Fecha cese (Opcional)</label>
+      <nb-form-field>
+        <input
+          id="fechaCese"
+          #fechaCese
+          formControlName="fechaCese"
+          nbInput
+          placeholder="dd/mm/aaaa"
+          [nbDatepicker]="formPickerFin"
+          fieldSize="large"
+          shape="semi-round"
+          [status]="
+            f.fechaCese.invalid && f.fechaCese.touched ? 'danger' : 'basic'
+          "
+        />
+
+        <nb-icon
+          style="cursor: pointer"
+          nbSuffix
+          class="mr-2"
+          icon="calendar-outline"
+          (click)="fechaCese.click()"
+        >
+          <span class="material-icons gray00">face</span>
+        </nb-icon>
+        <nb-datepicker #formPickerFin></nb-datepicker>
+      </nb-form-field>
+
+      <div
+        *ngIf="f.fechaCese.invalid && f.fechaCese.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.fechaCese.errors.required">
+          El campo es obligatorio
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col text-center">
+      <button
+        nbButton
+        shape="round"
+        size="large"
+        status="primary"
+        class="pl-5 pr-5 mr-3"
+        (click)="actualizar()"
+        style="background-color: #249eaf"
+      >
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

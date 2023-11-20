@@ -1,0 +1,168 @@
+<div class="panel">
+   <div class="d-flex">
+      <span class="titulo"><b>Editar Entidad</b></span>
+      <span class="flex-spacer"></span>
+      <nb-icon class="mr-2 btnClose" nbSuffix icon="close" (click)="onNoClick()"></nb-icon>
+   </div>
+
+   <div>
+      <div class='mb-4 p-0'></div>
+
+      <form [formGroup]="frm">
+
+         <div class="row">
+            <div class="col-sm-3 div-sm-3-no-padding">
+               <label>Nº RUC</label>
+               <input trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                  [status]="f.numeroruc.invalid && f.numeroruc.touched ? 'danger' : 'basic' "
+                  formControlName="numeroruc" class="text-uppercase" disabled/>
+
+               <div *ngIf="f.numeroruc.invalid && f.numeroruc.touched" class="invalid-text flex-column">
+                  <span *ngIf="f.numeroruc.errors.required">
+                     El campo es obligatorio
+                  </span>
+               </div>
+            </div>
+            <div class="col-sm-1 tooltip-body">
+               <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+               <button nbButton shape="round" size="medium" status='info' outline (click)='validarRUC()'
+                        class="buttonValidar">
+                        <nb-icon class="documentIcon" nbSuffix icon="refresh-outline" style="color: #fff!important"></nb-icon>
+               </button>
+               <div class="flex-column popoverInfo">
+                  <span class="texto-tooltip-body">Actualizar Razón Social</span>
+              </div>
+             </div>
+            <div class="col-sm-8">
+               <label>Razón Social</label>
+               <input trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                  [status]="f.razonSocial.invalid && f.razonSocial.touched ? 'danger' : 'basic' "
+                  formControlName="razonSocial" class="text-uppercase" disabled/>
+
+               <div *ngIf="f.razonSocial.invalid && f.razonSocial.touched" class="invalid-text flex-column">
+                  <span *ngIf="f.razonSocial.errors.required">
+                     El campo es obligatorio
+                  </span>
+               </div>
+            </div>
+
+         </div>
+
+         <div class="row">
+            <div class="col-sm-4">
+               <label>Nombre Abreviado</label>
+               <input trim="blur" placeholder="Ingresar" nbInput shape="semi-round" fullWidth
+                  [status]="f.nombreabreviado.invalid && ( f.nombreabreviado.dirty ||  f.nombreabreviado.touched) ? 'danger' : 'basic' "
+                  formControlName="nombreabreviado" class="text-uppercase" />
+
+               <div *ngIf="f.nombreabreviado.invalid && ( f.nombreabreviado.dirty ||  f.nombreabreviado.touched)" class="invalid-text flex-column">
+                  <span *ngIf="f.nombreabreviado.errors.required">
+                     El campo es obligatorio 
+                  </span>
+               </div>
+            </div>
+
+            <div class="col-sm-8">
+               <label>Nivel de gobierno (opcional)</label>
+               <nb-form-field>
+                  <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="nivelGobiernoId">
+                     <nb-option>Seleccione</nb-option>
+                     <nb-option *ngFor="let nivel of cboNivel" [value]="nivel.parametroId">
+                        {{nivel.valorTexto}}
+                     </nb-option>
+                  </nb-select>
+               </nb-form-field>
+            </div>
+
+         </div>
+
+         <div class="row">
+            <div class="col-sm-4">
+               <label>Tipo de entidad (opcional)</label>
+               <nb-form-field>
+                  <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="tipoEntidadId">
+                     <nb-option>Seleccione</nb-option>
+                     <nb-option *ngFor="let tipoPub of cboTipoEntPub" [value]="tipoPub.parametroId">
+                        {{tipoPub.valorTexto}}
+                     </nb-option>
+                     </nb-select>
+               </nb-form-field>
+            </div>
+ 
+            <div class="col-sm-4">
+               <label>Sector (opcional)</label>
+               <nb-form-field>
+                  <nb-select placeholder="Seleccione" shape="semi-round" fullWidth formControlName="sectorId">
+                     <nb-option>Seleccione</nb-option>
+                     <nb-option *ngFor="let sector of cboSector" [value]="sector.parametroId">
+                        {{sector.valorTexto}}
+                     </nb-option>
+                  </nb-select>
+               </nb-form-field>
+            </div>
+
+            <div class="col-sm-4">
+               <label>Nº de Sindicatos (opcional)</label>
+               <input placeholder="Ingresar" nbInput shape="semi-round" fullWidth formControlName="nroSindicatos" class="text-uppercase" type="number"/>
+            </div>
+         </div>
+
+         <div class="row">
+            <div class="col-sm-12">
+               <label>Subir logotipo</label>
+             <div class='col-12 row m-0 p-0'>
+                  <div class='col-6 fs-11 mt-2'></div>
+                  <div class='col-6 fs-11 mt-2 text-right'>Formatos permitidos <b>JPG, PNG, JPEG</b></div>
+               </div>
+               <div class="dropzone" *ngIf='!imgFile'>
+                  <input type='file' #fileDropRef id='fileDropRef' accept='image/.jpeg,.jpg,.png,.jpeg'
+                     (change)="fileLogoEvent($event)" formControlName='base64Image'>
+
+                  <label for='fileDropRef' style='height: 120px; width: 100%; padding-top: 1rem;'>
+                     <div class="etiqueta mb-1">Arrastra y suelta tu archivo aquí
+                        <br>
+                        <div class="etiqueta mt-2">ó</div>
+                     </div>
+
+                     <button nbButton shape="round" size="medium" status='info' outline (click)='fileDropRef.click()'
+                        class="py-2 px-5">
+                        Subir logotipo
+                     </button>
+                  </label>
+               </div>
+               <div class="col-12 m-0 p-3 box" *ngIf='imgFile'>
+                  <div class='row col-md-12 m-0 p-0 font-weight-bold'>
+                     <div class='col-10 p-0 fs-12 text-left'>
+                        {{nomArchivo}}
+                     </div>
+                     <div class='col-2 m-0 p-0'>
+                        <nb-action class="p-0 justify-content-end" (click)='clearImage()'><nb-icon icon="trash"></nb-icon></nb-action>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 m-0 p-3 box" *ngIf='tieneImagen && !imgFile'>
+                  <div class='row col-md-12 m-0 p-0 font-weight-bold'>
+                     <div class='col-10 p-0 fs-12 text-left'>
+                        {{nomArchivo}}
+                     </div>
+                  </div>
+               </div>
+               <div class='col-12 row m-0 p-0'>
+                  <div class='col-6 fs-11 mt-2'>Tamaño permitido: 400 x 400 px</div>
+                  <div class='col-6 fs-11 mt-2 text-right'>500 kb</div>
+               </div>
+            </div>
+         </div>
+
+      </form>
+
+      <mat-divider class="divider-modal my-3"></mat-divider>
+
+      <div class="d-flex justify-content-center">
+         <button nbButton shape="round" size="medium" status="primary" class="background-light-blue text-white"
+            (click)="enviar()">
+            Guardar
+         </button>
+      </div>
+   </div>
+</div>

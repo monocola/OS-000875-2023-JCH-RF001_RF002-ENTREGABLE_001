@@ -1,0 +1,36 @@
+<div style="background-color: white !important">
+  <div class="w-100 h-100 px-5 py-3 flex-v-center flex-column">
+    <img src="assets/images/icons/info.png" alt="envio imagen" />
+
+    <div class="mt-4 center">
+      Se encontrarón campos con incongruencias, por favor verifíque el archivo 
+      <br> ingresado y valide nuevamente.
+    </div>
+   
+    <div class="mb-3 col-md-12">
+      <div class="w-100 h-100 btn_area">
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          (click)="onClickNo()"
+        >
+          Aceptar
+        </button>
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          status="primary"
+          outline
+          [mat-dialog-close]="true"
+          (click)="uploadFile()"
+        >
+          Descargar reporte
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    kubernetes:
+      config:
+        enabled: true
+        name: default-name
+        namespace: default
+        sources:
+          - namespace: entidad-mdp-dev
+            name: common-configmap
+          - namespace: entidad-mdp-dev
+            name: entidad-configmap
+      reload:
+        enabled: true
+        mode: event
+        strategy: refresh
+
+management:
+  endpoint:
+    restart:
+      enabled: true

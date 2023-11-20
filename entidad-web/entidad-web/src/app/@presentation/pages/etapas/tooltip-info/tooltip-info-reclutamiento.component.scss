@@ -1,0 +1,30 @@
+@import '_colors';
+
+span {
+  font-size: 0.75rem !important;
+}
+
+.tooltip-body {
+  max-width: 500px !important;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.938rem;
+}
+
+img {
+  height: 2.5rem !important;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: green;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 20px;
+}

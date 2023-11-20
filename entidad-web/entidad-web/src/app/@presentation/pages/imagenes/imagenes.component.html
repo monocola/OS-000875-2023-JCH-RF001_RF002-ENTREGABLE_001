@@ -1,0 +1,123 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Galeria de imágenes</h3>
+    <span class="flex-spacer"></span>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="title-container">
+    <div class="etiqueta-busqueda">
+      <p>Puede agregar un máximo de 10 imágenes.</p>
+      <label
+        *ngIf="this.listfinal < 10"
+        class="btnUploadLogo flex-v-center"
+        shape="round"
+        status="primary"
+        fullWidth
+        for="file-upload"
+        style="margin-left: 30px"
+      >
+        <nb-icon
+          class="documentIcon"
+          status="control"
+          class="mr-3"
+          icon="foto"
+        ></nb-icon>
+        Subir imágenes
+      </label>
+      <input
+        id="file-upload"
+        type="file"
+        multiple="multiple"
+        accept="image/png, image/jpg, image/jpeg"
+        (change)="seleccionarImagenes($event)"
+      />
+    </div>
+  </div>
+  <div class="wrapper">
+    <div>
+      <p style="text-align: center">{{ contador }}/10 imágenes</p>
+      <div
+        class="row"
+        cdkDropList
+        #dragList="cdkDropList"
+        cdkDropListOrientation="vertical"
+        [cdkDropListData]="imagens2"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div
+          class="Upcard"
+          *ngFor="let imgIdx of imagens2; let index = index"
+          cdkDrag
+        >
+          <img
+            alt="img"
+            class="img-responsive"
+            [src]="imgIdx.urlImg"
+            style="width: 100px; height: 100px"
+          />
+          <button
+            style="
+              background-color: black;
+              position: absolute;
+              margin-top: 80px;
+              margin-left: -100px;
+              width: 100px;
+              height: 23px;
+              border: none;
+            "
+            (click)="openModalAgregarLink(imgIdx)"
+          >
+            <span
+              style="
+                color: white;
+                margin-top: 2px;
+                margin-left: -5px;
+                float: left;
+              "
+              >Ingrese link&nbsp;</span
+            >
+
+            <em class="ent-web-link fs-24" style="color: white"></em>
+          </button>
+          <button
+            matRipple
+            title="Eliminar imagen"
+            class="btn-card"
+            (click)="remvoverImagenesSeleccionadas(index)"
+          >
+            <nb-icon class="documentIcon" nbSuffix icon="close"></nb-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-4">
+        <button
+          *ngIf="this.flagGuardar"
+          style="margin-left: 100px; margin-top: 40px"
+          nbButton
+          shape="round"
+          status="primary"
+          fullWidth
+          (click)="guardarImagenes()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+    <div class="border">
+      <p style="margin-top: -20px; font-weight: bold">Vista Previa</p>
+      <ngb-carousel style="width: 400px; height: 400px; background-color: gray">
+        <ng-template *ngFor="let img of listaImagenes" ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img
+              style="margin-top: 80px"
+              src="{{ img.urlImg }}"
+              alt="Random first slide"
+              width="400"
+              height="auto"
+            />
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+  </div>
+</div>

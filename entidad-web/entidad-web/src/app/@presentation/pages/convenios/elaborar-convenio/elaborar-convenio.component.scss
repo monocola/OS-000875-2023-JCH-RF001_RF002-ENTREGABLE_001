@@ -1,0 +1,193 @@
+@import '_colors';
+
+.estadoDesactivado {
+  background-color: #f9f9f9 !important;
+  border-color: #ececec !important;
+  color: rgb(6 6 6 / 52%) !important;
+}
+
+.texPage {
+  margin-bottom: 0;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.item {
+  padding-bottom: 12px;
+}
+
+.item p {
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.item span {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.item input {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+
+.position {
+  align-items: center;
+  padding-bottom: 23px;
+  padding-top: 23px;
+}
+
+.contenedor {
+  text-align: left;
+  width: 100%;
+  margin: auto;
+}
+
+.lateral {
+  width: 35%; /* Este será el ancho que tendrá tu columna */
+  float: left; /* Aquí determinas de lado quieres quede esta "columna" */
+}
+
+.principal {
+  width: 65%;
+  float: right;
+  background-color: #ffffff;
+}
+
+.btn-card-black {
+  color: $primary-color;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.item_card_input_img {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-bottom: 5px;
+  height: 35px;
+  border-radius: 8px;
+  border: 1px solid $primary-color;
+  width: 100%;
+}
+
+.item_card_input_img_error {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-bottom: 5px;
+  height: 35px;
+  border-radius: 8px;
+  border: 1px solid red;
+  width: 100%;
+}
+
+.file-input {
+  display: none;
+}
+
+.filename {
+  font-weight: bold;
+  color: $primary-color;
+  margin-left: 15px;
+  font-size: 0.95rem;
+}
+
+.imagenBase {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  margin-left: 15%;
+  margin-right: 10%;
+  margin-top: 10%;
+  width: 231px;
+  height: 44;
+}
+
+.alerta {
+  background-color: #fff5f5;
+  width: 320px;
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid #ffebeb;
+  border-radius: 20px;
+  margin: auto;
+}
+
+.img-alerta {
+  float: left;
+  width: 15%;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.text-alerta {
+  text-align: left;
+  float: right;
+  width: 85%;
+}
+
+.iconStyle {
+  font-size: 23px;
+  margin-right: 5px;
+}
+
+.messageAlert {
+  background-color: #fff5f5cf;
+  width: 300px;
+  height: 61px;
+  border: 1px solid #ffebeb;
+  border-radius: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.lineIcon {
+  display: flex;
+  flex-direction: column;
+  margin-top: 29px;
+  position: absolute;
+  right: 10px;
+}
+.butonMostrar {
+  display: flex;
+  margin-bottom: 49px;
+}
+
+.contratoSection {
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-top: 2px;
+}
+
+.contratoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-gap: 26px;
+  margin-left: 18px;
+}
+
+.contratoGrid--New {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3%);
+  grid-gap: 26px;
+  margin-left: 18px;
+}
+

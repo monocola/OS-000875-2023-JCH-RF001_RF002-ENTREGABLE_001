@@ -1,0 +1,595 @@
+<form class="body py-3 px-3" [formGroup]="this.organoForm">
+  <strong>Datos generales del órgano</strong>
+
+  <div class="row mt-4">
+    <div class="mb-3 col-md-2">
+      <label>Estado</label>
+      <nb-select
+        id="reg_organo_estado"
+        placeholder="Elige una opción"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        formControlName="estado"
+        [status]="f.estado.invalid && f.estado.touched ? 'danger' : 'basic'"
+      >
+        <nb-option *ngFor="let item of this.states" [value]="item.codigoTexto">
+          {{ item.valorTexto }}
+        </nb-option>
+      </nb-select>
+      <span *ngIf="f.estado.invalid && f.estado.touched" class="invalid-text">
+        <span *ngIf="f.estado.errors.required"> El campo es obligatorio </span>
+      </span>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <label>Nivel</label>
+      <nb-select
+        id="reg_organo_nivel"
+        placeholder="Indicar nivel"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        formControlName="nivel"
+        [status]="f.nivel.invalid && f.nivel.touched ? 'danger' : 'basic'"
+      >
+        <nb-option [value]="item.parametroId" *ngFor="let item of niveles">
+          {{ item.valorTexto }}
+        </nb-option>
+      </nb-select>
+      <span *ngIf="f.nivel.invalid && f.nivel.touched" class="invalid-text">
+        <span *ngIf="f.nivel.errors.required"> El campo es obligatorio </span>
+      </span>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <label>Nombre de órgano</label>
+      <input
+        id="reg_organo_nombre"
+        trim="blur"
+        placeholder="Indicar órgano"
+        type="text"
+        nbInput
+        shape="semi-round"
+        maxlength="100"
+        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ0-9 ]/g, '')"
+        [status]="
+          f.nombreOrgano.invalid && f.nombreOrgano.touched ? 'danger' : 'basic'
+        "
+        fieldSize="large"
+        fullWidth
+        formControlName="nombreOrgano"
+      />
+      <span
+        *ngIf="f.nombreOrgano.invalid && f.nombreOrgano.touched"
+        class="invalid-text"
+      >
+        <span *ngIf="f.nombreOrgano.errors.required">
+          El campo es obligatorio
+        </span>
+        <span *ngIf="f.nombreOrgano.errors.pattern">
+          Solo se admiten letras
+        </span>
+        <span *ngIf="f.nombreOrgano.errors.minlength">
+          El texto introducido es muy corto
+        </span>
+        <span *ngIf="f.nombreOrgano.errors.maxlength">
+          El texto introducido es muy largo
+        </span>
+      </span>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <label>Sigla</label>
+      <input
+        nbInput
+        id="reg_organo_sigla"
+        trim="blur"
+        #sigla
+        placeholder="Indicar sigla"
+        type="text"
+        shape="semi-round"
+        [value]="sigla.value.toUpperCase()"
+        maxlength="10"
+        fieldSize="large"
+        fullWidth
+        formControlName="sigla"
+        [status]="f.sigla.invalid && f.sigla.touched ? 'danger' : 'basic'"
+        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ0-9 ]/g, '')"
+      />
+      <span *ngIf="f.sigla.invalid && f.sigla.touched" class="invalid-text">
+        <span *ngIf="f.sigla.errors.required"> El campo es obligatorio </span>
+        <span *ngIf="f.sigla.errors.pattern"> Solo se admiten letras </span>
+        <span *ngIf="f.sigla.errors.minlength">
+          El texto introducido es muy corto
+        </span>
+        <span *ngIf="f.sigla.errors.maxlength">
+          El texto introducido es muy largo
+        </span>
+      </span>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <label>Naturaleza del órgano</label>
+      <nb-select
+        id="reg_organo_naturaleza"
+        placeholder="Elige una opción"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        formControlName="naturaleza"
+        [status]="
+          f.naturaleza.invalid && f.naturaleza.touched ? 'danger' : 'basic'
+        "
+      >
+        <nb-option
+          *ngFor="let item of this.orgNaturalezaItems"
+          [value]="item.parametroId"
+        >
+          {{ item.valorTexto }}
+        </nb-option>
+      </nb-select>
+      <span
+        *ngIf="f.naturaleza.invalid && f.naturaleza.touched"
+        class="invalid-text"
+      >
+        <span *ngIf="f.naturaleza.errors.required">
+          El campo es obligatorio
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-4 subtitle">
+    Indique si depende de otro órgano
+    <nb-icon
+      [nbPopover]="templateRef"
+      icon="info"
+      nbPopoverPlacement="right"
+      nbPopoverTrigger="hint"
+      class="popoverTrigger"
+    >
+    </nb-icon>
+  </div>
+
+  <ng-template #templateRef>
+    <serv-talento-tooltip-info [message]="'Revisar el ROF o MOP de la entidad'">
+    </serv-talento-tooltip-info>
+  </ng-template>
+
+  <div class="row mt-3">
+    <div class="mb-3 col-md-3">
+      <label>Órgano</label>
+      <nb-select
+        id="reg_organo_organoQueDepen"
+        placeholder="Elegir órgano"
+        fullWidth="true"
+        [size]="'large'"
+        shape="semi-round"
+        formControlName="organoQueDepende"
+      >
+        <nb-option value="">---NO DEPENDE---</nb-option>
+        <nb-option
+          *ngFor="let item of organosFiltered"
+          [value]="item.organigramaId"
+        >
+          {{ item.descripcion }}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
+
+  <div class="mt-4"><strong>Datos del responsable del órgano</strong></div>
+
+  <div class="row mt-3">
+    <div class="mb-3 col-md-2">
+      <label>Tipo de documento</label>
+      <nb-select
+        id="reg_organo_organoQueDepende"
+        placeholder="Selecciona documento"
+        fullWidth
+        [size]="'large'"
+        shape="semi-round"
+        [status]="
+          f.tipoDocumento.invalid && f.tipoDocumento.touched
+            ? 'danger'
+            : 'basic'
+        "
+        formControlName="tipoDocumento"
+        (selectedChange)="changeTypeDocument()"
+      >
+        <nb-option
+          [value]="item.codigoNumero"
+          *ngFor="let item of typeDocuments"
+        >
+          {{ item.valorTexto }}
+        </nb-option>
+      </nb-select>
+      <span
+        *ngIf="f.tipoDocumento.invalid && f.tipoDocumento.touched"
+        class="invalid-text"
+      >
+        <span *ngIf="f.tipoDocumento.errors.required">
+          El campo es obligatorio
+        </span>
+      </span>
+    </div>
+
+    <div class="mb-3 col-md-3" *ngIf="this.f.tipoDocumento.value == 1">
+      <label class="label">N° de documento</label>
+      <nb-form-field>
+        <input
+          nbInput
+          type="text"
+          placeholder="Ingresa documento"
+          fullWidth
+          shape="semi-round"
+          fieldSize="large"
+          maxlength="8"
+          formControlName="numeroDocumento"
+          (keyup)="this.personFinded === true ? clearFields() : null"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="
+            f.numeroDocumento.invalid && f.numeroDocumento.touched
+              ? 'danger'
+              : 'basic'
+          "
+        />
+        <button
+          nbSuffix
+          nbButton
+          ghost
+          size="large"
+          shape="semi-round"
+          [disabled]="this.f.tipoDocumento.invalid"
+          class="searchButton"
+          (click)="this.personFinded ? clearFields() : searchReniec()"
+        >
+          <nb-icon [icon]="this.personFinded ? 'close' : 'buscar'"> </nb-icon>
+        </button>
+      </nb-form-field>
+      <div
+        *ngIf="f.numeroDocumento.invalid && f.numeroDocumento.touched"
+        class="invalid-text flex-columns"
+      >
+        <span *ngIf="f.numeroDocumento.errors.required">
+          El campo es obligatorio
+        </span>
+        <span *ngIf="f.numeroDocumento.errors.pattern">
+          Formato no coincide. DNI: Solo números | CE: Alfanumérico
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-3" *ngIf="this.f.tipoDocumento.value != 1">
+      <label class="label">N° de documento</label>
+      <nb-form-field>
+        <input
+          fullWidth
+          type="text"
+          placeholder="Ingresa documento"
+          nbInput
+          shape="semi-round"
+          fieldSize="large"
+          maxlength="12"
+          formControlName="numeroDocumento"
+          (keyup)="this.personFinded === true ? clearFields(false) : null"
+          oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')"
+          [status]="
+            f.numeroDocumento.invalid && f.numeroDocumento.touched
+              ? 'danger'
+              : 'basic'
+          "
+        />
+        <button
+          nbSuffix
+          nbButton
+          ghost
+          size="large"
+          shape="semi-round"
+          [disabled]="this.f.tipoDocumento.invalid"
+          class="searchButton"
+          (click)="this.personFinded ? clearFields(true) : searchReniec()"
+        >
+          <nb-icon [icon]="this.personFinded ? 'close' : 'buscar'"> </nb-icon>
+        </button>
+      </nb-form-field>
+      <div
+        *ngIf="f.numeroDocumento.invalid && f.numeroDocumento.touched"
+        class="invalid-text flex-columns"
+      >
+        <span *ngIf="f.numeroDocumento.errors.required">
+          El campo es obligatorio
+        </span>
+        <span *ngIf="f.numeroDocumento.errors.pattern">
+          Formato no coincide. DNI: Solo números | CE: Alfanumérico
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <label class="label">Nombre/s</label>
+      <input
+        trim="blur"
+        shape="semi-round"
+        type="text"
+        fullWidth
+        nbInput
+        fieldSize="large"
+        #nombres
+        [value]="nombres.value.toUpperCase()"
+        maxlength="30"
+        formControlName="nombres"
+        [status]="f.nombres.invalid && f.nombres.touched ? 'danger' : 'basic'"
+        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+      />
+      <div
+        *ngIf="f.nombres.invalid && f.nombres.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.nombres.errors.required">
+          Los nombres son obligatorios
+        </span>
+        <span *ngIf="f.nombres.errors.pattern"> Solo se admiten letras </span>
+        <span *ngIf="f.nombres.errors.minlength">
+          El texto introducido es muy corto
+        </span>
+        <span *ngIf="f.nombres.errors.maxlength">
+          El texto introducido es muy largo
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <label class="label">Apellido paterno</label>
+      <input
+        trim="blur"
+        fieldSize="large"
+        type="text"
+        fullWidth
+        nbInput
+        shape="semi-round"
+        #apellidoPaterno
+        [value]="apellidoPaterno.value.toUpperCase()"
+        maxlength="30"
+        [status]="
+          f.apellidoPaterno.invalid && f.apellidoPaterno.touched
+            ? 'danger'
+            : 'basic'
+        "
+        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+        formControlName="apellidoPaterno"
+      />
+      <div
+        *ngIf="f.apellidoPaterno.invalid && f.apellidoPaterno.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.apellidoPaterno.errors.required">
+          El apellido paterno es obligatorio
+        </span>
+        <span *ngIf="f.apellidoPaterno.errors.pattern">
+          Solo se admiten letras
+        </span>
+        <span *ngIf="f.apellidoPaterno.errors.minlength">
+          El texto introducido es muy corto
+        </span>
+        <span *ngIf="f.apellidoPaterno.errors.maxlength">
+          El texto introducido es muy largo
+        </span>
+      </div>
+    </div>
+    <div class="mb-3 col-md-2">
+      <label class="label">Apellido materno</label>
+      <input
+        trim="blur"
+        type="text"
+        fullWidth
+        nbInput
+        shape="semi-round"
+        fieldSize="large"
+        #apellidoMaterno
+        [value]="apellidoMaterno.value.toUpperCase()"
+        maxlength="30"
+        [status]="
+          f.apellidoMaterno.invalid && f.apellidoMaterno.touched
+            ? 'danger'
+            : 'basic'
+        "
+        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+        formControlName="apellidoMaterno"
+      />
+      <div
+        *ngIf="f.apellidoMaterno.invalid && f.apellidoMaterno.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.apellidoMaterno.errors?.required">
+          El apellido materno es obligatorio
+        </span>
+        <span *ngIf="f.apellidoMaterno.errors?.pattern">
+          Solo se admiten letras
+        </span>
+        <span *ngIf="f.apellidoMaterno.errors?.minlength">
+          El texto introducido es muy corto
+        </span>
+        <span *ngIf="f.apellidoMaterno.errors?.maxlength">
+          El texto introducido es muy largo
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-3" *ngIf="this.f.tipoDocumento.value === 4">
+      <label class="label">País</label>
+      <nb-form-field>
+        <input
+          #inputCountry
+          nbInput
+          (input)="onChange()"
+          type="text"
+          fullWidth
+          placeholder="Indicar país"
+          [nbAutocomplete]="auto"
+          formControlName="pais"
+          (blur)="verifyCountry()"
+          maxlength="60"
+          [status]="f.pais.invalid && f.pais.touched ? 'danger' : 'basic'"
+          shape="semi-round"
+          id="pais"
+          oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+          fieldSize="large"
+        />
+        <nb-icon nbSuffix icon="buscar"></nb-icon>
+      </nb-form-field>
+      <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+        <nb-option
+          *ngFor="let option of filteredOptions$ | async"
+          [value]="option.nombrePais"
+        >
+          {{ option.nombrePais }}
+        </nb-option>
+      </nb-autocomplete>
+      <div
+        *ngIf="f.pais.invalid && f.pais.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.pais.errors.required"> El país es obligatorio </span>
+        <span *ngIf="f.pais.errors.notfound">
+          Tiene que seleccionar un país de la lista
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-4">
+      <label class="label">Puesto</label>
+      <input
+        type="text"
+        placeholder="Indicar puesto o cargo"
+        fullWidth
+        trim="blur"
+        nbInput
+        shape="semi-round"
+        oninput="this.value = this.value.replace(/[^a-zA-ZñÑáéíóúÁÉÍÓÚüÜöÖ ]/g, '')"
+        fieldSize="large"
+        maxlength="60"
+        formControlName="puesto"
+        [status]="f.puesto.invalid && f.puesto.touched ? 'danger' : 'basic'"
+      />
+      <div
+        *ngIf="f.puesto.invalid && f.puesto.touched"
+        class="invalid-text flex-columns"
+      >
+        <span *ngIf="f.puesto.errors.required"> El puesto es obligatorio </span>
+        <span *ngIf="f.puesto.errors.pattern"> Solo se admiten letras </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <label class="label">Celular</label>
+      <input
+        placeholder="999999999"
+        shape="semi-round"
+        type="text"
+        fullWidth
+        nbInput
+        fieldSize="large"
+        maxlength="9"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        formControlName="celular"
+        [status]="f.celular.invalid && f.celular.touched ? 'danger' : 'basic'"
+      />
+      <div
+        *ngIf="f.celular.invalid && f.celular.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.celular.errors.required"> El campo es obligatorio </span>
+        <span *ngIf="f.celular.errors.pattern"> Solo se aceptan números </span>
+        <span *ngIf="f.celular.errors.minlength">
+          El texto introducido es muy corto
+        </span>
+        <span *ngIf="f.celular.errors.maxlength">
+          El texto introducido es muy largo
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <label class="label">Correo laboral</label>
+      <input
+        type="text"
+        class="text-lowercase"
+        placeholder="usuario@empresa.gob.pe"
+        fullWidth
+        nbInput
+        shape="semi-round"
+        fieldSize="large"
+        maxlength="60"
+        formControlName="correoLaboral"
+        [status]="
+          f.correoLaboral.invalid && f.correoLaboral.touched
+            ? 'danger'
+            : 'basic'
+        "
+      />
+      <div
+        *ngIf="f.correoLaboral.invalid && f.correoLaboral.touched"
+        class="invalid-text flex-column"
+      >
+        <span *ngIf="f.correoLaboral.errors?.maxlength">
+          El texto introducido es muy largo
+        </span>
+        <span *ngIf="f.correoLaboral.errors?.required">
+          El correo es obligatorio
+        </span>
+        <span *ngIf="f.correoLaboral.errors?.pattern">
+          Formato de correo inválido
+        </span>
+        <span *ngIf="f.correoLaboral.errors?.minlength">
+          El texto introducido es muy corto
+        </span>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="mt-4 d-flex">
+  <span class="flex-spacer"></span>
+  <button
+    type="button"
+    nbButton
+    shape="round"
+    outline
+    size="medium"
+    status="primary"
+    class="px-5 ml-3"
+    (click)="cancelItem()"
+  >
+    Cancelar
+  </button>
+  <button
+    *ngIf="!this.editMode"
+    nbButton
+    shape="round"
+    size="medium"
+    status="primary"
+    class="px-5 ml-3"
+    (click)="saveOrgano()"
+    [disabled]="
+      this.organoForm.invalid ||
+      this.f.estado.value == 0 ||
+      this.f.nombres.value
+    "
+  >
+    <span>Agregar órgano</span>
+  </button>
+  <button
+    *ngIf="this.editMode"
+    nbButton
+    shape="round"
+    size="medium"
+    status="primary"
+    class="px-5 ml-3"
+    (click)="saveOrgano()"
+    [disabled]="this.organoForm.invalid || this.f.nombres.value"
+  >
+    <span>Guardar</span>
+  </button>
+</div>

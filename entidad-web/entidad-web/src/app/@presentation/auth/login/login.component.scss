@@ -1,0 +1,113 @@
+@import '../../@theme/styles/themes';
+@import '_colors';
+
+@include nb-install-component() {
+  $principal: nb-theme(color-primary-default);
+
+  .parent-card {
+    margin: 0;
+    border-radius: 1.25rem;
+    @media screen and (min-width: 600px) {
+      padding: 2rem 2.5rem;
+    }
+    & > .body-card {
+      @media screen and (min-width: 600px) {
+        width: 25rem;
+      }
+
+      @media screen and (max-width: 600px) {
+        width: 350px;
+        padding: 2rem 3rem;
+      }
+    }
+  }
+
+  .btnSection {
+    border-bottom: 1px solid #f7f7f7;
+    display: flex;
+    justify-content: space-between;
+    & > .btn {
+      text-transform: none;
+      background-color: transparent;
+      border: none;
+      color: #9a9a9a;
+      font-weight: 400;
+      font-size: 0.875rem;
+      &.active {
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+
+  label {
+    color: $dark-gray;
+    font-size: 0.85rem !important;
+    margin-top: 1.5rem !important;
+  }
+
+  a {
+    color: $principal;
+    font-size: 0.75rem;
+  }
+
+  .invalid-text {
+    font-size: 0.75rem;
+    color: #fe6168;
+  }
+
+  @media screen and (max-width: 600px) {
+    .captchaContent {
+      user-select: none !important;
+      cursor: pointer;
+      display: block;
+      text-align: center;
+      width: 25rem;
+    }
+
+    .imgLogo {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    .captchaContent {
+      user-select: none !important;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25rem;
+    }
+  }
+
+  .realperson-challenge-content {
+    user-select: none !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.25rem;
+    width: 25rem;
+  }
+
+  /*
+    Catpcha - SERVIR
+*/
+
+  .realperson-challenge {
+    text-align: center !important;
+    display: flex;
+  }
+
+  ::ng-deep .realperson-text {
+    font-family: 'Courier New', monospace !important;
+  }
+
+  .captchaLogin {
+    text-align: center !important;
+    font-weight: 600 !important;
+    color: $primary_color !important;
+    text-transform: uppercase;
+  }
+}

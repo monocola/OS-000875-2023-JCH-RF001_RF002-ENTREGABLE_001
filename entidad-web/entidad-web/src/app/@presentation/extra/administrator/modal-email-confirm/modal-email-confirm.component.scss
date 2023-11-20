@@ -1,0 +1,43 @@
+@import '_colors';
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $primary_color;
+}
+
+.btn {
+  border-radius: 0.5rem;
+  border: 1px solid $primary_color !important;
+  height: 3rem;
+  width: 100%;
+  font-size: 0.938rem !important;
+  background: white !important;
+  color: $primary_color !important;
+  cursor: pointer;
+}
+
+.input-box {
+  display: flex;
+  padding: 1rem;
+  padding-top: 2rem;
+}
+
+.pad {
+  min-width: 64px;
+  width: 64px;
+  margin: 0.3rem;
+  text-align: center;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+}
+
+.timer {
+  text-align: center;
+  letter-spacing: -1px;
+  color: $primary_color;
+  font-weight: 500;
+}
+.timer span {
+  margin: 0 3px 0 15px;
+}

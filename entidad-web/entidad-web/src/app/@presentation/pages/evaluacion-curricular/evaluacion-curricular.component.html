@@ -1,0 +1,153 @@
+<div class="body">
+  <div class="header">
+    <h3 class="titlePage">Evaluación Curricular</h3>
+    <!-- <h3 class="subtitle">CURRICULAR</h3> -->
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="filtro">
+    <form [formGroup]="filterForm" autocomplete="off">
+      <div class="titulo">Filtros de búsqueda</div>
+      <div class="items">
+        <div>
+          <label>Código de convocatoria</label>
+          <nb-form-field>
+            <input
+              formControlName="convocatoria"
+              fullWidth
+              nbInput
+              type="search"
+              placeholder="Buscar"
+              shape="semi-round"
+              maxlength="120"
+              class="cursor-pointer"
+              autocomplete="off"
+              [nbAutocomplete]="autoConvocatoria"
+              fieldSize="large"
+              (input)="onInputChangeAutocomplete($event, 'convocatoria')"
+            />
+            <nb-icon nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+
+          <nb-autocomplete #autoConvocatoria ngDefaultControl>
+            <nb-option
+              *ngFor="let option of convocatorias_autocomplete"
+              [value]="option.codigoConvocatoria"
+            >
+              {{ option.codigoConvocatoria }}
+            </nb-option>
+          </nb-autocomplete>
+        </div>
+        <div>
+          <div>
+            <label>Regimen</label>
+            <nb-form-field>
+              <input
+                formControlName="regimen"
+                fullWidth
+                nbInput
+                type="search"
+                fieldSize="small"
+                placeholder="Buscar"
+                shape="semi-round"
+                maxlength="120"
+                class="cursor-pointer"
+                autocomplete="off"
+                [nbAutocomplete]="autoRegimen"
+                fieldSize="large"
+                (input)="onInputChangeAutocomplete($event, 'regimen')"
+              />
+              <nb-icon nbSuffix icon="buscar"></nb-icon>
+            </nb-form-field>
+            <nb-autocomplete #autoRegimen ngDefaultControl>
+              <nb-option
+                *ngFor="let option of regimen_autocomplete"
+                [value]="option.desRegimen"
+              >
+                {{ option.desRegimen }}
+              </nb-option>
+            </nb-autocomplete>
+          </div>
+        </div>
+        <div>
+          <label>Fecha / Periodo de convocatoria</label>
+          <nb-form-field>
+            <input
+              formControlName="rangoFechas"
+              [nbDatepicker]="rangepicker"
+              nbInput
+              fullWidth
+              shape="semi-round"
+              class="cursor-pointer"
+              format="DD/MM/YYYY"
+              placeholder="Elegir rango"
+              fieldSize="large"
+            />
+            <nb-icon nbSuffix icon="calendario"></nb-icon>
+            <nb-rangepicker #rangepicker></nb-rangepicker>
+          </nb-form-field>
+        </div>
+        <div>
+          <label>Estado Convocatoria</label>
+          <nb-select
+            formControlName="estado"
+            placeholder="Elegir estado"
+            fullWidth
+            shape="semi-round"
+            size="large"
+          >
+            <nb-option
+              *ngFor="let item of estados_autocomplete"
+              [value]="item.sigla"
+            >
+              {{ item.sigla }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="action">
+          <button
+            nbButton
+            outline
+            shape="round"
+            status="primary"
+            (click)="limpiar()"
+          >
+            Limpiar
+          </button>
+          &nbsp; &nbsp;
+          <button nbButton shape="round" status="primary" (click)="buscar()">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="table bg-gray justify-content-center">
+  <ng-container>
+    <div class="subtitle">Lista de evaluaciones curriculares</div>
+    <serv-talento-table
+      [title]="'Lista de evaluaciones'"
+      [tableData]="data"
+      [tableColumns]="this.conocimientoTableColumns"
+      [isFilterable]="true"
+      [isPageable]="true"
+      [paginationSizes]="[10, 15, 20]"
+      [defaultPageSize]="10"
+      [acciones]="true"
+      (sort)="sortData($event)"
+      [btnShowPdf]="true"
+      (showpdfAction)="viewDetailEvaluacion($event)"
+      [dataExport]="getDataExportEvaluaciones()"
+      fontSize="fs-14"
+      rowHeight="64px"
+    >
+    </serv-talento-table>
+  </ng-container>
+</div>
+
+<mat-divider></mat-divider>

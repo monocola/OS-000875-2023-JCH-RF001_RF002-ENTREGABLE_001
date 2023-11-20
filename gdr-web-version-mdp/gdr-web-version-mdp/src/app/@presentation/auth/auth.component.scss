@@ -1,0 +1,25 @@
+@import '~@nebular/theme/styles/theming';
+@include nb-install-component() {
+  .layout {
+    padding: 0 !important;
+  }
+}
+
+.layout {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: right !important;
+}
+
+img {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+  height: 6.25rem;
+}
+
+@media screen and (max-width: 600px) {
+  img {
+    display: none;
+  }
+}

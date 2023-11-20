@@ -1,0 +1,27 @@
+.bodyRegisterForm {
+  width: 40.625rem;
+}
+.pointer {
+  cursor: pointer;
+}
+.parrafo {
+  /*  font-weight: 400; */
+  /* font-style: italic; */
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.btn-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  & > button {
+    width: 80% !important;
+  }
+}
+
+.title-modal {
+  margin-top: -15px;
+}

@@ -1,0 +1,91 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="onNoClick()"
+  ></nb-icon>
+</div>
+
+<div class="mb-12 col-md-12 divHeaderMargin">
+  <div class="flex-v-center flex-column">
+    <img
+      src="./../assets/images/icons/formulario.svg"
+      style="height: 50px; width: 55px"
+      alt="Logo"
+    />
+    <h6 class="mt-3 fs-16 text-info">Registro masivo</h6>
+  </div>
+</div>
+
+<div class="row px-6 pt-3">
+
+  <div class="col-6">
+    <button nbButton outline status="primary" size="medium" (click)="onClickDownloadExcel()">Descargar plantilla<nb-icon class="fs-15" icon="descargar"></nb-icon>
+    </button>
+  </div>
+
+  <div class="col-6">
+    <form [formGroup] = "uploadForm">
+
+      <button nbButton outline fullWidth *ngIf="document == null" (click)="clickAndClean(inputfile)" class="btn btn-outline-secondary" status="dark" size="medium"
+        >
+        Subir plantilla<nb-icon class="fs-15 text-info" icon="subir"></nb-icon>
+      </button>
+      <nb-form-field *ngIf="document != null">
+        <input readonly fullWidth size="small" nbInput [value]="document.name"/>
+        <button nbSuffix nbButton ghost (click)="cleanFileSelect()">
+          <nb-icon class="fs-15" icon="clean">
+          </nb-icon>
+        </button>
+      </nb-form-field>
+    </form>
+  </div>
+  <input hidden #inputfile name="subirPlantilla" type="file" (change)="onSubirPlantilla($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+
+  <div class="row col-12 animate__animated animate__fadeIn" *ngIf="showResumen">
+    <div class="col-12 py-2 text-center seccion-errores rounded" *ngIf="objValidacionPlantilla?.mensaje != '' ">
+      <span class="text-danger">{{objValidacionPlantilla?.mensaje}}</span>
+    </div>
+    <div class="col-12 text-center py-2" *ngIf="objValidacionPlantilla?.mensaje != '' ">
+      <a alt="Descargar Observaciones" (click)="descargarArchivoErrores(objValidacionPlantilla.archivo)" class="cursor-pointer text-info">Descargar archivo de observaciones</a>
+    </div>
+    <div class="col-12 pt-4 pb-1">
+      <div class="row mx-5 seccion-resumen rounded text-center">
+        <div class="col-12 py-2 font-weight-bold">Resumen</div>
+        <div class="col-12 py-2">
+          <span class="fs-13">Total de registros importados de excel: </span>
+          <span class="font-weight-bold">{{objValidacionPlantilla?.totalRegistros}}</span>
+        </div>
+        <div class="col-12 py-2">
+          <span class="fs-13">Registros duplicados: </span>
+          <span class="font-weight-bold">{{objValidacionPlantilla?.totalDuplicados}}</span>
+        </div>
+        <div class="col-12 py-2">
+          <span class="fs-13">Registros correctos: </span>
+          <span class="font-weight-bold">{{objValidacionPlantilla?.totalCorrectos}}</span>
+        </div>
+        <div class="col-12 py-2">
+          <span class="fs-13">Registros incorrectos: </span>
+          <span class="font-weight-bold">{{objValidacionPlantilla?.totalIncorrectos}}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="row pt-5 justify-content-center">
+  <div class="col-2"></div>
+  <div class="col-4">
+    <button nbButton fullWidth outline status="primary" shape="round" (click)="dismiss(false)">Cancelar</button>
+  </div>
+  <div class="col-4">
+    <button nbButton fullWidth status="primary" shape="round" class="ml-2" [disabled]="!showEnableGuardar" (click)="guardarPreguntas()">Guardar</button>
+  </div>
+  <div class="col-2"></div>
+
+</div>
+

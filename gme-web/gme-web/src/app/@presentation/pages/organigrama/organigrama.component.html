@@ -1,0 +1,212 @@
+<div class="body">
+  <div class="d-flex">
+    <p class="titlePage">Registro de áreas</p>
+    <span class="flex-spacer"></span>
+  </div>
+ 
+  <mat-divider></mat-divider>
+  <div class="row mt-0">
+        <div class="mb-3 col-md-3"></div>
+        <div class="mb-3 col-md-9"></div>
+        <div class="mb-3 col-lg-9 col-md-6"></div>
+        <div class="mb-3 col-lg-3 col-md-6">
+          <div class="h-100 m-10 flex-v-bottom-right btn_area ">
+            <button
+            nbButton
+            shape="round"
+            size="medium"
+            status="success"
+            class="mr-3"
+            (click)="openModalRegister()"
+            style='color: white; background-color: #068264;'
+          
+          >
+            Registrar UO
+          </button>
+            <button
+              nbButton
+              outline
+              shape="round"
+              size="medium"
+              status="primary"
+              class="mr-3 btnOrganigrama"
+              [routerLink]="['vista']"
+               style='color: #249EAF; background-color: white; '
+
+            >
+              Ver organigrama
+            </button>
+          </div>
+        </div>
+  </div>
+  <div class='m-1 p-1'></div>
+
+  <mat-tab-group mat-align-tabs="end">
+    <mat-tab label="Registro individual">
+      <div class="bg-card m-1" [formGroup]="filterForm">
+        
+          <div class="row mt-3">
+            <div class="mb-3 col-lg-3 col-md-6">
+              <label>Tipo de órgano</label>
+              <nb-select
+                formControlName="tipoOrganoId"
+                placeholder="Seleccione"
+                fullWidth="true"
+                [size]="'large'"
+                shape="semi-round"
+                (selectedChange)="tipoOrganoChange($event)"
+              > 
+                <nb-option style="color: #a4a4a4">Seleccione</nb-option>
+                <nb-option
+                  *ngFor="let cboOrgano of organos"
+                  [value]="cboOrgano.parametroId"
+              >
+                  {{ cboOrgano.valorTexto }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="mb-3 col-lg-3 col-md-6">
+              <label>Órgano / UO superior</label>
+              <nb-select
+                formControlName="unidadOrganicaSuperiorId"
+                placeholder="Seleccione"
+                fullWidth="true"
+                [size]="'large'"
+                shape="semi-round"
+                (selectedChange)="unidadOrganicaSuperiorChange($event)"
+              >
+              <nb-option style="color: #a4a4a4">Seleccione</nb-option>
+                <nb-option
+                  *ngFor="let unidadSup of unidadOrganicaSup"
+                  [value]="unidadSup.id"
+                >
+                  {{ unidadSup.descripcion }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="mb-3 col-lg-3 col-md-6">
+              <label>Órgano / UO / Sub UO</label>
+              <nb-select
+                formControlName="unidadOrganicaId"
+                placeholder="Seleccione"
+                fullWidth="true"
+                [size]="'large'"
+                shape="semi-round"
+              >
+              <nb-option style="color: #a4a4a4">Seleccione</nb-option>
+                <nb-option
+                  *ngFor="let unidadCbo of unidadOrganicaCbo"
+                  [value]="unidadCbo.id"
+                >
+                  {{ unidadCbo.descripcion }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="mb-12 col-lg-3 col-md-6">
+              <div class="h-100 m-10 flex-v-bottom-right btn_area ">
+                <button
+                  nbButton
+                  shape="round"
+                  size="medium"
+                  status="primary"
+                  class="mr-3"
+                  outline
+                  (click)='clear()'
+                  style='color: #249EAF; background-color: white; '
+
+                >
+                  Limpiar
+                </button>
+                <button
+                  nbButton
+                  shape="round"
+                  size="medium"
+                  status="primary"
+                  class="mr-3"
+                  (click)='search()'
+                  style='color: white; background-color: #249EAF;'
+                >
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+          <br><br>
+      </div>
+      <br>
+      <div class="mt-3 mx-1 mb-1">
+        <ng-container *ngIf="this.organigrama.length > 0">
+          
+          <gme-web-table
+            [holderText]="this.holderText"
+            [tableData]="organigrama"
+            [tableColumns]="ordersTableColumns"
+            [isFilterable]="true"
+            [isPageable]="true"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            (sort)="sortData($event)"
+            [acciones]="true"
+            [title]="'Lista de  Gestión de Organigrama'"
+            [btnEditEnabled]="true"
+            (editAction)="editUO($event)"
+            [editTitle]="'Editar'"
+            [btnDeleteEnabled]="true"
+            (deleteAction)="removeGO($event)"
+            [deleteTitle]="'Eliminar'"
+            [showDownloadButton]='false'
+          >
+          </gme-web-table>
+        </ng-container>
+
+        <ng-container *ngIf="this.organigrama.length === 0">
+          <gme-web-table
+            [holderText]="this.holderText"
+            [tableData]="organigrama1"
+            [tableColumns]="ordersTableColumns"
+            [isFilterable]="true"
+            [isPageable]="true"
+            [paginationSizes]="[10, 20, 50, 100]"
+            [defaultPageSize]="10"
+            (sort)="sortData($event)"
+            [acciones]="true"
+            [title]="'Lista de  Gestión de Organigrama'"
+            [btnEditEnabled]="true"
+            (editAction)="editUO($event)"
+            [editTitle]="'Editar'"
+            [btnDeleteEnabled]="true"
+            (deleteAction)="removeGO($event)"
+            [deleteTitle]="'Eliminar'"
+            [showDownloadButton]='false'
+          >
+          </gme-web-table>
+        </ng-container>
+        
+      </div>
+      
+
+    </mat-tab>
+    <mat-tab label="Registro masivo">
+      <div class='bg-card py-2 m-1'>
+        <h5>Registro masivo de órganos/unidades orgánicas/sub unidades orgánicas</h5>
+        <p>
+          Para importar el archivo considerar los siguientes pasos: <br/>
+          1. Descargue la plantilla. <br>
+          2. No modificar los títulos de los campos de la primera fila ni agregar columnas. <br>
+          3. Registrar y seleccionar los datos a importar en las siguientes filas. <br>
+          4. Subir el archivo en formato Excel.
+        </p>
+        <br>
+        <br>
+        <gme-web-file-dropzone (upload)="upload($event)" (downloadPlanilla)="downloadFile()" [acepttFile] = "['xlsx', 'XLSX']" [menssageFile]= "['xlsx y XlSX']" >
+        </gme-web-file-dropzone>
+      </div>
+      <br>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
+

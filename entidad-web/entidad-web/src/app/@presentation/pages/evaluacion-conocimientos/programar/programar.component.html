@@ -1,0 +1,132 @@
+<div class="body">
+  <div class="title row">
+    <h4 class="titlePage">Programar evaluaciones</h4>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="title-container">
+    <div class="etiqueta-busqueda">Filtros de búsqueda</div>
+  </div>
+
+  <div style="padding-left: 10%; padding-right: 10%; margin-top: 2px">
+    <div class="row mt-3">
+      <div class="col-md-3 mb-3">
+        <autocomplete
+          [label]="'Código de Convocatoria'"
+          [placeholder]="'Buscar Convocatoria'"
+          [control]="f?.convocatoria"
+          [fieldToShow]="'descripcion'"
+          [items]="convocatorias"
+          (selectedChange)="changePerfil()"
+        ></autocomplete>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <select-field
+          [label]="'Perfil de Puesto'"
+          [control]="f.perfilPuesto"
+          [items]="perfiles"
+          [value]="'id'"
+          [valueToShow]="'descripcion'"
+        >
+        </select-field>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <autocomplete
+          [label]="'Evaluación'"
+          [placeholder]="'Buscar evaluacion'"
+          [control]="f?.evaluacion"
+          [fieldToShow]="'descripcion'"
+          [items]="examenes"
+        >
+        </autocomplete>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <input-field
+          [control]="f.selGrupo"
+          [label]="'Grupo'"
+          [placeholder]="'Cantidad'"
+          [maxlength]="3"
+          [minlength]="0"
+          [banKeyType]="2"
+        >
+        </input-field>
+      </div>
+
+      <div class="col-3">
+        <select-field
+          [label]="'Modalidad'"
+          [control]="f.selModalidad"
+          [items]="modalidad"
+          [value]="'idMaeDuracion'"
+          [valueToShow]="'descrDuracion'"
+        >
+        </select-field>
+      </div>
+      <div class="col-5"></div>
+      <div class="col-4">
+        <div class="w-100 h-100 btn_area">
+          <button
+            matRipple
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="clear()"
+          >
+            Limpiar
+          </button>
+          <button
+            matRipple
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="getBandejaEvaluacion()"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    style="padding: 1rem !important; padding-top: 2rem !important"
+    class="row mb-4"
+  >
+    <div class="col-1"></div>
+    <div class="col-10">
+      <ng-container>
+        <div class="subtitle">Lista de Programaciones</div>
+        <serv-talento-table
+          [tableData]="this.evaluaciones"
+          [tableColumns]="this.evaluacionColumns"
+          [showDownloadButton]="true"
+          [dataExport]="getDataExport()"
+          [isFilterable]="true"
+          (sort)="sortData($event)"
+          [isPageable]="true"
+          [paginationSizes]="[10, 15, 20]"
+          [defaultPageSize]="10"
+          [acciones]="true"
+          [btnEmailEnabled]="true"
+          (emailAction)="enviarCorreo($event)"
+          [emaillTitle]="'Enviar Correos'"
+          [btnEditEnabled]="true"
+          (editAction)="configEvaluacion($event)"
+          [editTitle]="'Editar Grupos'"
+          [btnDeleteEnabled]="true"
+          (deleteAction)="removeEvaluacion($event)"
+          [deleteTitle]="'Eliminar Grupos'"
+          title="Lista de Programaciones"
+          fontSize="fs-14"
+          rowHeight="64px"
+        >
+        </serv-talento-table>
+      </ng-container>
+    </div>
+  </div>
+</div>

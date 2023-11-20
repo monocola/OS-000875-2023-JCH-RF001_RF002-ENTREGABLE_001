@@ -1,0 +1,64 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: notificacion-mdp-dev
+  name: notificacion-mdp-dev
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    app: notificacion-mdp-dev
+  template:
+    metadata:
+      labels:
+        app: notificacion-mdp-dev
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/notificacion-mdp-dev/notificacion-mdp-dev:latest
+        imagePullPolicy: IfNotPresent
+        name: notificacion-mdp-dev
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 250m
+            memory: 768Mi
+        envFrom:
+        - configMapRef:
+            name: notificacion-mdp-dev
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notificacion-mdp-dev
+              key: DB_PASSWORD
+        - name: MQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notificacion-mdp-dev
+              key: MQ_PASSWORD
+        - name: MAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notificacion-mdp-dev
+              key: MAIL_PASSWORD
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - notificacion-mdp-dev
+      from:
+        kind: ImageStreamTag
+        name: notificacion-mdp-dev:latest
+        namespace: notificacion-mdp-dev

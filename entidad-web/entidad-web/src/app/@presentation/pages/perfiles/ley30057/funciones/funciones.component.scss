@@ -1,0 +1,35 @@
+@import 'colors';
+
+.iconAdd {
+  color: $primary-color;
+}
+
+.iconRemove {
+  color: $red;
+}
+
+.iconAdd,
+.iconRemove {
+  user-select: none;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 1.75rem;
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.option {
+  font-size: 0.875rem;
+  width: auto !important;
+}
+
+.list {
+  padding: 0;
+  user-select: none;
+  width: auto !important;
+  flex-wrap: wrap;
+  &:focus {
+    outline: none !important;
+  }
+}

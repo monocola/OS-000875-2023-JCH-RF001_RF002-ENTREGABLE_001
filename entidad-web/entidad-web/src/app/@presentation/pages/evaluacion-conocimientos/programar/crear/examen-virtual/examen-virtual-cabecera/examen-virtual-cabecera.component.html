@@ -1,0 +1,40 @@
+<div class="body">
+  <serv-talento-cabecera
+    [cabecera]="cabecera?.evaluacion"
+    [examenId]="cabecera?.evaluacionId"
+    [convocatoria]="cabecera?.convocatoria"
+    [regimen]="cabecera?.regimen"
+    [perfil]="cabecera?.perfil"
+  ></serv-talento-cabecera>
+
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="m-4 col-md-5">
+      <img class="imagenBase" src="assets/images/bases.png" alt="base" />
+    </div>
+    <div class="m-4 col-md-5">
+      <nb-card size="small">
+        <nb-card-header class="cabeceraCar">Requisitos</nb-card-header>
+        <nb-card-body class="bodyCar">
+          <p>
+            {{ cabecera?.requisitos }}
+          </p>
+        </nb-card-body>
+      </nb-card>
+      <div class="bodyCar">
+        <button
+          style="margin-top: 40px"
+          matRipple
+          type="button"
+          nbButton
+          shape="round"
+          status="primary"
+          class="px-5"
+          (click)="this.empezarExamen()"
+        >
+          Empezar Examen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

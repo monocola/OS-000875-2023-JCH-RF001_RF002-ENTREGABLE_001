@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: entidad-env
+  namespace: entidad-env
+
+data:
+  DB_HOSTNAME: "172.16.19.210"
+  #DB_HOSTNAME: "172.16.19.189"
+  DB_PORT: "1521"
+  #DB_DBNAME: "bdaudit"
+  DB_DBNAME: "bdtem"
+  DB_USERNAME: "sch_entidad"
+  
+  PUBLIC_RSA_KEY: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIUudlwZpxtTRcyg+nsFVobNHeD+MDwEXIDEqjxYk3V+4rbEXkmMjDAx324PPluuX0kbQVN+Qj3vJ8HDzqfWkYMCAwEAAQ=="
+  BASE_URL_MAESTRA: "https://uatenvapp02.servir.gob.pe/maestra/api/private"
+  BASE_URL_PERSONA: "https://uatenvapp02.servir.gob.pe/persona/api/private"
+  BASE_URL_SEGURIDAD: "https://uatenvapp02.servir.gob.pe/seguridad/api/private"
+  #BASE_URL_MAESTRA: "http://localhost:8081/maestra-mdp/api/private"
+  #BASE_URL_PERSONA: "http://localhost:8081/persona-mdp/api/private"
+  #BASE_URL_SEGURIDAD: "http://localhost:8081/persona-mdp/api/private"
+  BASE_URL_PLANIFICACION: "http://planificacion-env.ocdev.ansc.gob.pe/planificacion/api/private"
+  BASE_URL_NOTIFICACION: "http://notificacion-env.ocdev.ansc.gob.pe/mensajeria/api/private"
+  CORREO_ENTIDAD_URL_SISTEMA: "https://uatenvgdr.servir.gob.pe/#"
+  CORREO_ENTIDAD_URL_PAGINA: "extra/actualiza"
+  CORREO_ENTIDAD_SERVIR: "test_sjti@servir.com.pe"
+  ROL_ADMIN_ENTIDAD_ID: "19"
+  PERSONA_ID_PAIS_PERU: "193"
+  SEGURIDAD_ID_APP_TALENTO: "5"
+  URL_FILE_SERVER_PUBLICO: "https://qasimagen.servir.gob.pe/file/"
+  TIPO_DOCUMENTO_RUC: "6"
+  TIPO_DOCUMENTO_DNI: "1"
+  TIPO_PERSONA_JURIDICA: '23'
+  TIPO_PERSONA_NATURAL: '22'
+  ESTADO_SOLICITUD_APROBADO: '42'
+  ESTADO_SOLICITUD_BAJA: '95'
+  ESTADO_SOLICITUD_NUEVO: '41'
+  ESTADO_SOLICITUD_OBSERVADO: '43'
+  TIPO_VALIDACION_RENIEC: '66'
+  TIPO_VALIDACION_SUNAT: '67'
+  TIPO_ORGANO: '92'
+  TIPO_UNIDAD_ORGANICA: '94'
+  GRUPO_ENTIDAD_ADMIN: "1"
+  ROL_JEFE_ID: '17'
+  ROL_JEFE_ORH_GDR_ID: '27'
+  
+  MQ_USER: "usr_env"
+  MQ_HOST: "172.16.20.11"
+  MQ_PORT: "5672"
+  
+  CLIENTID_SECRET_KEY: "OTgyOThkNjktYzlmNS00OTg3LWEzOTUtZmU4ZWQ5ZWM5NzNhOjdjZjI4MTMzLTI0YjctNGVlOS1iOWE0LTk4OGQxNThlMGFkNg=="
+  
+---
+apiVersion: v1
+kind: Secret
+data:
+  #DB_PASSWORD: ZEVTNHJSMGxMTzBSNGkyYw==
+  DB_PASSWORD: UTRUM20wUjRpMmM=
+metadata:
+  name: entidad-env
+  namespace: entidad-env
+type: Opaque

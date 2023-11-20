@@ -1,0 +1,983 @@
+<div class="p-1">
+  <div class="content__header">
+    <div style="display: flex;">
+      <div class="cursor-pointer" (click)="back()">
+        <mat-icon class="label__selected">navigate_before</mat-icon>
+      </div>
+      <div>
+        <h5 class="postulante__name">{{ data.nombres }}</h5>
+        <h5 class="titlePage m-0">Perfil: {{ data.nombrePuesto }}</h5>
+      </div>
+    </div>
+    <div class="resultados">
+      <div [ngStyle]="{'background-color':resumenTotal?.flag_apto === 1 ? '#005d82' : '#e65558' }"
+        class="result__item active califica border_right">
+        <div class="result__text">{{ getCalificaText(resumenTotal?.flag_apto) }}</div>
+      </div>
+      <div class="result__item content border_right">
+        <div class="total">Puntaje</div>
+        <div class="porcentaje">100</div>
+        <div class="porcentaje__total">Max 100 pts</div>
+      </div>
+      <div class="result__item content">
+        <div class="total">Puntaje</div>
+        <div class="porcentaje">{{ resumenTotal?.puntos }}</div>
+        <div class="porcentaje__total">pts acomulado</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+
+<div style="padding-bottom: 4rem;">
+  <div class="stepper__bg">
+    <mat-horizontal-stepper  class="stepper perfilesStepper" labelPosition="bottom" linear [@.disabled]="true" #stepper>
+
+      <ng-template matStepperIcon="edit">
+        <mat-icon>check</mat-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="edit">
+        <mat-icon>done</mat-icon>
+      </ng-template>
+
+      <mat-step state="check">
+        <ng-template matStepLabel>
+          <span [class.label__selected]="selectedIndex === 0">
+            Formacion academica
+          </span>
+        </ng-template>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <span [class.label__selected]="selectedIndex === 1">
+            Experiencia
+          </span>
+        </ng-template>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <span [class.label__selected]="selectedIndex === 2">
+            Otros requisitos
+          </span>
+        </ng-template>
+      </mat-step>
+
+      <mat-step state="number">
+        <ng-template matStepLabel>
+          <span [class.label__selected]="selectedIndex === 3">
+            Declaraciones juradas
+          </span>
+        </ng-template>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+
+  <div *ngIf="selectedIndex === 0" class="table__content">
+    <div class="header">
+      <img width="48px" alt="imagen bandeja" src="assets/images/icons/bandeja.png" class="my-3" />
+      &nbsp;&nbsp;
+      <div class="titlePage">Formación académica</div>
+    </div>
+
+    <div class="table">
+      <div class="row">
+        <div class="col-6 no__padding__right">
+          <div class="column__header border-top-left-radius">
+            <div class="column__header__title">
+              ENTIDAD
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Porcentaje</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos</div>
+                <div class="column__box__box"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 no__padding__left">
+          <div class="column__header border-top-right-radius">
+            <div class="column__header__title">
+              POSTULANTE
+            </div>
+            <div class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Puntaje parcial</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{ getPuntajeSeccion(1, 'puntajeParcial') }}
+                </div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos total</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{ getPuntajeSeccion(1, 'puntajeTotal') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let item of listarFormacionByPerfil?.ltaSeccionFormacion">
+        <div class="row">
+          <div class="col-6 table__class__content">
+            <div class="font-weight-bold">{{ item.nombreSeccion }}</div>
+
+            <div style="padding-top: 9px;">
+              <div *ngIf="item.tipoSeccion === 1">
+                <div class="row lista__elementos" *ngIf="listarCarrerasPerfil === null || listarCarrerasPerfil.length <= 0">
+                  No aplica
+                </div>
+                <div *ngFor="let itemCarrera of listarCarrerasPerfil" class="row lista__elementos">
+                  <div class="col-8" style="padding-left: 6px">
+                    {{ itemCarrera.descCarreras }}
+                  </div>
+                  <div class="col-4 text-right lista__elementos__number">{{ itemCarrera.puntaje }}</div>
+                </div>
+                <div class="pt-1">Grados superiores adicionales al mínimo requerido</div>
+                <div *ngFor="let itemGrado of lstGradosFormacionACarrera" class="row lista__elementos">
+                  <div class="col-3" style="padding-left: 6px">
+                    {{ itemGrado.grado | fillDigit}}
+                  </div>
+                  <div class="col-6">
+                    Grado (Si cumple con {{ itemGrado.grado }} grado superior al mínimo requerido)
+                  </div>
+                  <div class="col-3 text-right lista__elementos__number">{{ itemCarrera.itemGrado }}</div>
+                </div>
+
+              </div>
+
+              <div *ngIf="item.tipoSeccion === 2">
+                <div *ngIf="listarEspecialidadesPerfil === null || listarEspecialidadesPerfil.length === 0 ">
+                  No aplica
+                </div>
+                <div *ngFor="let itemEspecialidad of listarEspecialidadesPerfil" class="row lista__elementos">
+                  <div class="col-8" style="padding-left: 6px">
+                    {{ itemEspecialidad.descConocimiento }}
+                  </div>
+                  <div class="col-4 text-right lista__elementos__number">{{ itemEspecialidad.puntaje }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 table__class__content pl-1">
+            <mat-slide-toggle (change)="toggleChange($event, item, 'formacion')" [(ngModel)]="item.flagCalifica"
+              class="example-margin" color="primary" [disabled]="!item.flagCalifica">
+              <strong>
+                <span *ngIf="item.flagCalifica == true" style="color: #11ce89;">Califica</span>
+                <span *ngIf="item.flagCalifica == false">No Califica</span>
+              </strong>
+            </mat-slide-toggle>
+            <div>
+              <div *ngFor="let seccion of item.ltaDetalleSeccion" class="row lista__elementos">
+                <div class="col-8" style="padding-left: 6px">
+                  {{ seccion.descripcionCarrera }}
+                </div>
+                <div class="col-4 text-right lista__elementos__number">{{ seccion.puntaje }}</div>
+                <div *ngIf="validarLinkVisible(seccion?.listaDocumentos)" (click)="verDocumentos (seccion)"
+                  class="col-12 cursor-pointer lista__elementos__document">
+                  Ver documento
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+      </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="selectedIndex === 1" class="table__content">
+    <div class="header">
+      <img width="48px" alt="imagen bandeja" src="assets/images/icons/bandeja.png" class="my-3" />
+      &nbsp;&nbsp;
+      <div class="titlePage">Experiencia laboral</div>
+    </div>
+
+    <div class="table">
+      <div class="row">
+        <div class="col-6 no__padding__right">
+          <div class="column__header border-top-left-radius">
+            <div class="column__header__title">
+              ENTIDAD
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Porcentaje</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 no__padding__left">
+          <div class="column__header border-top-right-radius">
+            <div class="column__header__title">
+              POSTULANTE
+            </div>
+            <div class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Puntaje parcial</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{ getPuntajeSeccion(2, 'puntajeParcial') }}
+                </div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos total</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{ getPuntajeSeccion(2, 'puntajeTotal') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold">Experiencia general</div>
+          <div *ngIf="getPerfilExperienciaBySeccion (1) === null || getPerfilExperienciaBySeccion (1).length === 0">
+            No aplica
+          </div>
+          <ng-container *ngFor="let item of getPerfilExperienciaBySeccion (1)">
+            <div class="font-weight-bold">{{ item.descripcionNivel === 'null null' ? '' : item.descripcionNivel  }}</div>
+            <div *ngFor="let exp of item.listDetalleExperiencia" class="row lista__elementos">
+              <div class="col-5">
+                Desde<br><strong>{{ exp.desdeAnios }}, años</strong>
+              </div>
+              <div class="col-5">
+                Hasta<br><strong>{{ exp.hastaAnios }}, años</strong>
+              </div>
+
+              <div class="col-2 lista__elementos__number">
+                {{ exp.puntaje }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="col-6 table__class__content pl-1">
+          <ng-container *ngIf="getExperienciaSeccionPostulante (1).experienciaDetalle">
+            <mat-slide-toggle
+              (change)="toggleChange($event, getExperienciaSeccionPostulante (1).experienciaDetalle, 'experiencia')"
+              [(ngModel)]="getExperienciaSeccionPostulante (1).experienciaDetalle.flagCalifica" class="example-margin"
+              color="primary">
+              <strong>
+                <span *ngIf="getExperienciaSeccionPostulante (1).experienciaDetalle.flagCalifica == true"
+                  style="color: #11ce89;">Califica</span>
+                <span *ngIf="getExperienciaSeccionPostulante (1).experienciaDetalle.flagCalifica == false">No
+                  Califica</span>
+              </strong>
+            </mat-slide-toggle>
+
+            <div *ngFor="let experiencia of getExperienciaSeccionPostulante (1).ltaExperiencia; index as i"
+              class="row lista__elementos">
+              <div class="col-10">
+                <div class="col-12">{{ experiencia.puestoCargo }}</div>
+                <div class="col-12 label__selected">{{ experiencia.nombreEntidad }}</div>
+                <div class="col-12">Experiencia, {{ experiencia.tiempoExperiencia }}</div>
+                <div *ngIf="experiencia.urlDocumento" (click)="verDocumento(experiencia.urlDocumento)"
+                  class="col-12 lista__elementos__document cursor-pointer ">
+                  Ver documento
+                </div>
+              </div>
+              <div class="col-2 label__selected">
+                {{ getExperienciaSeccionPostulante(1).experienciaDetalle.listaDetalleSeccionExp[i] != null ?  getExperienciaSeccionPostulante(1).experienciaDetalle.listaDetalleSeccionExp[i].puntaje : '' }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="table">
+      <div class="row">
+        <div class="col-6 no__padding__right">
+          <div class="column__header border-top-left-radius">
+            <div class="column__header__title">
+              ENTIDAD
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Porcentaje</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 no__padding__left">
+          <div class="column__header border-top-right-radius">
+            <div class="column__header__title">
+              POSTULANTE
+            </div>
+            <div class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Puntaje parcial</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{ getPuntajeSeccion(3, 'puntajeParcial') }}
+                </div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos total</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{ getPuntajeSeccion(3, 'puntajeTotal') }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let item of getSeccionesExperiencia (1)">
+        <div class="row">
+          <div class="col-6 table__class__content">
+            <div class="font-weight-bold">{{ item.calculoPostulante.tipoExperiencia }}</div>
+            <ng-container *ngFor="let item of getPerfilExperienciaBySeccion (item.tipoSeccion)">
+              <div class="font-weight-bold">{{ item.descripcionNivel === null?item.descripcionNivel:'' }}</div>
+              <div *ngFor="let exp of item.listDetalleExperiencia" class="row lista__elementos">
+                <div class="col-5">
+                  Desde<br><strong>{{ exp.desdeAnios }}, años</strong>
+                </div>
+                <div class="col-5">
+                  Hasta<br><strong>{{ exp.hastaAnios }}, años</strong>
+                </div>
+
+                <div class="col-2 lista__elementos__number">
+                  {{ exp.puntaje }}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="col-6 table__class__content pl-1">
+            <ng-container *ngIf="item.experienciaDetalle">
+              <mat-slide-toggle (change)="toggleChange($event, item.experienciaDetalle, 'experiencia')"
+                [(ngModel)]="item.experienciaDetalle.flagCalifica" [disabled]="!item.experienciaDetalle.flagCalifica" class="example-margin" color="primary">
+                <strong>
+                  <span *ngIf="item.experienciaDetalle.flagCalifica == true" style="color: #11ce89;">Califica</span>
+                  <span *ngIf="item.experienciaDetalle.flagCalifica == false">No Califica</span>
+                </strong>
+              </mat-slide-toggle>
+
+              <div *ngFor="let experiencia of item.ltaExperiencia; index as i" class="row lista__elementos">
+                <div class="col-10">
+                  <div class="col-12">{{ experiencia.puestoCargo }}</div>
+                  <div class="col-12 label__selected">{{ experiencia.nombreEntidad }}</div>
+                  <div class="col-12">{{ experiencia.tiempoExperiencia }}</div>
+                  <div *ngIf="experiencia.urlDocumento" (click)="verDocumento(experiencia.urlDocumento)"
+                    class="col-12 lista__elementos__document cursor-pointer">
+                    Ver documento
+                  </div>
+                </div>
+                <div class="col-2 label__selected">
+                  {{ item.experienciaDetalle.listaDetalleSeccionExp [i] != null ? item.experienciaDetalle.listaDetalleSeccionExp [i].puntaje : ''}}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </div>
+
+    <div class="table">
+      <div class="row">
+        <div class="col-6 no__padding__right">
+          <div class="column__header border-top-left-radius">
+            <div class="column__header__title">
+              ENTIDAD
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Porcentaje</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 no__padding__left">
+          <div class="column__header border-top-right-radius">
+            <div class="column__header__title">
+              POSTULANTE
+            </div>
+            <div class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Puntaje parcial</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{lstInvestigacionPostulante.puntajeParcial?lstInvestigacionPostulante.puntajeParcial:0}}
+                  <!-- {{ getPuntajeSeccion(4, 'puntajeParcial') }} -->
+                </div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos total</div>
+                <div class="column__box__box lista__elementos__number">
+                  {{lstInvestigacionPostulante.puntajeTotal?lstInvestigacionPostulante.puntajeTotal:0}}
+                  <!-- {{ getPuntajeSeccion(4, 'puntajeTotal') }} -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container >
+        <div class="row">
+          <div class="col-6 table__class__content">
+            <div class="font-weight-bold">Especifiaciones de investigación y publicación</div>
+            <div class="font-weight-bold" *ngIf="listaInvestigacionByPerfil.listaInvestigacion != null">Investigación</div>
+            <ng-container *ngFor="let item of listaInvestigacionByPerfil.listaInvestigacion">
+              <div class="row lista__elementos text-center">
+                <div class="col-4">
+                  {{ item.tipoDescripcion }}
+                </div>
+                <div class="col-8">
+                  {{ item.descripcion}}
+                </div>
+              </div>
+            </ng-container>
+
+
+            <div class="font-weight-bold">Investigación</div>
+            <ng-container *ngFor="let item of listaInvestigacionByPerfil.lstEspecifInvestigacion">
+              <div class="row lista__elementos text-center">
+                <div class="col-4">
+                  {{ item.cantidad }} {{item.superior?' a más': ''}}
+                </div>
+                <div class="col-4">
+                  {{ item.tipoDescripcion}}
+                </div>
+
+                <div class="col-4 lista__elementos__number">
+                  {{ item.puntaje }}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="col-6 table__class__content pl-1">
+
+            <mat-slide-toggle [disabled]="cantMarcadosInvest <= 0" (change)="toggleChange($event, lstInvestigacionPostulante.investigacion, 'investigacion')" [(ngModel)]="lstInvestigacionPostulante.investigacion.flagCalifica" class="example-margin" color="primary">
+                <strong>
+                  <span *ngIf="lstInvestigacionPostulante.investigacion.flagCalifica == true" style="color: #11ce89;">Califica</span>
+                  <span *ngIf="lstInvestigacionPostulante.investigacion.flagCalifica == false">No Califica</span>
+                </strong>
+              </mat-slide-toggle>
+            <ng-container>
+              <div *ngFor="let itemInvest of lstInvestigacionPostulante.investigacion.listaInvestigacion; let i = index" class="row lista__elementos">
+                <div class="col-8">
+                  <div class="col-12">{{ itemInvest.descripcion }}</div>
+                  <div class="col-12 lista__elementos__document cursor-pointer" (click)="verDocumento(itemInvest.urlDocumento)">
+                    <div *ngIf="itemInvest.urlDocumento != null">Ver documento</div>
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="text-info fs-16">{{i == 0 ? puntajeInvestigacion: ''}}</div>
+                </div>
+                <div class="col-2">
+                  <div>
+                      <nb-checkbox [checked]="itemInvest.flagMarca" (checkedChange)="onCheckInvestigacion($event,i)" class="custom-valign-center"></nb-checkbox>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </ng-container>
+
+
+      <ng-container>
+      <div class="row">
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold" *ngIf="listaInvestigacionByPerfil.listaPublicacion != null">Publicación</div>
+            <ng-container *ngFor="let item of listaInvestigacionByPerfil.listaPublicacion">
+              <div class="row lista__elementos text-center">
+                <div class="col-4">
+                  {{ item.tipoDescripcion }}
+                </div>
+                <div class="col-8">
+                  {{ item.descripcion}}
+                </div>
+              </div>
+            </ng-container>
+          <ng-container>
+            <div class="font-weight-bold">Publicación</div>
+            <div *ngFor="let item of listaInvestigacionByPerfil.lstEspecifPublicacion" class="row lista__elementos text-center">
+              <div class="col-4">
+                {{ item.cantidad }} {{item.superior?' a más': ''}}
+              </div>
+              <div class="col-4">
+                {{ item.tipoDescripcion}}
+              </div>
+
+              <div class="col-4 lista__elementos__number">
+                {{ item.puntaje }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <mat-slide-toggle [disabled]="cantMarcadosPublic <= 0" (change)="toggleChange($event, lstInvestigacionPostulante.publicacion, 'publicacion')" [(ngModel)]="lstInvestigacionPostulante.publicacion.flagCalifica"  class="example-margin" color="primary">
+            <strong>
+              <span *ngIf="lstInvestigacionPostulante.publicacion.flagCalifica == true" style="color: #11ce89;">Califica</span>
+              <span *ngIf="lstInvestigacionPostulante.publicacion.flagCalifica == false">No Califica</span>
+            </strong>
+          </mat-slide-toggle>
+          <ng-container>
+            <div *ngFor="let item of lstInvestigacionPostulante.publicacion.listaInvestigacion; let i = index" class="row lista__elementos">
+              <div class="col-8">
+                <div class="col-12">{{ item.descripcion }}</div>
+                <div class="col-12 lista__elementos__document cursor-pointer" (click)="verDocumento(item.urlDocumento)">
+                  <div *ngIf="item.urlDocumento != null">Ver documento</div>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="text-info fs-16">{{i == 0 ? puntajePublicacion: ''}}</div>
+              </div>
+              <div class="col-2">
+                <div>
+                    <nb-checkbox [checked]="item.flagMarca" (checkedChange)="onCheckPublicacion($event,i)" class="custom-valign-center"></nb-checkbox>
+                </div>
+              </div>
+            </div>
+
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="selectedIndex === 2" class="table__content">
+    <div class="header">
+      <img width="48px" alt="imagen bandeja" src="assets/images/icons/bandeja.png" class="my-3" />
+      &nbsp;&nbsp;
+      <div class="titlePage">Otros requisitos</div>
+    </div>
+
+    <div class="table">
+      <div class="row">
+        <div class="col-6 no__padding__right">
+          <div class="column__header border-top-left-radius">
+            <div class="column__header__title">
+              Otros requisitos
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Porcentaje</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 no__padding__left">
+          <div class="column__header border-top-right-radius">
+            <div class="column__header__title">
+              POSTULANTE
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Puntaje parcial</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos total</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6 table__class__content">
+          <div class="row lista__elementos" *ngFor="let item of listaOtrosRequisitoPostulante">
+            <div class="col-8" style="padding-left: 6px">
+              {{item.nombreCertificacion}}
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              {{item.tipoCertificacionId}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <div class="row lista__elementos" *ngFor="let item of listarConfiguracionOtrosReque">
+            <div class="col-8" style="padding-left: 6px">
+              {{item.descripcion}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold">Bonificaciones de deportistas calificados</div>
+          <div *ngFor="let item of lstBonoDeportista" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 30px">
+              {{item.desNivel}}
+            </div>
+            <div class="col-4 text-center lista__elementos__number">
+              Bonificación<br>
+              {{item.porcentajeBono}} %
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <div class="title align-items-center">
+            <div class="font-weight-bold">Bonificaciones de deportistas calificados</div>
+            <div class="action">
+              <button nbButton outline shape="round" status="primary" (click)="validarBonificacion(1)">
+                Validar
+              </button>
+            </div>
+          </div>
+          <div *ngIf="tipoDeportista.length > 0" class="mt-2 alert alert-info">
+            <strong><span
+                [ngClass]="{active : tipoDeportista[0] === 'Aplica', desactive : tipoDeportista[0] === 'No Aplica'}">{{tipoDeportista[0]}}</span>,
+              {{tipoDeportista[1]}}
+            </strong>
+          </div>
+          <div class="row lista__elementos">
+
+            <div class="col-12" style="padding-left: 6px">
+              <div class="text-primary subrayado">
+                <span class="mr-2 subrayado font-weight-bold">
+                  <a class="href" target="_blank" (click)="verDocumento(urlDeportista)" rel="documento">Ver
+                    Documento</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold">Bonificaciones por discapacidad (Conadis)</div>
+          <div *ngFor="let item of lstBonoConadi" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 30px">
+              {{item.desNivel}}
+            </div>
+            <div class="col-4 text-center lista__elementos__number">
+              Bonificación<br>
+              {{item.porcentajeBono}} %
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <div class="title align-items-center">
+            <div class="font-weight-bold">Bonificaciones por discapacidad (Conadis)</div>
+            <div class="action">
+              <button nbButton outline shape="round" status="primary" (click)="validarBonificacion(2)">
+                Validar
+              </button>
+            </div>
+          </div>
+          <div *ngIf="tipoConadi.length > 0" class="mt-2 alert alert-info">
+            <strong><span
+                [ngClass]="{active : tipoConadi[0] === 'Aplica', desactive : tipoConadi[0] === 'No Aplica'}">{{tipoConadi[0]}}</span>,
+              {{tipoConadi[1]}} </strong>
+          </div>
+          <div class="row lista__elementos">
+
+            <div class="col-12" style="padding-left: 6px">
+              <div class="text-primary subrayado">
+                <span class="mr-2 subrayado font-weight-bold">
+                  <a class="href" target="_blank" (click)="verDocumento(urlConadi)" rel="documento">Ver Documento</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold">Bonificaciones por Fuerzas Armadas</div>
+          <div *ngFor="let item of lstBonoFFAA" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 30px">
+              {{item.desNivel}}
+            </div>
+            <div class="col-4 text-center lista__elementos__number">
+              Bonificación<br>
+              {{item.porcentajeBono}} %
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <div class="title align-items-center">
+            <div class="font-weight-bold">Bonificaciones por Fuerzas Armadas</div>
+            <div class="action">
+              <button nbButton outline shape="round" status="primary" (click)="validarBonificacion(3)">
+                Validar
+              </button>
+            </div>
+          </div>
+          <div *ngIf="tipoFFAA.length > 0" class="mt-2 alert alert-info">
+            <strong><span
+                [ngClass]="{active : tipoFFAA[0] === 'Aplica', desactive : tipoFFAA[0] === 'No Aplica'}">{{tipoFFAA[0]}}</span>,
+              {{tipoFFAA[1]}}</strong>
+          </div>
+          <div class="row lista__elementos">
+
+            <div class="col-12" style="padding-left: 6px">
+              <div class="text-primary subrayado">
+                <span class="mr-2 subrayado font-weight-bold">
+                  <a class="href" target="_blank" (click)="verDocumento(urlFFAA)" rel="documento">Ver Documento</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="selectedIndex === 3" class="table__content">
+    <div class="header">
+      <img width="48px" alt="imagen bandeja" src="assets/images/icons/bandeja.png" class="my-3" />
+      &nbsp;&nbsp;
+      <div class="titlePage">Declaraciones juradas</div>
+    </div>
+
+    <div class="table">
+      <div class="row">
+        <div class="col-6 no__padding__right">
+          <div class="column__header border-top-left-radius">
+            <div class="column__header__title">
+              Entidad
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Porcentaje</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 no__padding__left">
+          <div class="column__header border-top-right-radius">
+            <div class="column__header__title">
+              POSTULANTE
+            </div>
+            <div style="opacity: 0;" class="column__header__boxs">
+              <div>
+                <div class="column__box__title">Puntaje parcial</div>
+                <div class="column__box__box">35%</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div>
+                <div class="column__box__title">Puntos total</div>
+                <div class="column__box__box">100</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold">Declaraciones Juradas SERVIR</div>
+          <div *ngFor="let item of lstDDJJEntidadServir" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              {{ item.descripcion }}
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ item.respuesta ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <div class="font-weight-bold">Declaraciones Juradas SERVIR</div>
+
+          <div class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              Poseer antecedentes penales, policiales y/o judiciales
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ indicadorPostulante.indAntecedentePpj ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              Tener condena por delito doloso, con sentencia firme
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ indicadorPostulante.indCondenaDelitoDoloso ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              Estar inscrito en el Registro de Deudores Civiles por delitos Dolosos(REDERECI).
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ indicadorPostulante.indDeudorReparacionCivil ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              Contar con inhabilitación o suspensión vigente administrativo judicial, inscrita o no, en el Registro Nacional de Sanciones de Destitución o despido.
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ indicadorPostulante.indInhabilitacionAdmJudicial ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              Percibir simultáneamente remuneración, pensión u honorarios por concepto de locación de servicios, asesorías o consultorías, o cualquier otra doble percepción o ingresos del Estado, salvo por el ejercicio de la función docente efectiva y la percepción de dietas por participación en uno (1) de los directorios de entidades o empresas estatales o en tribunales administrativos o en otros órganos colegiados.
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ indicadorPostulante.indPercibirRemimultanea ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+
+
+
+          <!-- <div *ngFor="let item of ltaDDJJPostulanteServir" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              {{ item.descripcion }}
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ item.respuesta ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div> -->
+        </div>
+
+
+
+        <div class="col-6 table__class__content">
+          <div class="font-weight-bold">Declaraciones Juradas ENTIDAD</div>
+          <div *ngFor="let item of lstDDJJEntidadEspecifica" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              {{ item.descripcion }}
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ item.respuesta ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 table__class__content pl-1">
+          <div class="font-weight-bold">Declaraciones Juradas ENTIDAD</div>
+          <div *ngFor="let item of ltaDDJJPostulanteServir" class="row lista__elementos">
+            <div class="col-8" style="padding-left: 6px">
+              {{ item.descripcion }}
+            </div>
+            <div class="col-4 text-right lista__elementos__number">
+              <span style="font-size: 16px; margin-top: 1px; font-weight: 400;">
+                {{ item.respuesta ? 'SI': 'NO' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="row footer__content">
+    <div class="col-6 text-left">
+      <button nbButton class="col-2" *ngIf="selectedIndex > 0" (click)="goBack (stepper)" ghost shape="round"
+        status="primary">
+        Volver
+      </button>
+    </div>
+
+    <div class="col-6 text-right">
+      <button nbButton class="col-2" (click)="goForward (stepper)" shape="round" status="primary">
+        Calificar
+      </button>
+    </div>
+  </div>
+</footer>

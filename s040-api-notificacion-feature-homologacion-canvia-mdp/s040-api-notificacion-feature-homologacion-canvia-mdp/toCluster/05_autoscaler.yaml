@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: notificacion-mdp-dev
+  name: notificacion-mdp-dev
+spec:
+  scaleTargetRef:
+    apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    name: notificacion-mdp-dev
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80

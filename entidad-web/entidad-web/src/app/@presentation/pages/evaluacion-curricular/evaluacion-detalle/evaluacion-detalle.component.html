@@ -1,0 +1,123 @@
+<div class="body">
+  <div class="header">
+    <h3 style="display: flex" class="titlePage">
+      <div class="cursor-pointer" (click)="back()">
+        <mat-icon class="label__selected">navigate_before</mat-icon>
+      </div>
+      Evaluación curricular| {{ selectedEvaluacion.convocatoria }}
+    </h3>
+    <!-- <h3 class="subtitle">CURRICULAR</h3> -->
+  </div>
+
+  <mat-divider></mat-divider>
+  <form [formGroup]="filterForm" autocomplete="off">
+    <div class="filtro">
+      <div class="titulo">Filtros de convocatorias</div>
+      <div class="items">
+        <div class="pr-2">
+          <label>Perfil de puesto</label>
+          <nb-select placeholder="Elegir perfil" fullWidth shape="rectangle" size="large"
+            formControlName="perfilPuesto">
+            <nb-option *ngFor="let item of comboPerfilPuesto" [value]="item.convocatoria.convocatoriaSelId">
+              {{ item.convocatoria.nombrepuesto }}</nb-option>
+          </nb-select>
+        </div>
+
+        <div class="pr-2" *ngIf="mostrarFiltroCompletos">
+          <label>Nombres y/o Apellidos</label>
+          <nb-form-field>
+            <input fullWidth nbInput type="search" shape="rectangle" fieldSize="small" placeholder="Buscar"
+              shape="semi-round" class="cursor-pointer" fieldSize="large" formControlName="nombres" />
+            <nb-icon nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+        </div>
+
+        <div class="pr-2" *ngIf="mostrarFiltroCompletos">
+          <label>N° de Documento de idetidad</label>
+          <nb-form-field>
+            <input fullWidth nbInput type="search" shape="rectangle" fieldSize="small" placeholder="Buscar"
+              shape="semi-round" class="cursor-pointer" fieldSize="large" formControlName="nroDocumento" />
+            <nb-icon nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+        </div>
+
+        <div class="pr-2" *ngIf="mostrarFiltroCompletos">
+          <label>Estado</label>
+          <nb-select placeholder="Elegir estado" fullWidth shape="rectangle" size="large"
+            formControlName="estadoCurricular">
+            <nb-option value="">---Todos---</nb-option>
+            <nb-option *ngFor="let item of comboEstados" [value]="item.id">
+              {{ item.descripcion }}</nb-option>
+          </nb-select>
+        </div>
+
+        <div class="action">
+          <button nbButton outline shape="round" status="primary" (click)="limpiar()">
+            Limpiar
+          </button>
+          &nbsp; &nbsp;
+          <button nbButton shape="round" status="primary" (click)="buscar()">
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<mat-divider></mat-divider>
+<div class="table bg-gray">
+  <div *ngIf="data.length > 0" class="col-4 m-0 p-0 pl-3">
+    <div class="row list__calificado py-2">
+      <div class="list_form--aligncenter">
+        <div class="fs-12">Postulantes</div>
+        <img src="assets/images/icons/users.svg" height="12px" alt="users" />
+      </div>
+      <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+        {{ total }}
+      </div>
+      <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+      <div class="list_form--aligncenter pl-2">
+        <div class="fs-12">Califican</div>
+        <img src="assets/images/icons/users-validacion_positiva.svg" alt="validacion-positiva" />
+      </div>
+      <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+        {{ califica }}
+      </div>
+      <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+      <div class="list_form--aligncenter pl-2">
+        <div class="fs-12">No califican</div>
+        <img src="assets/images/icons/users-validacion_negativa.svg" alt="validacion-negativa" />
+      </div>
+      <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+        {{ noCalifica }}
+      </div>
+    </div>
+  </div>
+
+  <serv-talento-table-evaluacion-detalle *ngIf="data.length > 0" [tableData]="data"
+    [tableColumns]="conocimientoTableColumns" (pageEvent)="getPaginado($event)"
+    [dataExport]="getDataExportEvaluaciones()" (aprobarAction)="changeRedereci($event)" (pdfAction)="viewPdf($event)"
+    (editAction)="viewDetailEvaluacion($event)">
+
+  </serv-talento-table-evaluacion-detalle>
+
+  <div *ngIf="data.length <= 0" class="flex-v-center flex-column mt-5">
+    <img width="70px" alt="imagen bandeja" src="assets/images/icons/bandeja.png" class="my-3" />
+    <span class="fs-18 titlePage">
+      <strong> Mis evaluaciones </strong>
+    </span>
+    <br />
+    <span class="fs-14">
+      Aqui podrás visualizar todas las Evaluaciones por Perfil, grupo y
+      postulantes
+    </span>
+    <span class="fs-14">
+      Tambien podrás registrar las evaluaciones presenciales
+    </span>
+  </div>
+</div>
+
+<mat-divider></mat-divider>

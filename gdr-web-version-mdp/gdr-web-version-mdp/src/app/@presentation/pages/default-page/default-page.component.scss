@@ -1,0 +1,77 @@
+@import '../../@theme/styles/themes';
+@import '_colors';
+
+h5 {
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  color: #024487 !important;
+}
+
+:host {
+  display: contents;
+  max-height: 25rem;
+}
+
+.card-row {
+  margin: 0;
+  display: flex;
+}
+
+.card-col {
+  flex: 1 0 calc(20% - 1rem);
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+.material-icons.gray00 {
+  color: #0dacbc;
+}
+
+.img-grande {
+  width: 680px;
+  height: 264px;
+}
+
+.card-col-small {
+  border: 1px solid rgba(13,172,188,0.43);
+  border-radius: 20px;
+}
+
+.box {
+  color: #0dacbc;
+}
+
+
+
+
+.btn-login {
+  background-color: #0dacbc;
+  color: white;
+  font-weight: bold;
+}
+.btn-login:focus {
+  box-shadow: none;
+ }
+
+.titleCiclo {
+  color: #0dacbc !important;
+  font-weight: bold;
+}
+
+.select.blueSelect:hover {
+  font-weight: bold;
+  color: #0DACBC !important;
+  font-size: 1.75rem;
+  opacity: 0.75;
+}
+
+nb-option.selected:focus {
+  background-color: #DDF3F6;
+  color: #0DACBC !important;
+}
+nb-option.selected {
+  background-color: #DDF3F6;
+  color: #0DACBC !important;
+}

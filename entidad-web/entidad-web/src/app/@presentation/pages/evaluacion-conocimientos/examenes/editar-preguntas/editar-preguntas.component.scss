@@ -1,0 +1,276 @@
+@import '_colors';
+
+html {
+  scroll-behavior: smooth;
+}
+
+.xx-dialog .modal-dialog {
+  width: 90%;
+  min-width: 800px;
+}
+
+h5 {
+  color: $primary-color;
+}
+
+h6 {
+  color: $primary-color;
+}
+
+.htitle {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.overlay {
+  position: fixed;
+  bottom: 0;
+  top: 10%;
+  width: 48%;
+  height: 100%;
+  z-index: 2;
+}
+
+.divMargin {
+  margin-top: -60px;
+}
+
+.divHeaderMargin {
+  margin-bottom: 30px;
+}
+
+.pText {
+  text-align: center;
+  font-size: 14px;
+}
+
+.iconCorrecto {
+  font-size: 50px;
+  color: blue;
+}
+
+.iconIncorrecto {
+  font-size: 20px;
+  color: red;
+}
+
+.item-card {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-bottom: 20px;
+  height: 60px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.item-card-input {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-bottom: 5px;
+  height: 45px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+}
+
+.item-card-input-img {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-bottom: 5px;
+  height: 35px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+  max-width: 90%;
+  width: 100%;
+}
+
+.mdcss {
+  padding-top: 5px;
+}
+
+.firstColumn {
+  width: 20% !important;
+}
+
+table {
+  border-radius: 0.625rem;
+}
+
+th {
+  background-color: $dark-gray;
+  color: white;
+  font-weight: 400;
+  font-size: 0.875rem !important;
+  position: relative;
+  &:first-child {
+    border-top-left-radius: 0.625rem;
+    &::after {
+      content: '';
+      right: 0;
+      top: 10%;
+      position: absolute;
+      height: 80%;
+      width: 0.125rem;
+      background-color: #ccc;
+    }
+  }
+  &:last-child {
+    border-top-right-radius: 0.625rem;
+  }
+}
+
+td {
+  font-size: 0.813rem !important;
+}
+
+.iconAAddMiniRed {
+  font-size: 1.275rem;
+  margin-right: 5px;
+}
+
+.btn-card {
+  color: $primary_color;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btn-card-simple {
+  color: $primary_color;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btn-card-black {
+  color: black;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btn-card-green {
+  color: black;
+  font-size: 2.5rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: #27ae60;
+  }
+}
+
+.btn-card-red {
+  color: black;
+  font-size: 2.5rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: #eb5757;
+  }
+}
+
+.btnAdd {
+  background: none;
+  border: none;
+  color: $primary-color;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &:hover > span {
+    text-decoration: underline;
+  }
+}
+
+.btnAddMiniGreen {
+  background: none;
+  border: none;
+  color: #27ae60;
+  font-size: 0.775rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  &:hover > span {
+    text-decoration: underline;
+  }
+}
+
+.btnAddMiniRed {
+  background: none;
+  border: none;
+  color: #eb5757;
+  font-size: 0.775rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  &:hover > span {
+    text-decoration: underline;
+  }
+}
+
+.btnAdd span {
+  margin-left: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.file-input {
+  display: none;
+}

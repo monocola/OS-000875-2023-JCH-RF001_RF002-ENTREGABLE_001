@@ -1,0 +1,64 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: notificacion-dev
+  name: notificacion-dev
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    app: notificacion-dev
+  template:
+    metadata:
+      labels:
+        app: notificacion-dev
+    spec:
+      containers:
+      - image: docker-registry.default.svc:5000/notificacion-dev/notificacion-dev:latest
+        imagePullPolicy: IfNotPresent
+        name: notificacion-dev
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+          requests:
+            cpu: 250m
+            memory: 768Mi
+        envFrom:
+        - configMapRef:
+            name: notificacion-dev
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notificacion-dev
+              key: DB_PASSWORD
+        - name: MQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notificacion-dev
+              key: MQ_PASSWORD
+        - name: MAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: notificacion-dev
+              key: MAIL_PASSWORD
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - notificacion-dev
+      from:
+        kind: ImageStreamTag
+        name: notificacion-dev:latest
+        namespace: notificacion-dev

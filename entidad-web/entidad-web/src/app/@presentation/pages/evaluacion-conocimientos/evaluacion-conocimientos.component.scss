@@ -1,0 +1,143 @@
+@import '_colors';
+
+.title {
+  margin-left: 10%;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+}
+
+.left-section {
+  width: 34%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section-divider {
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.right-section {
+  width: 64%;
+  max-width: 820px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.top-right-section-container,
+.bottom-right-section-container {
+  display: flex;
+  justify-content: center;
+}
+.top-right-section {
+  width: 100%;
+  max-width: 740px;
+  padding-left: 20px;
+}
+
+.right-section-divider {
+  flex-basis: 1px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.bottom-right-section {
+  width: 100%;
+  max-width: 740px;
+  padding-left: 20px;
+}
+
+.banco-preguntas-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 20px;
+}
+
+.banco-preguntas-title {
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+.banco-preguntas-ver-lista {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.right-section-top-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.right-section-title-container {
+  //display: flex;
+  margin-top: 24px;
+}
+
+.right-section-title {
+  font-weight: 500;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.right-section-ver-lista {
+  margin-top: 40px;
+}
+
+.item-card {
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  margin-bottom: 10px;
+  height: 60px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-card {
+  color: $primary_color;
+  font-size: 1.5rem;
+  margin-top: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  background: none;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}
+
+.btnAdd {
+  background: none;
+  border: none;
+  color: $primary-color;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &:hover > span {
+    text-decoration: underline;
+  }
+}
+
+.btnAdd span {
+  margin-left: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+}

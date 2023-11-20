@@ -1,0 +1,117 @@
+<form [formGroup]="this.helper30057Service.funcionesForm" class="px-5">
+  <div class="w-100">
+    <serv-talento-strings-array-field
+      [title]="'Funciones de puesto'"
+      [addItemLabel]="'Añadir función'"
+      [items]="f.funciones"
+      [deletedItems]="helper30057Service.funcionesToDelete"
+      [placeholderItem]="'Ingrese descripción de función'"
+      [minItems]="5"
+      [maxItems]="15"
+    >
+    </serv-talento-strings-array-field>
+  </div>
+
+  <div class="mt-3">
+    <h6 class="d-flex">Condiciones atípicas para el desempeño</h6>
+
+    <textarea-field
+      [control]="f.condicionAtipica"
+      [maxlength]="250"
+      [placeholder]="'Ingrese texto'"
+    >
+    </textarea-field>
+
+    <div class="mt-3 d-flex">
+      <label> Periodicidad de aplicación </label>
+      <mat-radio-group
+        class="ml-3"
+        aria-label="Select an option"
+        color="primary"
+        formControlName="condicionAtipicaRadio"
+      >
+        <mat-radio-button
+          [value]="item.maeDetalleId"
+          class="mx-2"
+          *ngFor="let item of helper30057Service.periodicidades"
+        >
+          {{ item.descripcion }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div
+      *ngIf="f.condicionAtipicaRadio.invalid && f.condicionAtipicaRadio.touched"
+      class="invalid-text mb-1"
+    >
+      <span *ngIf="f.condicionAtipicaRadio.errors?.required">
+        Tiene que seleccionar al menos una opción
+      </span>
+    </div>
+
+    <div class="mt-3">
+      <input-field
+        [maxlength]="250"
+        [control]="f.sustento"
+        [placeholder]="'Sustento de periodicidad'"
+      >
+      </input-field>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <h6>Coordinaciones principales</h6>
+
+    <div class="mt-3">
+      <textarea-field
+        [control]="f.coordinacionInterna"
+        [maxlength]="250"
+        [label]="'A. Coordinaciones internas'"
+        [placeholder]="'Ingrese texto'"
+      >
+      </textarea-field>
+    </div>
+
+    <div class="mt-2">
+      <label>
+        A. 1 Marque grupo de servidores civiles con quien coordina:
+      </label>
+      <div>
+        <mat-selection-list
+          class="list"
+          #mainTheme
+          style="display: flex !important"
+          [color]="'primary'"
+          formControlName="servidoresCiviles"
+        >
+          <mat-list-option
+            class="option"
+            *ngFor="let item of helper30057Service.servidoresCiviles"
+            [value]="item.id"
+            [checkboxPosition]="'before'"
+          >
+            {{ item.descripcion }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+      <div
+        *ngIf="f.servidoresCiviles.invalid && f.servidoresCiviles.touched"
+        class="invalid-text m-0"
+      >
+        <span *ngIf="f.servidoresCiviles.errors?.required">
+          Tiene que seleccionar al menos una opción
+        </span>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <textarea-field
+        [control]="f.coordinacionExterna"
+        [maxlength]="250"
+        [label]="'B. Coordinaciones Externas'"
+        [placeholder]="'Ingrese texto'"
+      >
+      </textarea-field>
+    </div>
+  </div>
+</form>

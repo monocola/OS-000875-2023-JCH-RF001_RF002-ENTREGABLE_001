@@ -1,0 +1,113 @@
+.convocatoriaNombre {
+  color: #0d88bc !important;
+}
+
+.material-icons {
+  font-size: 15px !important;
+}
+
+.cuestionario-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.cuestionario-radio-button {
+  margin: 5px;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: #0d88bc !important;
+
+}
+
+.calendarioResumen {
+  text-align: center;
+  background-color: #146080 !important;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.calendarioPrincipal {
+  padding-top: 1vw;
+  text-align: center;
+}
+
+.colorresumen {
+  color: #0d88bc !important;
+}
+
+.notaresumen {
+  font-size: 30px !important;
+  padding-top: 1vw;
+}
+
+.estadoexamen {
+  font-size: 30px !important;
+  padding-bottom: 1vw;
+  padding-top: 1vw;
+}
+
+.list {
+  padding: 0;
+  user-select: none;
+  width: auto !important;
+  flex-wrap: wrap;
+
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.option {
+  font-size: 0.875rem;
+  width: auto !important;
+}
+
+.listresultado {
+  border: none;
+  align-items: center;
+}
+
+.errorResumen {
+  color: red;
+}
+
+.correctoResumen {
+  color: rgb(58, 189, 156);
+}
+
+.w-100 {
+  width: 50% !important;
+}
+
+.alert-light {
+  color: #0d88bc !important;
+  background-color: #f8e9e9;
+  border-color: #f8e9e9;
+}
+
+.resumeninfo {
+  text-align: center;
+
+}
+
+.incorrectoResumen {
+  color: red;
+}
+
+.header-detail {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  border-left-color: #0D88BC;
+  border-left-width: 3px;
+  border-left-style: solid;
+  padding: 0.75rem 1rem !important;
+}
+
+nb-checkbox > label > span {
+  font-weight: normal;
+}

@@ -1,0 +1,33 @@
+<div class="body">
+  <serv-talento-cabecera
+    [cabecera]="cabecera?.evaluacion"
+    [examenId]="cabecera?.evaluacionId"
+    [convocatoria]="cabecera?.convocatoria"
+    [regimen]="cabecera?.regimen"
+    [perfil]="cabecera?.perfil"
+  ></serv-talento-cabecera>
+
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="m-4 col-md-4" style="margin-left: 20px">
+      <nb-card size="small">
+        <nb-card-header class="cabeceraCar"
+          >Resumen de Evaluación</nb-card-header
+        >
+        <nb-card-body class="bodyCar">
+          <p class="textBlue">Puntaje Total</p>
+          <p class="textNota">{{ puntajeTotal }}</p>
+          <p class="miniSubTitle">{{ puntajeMin }} MIN|{{ puntajeMax }} MAX</p>
+          <br />
+          <p class="textBlue">Condición</p>
+          <p class="resultado">{{ resultado }}</p>
+
+          <p class="footerCard">Fecha de Evaluación: {{ fechaActual }}</p>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="m-4 col-md-4">
+      <img src="assets/images/examen_aprobado.png" alt="base" />
+    </div>
+  </div>
+</div>

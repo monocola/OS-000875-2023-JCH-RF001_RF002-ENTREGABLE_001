@@ -1,0 +1,91 @@
+<mat-tab-group dynamicHeight [(selectedIndex)]="index" *ngIf="createMode">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <ng-container *ngIf="!editMode">
+        <nb-icon icon="documento" class="mr-2"> </nb-icon>
+        <span>Registro</span>
+      </ng-container>
+      <ng-container *ngIf="editMode">
+        <nb-icon icon="edit" class="mr-2"> </nb-icon>
+        <span>Edición</span>
+      </ng-container>
+    </ng-template>
+    <serv-talento-registro-unidad-organica
+      (closeOrgano)="handleClose($event)"
+      [dataToEdit]="dataToEdit"
+      (updateUnidadesOrganicas)="handleUpdateEmitter()"
+      [unidadesOrganicas]="unidadesOrganicas"
+      [editMode]="editMode"
+    >
+    </serv-talento-registro-unidad-organica>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <nb-icon icon="copy" class="mr-2"> </nb-icon>
+      Registro masivo
+    </ng-template>
+    <serv-talento-registro-masivo-unidad-organica
+      (closeOrgano)="handleClose($event)"
+      (updateUnidadesOrganicas)="handleUpdateEmitter()"
+    >
+    </serv-talento-registro-masivo-unidad-organica>
+  </mat-tab>
+</mat-tab-group>
+
+<div
+  style="height: 25rem"
+  class="flex-v-center flex-column"
+  *ngIf="!createMode && unidadesOrganicas.length == 0"
+>
+  <img
+    alt="imagen estructura"
+    src="assets/images/org-structure.svg"
+    class="my-3"
+  />
+  <span>No tienes ningún registro,</span>
+  <span>para iniciar despliega combo unidad orgánica luego</span>
+  <strong>click al botón "Crear"</strong>
+</div>
+
+<div
+  class="w-100 px-3 my-4"
+  *ngIf="
+    (createMode && unidadesOrganicas.length > 0) || unidadesOrganicas.length > 0
+  "
+>
+  <h6>Lista de unidades orgánicas</h6>
+  <serv-talento-table
+    [tableData]="this.unidadesOrganicas"
+    [tableColumns]="ordersTableColumns"
+    [dataExport]="getDataExport()"
+    [isFilterable]="true"
+    [isPageable]="true"
+    [paginationSizes]="[5, 10, 15]"
+    [defaultPageSize]="10"
+    (sort)="sortData($event)"
+    [acciones]="true"
+    [title]="'Lista de unidades orgánicas'"
+    [btnEditEnabled]="true"
+    (editAction)="editOrgano($event)"
+    [editTitle]="'Editar unidad orgánica'"
+    [btnDeleteEnabled]="true"
+    (deleteAction)="removeOrgano($event)"
+    [deleteTitle]="'Inactivar unidad orgánica'"
+  >
+  </serv-talento-table>
+</div>
+
+<div
+  style="height: 25rem"
+  class="flex-v-center flex-column"
+  *ngIf="createMode && unidadesOrganicas.length == 0"
+>
+  <img
+    alt="imagen bandeja"
+    src="assets/images/icons/bandeja.png"
+    class="my-3"
+  />
+  <span>Aún no tienes ningún registro, debes iniciar</span>
+  <span>el registro</span>
+</div>

@@ -1,0 +1,39 @@
+h5 {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+  color: #0dacbc !important;
+}
+
+:host {
+  display: contents;
+  max-height: 25rem;
+}
+
+.card-row {
+  margin: 0;
+  display: flex;
+}
+
+.card-col {
+  flex: 1 0 calc(50% - 1rem);
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+.material-icons.gray00 {
+  color: #0dacbc;
+}
+
+.card-col-small {
+  border: 1px solid rgba(13,172,188,0.43);
+  border-radius: 20px;
+}
+
+.box {
+  border: 0 solid #0dacbc;
+  width: 25vw;
+  height: 50vh;
+  font-size: 10vh;
+}

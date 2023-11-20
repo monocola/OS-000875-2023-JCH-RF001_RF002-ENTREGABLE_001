@@ -1,0 +1,123 @@
+<div class="body">
+  <div class="d-flex pb-3">
+    <div class="flex-v-center-left w-100 pr-3">
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/pages/organigrama']"
+      >
+        <nb-icon nbSuffix icon="back"></nb-icon>
+      </button>
+      <h3 class="pl-2 titlePage">Organigrama</h3>
+      <span class="flex-spacer"></span>
+      <button
+        (click)="clickFiltro()"
+        nbButton
+        outline
+        shape="semi-round"
+        size="medium"
+        status="primary"
+        [hidden]="this.organos.length === 0"
+      >
+        <nb-icon class="filterIcon" nbSuffix icon="tune"></nb-icon>
+        Filtros
+      </button>
+    </div>
+  </div>
+
+  <form
+    id="filtros__organigrama"
+    [ngClass]="{ hide: !this.showFilters }"
+    class="w-100 hide filtros__organigrama"
+    [formGroup]="filterForm"
+  >
+    <div class="body__organigrama">
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label>Responsable del puesto</label>
+          <nb-form-field>
+            <input
+              (keyup)="keyupResponsable()"
+              type="text"
+              placeholder="Escribir a un responsable"
+              fullWidth
+              nbInput
+              shape="semi-round"
+              fieldSize="large"
+              maxlength="60"
+              formControlName="responsable"
+              [matAutocomplete]="auto"
+              [status]="
+                f.responsable.invalid && f.responsable.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+          </nb-form-field>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="showField">
+            <mat-option *ngFor="let persona of this.personas" [value]="persona">
+              {{ persona.nombreCompleto }}
+            </mat-option>
+          </mat-autocomplete>
+          <div class="invalid-text flex-column">
+            <span *ngIf="f.responsable.errors?.notfound">
+              Tiene que seleccionar una persona de la lista
+            </span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label>Puesto</label>
+          <input
+            type="text"
+            formControlName="puesto"
+            placeholder="Escribir el puesto"
+            fullWidth
+            nbInput
+            shape="semi-round"
+            fieldSize="large"
+            maxlength="60"
+            (keyup)="keyupPuesto()"
+          />
+        </div>
+        <div class="mb-3 col-md-5">
+          <div class="flex-v-bottom-right w-100 h-100 align-bottom">
+            <div class="flex-spacer"></div>
+            <div class="btn_area">
+              <button
+                class="px-5 mr-3"
+                nbButton
+                shape="round"
+                size="medium"
+                status="primary"
+                outline
+                (click)="cleanFilters()"
+              >
+                Limpiar filtros
+              </button>
+              <button
+                class="px-5"
+                nbButton
+                shape="round"
+                size="medium"
+                status="primary"
+                (click)="searchOrganigrama()"
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="px-3">
+    <serv-talento-graph
+      [organosFinded]="organosFinded"
+      [organosFindedByPuesto]="organosFindedByPuesto"
+      [organos]="organos"
+      [unidadesOrganicas]="unidadesOrganicas"
+    >
+    </serv-talento-graph>
+  </div>
+</div>

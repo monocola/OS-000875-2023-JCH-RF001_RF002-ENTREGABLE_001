@@ -1,0 +1,38 @@
+<div class="body" (resized)="onResized($event)">
+  <div class="flex-v-center-left mb-4">
+    <button mat-icon-button color="primary" (click)="goBack()">
+      <nb-icon nbSuffix icon="back"></nb-icon>
+    </button>
+    <span class="fs-24 fw-500 titleBase"
+      >Informe de
+      {{ helperService.tipoInforme?.descripcion || '' | lowercase }}</span
+    >
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="baseLegalForm" class="mt-4 container-fluid">
+    <input-field
+      [control]="f.nombreInforme"
+      [label]="'Nombre de informe'"
+      [placeholder]="'Ingrese título del informe'"
+      [maxlength]="45"
+      [banKeyType]="5"
+      [minlength]="0"
+    >
+    </input-field>
+
+    <label class="mt-4">Registra contenido del informe</label>
+    <ckeditor
+      [(ngModel)]="ckeditorContent"
+      [ngModelOptions]="{ standalone: true }"
+    >
+    </ckeditor>
+  </form>
+</div>
+
+<serv-talento-bottom-div
+  [bodySize]="bodySize"
+  (saveEmitter)="save()"
+  [disabledSave]="false"
+></serv-talento-bottom-div>

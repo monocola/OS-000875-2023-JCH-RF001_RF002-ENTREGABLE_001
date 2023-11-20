@@ -1,0 +1,27 @@
+<div style="background-color: white !important">
+  <div class="w-100 h-100 px-5 py-3 flex-v-center flex-column">
+    <img src="assets/images/icons/send.png" alt="envio imagen" />
+
+    <div class="mt-4 title">Solicitud enviada</div>
+    <div class="mt-4">
+      SERVIR validará tu información y te enviará un correo a
+    </div>
+    <div class="text-center">
+      <strong>{{
+        this.data?.correo.toLowerCase() || 'manuel.bs@essalud.com'
+      }}</strong>
+      en 1 día hábil.
+    </div>
+
+    <button
+      class="mt-4"
+      nbButton
+      shape="round"
+      status="primary"
+      fullWidth
+      (click)="close()"
+    >
+      Aceptar
+    </button>
+  </div>
+</div>

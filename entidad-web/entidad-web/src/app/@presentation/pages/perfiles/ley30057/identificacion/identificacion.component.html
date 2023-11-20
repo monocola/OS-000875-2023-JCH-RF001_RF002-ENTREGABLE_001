@@ -1,0 +1,257 @@
+<div class="px-5">
+  <mat-form-field class="w-40">
+    <mat-label>Nombre del puesto</mat-label>
+    <input
+      class="inputPuesto"
+      matInput
+      type="text"
+      [formControl]="f.nombrePerfil"
+      oninput="this.value = this.value.replace(/[^0-9a-zA-Z-()_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+    />
+    <mat-icon matSuffix>edit</mat-icon>
+    <mat-error *ngIf="f.nombrePerfil.invalid && f.nombrePerfil.touched">
+      <span class="invalid-text m-0">El campo es obligatorio</span>
+    </mat-error>
+  </mat-form-field>
+
+  <div [ngClass]="{ 'mt-3': f.nombrePerfil.invalid && f.nombrePerfil.touched }">
+    <label>Mision del puesto</label>
+    <nb-form-field>
+      <textarea
+        nbInput
+        placeholder="Redacta de forma breve la misión del puesto"
+        [status]="f.mision.invalid && f.mision.touched ? 'danger' : 'basic'"
+        fullWidth
+        shape="semi-round"
+        maxlength="500"
+        [formControl]="f.mision"
+        oninput="this.value = this.value.replace(/[^0-9a-zA-Z-_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+      ></textarea>
+    </nb-form-field>
+    <div *ngIf="f.mision.invalid && f.mision.touched" class="invalid-text m-0">
+      <span *ngIf="f.mision.errors?.required"> El campo es obligatorio </span>
+    </div>
+  </div>
+
+  <h6 class="mt-3">Identificación del puesto</h6>
+
+  <form [formGroup]="helper30057Service.identificacionForm" class="row">
+    <div class="mb-3 col-md-3">
+      <autocomplete
+        [label]="'Órgano'"
+        [placeholder]="'Busca un órgano'"
+        [control]="f?.organo"
+        [fieldToShow]="'descripcion'"
+        [items]="helper30057Service.organos"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <autocomplete
+        [label]="'Unidad orgánica'"
+        [placeholder]="'Busca una unidad orgánica'"
+        [control]="f?.unidadOrganica"
+        [fieldToShow]="'unidadOrganica'"
+        [items]="helper30057Service.unidadesOrganicas"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <input-field
+        [control]="f.unidadFuncional"
+        [label]="'Unidad funcional (opcional)'"
+        [maxlength]="150"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <input-field
+        [label]="'Nivel organizacional'"
+        [control]="f.nivelOrganizacional"
+        [maxlength]="150"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Grupo de servidores civiles'"
+        [control]="f.grupoServidoresCiviles"
+        [items]="helper30057Service.servidoresCiviles"
+        [valueToShow]="'descripcion'"
+        (selectedChange)="changeGrupoServidores()"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Familia de puestos (opcional)'"
+        [control]="f.familiaPuestos"
+        [items]="helper30057Service.familiaPuestos"
+        [valueToShow]="'descripcion'"
+        (selectedChange)="changeFamiliaPuestos()"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <select-field
+        [label]="'Rol'"
+        [control]="f.rol"
+        [items]="helper30057Service.roles"
+        [valueToShow]="'descripcion'"
+        (selectedChange)="this.f.codigoPuesto.enable()"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Nivel/categoría'"
+        [control]="f.nivel"
+        [items]="helper30057Service.niveles"
+        [value]="'parametroId'"
+        [valueToShow]="'valorTexto'"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Puesto tipo (opcional)'"
+        [control]="f.puestoTipo"
+        [items]="helper30057Service.puestosTipo"
+        [value]="'maeDetalleId'"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'Subnivel/subcategoría'"
+        [control]="f.subnivel"
+        [maxlength]="100"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'Dependencia jerárquica'"
+        [control]="f.depJerarquica"
+        [maxlength]="100"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'Dependencia funcional (opcional)'"
+        [control]="f.depFuncional"
+        [maxlength]="100"
+        [banKeyType]="4"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <select-field
+        [label]="'Grupo de servidores a reportar'"
+        [control]="f.grupoServidoresParaReportar"
+        [items]="helper30057Service.servidoresCivilesAReportar"
+        [value]="'id'"
+        [valueToShow]="'descripcion'"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'N° de posiciones a su cargo'"
+        [control]="f.numPosicionesACargo"
+        [maxlength]="4"
+        [minlength]="1"
+        [banKeyType]="2"
+        (keyup)="validateCodPosicionACargo(f.numPosicionesACargo)"
+        (blur)="validateCodPosicionACargo(f.numPosicionesACargo)"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <label>Código del puesto</label>
+      <div class="flex-v-center">
+        <ng-container
+          *ngIf="
+            f.grupoServidoresCiviles.value ||
+            f.familiaPuestos.value ||
+            f.rol.value
+          "
+        >
+          <div *ngIf="this.f.grupoServidoresCiviles.value" class="mr-1 fs-12">
+            {{ this.f.grupoServidoresCiviles.value.codigo || '' }}
+          </div>
+          <div *ngIf="this.f.familiaPuestos.value" class="mr-1 fs-12">
+            {{ this.f.familiaPuestos.value.codigo || '' }}
+          </div>
+          <div *ngIf="this.f.rol.value" class="mr-1 fs-12">
+            {{ this.f.rol.value.codigo || '' }}
+          </div>
+          <div class="mr-1">-</div>
+        </ng-container>
+        <div class="flex-spacer"></div>
+        <input
+          formControlName="codigoPuesto"
+          nbInput
+          fullWidth
+          shape="semi-round"
+          fieldSize="large"
+          [status]="
+            f.codigoPuesto.invalid && f.codigoPuesto.touched
+              ? 'danger'
+              : 'basic'
+          "
+        />
+      </div>
+      <div
+        *ngIf="f.codigoPuesto.invalid && f.codigoPuesto.touched"
+        class="invalid-text m-0"
+      >
+        <span *ngIf="f.codigoPuesto.errors?.required">
+          El campo es obligatorio
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'N° de posiciones del puesto'"
+        [control]="f.numPosicionesPuesto"
+        [maxlength]="4"
+        [minlength]="1"
+        [banKeyType]="2"
+        (keyup)="validateCodPosicion(f.numPosicionesPuesto)"
+        (blur)="validateCodPosicion(f.numPosicionesPuesto)"
+      >
+      </input-field>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <input-field
+        [label]="'Código de posición'"
+        [control]="f.codigoPosicion"
+        [maxlength]="100"
+      >
+      </input-field>
+    </div>
+  </form>
+</div>

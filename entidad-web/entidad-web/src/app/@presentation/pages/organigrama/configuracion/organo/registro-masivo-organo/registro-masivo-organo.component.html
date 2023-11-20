@@ -1,0 +1,98 @@
+<div class="container-fluid mt-3">
+  <div class="buttonArea mt-3 flex-v-center">
+    <div class="flex-spacer"></div>
+    <button
+      nbButton
+      outline
+      shape="semi-round"
+      size="medium"
+      status="primary"
+      class="px-5 ml-3 flex-v-center"
+      (click)="downloadFile()"
+    >
+      <span>Descargar plantilla</span>
+      <nb-icon
+        icon="subir"
+        class="ml-2 iconArrow"
+        style="transform: rotate(180deg)"
+      ></nb-icon>
+    </button>
+    <label for="input-file" class="px-5 ml-3 mt-2 btnFileUpload flex-v-center">
+      <span>Subir plantilla</span>
+      <nb-icon icon="subir" class="ml-2 iconArrow"></nb-icon>
+    </label>
+  </div>
+
+  <input
+    id="input-file"
+    onclick="this.value=null;"
+    [hidden]="true"
+    type="file"
+    (change)="fileChangeEvent($event)"
+  />
+
+  <div class="mt-1">
+    <div class="subtitle">Documento adjunto</div>
+
+    <div class="sectionFile flex-v-center px-2">
+      <mat-chip-list>
+        <span *ngIf="!fileOrgano" class="ml-2">
+          <em>Aún no ha seleccionado ningún archivo</em>
+        </span>
+        <mat-chip
+          [removable]="true"
+          (removed)="remove()"
+          class="flex-v-center"
+          *ngIf="fileOrgano"
+        >
+          {{ fileOrgano.name }}
+          <nb-icon matChipRemove icon="close" class="ml-3 btnRemoveFile">
+          </nb-icon>
+        </mat-chip>
+      </mat-chip-list>
+      <div class="flex-spacer"></div>
+    </div>
+  </div>
+
+  <div class="mt-3 flex-v-center">
+    <div class="flex-spacer"></div>
+    <button
+      nbButton
+      outline
+      shape="round"
+      size="medium"
+      status="primary"
+      class="px-5 ml-3"
+      (click)="cancelUpdate()"
+    >
+      Cancelar
+    </button>
+    <button
+      nbButton
+      shape="round"
+      size="medium"
+      status="primary"
+      class="px-5 ml-3"
+      [disabled]="!fileOrgano"
+      (click)="uploadFile()"
+    >
+      Guardar
+    </button>
+  </div>
+
+  <div class="mt-2" *ngIf="this.errorsFromFile.length > 0">
+    <mat-list>
+      <div class="subtitle">Errores encontrados en el archivo subido</div>
+      <div class="erroresContainer mt-2">
+        <mat-list-item *ngFor="let organoFallido of this.errorsFromFile">
+          <mat-icon mat-list-icon>error_outline</mat-icon>
+          <div class="fs-13 fw-600" mat-line>
+            {{ organoFallido.nombreOrgano || 'Nombre por definir' }}
+          </div>
+          <div class="fs-13" mat-line>{{ organoFallido.filaObservacion }}</div>
+        </mat-list-item>
+      </div>
+    </mat-list>
+    <mat-divider class="mt-3"></mat-divider>
+  </div>
+</div>

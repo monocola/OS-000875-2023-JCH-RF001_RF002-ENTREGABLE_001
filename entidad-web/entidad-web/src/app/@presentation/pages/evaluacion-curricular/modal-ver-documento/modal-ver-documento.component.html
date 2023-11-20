@@ -1,0 +1,45 @@
+<div class="d-flex w-100">
+  <span class="flex-spacer"></span>
+  <nb-icon class="mr-2 btnClose" nbSuffix icon="close" (click)="onNoClick()"></nb-icon>
+</div>
+
+<div class="py-2 px-2 bodyModal">
+  <div class="flex-v-center"></div>
+
+  <div class="title fw-600 flex-v-center mt-4">Evaluación curricular</div>
+
+  <div class="content row mt-4 py-2 align-items-baseline">
+    <div class="col-12 col-sm-12 text-center fs-14 px-1">
+      <div class="text-info fs-20 font-weight-bold">Documentos Adjuntos</div>
+      <div class="px-2 pt-3">
+        Se encontraron los siguientes documentos adjuntos
+      </div>
+    </div>
+    <div style="width: 100%" class="row mt-5">
+      <div class="col-12">
+        <table class="table">
+          <caption>Tabla de vista previa de documentos</caption>
+          <tr>
+            <th id="carrera" style="width: 35%;">Nombre Carrera</th>
+            <th id="fecha" style="width: 35%;">fecha Obtencion</th>
+            <th id="previa" style="width: 35%;">Vista Previa</th>
+          </tr>
+          <tr *ngFor="let item of data?.item?.listaDocumentos">
+            <ng-container *ngIf="item.urlDocumento">
+              <td>{{ data?.item?.descripcionCarrera }}</td>
+              <td>
+                <a class="href" target="_blank" (click)="verDocumento(item)" rel="documento">Ver Documento</a>
+              </td>
+            </ng-container>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-v-center mt-4">
+    <button nbButton outline shape="round" status="primary" class="py-2 px-5 mr-3" (click)="onNoClick(true)">
+      Cancelar
+    </button>
+  </div>
+</div>

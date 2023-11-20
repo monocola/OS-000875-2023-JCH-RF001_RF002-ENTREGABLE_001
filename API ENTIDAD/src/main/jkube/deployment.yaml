@@ -1,0 +1,33 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - env: null
+        livenessProbe:
+          httpGet:
+            path: /entidad/api/actuator/health/liveness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /entidad/api/actuator/health/readiness
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 2
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: 250m
+            memory: 768Mi
+          limits:
+            cpu: 1000m
+            memory: 1024Mi

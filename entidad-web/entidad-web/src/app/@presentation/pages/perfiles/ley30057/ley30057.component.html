@@ -1,0 +1,90 @@
+<div (resized)="onResized($event)">
+  <div class="parentBox">
+    <div class="firstBox px-4" [ngStyle]="{ width: bodySize }">
+      <div
+        class="title pr-4 m-0"
+        [ngClass]="{ selected: mode === 0 }"
+        (click)="changeMode(0)"
+      >
+        <span *ngIf="!this.helper30057Service.duplicarMode">
+          {{
+            this.helper30057Service.createMode
+              ? 'Crear perfil'
+              : 'Editar perfil'
+          }}
+        </span>
+        <span *ngIf="this.helper30057Service.duplicarMode">
+          Duplicar Perfil
+        </span>
+      </div>
+      <div class="flex-spacer"></div>
+      <div class="flex-v-center">
+        Régimen laboral:
+        <strong class="fs-16 ml-3">
+          {{
+            this.helper30057Service.regimenSelected?.descripcion || 'Ley 30057'
+          }}
+        </strong>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.mode === 0">
+    <div class="steps-box" [ngStyle]="{ width: this.bodySize }">
+      <mat-horizontal-stepper
+        class="stepper perfilesStepper"
+        labelPosition="bottom"
+        #stepper
+        [selectedIndex]="helper30057Service.indexStepper"
+        (selectionChange)="change($event)"
+      >
+        <mat-step [completed]="this.helper30057Service.idIdentificacion">
+          <ng-template matStepLabel>Identificación del perfil</ng-template>
+        </mat-step>
+
+        <mat-step [completed]="this.helper30057Service.idFunciones">
+          <ng-template matStepLabel>Funciones / Actividades</ng-template>
+        </mat-step>
+
+        <mat-step [completed]="this.helper30057Service.idFormacion">
+          <ng-template matStepLabel>Formación académica</ng-template>
+        </mat-step>
+
+        <mat-step [completed]="this.helper30057Service.idExperiencia">
+          <ng-template matStepLabel>Experiencia</ng-template>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+
+    <div class="contentToRender">
+      <serv-talento-identificacion
+        [hidden]="helper30057Service.indexStepper !== 0"
+      ></serv-talento-identificacion>
+
+      <serv-talento-funciones
+        [hidden]="helper30057Service.indexStepper !== 1"
+      ></serv-talento-funciones>
+
+      <serv-talento-formacion
+        [helper30057Service]="helper30057Service"
+        [hidden]="helper30057Service.indexStepper !== 2"
+      ></serv-talento-formacion>
+
+      <serv-talento-experiencia
+        [helper30057Service]="helper30057Service"
+        [hidden]="helper30057Service.indexStepper !== 3"
+      ></serv-talento-experiencia>
+    </div>
+  </div>
+</div>
+
+<serv-talento-bottom-div
+  [indexStepper]="helper30057Service.indexStepper"
+  [bodySize]="bodySize"
+  (previousStep)="previousStep()"
+  (nextStep)="nextStep()"
+  (createProfile)="createProfile()"
+  (cancelClick)="router.navigateByUrl('pages/regperfilpuesto')"
+  [createMode]="helper30057Service.createMode"
+>
+</serv-talento-bottom-div>

@@ -1,0 +1,169 @@
+@import "../../@common-components/material-table/material-table.component.scss";
+
+/* Haciendo para el arrastrar */
+
+.body {
+  background-color: #fbfbfb;
+}
+
+.container-fluid {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+
+.button-panel-1 {
+  width: 150px;
+  //font-family: Helvetica Neue;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.temas {
+  background-color: #fff;
+  padding-left: 15px;
+}
+
+.mat-tab-body-wrapper {
+  background: #fff;
+}
+
+/* .mat-tab-body{
+  background-color: #fff;
+
+ } */
+
+$danger: red;
+$primary: #2665c5;
+
+.dropzone {
+  width: 100%;
+  margin-bottom: 16px;
+  &-file {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    border-style: dashed;
+    border-width: 3px;
+    border-color: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.02);
+    input {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+  }
+  &-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    margin-bottom: 16px;
+  }
+  small {
+    color: $danger;
+    margin-top: 16px;
+  }
+  &-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    i-file {
+      font-size: 40px;
+      color: rgba(0, 0, 0, 0.15);
+    }
+    p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 250px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+    }
+  }
+  .file-uploaded {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    i {
+      color: $danger;
+      margin-left: 16px;
+      font-size: 22px;
+      &:hover {
+        opacity: 0.75;
+        cursor: pointer;
+      }
+    }
+    p.uploaded {
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+    }
+  }
+  label {
+    z-index: 1;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 32px;
+    padding-right: 32px;
+    border-radius: 4px;
+    background: $primary;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    &:hover {
+      opacity: 0.75;
+      cursor: pointer;
+    }
+  }
+}
+
+.button-val {
+  margin-bottom: 10px;
+  width: 150px;
+  display: block;
+}
+
+.btnDescargar {
+  position: absolute;
+  left: 800px;
+  top: 180px;
+}
+
+.titlePage {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.title-uo-position {
+  position: absolute;
+  margin-top: 20px;
+  left: 40px;
+}
+
+.title-uo {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8191a4;
+}
+
+.sub-title-uo {
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8191a4;
+}

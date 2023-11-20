@@ -1,0 +1,207 @@
+CREATE OR REPLACE package SCH_ENTIDAD.PKG_ORGANIGRAMA is
+ESTADO_REGISTRO_ACTIVO VARCHAR (1) DEFAULT 'N';
+TYPE cursor_test is ref cursor;
+
+PROCEDURE SP_BUSCAR_UNIDADES_ORGANICAS_ENTIDAD (V_ENTIDAD_ID         IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ENTIDAD_ID%TYPE DEFAULT NULL 
+											   ,V_TIPORGANO_ID       IN SCH_ENTIDAD.TBL_ORGANIGRAMA.NATURALEZA_ORGANO%TYPE DEFAULT NULL 
+											   ,V_UO_SUP_ID          IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PADRE_ORGANIGRAMA_ID%TYPE DEFAULT NULL 
+                                               ,CUR_TEST            OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_UNIDADES_ORGANICAS_SUPERIOR_ENTIDAD (V_ENTIDAD_ID         IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ENTIDAD_ID%TYPE DEFAULT NULL
+                                                        ,V_TIPORGANO_ID       IN SCH_ENTIDAD.TBL_ORGANIGRAMA.TIPO_ORGANO_UO_ID%TYPE DEFAULT NULL
+                                                        ,CUR_TEST            OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PUESTOS_ENTIDAD (V_ENTIDAD_ID         IN SCH_ENTIDAD.TBL_PUESTO.ENTIDAD_ID%TYPE DEFAULT NULL 
+                                    ,V_ORGANIGRAMA_ID     IN SCH_ENTIDAD.TBL_PUESTO.ORGANIGRAMA_ID%TYPE
+                                    ,CUR_TEST            OUT cursor_test);       
+
+PROCEDURE SP_SEL_SERVIDORES_CIVILES  (V_ENTIDAD_ID         IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE 
+									 ,V_TIPO_ORGANO        IN SCH_ENTIDAD.TBL_ORGANIGRAMA.TIPO_ORGANO_UO_ID%TYPE 
+									 ,V_UO_SUPERIOR        IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PADRE_ORGANIGRAMA_ID%TYPE 
+									 ,V_UO                 IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE 
+									 ,V_REGIMEN_LABORAL    IN SCH_ENTIDAD.TBL_EMPLEADO.REGIMEN_LABORAL_ID%TYPE 
+									 ,V_TIPO_DOCUMENTO     IN SCH_PERSONA.TBL_DOCUMENTO.TIPO_DOCUMENTO%TYPE
+									 ,V_APE_PAT_MAT_NOM    IN VARCHAR2
+                                     ,V_NUMERO_DOCUMENTO  IN SCH_PERSONA.TBL_DOCUMENTO.NUMERO_DOCUMENTO%TYPE
+                                     ,V_ESTADO_ID IN SCH_ENTIDAD.TBL_DETALLE_UO.ESTADO_REGISTRO%TYPE
+                                     ,CUR_TEST            OUT cursor_test); 
+
+PROCEDURE SP_BUSCAR_ORGANIGRAMA_PADRE(V_ENTIDAD_ID         IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ENTIDAD_ID%TYPE DEFAULT NULL 
+                                     ,V_PERSONA_ID         IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PERSONA_RESPONSABLE_ID%TYPE DEFAULT NULL
+                                     ,V_ORGANIGRAMA_ID     IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE DEFAULT NULL
+                                     ,V_PUESTO_ID          IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PUESTO_ID%TYPE DEFAULT NULL  
+                                     ,V_ESTADO_REGISTRO    IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ESTADO_REGISTRO%TYPE DEFAULT NULL
+                                     ,V_UNIDAD_ID          IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE DEFAULT NULL
+                                     ,CUR_TEST            OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_ORGANIGRAMA_HIJO (V_ENTIDAD_ID         IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ENTIDAD_ID%TYPE DEFAULT NULL 
+                                     ,V_PERSONA_ID         IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PERSONA_RESPONSABLE_ID%TYPE DEFAULT NULL                                    
+                                     ,V_UNIDAD_ID          IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE DEFAULT NULL
+                                     ,V_PUESTO_ID          IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PUESTO_ID%TYPE DEFAULT NULL  
+                                     ,V_ESTADO_REGISTRO    IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ESTADO_REGISTRO%TYPE DEFAULT NULL
+                                     ,CUR_TEST            OUT cursor_test);
+
+PROCEDURE SP_OBTENER_PARAMETROS (V_TIPO_PARAMETRO         IN SCH_MAESTRA.TBL_PARAMETRO.TIPO_PARAMETRO%TYPE DEFAULT NULL 
+								,V_ESTADO_REGISTRO		  IN SCH_MAESTRA.TBL_PARAMETRO.ESTADO_REGISTRO%TYPE DEFAULT NULL 
+								,V_CODIGO_NUMERO		  IN SCH_MAESTRA.TBL_PARAMETRO.CODIGO_NUMERO%TYPE DEFAULT NULL 
+                                ,CUR_TEST                OUT cursor_test);
+
+PROCEDURE SP_SEL_GESTION_ORGANIGRAMAS (V_ENTIDAD_ID       IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ENTIDAD_ID%TYPE
+                                      ,V_TIPO_ORGANO_ID   IN SCH_ENTIDAD.TBL_ORGANIGRAMA.TIPO_ORGANO_UO_ID%TYPE
+                                      ,V_UO_SUPERIOR_ID   IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PADRE_ORGANIGRAMA_ID%TYPE
+                                      ,V_UO_ID            IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE
+                                      ,CUR_TEST          OUT cursor_test);
+
+PROCEDURE SP_VALIDA_ORGANIGRAMA (V_ENTIDAD_ID       IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ENTIDAD_ID%TYPE
+                                ,V_DESCRIPCION      IN SCH_ENTIDAD.TBL_ORGANIGRAMA.DESCRIPCION%TYPE
+                                ,V_SIGLA            IN SCH_ENTIDAD.TBL_ORGANIGRAMA.SIGLA%TYPE
+                                ,V_ORGANIGRAMA_ID   IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE
+                                ,CUR_TEST          OUT cursor_test);
+
+PROCEDURE SP_FILTRAR_PUESTOS (V_ENTIDAD_ID       IN SCH_ENTIDAD.TBL_PUESTO.ENTIDAD_ID%TYPE
+                             ,V_DESCRIPCION      IN SCH_ENTIDAD.TBL_PUESTO.DESCRIPCION%TYPE
+                             ,V_ORGANIGRAMA_ID      IN SCH_ENTIDAD.TBL_PUESTO.ORGANIGRAMA_ID%TYPE
+                             ,CUR_TEST          OUT cursor_test);
+
+
+
+PROCEDURE SP_ALTA_SERVIDORES_CIVILES (V_ENTIDAD_ID               IN SCH_ENTIDAD.TBL_PUESTO.ENTIDAD_ID%TYPE
+                                     ,V_ORGANIGRAMA_ID           IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE
+									 ,V_PERSONA_ID               IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE
+									 ,V_REGIMEN_LABORAL_ID       IN SCH_ENTIDAD.TBL_EMPLEADO.REGIMEN_LABORAL_ID%TYPE
+									 ,V_SINDICATO_FLAG           IN SCH_ENTIDAD.TBL_EMPLEADO.SINDICATO_FLAG%TYPE
+									 ,V_FECHA_INICIO             IN SCH_ENTIDAD.TBL_DETALLE_UO.PUESTO_FECHA_INICIO%TYPE									 
+                                     ,V_CORREO_INSTITUCIONAL     IN SCH_PERSONA.TBL_CORREO.CORREO%TYPE
+									 ,V_ES_RESPONSABLE			 IN SCH_ENTIDAD.TBL_DETALLE_UO.ES_RESPONSABLE%TYPE
+									 ,V_EXCLUYE 			     IN SCH_ENTIDAD.TBL_DETALLE_UO.EXCLUYE%TYPE
+									 ,V_DESCRIPCION              IN SCH_ENTIDAD.TBL_PUESTO.DESCRIPCION%TYPE
+                                     ,V_ESTADO_REGISTRO          IN SCH_ENTIDAD.TBL_PUESTO.ESTADO_REGISTRO%TYPE
+                                     ,V_USUARIO_CREACION         IN SCH_ENTIDAD.TBL_PUESTO.USUARIO_CREACION%TYPE
+                                     ,V_FECHA_CREACION           IN SCH_ENTIDAD.TBL_PUESTO.FECHA_CREACION%TYPE
+                                     ,V_TIPO_ASIGNACION          IN SCH_ENTIDAD.TBL_DETALLE_UO.TIPO_ASIGNACION%TYPE
+                                     ,V_PUESTO_ID                IN SCH_ENTIDAD.TBL_PUESTO.PUESTO_ID%TYPE
+                                     ,CUR_TEST                  OUT cursor_test);
+
+FUNCTION FN_SINCRONIZAR_SECUENCIAS ( V_TABLE_NAME IN VARCHAR2 ) RETURN NUMBER;
+
+PROCEDURE SP_OBTENER_DATOS_PERSONALES_SERVIDOR_CIVIL (V_ENTIDAD_ID       IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                     ,V_DET_UO_ID        IN SCH_ENTIDAD.TBL_DETALLE_UO.DET_UO_ID%TYPE
+                                                     ,V_PERSONA_ID       IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE
+                                                     ,V_REGIMEN_ID       IN SCH_MAESTRA.TBL_PARAMETRO.CODIGO_NUMERO%TYPE
+                                                     ,CUR_TEST          OUT cursor_test);
+
+PROCEDURE SP_OBTENER_PUESTO_UO_SERVIDOR_CIVIL (V_ENTIDAD_ID       IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                              ,V_UO_ID            IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                              ,V_PERSONA_ID       IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE
+                                              ,CUR_TEST          OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PERSONAS_PUESTO_UO_SERVIDOR_CIVIL (V_ENTIDAD_ID       IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                      ,V_UO_ID            IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                                      ,V_PUESTO_ID           IN SCH_ENTIDAD.TBL_PUESTO.PUESTO_ID%TYPE
+                                                      ,CUR_TEST          OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_SERVIDOR_CIVIL (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                 ,V_TIPO_ORGANO             IN SCH_ENTIDAD.TBL_ORGANIGRAMA.TIPO_ORGANO_UO_ID%TYPE
+                                                 ,V_UO_SUPERIOR             IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PADRE_ORGANIGRAMA_ID%TYPE
+                                                 ,V_UO                      IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE
+                                                 ,V_REGIMEN_LABORAL         IN SCH_ENTIDAD.TBL_EMPLEADO.REGIMEN_LABORAL_ID%TYPE
+                                                 ,V_TIPO_DOCUMENTO          IN SCH_PERSONA.TBL_DOCUMENTO.TIPO_DOCUMENTO%TYPE
+                                                 ,V_APE_PAT_MAT_NOM         IN VARCHAR2
+                                                 ,V_NUMERO_DOCUMENTO        IN SCH_PERSONA.TBL_DOCUMENTO.NUMERO_DOCUMENTO%TYPE
+                                                 ,V_ESTADO_ID               IN SCH_ENTIDAD.TBL_DETALLE_UO.ESTADO_REGISTRO%TYPE
+                                                ,V_ESTADO_SERVCIVIL_GDR    IN SCH_ENTIDAD.TBL_DETALLE_UO.ESTADO_SRV_CIV_GDR_ID%TYPE
+                                                 ,CUR_TEST                 OUT cursor_test); 
+                                                
+PROCEDURE SP_BUSCAR_PARTICIPANTES_SERVIDOR_CIVIL_NOACTIVOS (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                 ,V_TIPO_ORGANO             IN SCH_ENTIDAD.TBL_ORGANIGRAMA.TIPO_ORGANO_UO_ID%TYPE
+                                                 ,V_UO_SUPERIOR             IN SCH_ENTIDAD.TBL_ORGANIGRAMA.PADRE_ORGANIGRAMA_ID%TYPE
+                                                 ,V_UO                      IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE
+                                                 ,V_REGIMEN_LABORAL         IN SCH_ENTIDAD.TBL_EMPLEADO.REGIMEN_LABORAL_ID%TYPE
+                                                 ,V_TIPO_DOCUMENTO          IN SCH_PERSONA.TBL_DOCUMENTO.TIPO_DOCUMENTO%TYPE
+                                                 ,V_APE_PAT_MAT_NOM         IN VARCHAR2
+                                                 ,V_NUMERO_DOCUMENTO        IN SCH_PERSONA.TBL_DOCUMENTO.NUMERO_DOCUMENTO%TYPE
+                                                 ,V_ESTADO_ID               IN SCH_ENTIDAD.TBL_DETALLE_UO.ESTADO_REGISTRO%TYPE
+                                                ,V_ESTADO_SERVCIVIL_GDR    IN SCH_ENTIDAD.TBL_DETALLE_UO.ESTADO_SRV_CIV_GDR_ID%TYPE
+                                                 ,CUR_TEST                 OUT cursor_test); 
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADORES_SERVIDOR_CIVIL (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                             ,CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                           ,V_UO_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                                           ,V_PERSONA_EVALUADOR_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_EVALUADOR_ID%TYPE
+                                                           ,CUR_TEST                 OUT cursor_test);
+
+  PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL_GDR (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+   ,V_PERSONA_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE
+   ,CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_NO_MANDO_MEDIO_SERVIDOR_CIVIL (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                                          ,V_UO_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                                                          ,V_PERSONA_EVALUADOR_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_EVALUADOR_ID%TYPE
+                                                                          ,CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADOR_MANDO_MEDIO_SERVIDOR_CIVIL (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                                                     ,V_DET_UO_ID               IN SCH_ENTIDAD.TBL_DETALLE_UO.DET_UO_ID%TYPE
+                                                                                     ,V_UO_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                                                                     ,V_PERSONA_EVALUADOR_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_EVALUADOR_ID%TYPE
+                                                                                     ,CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_MANDO_MEDIO (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                              ,V_UO_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                              ,V_PERSONA_EVALUADOR_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_EVALUADOR_ID%TYPE
+                                              ,CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADORES (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                            ,V_UO_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                                            ,CUR_TEST                 OUT cursor_test);   
+
+PROCEDURE SP_DATOS_EVALUADOR_Y_EVALUADO (V_DET_OU_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.DET_UO_ID%TYPE
+                                         ,CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_DATOS_PARTICIPANTE (V_DET_OU_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.DET_UO_ID%TYPE
+                                 ,V_SEGMENTO_ID  		  IN SCH_ENTIDAD.TBL_DETALLE_UO.SEGMENTO_ID%TYPE
+                                 ,CUR_TEST                 OUT cursor_test);                                   
+                                        
+PROCEDURE SP_BUSCAR_PERSONAS_SERVIDOR_CIVIL (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                           ,V_PERSONA_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE
+                                                           ,CUR_TEST                 OUT cursor_test);                                         
+
+PROCEDURE SP_BUSCAR_CORREO_PERSONA (V_PERSONA_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE,
+                                    CUR_TEST                 OUT cursor_test);   
+
+PROCEDURE SP_BUSCAR_CORREO_PERSONA_GESTOR (V_ENTIDAD_ID    IN SCH_ENTIDAD.TBL_ENTIDAD_GESTOR.ENTIDAD_ID%TYPE,
+                                            V_TIPO_GESTOR_ID    IN SCH_ENTIDAD.TBL_ENTIDAD_GESTOR.TIPO_GESTOR_ID%TYPE,
+                                    CUR_TEST                 OUT cursor_test);  
+
+PROCEDURE SP_BUSCAR_CORREO_EXISTENTE_SERVIDOR_CIVIL (V_CORREO    IN VARCHAR2,
+                                    CUR_TEST                 OUT cursor_test);
+
+PROCEDURE SP_LISTAR_PUESTOS (V_ES_JEFE IN SCH_ENTIDAD.TBL_PUESTO.ES_JEFE%TYPE,
+                             V_ID_UO IN SCH_ENTIDAD.TBL_PUESTO.ORGANIGRAMA_ID%TYPE,
+                             V_DESCRIPCION IN SCH_ENTIDAD.TBL_PUESTO.DESCRIPCION%TYPE,
+                             V_ENTIDAD_ID IN SCH_ENTIDAD.TBL_PUESTO.ENTIDAD_ID%TYPE,
+                             V_PUESTO_ID IN SCH_ENTIDAD.TBL_PUESTO.PUESTO_ID%TYPE,
+                             CUR_TEST OUT CURSOR_TEST);                                 
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_SIN_EVALUADORES_ENTIDAD (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                            ,CUR_TEST                 OUT cursor_test);   
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADORES_Y_SIN_EVALUADORES_ENTIDAD (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                            ,V_SEGMENTO_ID IN SCH_MAESTRA.TBL_PARAMETRO.CODIGO_NUMERO%TYPE
+                                                            ,V_UO_ID IN SCH_ENTIDAD.TBL_ORGANIGRAMA.ORGANIGRAMA_ID%TYPE
+                                                            ,CUR_TEST                 OUT cursor_test);   
+
+PROCEDURE SP_BUSCAR_PARTICIPANTES_EVALUADOS_SERVIDOR_CIVIL_ENTIDAD (V_ENTIDAD_ID              IN SCH_ENTIDAD.TBL_DETALLE_UO.ENTIDAD_ID%TYPE
+                                                           ,V_UO_ID                   IN SCH_ENTIDAD.TBL_DETALLE_UO.ORGANIGRAMA_ID%TYPE
+                                                           ,V_PERSONA_EVALUADOR_ID    IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_EVALUADOR_ID%TYPE
+                                                           ,V_SEGMENTO_ID IN SCH_MAESTRA.TBL_PARAMETRO.CODIGO_NUMERO%TYPE
+                                                           ,CUR_TEST                 OUT cursor_test);
+                                                          
+PROCEDURE SP_OBTENER_DATOS_PARTICIPANTE (V_DET_UO_ID	IN SCH_ENTIDAD.TBL_DETALLE_UO.DET_UO_ID%TYPE
+                                        ,V_PERSONA_ID   IN SCH_ENTIDAD.TBL_DETALLE_UO.PERSONA_ID%TYPE
+                                        ,V_SEGMENTO_ID  IN SCH_ENTIDAD.TBL_DETALLE_UO.SEGMENTO_ID%TYPE
+                                        ,V_ROL_ID   	IN SCH_ENTIDAD.TBL_DETALLE_UO.ROL_ID%TYPE
+										,CUR_TEST 	   OUT cursor_test);
+                                                          
+end PKG_ORGANIGRAMA;

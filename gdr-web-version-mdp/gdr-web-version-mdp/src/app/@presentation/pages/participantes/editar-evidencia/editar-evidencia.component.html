@@ -1,0 +1,116 @@
+<div class="d-flex w-100 header-modal">
+  <div class="">
+    <p class="parrafo">Editar evidencia</p>
+  </div>
+
+  <span class="flex-spacer"></span>
+  <nb-icon
+    class="mr-2 btnClose"
+    nbSuffix
+    icon="close"
+    (click)="dismiss(false)"
+  ></nb-icon>
+</div>
+<mat-divider class="divider-modal"></mat-divider>
+<div class="bodyRegisterForm">
+  <div class="row mt-4">
+    <div class="container-fluid pt-2 px-5">
+      <div class="mb-4">
+        <p class="title-modal">Edite los siguientes campos</p>
+      </div>
+      <form [formGroup]="registerForm" class="row mt-2">
+        <div class="mb-3 col-md-4">
+          <label>Plazo</label>
+          <nb-form-field>
+            <input
+              id="plazo"
+              #plazo
+              formControlName="plazo"
+              nbInput
+              class="pointer"
+              placeholder="dd/mm/aaaa"
+              [nbDatepicker]="formpicker"
+              fieldSize="medium"
+              shape="semi-round"
+              [status]="f.plazo.invalid && f.plazo.touched ? 'danger' : 'basic'"
+            />
+
+            <nb-icon
+              style="cursor: pointer"
+              nbSuffix
+              class="mr-2 pointer"
+              (click)="plazo.click()"
+              icon="calendar-outline"
+            >
+            </nb-icon>
+            <nb-datepicker #formpicker></nb-datepicker>
+          </nb-form-field>
+
+          <div
+            *ngIf="f.plazo.invalid && f.plazo.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.plazo.errors.required">
+              El campo es obligatorio
+            </span>
+          </div>
+        </div>
+
+        <div class="mb-3 col-md-12">
+          <label for="anio">Evidencia</label>
+          <nb-form-field>
+            <textarea
+              formControlName="evidencia"
+              nbInput
+              fullWidth
+              placeholder="Escriba la evidencia"
+              fieldSize="large"
+              [status]="
+                f.evidencia.invalid && f.evidencia.touched ? 'danger' : 'basic'
+              "
+            ></textarea>
+          </nb-form-field>
+
+          <div
+            *ngIf="f.evidencia.invalid && f.evidencia.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.evidencia.errors.required">
+              El campo es obligatorio
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="mb-3 offset-3"></div>
+    <div class="col-md-4">
+      <div class="w-100 h-100 btn-area col-md-12 m-0 p-0">
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          style="color: white"
+          class="background-light-blue py-2.5 px-5 mr-3"
+          (click)="actualizar()"
+        >
+          Guardar
+        </button>
+
+        <button
+          nbButton
+          shape="round"
+          size="medium"
+          style="
+            color: #ffffff;
+            background-color: #adb5bd;
+            border-color: #dddddd;
+          "
+          class="py-2.5 px-5 mr-3"
+          (click)="dismiss(false)"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

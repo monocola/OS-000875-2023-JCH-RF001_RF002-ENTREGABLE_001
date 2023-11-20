@@ -1,0 +1,127 @@
+<div class="body">
+  <div class="d-flex">
+    <h3 class="titlePage">Gestión de tablas maestras</h3>
+    <span class="flex-spacer"></span>
+    <div>
+      <button
+        nbButton
+        class="px-5"
+        shape="round"
+        size="medium"
+        status="primary"
+        (click)="openModalRegister()"
+      >
+        Crear registro
+      </button>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <form class="container-fluid mt-3" [formGroup]="filterForm">
+    <div class="subtitle">Filtros de búsqueda</div>
+
+    <div class="row mt-3">
+      <div class="col-7 mb-3">
+        <select-field
+          [label]="'Nombre de tabla maestra'"
+          [control]="f.tablaMaestra"
+          [items]="comboTablaMaestra"
+          [value]="'maeCabeceraId'"
+          [valueToShow]="'descripcion'"
+          (selectedChange)="clearAutocomplete()"
+        >
+        </select-field>
+      </div>
+
+      <ng-container *ngIf="searchMode">
+        <div class="col-5">
+          <autocomplete
+            class="col-9 p-0"
+            [control]="f?.nombreCamposMaestra"
+            [label]="'Nombre de campos de tabla maestra'"
+            [items]="dataTablaMaestraAutocomplete"
+            [fieldToShow]="'textToSearch'"
+            [placeholder]="'Buscar por nombre completo/corto'"
+          >
+          </autocomplete>
+        </div>
+
+        <div class="col-3 mb-3">
+          <select-field [label]="'Sigla'" [control]="f.sigla" [items]="siglas">
+          </select-field>
+        </div>
+
+        <div class="col-2 mb-3">
+          <select-field
+            [label]="'Estado'"
+            [control]="f.estado"
+            [items]="estados"
+            [value]="'codigoTexto'"
+            [valueToShow]="'valorTexto'"
+          >
+          </select-field>
+        </div>
+
+        <div class="col-3 mb-3"></div>
+      </ng-container>
+
+      <ng-container *ngIf="!searchMode">
+        <div class="col-1"></div>
+      </ng-container>
+
+      <div class="col-4 mb-3">
+        <div class="w-100 h-100 btn_area">
+          <button
+            type="button"
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            outline
+            (click)="clearForm()"
+            [disabled]="!searchMode"
+          >
+            Limpiar
+          </button>
+          <button
+            type="button"
+            nbButton
+            shape="round"
+            size="medium"
+            status="primary"
+            (click)="search()"
+            [disabled]="!f.tablaMaestra.value"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="padding-body">
+  <ng-container>
+    <div class="subtitle">Lista detalle de tablas maestras</div>
+    <serv-talento-table
+      [tableData]="this.dataTablaMaestra"
+      [tableColumns]="maestraTableColumns"
+      [dataExport]="getDataExport()"
+      [isFilterable]="true"
+      [isPageable]="true"
+      [paginationSizes]="[5, 10, 15]"
+      [defaultPageSize]="10"
+      (sort)="sortData($event)"
+      [acciones]="true"
+      [title]="'Lista de tablas maestras'"
+      [btnEditEnabled]="true"
+      (editAction)="editMaestra($event)"
+      [editTitle]="'Editar maestra'"
+      [btnDeleteEnabled]="true"
+      (deleteAction)="removeMaestra($event)"
+      [deleteTitle]="'Inactivar maestra'"
+    >
+    </serv-talento-table>
+  </ng-container>
+</div>

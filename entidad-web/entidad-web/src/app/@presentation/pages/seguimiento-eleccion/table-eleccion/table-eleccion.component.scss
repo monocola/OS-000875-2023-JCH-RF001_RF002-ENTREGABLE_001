@@ -1,0 +1,71 @@
+@import '../../../@common-components/material-table/material-table.component.scss';
+@import '_colors';
+
+.statusSpan {
+  width: 5rem;
+  border-radius: 0.25rem;
+}
+
+.statusInProcess {
+  background-color: #6fcf97;
+  color: #000;
+}
+
+.statusPassed {
+  background-color: #2d9cdb;
+  color: white;
+}
+
+.statusPassing {
+  background-color: #a7dbf1;
+}
+
+.statusObserved {
+  background-color: #f2994a;
+  color: white;
+}
+
+.statusInactivo {
+  background-color: #bdbdbd;
+  color: white;
+}
+
+.statusRevisado {
+  background-color: #a5dcf0;
+  color: #000;
+}
+
+.statusPorRevisar {
+  background-color: #a5dcf0;
+  color: #000;
+}
+
+.statusPorPublicar {
+  background-color: #2b9ce0;
+  color: #fff;
+}
+
+.statusPublicado {
+  background-color: #f2c94d;
+  color: #fff;
+}
+
+.statusFinished {
+  background-color: #51b7f0;
+  color: white;
+}
+
+.btnVer {
+  color: $primary-color;
+  background: none;
+  padding: 0.125rem 0.25rem;
+  border: none;
+  border-radius: 0.125rem;
+  transition: 0.2s;
+  &:enabled:hover {
+    transform: scale(1.3);
+  }
+  &:disabled {
+    color: rgba(13, 136, 188, 0.3);
+  }
+}

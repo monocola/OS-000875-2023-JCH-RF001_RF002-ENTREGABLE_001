@@ -1,0 +1,278 @@
+<div class="body">
+   <div class="d-flex justify-content-between">
+      <h4 class="titlePage">Planificación / Reuniones</h4>
+      <div class='mb-1 pb-1'>
+         <div class='titleCiclo mx-1 px-1 flex-v-center-right'>Ciclo {{cicloDefaultDesc}} </div>
+      </div>
+   </div>
+
+
+   <mat-divider></mat-divider>
+   <mat-tab-group mat-align-tabs="start" (selectedTabChange)="changeTab($event.index)">
+      <mat-tab *ngFor="let tab of listaPuestosTabs" label={{tab.sigla}}>
+      </mat-tab>
+   </mat-tab-group>
+
+   <div class='m-1 p-1'></div>
+
+   <div >
+      <div class="d-flex justify-content-between">
+         <ng-container>
+            <nb-form-field *ngIf="isFilterable" style="width: 40%;">
+               <nb-icon icon="search" nbSuffix></nb-icon>
+               <input type="text" placeholder="{{holderText}}" nbInput shape="semi-round" fieldSize="medium"
+                  maxlength="70" (keyup)="applyFilter($event)" />
+            </nb-form-field>
+         </ng-container>
+         <nb-button-group status="basic" disabled>
+            <button nbButtonToggle>{{registrados}} Registrados</button>
+            <button nbButtonToggle>{{noRegistrados}} Sin registrar</button>
+         </nb-button-group>
+      </div>
+      <br>
+      <ng-container>
+         <table
+            aria-describedby="material-table"
+            class="m-1 bg-card"
+            mat-table
+            [dataSource]="dataSource"
+            style="border-radius: 10px!important;"
+            matSort>
+            <!-- Position Column -->
+            <ng-container matColumnDef="descripcionEvaluado">
+               <th mat-header-cell *matHeaderCellDef
+                  style='width: 25%; position: center; color: #000000; font-weight: bold;'> Evaluado </th>
+               <td mat-cell style='width: 25%;' *matCellDef="let element"> {{element.nombreEvaluado}} </td>
+            </ng-container>
+
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="descripcionPuesto">
+               <th mat-header-cell *matHeaderCellDef
+                  style='width: 18%; position: center; color: #000000; font-weight: bold;'> Puesto </th>
+               <td mat-cell style='width: 18%; position: center;' *matCellDef="let element">
+                  {{element.puesto}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="fecha">
+               <th mat-header-cell *matHeaderCellDef
+                  style='width: 15%; position: center; color: #000000; font-weight: bold;'> Fecha </th>
+               <td mat-cell style='width: 15%; position: center;' *matCellDef="let element">
+                  <div class="p-2">
+                     <nb-form-field>
+                        <input #fechaTable nbInput placeholder="dd/mm/aaaa" value={{element.fechaReunion}} disabled
+                           [nbDatepicker]="dateTimePickerTable" fieldSize="large" shape="semi-round">
+                        <nb-icon (click)="fechaTable.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                           icon="calendar-outline">
+                        </nb-icon>
+                        <nb-datepicker #dateTimePickerTable></nb-datepicker>
+                     </nb-form-field>
+                  </div>
+               </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="hora">
+               <th mat-header-cell *matHeaderCellDef
+                  style='width: 12%; position: center; color: #000000; font-weight: bold;'> Hora </th>
+               <td mat-cell style='width: 12%; position: center;' *matCellDef="let element">
+                  <div class="p-2">
+                     <nb-form-field>
+                        <input #horaTable nbInput twelveHoursFormat placeholder="--:--" value={{element.horaReunion}} disabled
+                           [nbTimepicker]="timepickerTable" fieldSize="large" shape="semi-round">
+                        <nb-icon (click)="horaTable.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                           icon="clock-outline">
+                        </nb-icon>
+                        <nb-timepicker #timepickerTable></nb-timepicker>
+                     </nb-form-field>
+                  </div>
+               </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="duracion">
+               <th mat-header-cell *matHeaderCellDef
+                  style='width: 12%; position: center; color: #000000; font-weight: bold;'> Duración </th>
+               <td mat-cell style='width: 12%; position: center;' *matCellDef="let element">
+                  <div class="p-2">
+                     <nb-form-field>
+                        <input #dura1Table nbInput twelveHoursFormat placeholder="--:--" disabled
+                           value={{duracionString(element.duracion)}} [nbTimepicker]="duracionTable" fieldSize="large"
+                           shape="semi-round">
+                        <nb-icon (click)="dura1Table.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                           icon="clock-outline">
+                        </nb-icon>
+                        <nb-timepicker #duracionTable></nb-timepicker>
+                     </nb-form-field>
+                  </div>
+               </td>
+            </ng-container>
+
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="acciones" justify="end">
+               <th mat-header-cell *matHeaderCellDef
+                  style='width: 20%; position: center;  color: #000000; font-weight: bold;'>
+                  Acciones
+               </th>
+               <td mat-cell *matCellDef="let elem" style='width: 20%;position: center; padding: 0;'>
+                  <div class="d-block">
+                     <button nbButton ghost  size="tiny" (click)="openNewReunion(elem)" style="padding: 0; margin-left: 5px; margin-right: 5px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="#8191A4" />
+                        </svg>
+                     </button>
+                     <button nbButton ghost  size="tiny"
+                        (click)="openEditReunion(elem)" style="padding: 0; margin-left: 5px; margin-right: 5px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path
+                              d="M3 17.2501V21.0001H6.75L17.81 9.94006L14.06 6.19006L3 17.2501ZM20.71 7.04006C21.1 6.65006 21.1 6.02006 20.71 5.63006L18.37 3.29006C17.98 2.90006 17.35 2.90006 16.96 3.29006L15.13 5.12006L18.88 8.87006L20.71 7.04006Z"
+                              fill="#8191A4" />
+                        </svg>
+                     </button>
+                     <button nbButton ghost  size="tiny" (click)="openModalNotifacion('N')" style="padding: 0; margin-left: 5px; margin-right: 5px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path
+                              d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z"
+                              fill="#8191A4" />
+                        </svg>
+                     </button>
+                     <button nbButton ghost  size="tiny" (click)="verHistorial(elem)" style="padding: 0; margin-left: 5px; margin-right: 5px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path
+                              d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z"
+                              fill="#8191A4" />
+                        </svg>
+                     </button>
+                  </div>
+               </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+
+         </table>
+         <div *ngIf="this.dataSource.filteredData.length === 0" class="p-3 bg-card mx-1"
+            style="background-color: white;">
+            No se encontraron resultados
+         </div>
+      </ng-container>
+      <br>
+      <div class="d-flex justify-content-end  ">
+         <mat-paginator *ngIf="isPageable" [pageSizeOptions]="paginationSizes" [pageSize]="defaultPageSize"
+            showFirstLastButtons aria-label="Select page">
+         </mat-paginator>
+      </div>
+      <br>
+
+      <br>
+      <div class="mb-3 col-12">
+         <div class="w-100 text-center">
+            <button nbButton shape="round" size="medium" status="info" outline class="mr-3 button-panel-1"
+               (click)='excluir()' *ngIf="showDownloadReport">
+               <mat-icon aria-hidden="false" class="mr-2 mf-1" aria-label="Example home icon">cloud_download</mat-icon>
+               Descargar reporte
+            </button>
+         </div>
+      </div>
+
+   </div>
+</div>
+
+
+
+<!--nb-card>
+
+      <div class="container-fluid mt-3" [formGroup]="filterForm">
+         <h4>Datos del Evaluado</h4>
+         <div class="row search-panel">
+
+            <div class="mb-3 col-md-3">
+               <label>Órgano/UO/Sub UO</label>
+               <nb-select formControlName="unidadOrganicaId" placeholder="Seleccione" fullWidth="true" [size]="'large'"
+                  shape="semi-round">
+                  <nb-option *ngFor="let unidadCbo of unidadOrganicaCbo" [value]="unidadCbo.id">
+                     {{ unidadCbo.descripcion }}
+                  </nb-option>
+               </nb-select>
+            </div>
+            <div class="mb-3 col-md-3">
+               <label>Puesto</label>
+               <nb-select formControlName="puestoId" placeholder="Seleccione" fullWidth="true" [size]="'large'"
+                  shape="semi-round">
+                  <nb-option *ngFor="let cboTipDoc of listaPuestos" [value]="cboTipDoc.codigoNumero">
+                     {{ cboTipDoc.valorTexto }}
+                  </nb-option>
+               </nb-select>
+            </div>
+            <div class="mb-3 col-md-6">
+               <label>Evaluados</label>
+               <nb-select formControlName="puestoId" placeholder="Seleccione" fullWidth="true" [size]="'large'"
+                  shape="semi-round">
+                  <nb-option *ngFor="let cboTipDoc of listaPuestos" [value]="cboTipDoc.codigoNumero">
+                     {{ cboTipDoc.valorTexto }}
+                  </nb-option>
+               </nb-select>
+            </div>
+            <div class="mb-3 col-md-3">
+               <label for='fecha'>Fecha</label>
+               <nb-form-field>
+                  <input #fecha id='fecha' formControlName="fecha" nbInput placeholder="Ingresar"
+                     [nbDatepicker]="dateTimePicker1" fieldSize="large" shape="semi-round">
+                  <nb-icon (click)="fecha.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                     icon="calendar-outline">
+                  </nb-icon>
+                  <nb-datepicker #dateTimePicker1></nb-datepicker>
+               </nb-form-field>
+               <div *ngIf="f.fecha.invalid && f.fecha.touched" class="invalid-text flex-column">
+                  <span *ngIf="f.fecha.errors.required">
+                     El campo es obligatorio
+                  </span>
+               </div>
+            </div>
+            <div class="mb-3 col-md-3">
+               <label for='hora'>Hora</label>
+               <nb-form-field>
+                  <input #hora1 id='hora' formControlName="hora" nbInput twelveHoursFormat placeholder="Ingresar"
+                     [nbTimepicker]="timepicker" fieldSize="large" shape="semi-round">
+                  <nb-icon (click)="hora1.click()" style="cursor: pointer;" nbSuffix class="mr-2" icon="clock-outline">
+                  </nb-icon>
+                  <nb-timepicker #timepicker></nb-timepicker>
+               </nb-form-field>
+
+               <div *ngIf="f.hora.invalid && f.hora.touched" class="invalid-text flex-column">
+                  <span *ngIf="f.hora.errors.required">
+                     El campo es obligatorio
+                  </span>
+               </div>
+            </div>
+            <div class="mb-3 col-md-3">
+               <label>Duración</label>
+               <nb-form-field>
+                  <input #duracion id='duracion' formControlName="duracion" nbInput twelveHoursFormat
+                     placeholder="seleccione" [nbTimepicker]="timepicker" fieldSize="large" shape="semi-round">
+                  <nb-icon (click)="duracion.click()" style="cursor: pointer;" nbSuffix class="mr-2"
+                     icon="clock-outline">
+                  </nb-icon>
+                  <nb-timepicker #timepicker></nb-timepicker>
+               </nb-form-field>
+
+               <div *ngIf="f.duracion.invalid && f.duracion.touched" class="invalid-text flex-column">
+                  <span *ngIf="f.duracion.errors.required">
+                     El campo es obligatorio
+                  </span>
+               </div>
+            </div>
+
+
+            <div class="col-3 my-2 text-right">
+               <button nbButton shape="round" size="medium" status="primary" outline class="mr-3 button-panel-1"
+                  (click)='clear()'>
+                  Limpiar
+               </button>
+               <button nbButton shape="round" size="medium" class="button-panel-1"
+                  style='color: white; background-color: #0dacbc;' (click)='search()'>
+                  Registrar
+               </button>
+            </div>
+         </div>
+      </div>
+   </nb-card -->

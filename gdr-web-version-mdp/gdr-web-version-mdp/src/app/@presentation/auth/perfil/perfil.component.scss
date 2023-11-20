@@ -1,0 +1,112 @@
+.titulo {
+    padding-top: 2px;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.tituloPage {
+  font-size: 24px;
+  color: #0dacbc !important;
+  margin: 0;
+  padding: 0;
+}
+
+.closed {
+    border-color: blue;
+    margin-top: -50px;
+    padding-top: -50px;
+}
+
+.texto1 {
+    font-size: 1rem;
+    text-align:center;
+    font-weight:bold;
+    margin: 0;
+    padding: 0;
+}
+
+.h6 {
+    text-align:center;
+    font-weight:bold;
+}
+
+.padre {
+  padding: 0.1rem 1rem 1rem;
+  display: flex;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    align-items:center;
+}
+
+.hijo {
+    padding:1.9rem;
+    margin:1.9rem;
+    text-align:center;
+    width:25%;
+    height:90%;
+}
+
+.hijo2 {
+  padding:2rem;
+  margin:2rem;
+  text-align:center;
+  width:37.5%;
+  height:90%;
+}
+
+.imagen {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    border-color: blue;
+    object-fit: cover;
+  align-items: center;
+}
+
+.padre .hijo img:hover {
+    cursor: pointer;
+    box-shadow: 0.1px 0.1px 5px 3px rgba(0.1,162,255,0.5);
+}
+
+.padre .hijo img:hover ~ h3 {
+    cursor: pointer;
+    color: rgba(0,162,255, 0.5);
+    font-weight: 500;
+}
+
+.boton {
+  background-color: #0dacbc;
+  color: white;
+  width: 100%;
+  border-radius: 25px;
+  font-weight: bold;
+  height: 100%;
+  border: #0dacbc;
+}
+
+.boton:disabled {
+  background-color: #CED4DA;
+  color: white;
+  width: 100%;
+  border-radius: 25px;
+  font-weight: bold;
+  height: 100%;
+  border: #0dacbc;
+}
+
+.card-img:hover {
+    background-color: blue;
+    animation-name: example;
+    animation-duration: 3s;
+}
+
+.marca {
+  cursor: pointer;
+  box-shadow: 0.1px 0.1px 5px 3px rgba(0.1,162,255,0.5);
+}
+
+.marcaOff {
+  cursor: pointer;
+  box-shadow: 0.1px 0.1px 5px 3px rgba(18, 32, 25, 0.1);
+}

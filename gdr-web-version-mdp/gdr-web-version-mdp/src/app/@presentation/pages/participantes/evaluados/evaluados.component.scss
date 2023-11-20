@@ -1,0 +1,44 @@
+.round {
+  border-radius: 42px;
+}
+.body {
+  background-color: #EDF0F4;
+}
+
+.leyenda {
+  background-color: #eff2f4;
+  flex-direction: column;
+  border-radius: 10px;
+  border-right: 2px solid #d9e0e9;
+  .leyenda-item {
+    padding: 5px 20px;
+    margin: 0 auto;
+    .circle {
+      font-size: 1.5rem;
+      margin-right: 10px;
+    }
+    .success {
+      color: #00bfa6;
+    }
+
+    .warning {
+      color: #f7ac52;
+    }
+    .danger {
+      color: #fc5162;
+    }
+    .info {
+      color: #e4520f;
+    }
+    .gray {
+      color: #8191a4;
+    }
+    &.end {
+      border-right: none;
+    }
+    .texto {
+      color: #788594;
+      float: right;
+    }
+  }
+}

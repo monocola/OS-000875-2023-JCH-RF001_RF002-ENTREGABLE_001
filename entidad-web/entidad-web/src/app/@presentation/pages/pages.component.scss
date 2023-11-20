@@ -1,0 +1,20 @@
+@import '~@nebular/theme/styles/theming';
+
+::ng-deep .dashboardHeader {
+  width: 100%;
+}
+
+::ng-deep .rootBase {
+  position: relative !important;
+  background-color: #f5f5f5 !important;
+}
+
+.body__wide {
+  min-height: calc(100vh - 11rem);
+  background-color: white;
+}
+
+.body__footer {
+  height: 6.25rem;
+  background-color: white;
+}

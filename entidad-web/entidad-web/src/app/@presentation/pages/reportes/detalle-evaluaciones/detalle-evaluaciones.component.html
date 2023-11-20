@@ -1,0 +1,205 @@
+<div class="body">
+  <div>
+    <div class="row pb-3 px-5">
+      <div class="col-1">
+        <div class="row">
+          <img class="photo-postul" alt="profile" width="96" src="../../../../../assets/images/photo-postulante.png">
+        </div>
+      </div>
+      <div class="col-7">
+        <h3 style="display: flex" class="titlePage back-font-weight">
+          <div class="cursor-pointer" (click)="back()">
+            <mat-icon class="label__selected">navigate_before</mat-icon>
+          </div>
+          <div class="text-dark fs-18">
+            {{infoPostulante?.nombreCompleto}}
+          </div>
+        </h3>
+        <div class="row pt-0 mt-0 ml-2">
+          <span class="text-secondary fs-13">{{infoPostulante?.resumen}}</span>
+        </div>
+        <div class="pl-4">
+          <div class="row">
+            <div class="col-sm">
+              <div class="row"><span class="text-secondary fs-13">{{infoPostulante?.desTipoDoc | titlecase}}: </span><span class="text-secondary fs-13">{{infoPostulante?.nroDocumento}}</span></div>
+              <div class="row"><span class="text-secondary fs-13">Edad: </span><span class="text-secondary fs-13">{{infoPostulante?.edad}}</span></div>
+              <div class="row"><span class="text-secondary fs-13">{{infoPostulante?.correo}}</span></div>
+            </div>
+            <div class="col-sm">
+              <div class="row"><span class="text-secondary fs-13"><mat-icon class="fs-12">cake</mat-icon>nac.</span> <span class="text-secondary fs-13">{{infoPostulante?.fechaNacimiento}}</span></div>
+              <div class="row"><span class="text-secondary fs-13"><mat-icon class="fs-12">place</mat-icon>{{infoPostulante?.direccion}}</span></div>
+              <div class="row"><span class="text-secondary fs-13"><mat-icon class="fs-12">phone</mat-icon>{{infoPostulante?.telefono}}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 text-center">
+        <div class="card col-md-8">
+          <div>
+            <!-- <img alt="" src="/src/assets/images/icons/img.svg"> -->
+          </div>
+          <div class="row d-flex justify-content-center  py-2">
+            <mat-icon>perm_identity</mat-icon>
+            <div class="resumeninfo 4 text-info text-center">
+              PUBLICADA
+            </div>
+          </div>
+          <div class="row pt-2 border custom-footer-card pb-2">
+            <div class="col-6 px-0 text-center fs-13">Etapa</div>
+            <div class="col-6 px-0 text-center fs-15">{{infoPostulante?.descEtapa}}</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</div>
+<div>
+  <div>
+    <div class="row pb-3 px-5 m-0">
+      <div class="col-3 pt-3 ">
+        <div class="row fs-12">Codigo de convocatoria</div>
+        <div class="row fs-16 pt-2">
+          {{infoPostulante?.codigoConvocatoria}}
+        </div>
+        <div class="row pt-3 fs-12">Nombre de perfil</div>
+        <div class="row text-info fs-16 pt-2">
+         {{infoPostulante?.nombrePuesto}}
+        </div>
+        <div class="row pt-3 fs-12">Modalidad de Acceso</div>
+        <div class="row fs-16 pt-2">
+          {{infoPostulante?.modalidadAcceso}}
+        </div>
+        <div class="row pt-3 fs-12">Tipo</div>
+        <div class="row fs-16 pt-2">
+          {{infoPostulante?.desTipo}}
+        </div>
+
+      </div>
+
+      <div class="col-9 pt-3 px-4">
+        <div class="card px-4">
+            <div class="row p-2">
+              <div class="col-2 pr-0 text-right"><mat-icon class="text-secondary">calendar_today</mat-icon></div>
+              <div class="col-5 px-0 pl-1 fs-16 font-weight-bold text-left">Etapas vs Evaluaciones</div>
+              <div class="col-5">
+                <div class="text-info fs-13 text-right">{{infoPostulante?.periodo}}</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-7">
+                <div class="row pb-3 font-weight-bold">
+                  <div class="col-3 fs-13 pl-2">ETAPA</div>
+                  <div class="col-3 fs-13 text-center">PERIODOS</div>
+                  <div class="col-3 fs-13 text-center">NOTAS</div>
+                  <div class="col-2"></div>
+                </div>
+
+                <div class="row" *ngFor="let item of infoPostulante?.lstEtapas">
+                  <div class="col-3 text-secondary fs-13 pl-2">{{item.etapa}}</div>
+                  <div class="col-3 text-secondary fs-13 text-center">{{item.periodo}}</div>
+                  <div class="col-3 text-secondary fs-13 text-center">{{item.nota}}</div>
+                  <div class="col-2 ">
+                    <span class="material-icons correct-style" *ngIf="item.califica === 1">check_circle_outline</span>
+                  </div>
+                </div>
+
+
+                <!-- <div class="row">
+                  <div class="col-3 text-secondary fs-13 pl-2">Difusión</div>
+                  <div class="col-3 text-secondary fs-13 text-center">01 - 10/11/2020</div>
+                  <div class="col-3 text-secondary fs-13 text-center"> - </div>
+                  <div class="col-2 "><span class="material-icons correct-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-secondary fs-13 pl-2">Reclutamiento</div>
+                  <div class="col-3 text-secondary fs-13 text-center">10 - 12/11/2020</div>
+                  <div class="col-3 text-secondary fs-13 text-center"> - </div>
+                  <div class="col-2 "><span class="material-icons correct-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-secondary fs-13 pl-2">Ev. Curricular</div>
+                  <div class="col-3 text-secondary fs-13 text-center">14 - 15/11/2020</div>
+                  <div class="col-3 text-secondary fs-13 text-center">16</div>
+                  <div class="col-2 "><span class="material-icons correct-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-info fs-13 pl-2">Ev. Técnica</div>
+                  <div class="col-3 text-info fs-13 text-center">17 - 20/11/2020</div>
+                  <div class="col-3 text-info fs-13 text-center">17</div>
+                  <div class="col-2 "><span class="material-icons incorrect-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-info fs-13 pl-2">Ev. Conocimientos</div>
+                  <div class="col-3 text-info fs-13 text-center">22 - 23/11/2020</div>
+                  <div class="col-3 text-info fs-13 text-center"> - </div>
+                  <div class="col-2 "><span class="material-icons incorrect-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-info fs-13 pl-2">Ev. Psicológica</div>
+                  <div class="col-3 text-info fs-13 text-center">25 - 27/11/2020</div>
+                  <div class="col-3 text-info fs-13 text-center"> - </div>
+                  <div class="col-2 "><span class="material-icons incorrect-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-info fs-13 pl-2">Ev. Entrevista</div>
+                  <div class="col-3 text-info fs-13 text-center">28 - 29/11/2020</div>
+                  <div class="col-3 text-info fs-13 text-center"> - </div>
+                  <div class="col-2 "><span class="material-icons incorrect-style">check_circle_outline</span></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-3 text-info fs-13 pl-2">Ev. Elección</div>
+                  <div class="col-3 text-info fs-13 text-center">30 - 01/11/2020</div>
+                  <div class="col-3 text-info fs-13 text-center"> - </div>
+                  <div class="col-2 "><span class="material-icons incorrect-style">check_circle_outline</span></div>
+                </div> -->
+              </div>
+
+              <div class="col-5">
+                <div class="row pb-3 font-weight-bold">
+                  <div class="col-4 fs-13 pl-2">DESCRIPCION</div>
+                  <div class="col-4 fs-13 pl-2">VALIDACION</div>
+                  <div class="col-4 fs-13 pl-2">FECHA</div>
+                </div>
+
+                <div class="row" *ngFor="let item of infoPostulante?.lstIndicadores">
+                  <div class="col-4 text-secondary fs-13 pl-2">{{item.descripcion}}</div>
+                  <div class="col-4">
+                    <span class="material-icons correct-style" *ngIf="item.califica" >check_circle_outline</span>
+                  </div>
+                  <div class="col-4 text-secondary fs-13 text-center">{{item.fecha}}</div>
+
+                </div>
+
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <mat-divider></mat-divider>
+<div>
+  <div class="flex-v-center mt-3 px-3">
+    <div class="flex-spacer"></div>
+    <button type="button" nbButton shape="round" status="primary" class="px-5" (click)="descargarPDF()">
+        Descargar PDF<nb-icon icon="descargar"></nb-icon>
+      </button>
+
+
+  </div>
+</div>
+

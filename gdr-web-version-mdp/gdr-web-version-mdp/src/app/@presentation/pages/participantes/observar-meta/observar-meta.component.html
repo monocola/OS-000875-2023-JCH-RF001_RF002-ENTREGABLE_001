@@ -1,0 +1,69 @@
+<div class='d-flex w-100 header-modal'>
+    <div class="">
+        <p class="parrafo">
+            Observar meta
+        </p>
+      </div>
+
+    <span class='flex-spacer'></span>
+    <nb-icon class='mr-2 btnClose' nbSuffix icon='close'  (click)="onNoClick(false)"></nb-icon>
+</div>
+  <mat-divider class='divider-modal'></mat-divider>
+
+  
+  <div class="py-3 px-2 bodyModal">
+    <form [formGroup]="registerForm">
+
+          <div class="mb-3 col-md-12">
+              <label for='anio'>Ingrese el motivo de la observación</label>
+              <nb-form-field>
+                  <textarea 
+                  formControlName="descripcionObservacion"
+                  nbInput
+                  fullWidth 
+                  placeholder="Ingrese"
+                  fieldSize="large"
+                  [status]="f.descripcionObservacion.invalid && f.descripcionObservacion.touched ? 'danger' : 'basic' "
+
+                  ></textarea>
+              </nb-form-field>
+
+              <div *ngIf="f.descripcionObservacion.invalid && f.descripcionObservacion.touched"
+              class="invalid-text flex-column">
+              <span *ngIf="f.descripcionObservacion.errors.required">
+                  El campo es obligatorio
+              </span>
+          </div>
+          </div> 
+        
+        
+          <div class="flex-v-center mt-4">
+          
+            <button
+              nbButton
+              shape="round"
+              status="primary"
+              class="py-2 px-5 mr-3"
+              (click)="observarMetas()"
+              style='color: white; background-color: #0DACBC; border-color: #0DACBC;'
+              size="large"
+            >
+              {{ data.textOk || 'Guardar' }}
+            </button>
+        
+            <button
+            nbButton
+            outline
+            shape="round"
+            status="primary"
+            class="py-2 px-5"
+            (click)="onNoClick()"
+            style='color: white; background-color: #ADB5BD; border-color: #ADB5BD;'
+            size="large"
+          >
+            {{ data.textCancel || 'Cancelar' }}
+          </button>
+          </div>
+    </form>
+  </div>
+  

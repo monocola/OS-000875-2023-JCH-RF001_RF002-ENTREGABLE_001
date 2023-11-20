@@ -1,0 +1,55 @@
+<form [formGroup]="helperService.form6" class="px-5">
+  <ng-container *ngIf="helperService.observaciones[5].description">
+    <serv-talento-observacion-base-div
+      [observacion]="helperService.observaciones[5]"
+      (editEmitter)="helperService.editObservacion()"
+      (deleteEmitter)="helperService.deleteObservacion()"
+      (resolverEmitter)="helperService.resolverObservacion()"
+      [showButtons]="helperService.estadoBase !== const.ETA_BASE_OBSERVADO"
+      [onlyShow]="helperService.estadoBase == const.ETA_BASE_OBSERVADO && (authRepository.isCoordinador() || authRepository.isSuperAdminEntidad())"
+    ></serv-talento-observacion-base-div>
+  </ng-container>
+
+  <h6 class="d-flex">Información complementaria</h6>
+
+  <div class="row mb-3 mt-3">
+    <div class="col-3">
+      <select-field
+        label="Tipos de informe"
+        [control]="f.tipoDeInforme"
+        [items]="helperService.tiposDeInforme"
+        value="value"
+        valueToShow="valueToShow"
+        (selectedChange)="updateInformes($event)"
+      >
+      </select-field>
+    </div>
+    <div class="col-9">
+      <buscar-documento
+        label="Seleccione un informe"
+        placeholder="Buscar informe"
+        [maxItems]="10"
+        [controlDocument]="f.informes"
+        [items]="listaDeInformes"
+        [itemsSeleccionados]="informesSeleccionados"
+        fieldToShow="description"
+        (selectedChange)="setItemsSelected($event)"
+        (pdfSelected)="showPDFSelected($event)"
+      >
+      </buscar-documento>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <input-field
+        [label]="'Observación (opcional)'"
+        [control]="f.observacion"
+        [maxlength]="200"
+        [minlength]="1"
+        [banKeyType]="5"
+      >
+      </input-field>
+    </div>
+  </div>
+</form>

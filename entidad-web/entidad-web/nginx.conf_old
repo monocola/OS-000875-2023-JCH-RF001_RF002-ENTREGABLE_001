@@ -1,0 +1,32 @@
+events{}
+
+http {
+
+    include /etc/nginx/mime.types;
+    
+    server {
+        
+        listen 80;
+        server_name localhost;
+        root /usr/share/nginx;
+        index index.html;
+
+        location /entidadweb {
+          
+        }
+
+        location ~ \.css {
+            add_header  Content-Type  text/css;
+        }
+
+        location ~ \.js {
+            add_header  Content-Type  application/x-javascript;
+        }
+
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+    }
+}
+

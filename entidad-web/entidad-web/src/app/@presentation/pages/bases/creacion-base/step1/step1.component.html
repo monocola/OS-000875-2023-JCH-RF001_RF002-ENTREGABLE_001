@@ -1,0 +1,164 @@
+<form [formGroup]="helperService.form1" class="px-5">
+  <ng-container *ngIf="helperService.observaciones[0].description">
+    <serv-talento-observacion-base-div
+      [observacion]="helperService.observaciones[0]"
+      (editEmitter)="helperService.editObservacion()"
+      (deleteEmitter)="helperService.deleteObservacion()"
+      (resolverEmitter)="helperService.resolverObservacion()"
+      [showButtons]="helperService.estadoBase !== const.ETA_BASE_OBSERVADO"
+      [onlyShow]="helperService.estadoBase == const.ETA_BASE_OBSERVADO && (authRepository.isCoordinador() || authRepository.isSuperAdminEntidad())"
+    ></serv-talento-observacion-base-div>
+  </ng-container>
+
+  <h6 class="d-flex">Datos del concurso</h6>
+
+  <mat-form-field class="w-40">
+    <input
+      class="inputPuesto"
+      matInput
+      type="text"
+      placeholder="Ingrese denominación"
+      formControlName="nombreConcurso"
+      oninput="this.value = this.value.replace(/[^0-9a-zA-Z-()_ñÑáéíóúÁÉÍÓÚüÜöÖ. ]/g, '')"
+    />
+    <mat-icon matSuffix>edit</mat-icon>
+    <mat-error *ngIf="f.nombreConcurso.invalid && f.nombreConcurso.touched">
+      <span class="invalid-text m-0">El campo es obligatorio</span>
+    </mat-error>
+  </mat-form-field>
+
+  <div
+    [ngClass]="{ 'mt-3': f.nombreConcurso.invalid && f.nombreConcurso.touched }"
+  >
+    <textarea-field
+      [control]="f.objetivo"
+      [maxlength]="250"
+      [label]="'Objetivo del concurso'"
+      [placeholder]="'Ingrese texto'"
+    >
+    </textarea-field>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-3 mb-3">
+      <autocomplete
+        [label]="'Órgano'"
+        [placeholder]="'Busca un órgano'"
+        [control]="f?.organo"
+        [fieldToShow]="'descripcion'"
+        [items]="helperService.organos"
+        [requiredField]="true"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="col-md-3 mb-3" *ngIf="helperService.jerarquiaMode === 0">
+      <autocomplete
+        [label]="'Unidad orgánica'"
+        [placeholder]="'Busca una unidad orgánica'"
+        [control]="f?.unidadOrganica"
+        [fieldToShow]="'unidadOrganica'"
+        [items]="helperService.unidadesOrganicas"
+        [requiredField]="true"
+      >
+      </autocomplete>
+    </div>
+
+    <div class="col-md-3 mb-3" *ngIf="helperService.jerarquiaMode === 0">
+      <select-field
+        [label]="'Órgano encargado del proceso de selección'"
+        [control]="f.organoEncargado"
+        [items]="helperService.organosEncargados"
+        [valueToShow]="'descripcion'"
+        [value]="'maeDetalleId'"
+      >
+      </select-field>
+    </div>
+
+    <div class="col-md-3 mb-3" *ngIf="helperService.jerarquiaMode === 1">
+      <select-field
+        [label]="'Tipo de prácticas'"
+        [control]="f.tipoPractica"
+        [items]="helperService.tipoPracticas"
+        [valueToShow]="'descripcion'"
+        [value]="'maeDetalleId'"
+      >
+      </select-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <input-field
+        [label]="'Ingrese correo de contacto'"
+        [control]="f.correo"
+        [maxlength]="100"
+        [banKeyType]="7"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <input-field
+        [label]="'Teléfono'"
+        [placeholder]="'(00)-0000000'"
+        [control]="f.telefono"
+        [maxlength]="15"
+        [minlength]="8"
+        [banKeyType]="1"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <input-field
+        [label]="'Anexo'"
+        [placeholder]="'0000'"
+        [control]="f.anexo"
+        [maxlength]="11"
+        [minlength]="1"
+        [banKeyType]="1"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-2">
+      <input-field
+        [label]="'Vacantes disponibles'"
+        [control]="f.numeroVacantes"
+        [maxlength]="100"
+        [minlength]="1"
+        [banKeyType]="2"
+      >
+      </input-field>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <buscar-documento
+        label="base legal generíca"
+        placeholder="base legal generíca"
+        [maxItems]="1"
+        [controlDocument]="f.baseSeleccionada"
+        [items]="this.helperService.informeBases || []"
+        [itemsSeleccionados]="this.basesLegales"
+        fieldToShow="description"
+        (selectedChange)="setItemsSelected($event)"
+        (pdfSelected)="showPDFSelected($event)"
+      >
+      </buscar-documento>
+    </div>
+
+    <div class="mb-3 col-md-3">
+      <buscar-documento
+        label="base legal específica (opcional)"
+        placeholder="base legal específica"
+        [maxItems]="1"
+        [controlDocument]="f.baseSeleccionadaEsp"
+        [items]="this.helperService.informeBasesEsp || []"
+        [itemsSeleccionados]="this.basesLegalesEsp"
+        fieldToShow="description"
+        (selectedChange)="setItemsSelectedEsp($event)"
+        (pdfSelected)="showPDFSelectedEsp($event)"
+      >
+      </buscar-documento>
+    </div>
+  </div>
+</form>

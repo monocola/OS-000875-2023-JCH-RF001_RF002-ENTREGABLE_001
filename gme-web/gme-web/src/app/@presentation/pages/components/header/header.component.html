@@ -1,0 +1,55 @@
+<div class="flex-v-center h-100">
+  <div class="logo">
+      <img class="ml-4 logoEntidad" alt=""
+           [src]="this.imgEntidad" />
+  </div>
+  <span style="flex: 1 0;"></span>
+  <div class='col-md-2 m-1 p-1'>
+    <div class='row-cols-1 flex-v-center-right titleUser'>
+      {{ profile.nombres.split(' ')[0] + ' ' + profile.apellidoPaterno | titlecase }}
+    </div>
+    <div class='row-cols-1 text-right'>
+      <div class="btn-group lista-roles mt-1" dropdown>
+        <button dropdownToggle type="button" class="btn dropdown-toggle">
+          {{ nombreRol }} <span class="caret"></span>
+        </button>
+        <div #ocultarEspacio>
+          <div id="dropdown-basic" *dropdownMenu class="dropdown-menu">
+            <a *ngFor="let rol of roles" (click)="cambioRol(rol.rolId)"><a class="dropdown-item">{{rol.nombreRol}}</a></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex-v-center menuProfileTrigger mr-5 px-2"
+    [matMenuTriggerFor]="menu"
+  >
+    <div class="col-md-1 flex-v-center item p-0">
+      <img alt="icon profile" [src]="url" class="rounded-circle" />
+    </div>
+  </div>
+</div>
+
+<mat-menu #menu="matMenu" class="flex-v-center w-100 p-0">
+  <div class="flex-v-center item p-2">
+    <img alt="icon profile" [src]="url" class="rounded-circle" />
+    <div class="ml-3">
+      <div class="nameUser fw-500">{{ profile.nombreCompleto }}</div>
+      <div class="redirectProfile" [routerLink]="['/pages/profile']">
+        Ver mi perfil
+      </div>
+    </div>
+    <span class="flex-spacer"></span>
+    <div class="px-4"></div>
+  </div>
+
+  <hr />
+
+  <div class="flex-v-center-left item__option p-2 w-100" (click)="logout()">
+    <div class="flex-v-center item__option__icon mr-3">
+      <fa-icon class="icon li fs-20" [icon]="iconOut"></fa-icon>
+    </div>
+    <span class="fs-16"> Salir </span>
+  </div>
+</mat-menu>

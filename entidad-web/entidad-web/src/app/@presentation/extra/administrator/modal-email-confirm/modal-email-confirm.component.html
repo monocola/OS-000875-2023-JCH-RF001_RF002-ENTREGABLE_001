@@ -1,0 +1,124 @@
+<div style="background-color: white !important">
+  <div class="w-100 h-100 px-5 py-3 flex-v-center flex-column">
+    <img src="assets/images/icons/send.png" alt="envio imagen" />
+
+    <div class="mt-4 title">Verificación de correo electronico</div>
+    <div class="mt-4">Se envió un mensaje con un código de verificación a</div>
+    <div class="text-center">
+      <strong
+        >{{
+          this.data?.correo.toLowerCase() || 'manuel.bs@essalud.com'
+        }}.</strong
+      >
+      Ingrese el código para continuar.
+    </div>
+
+    <form [formGroup]="form">
+      <div class="input-box">
+        <input
+          class="pad"
+          formControlName="code_1"
+          #code_1_input
+          maxlength="1"
+          minlength="1"
+          type="text"
+          (ngModelChange)="change_code_input($event, 'code_2_input')"
+          nbInput
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="status"
+        />
+        <input
+          class="pad"
+          formControlName="code_2"
+          #code_2_input
+          maxlength="1"
+          minlength="1"
+          type="text"
+          (ngModelChange)="change_code_input($event, 'code_3_input')"
+          nbInput
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="status"
+        />
+        <input
+          class="pad"
+          formControlName="code_3"
+          #code_3_input
+          maxlength="1"
+          minlength="1"
+          type="text"
+          (ngModelChange)="change_code_input($event, 'code_4_input')"
+          nbInput
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="status"
+        />
+        <input
+          class="pad"
+          formControlName="code_4"
+          #code_4_input
+          maxlength="1"
+          minlength="1"
+          type="text"
+          (ngModelChange)="change_code_input($event, 'code_5_input')"
+          nbInput
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="status"
+        />
+        <input
+          class="pad"
+          formControlName="code_5"
+          #code_5_input
+          maxlength="1"
+          minlength="1"
+          type="text"
+          (ngModelChange)="change_code_input($event, 'code_6_input')"
+          nbInput
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="status"
+        />
+        <input
+          class="pad"
+          formControlName="code_6"
+          #code_6_input
+          maxlength="1"
+          minlength="1"
+          type="text"
+          nbInput
+          oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+          [status]="status"
+        />
+      </div>
+    </form>
+
+    <button
+      class="mt-4"
+      nbButton
+      shape="round"
+      status="primary"
+      fullWidth
+      (click)="validar()"
+    >
+      <ng-container *ngIf="timeDifference > 0">
+        Validar (<ng-container *ngIf="daysToDday > 0"
+          ><span id="days"> {{ daysToDday }} </span>dia(s)</ng-container
+        >
+        <ng-container *ngIf="hoursToDday > 0"
+          ><span id="hours" *ngIf="hoursToDday > 0"> {{ hoursToDday }} </span
+          >hrs</ng-container
+        >
+        <ng-container *ngIf="minutesToDday > 0"
+          ><span id="minutes" *ngIf="minutesToDday > 0">
+            {{ minutesToDday }} </span
+          >min</ng-container
+        >
+        <ng-container *ngIf="secondsToDday > 0"
+          ><span id="seconds" *ngIf="secondsToDday > 0">
+            {{ secondsToDday }} </span
+          >s</ng-container
+        >)
+      </ng-container>
+      <ng-container *ngIf="timeDifference <= 0">
+        Volver a enviar el codigo
+      </ng-container>
+    </button>
+  </div>
+</div>

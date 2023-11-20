@@ -1,0 +1,311 @@
+<div class="body">
+  <div class="d-flex title-container pl-4 pr-4">
+    <h4 class="titlePage">Evaluaciones</h4>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="body-margin mb-5 mt-2">
+    <div class="mt-3" [formGroup]="filterForm">
+      <div class="subtitle">Filtros de búsqueda</div>
+
+      <div class="row mt-3">
+
+        <div class="col-md-3 mb-3">
+          <nb-form-field>
+            <label>Evaluaciones</label>
+            <nb-select formControlName="evaluaciones" placeholder="Seleccione la evaluacion" fullWidth shape="rectangle"
+              size="large" (selectedChange)="onChangeEvaluacion($event)">
+              <nb-option *ngFor="let item of lstEvaluacion" [value]="item.evaluacionDetalleId">{{
+                item.descripcion
+                }}</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+
+        <div class="col-md-2 mb-3">
+          <label>Perfil del puesto</label>
+          <nb-form-field>
+            <nb-select placeholder="Seleccione perfil" fullWidth shape="rectangle" formControlName="perfilId"
+              size="large" (selectedChange)="cambioPerfil($event)">
+              <nb-option value="">---Todos---</nb-option>
+              <nb-option *ngFor="let item of lstPerfil" [value]="item.idPerfil">{{ item.desPerfil }}</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class="col-md-2 mb-3" *ngIf="flagConocimiento">
+          <nb-form-field>
+            <label>Grupo</label>
+            <input #inputGrupo formControlName="desGrupo" id="desGrupo" nbInput type="text" fullWidth
+              placeholder="Indicar Grupo" maxlength="120" (input)="onChangeGrupo()" [nbAutocomplete]="autoGrupo"
+              shape="semi-round" fieldSize="large" />
+            <nb-icon class="icon__search" nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+
+          <nb-autocomplete #autoGrupo (selectedChange)="onSelectionChangeGrupo($event)" formControlName="programacionId"
+            ngDefaultControl>
+            <nb-option *ngFor="let option of filteredOptionsGrupo$ | async" [value]="option.desGrupo">
+              {{ option.desGrupo }}
+            </nb-option>
+          </nb-autocomplete>
+        </div>
+        <div class="col-md-2 mb-3" *ngIf="flagConocimiento">
+          <nb-form-field>
+            <label>Modalidad</label>
+            <nb-select placeholder="Seleccione modalidad" fullWidth shape="rectangle" formControlName="modalidadId"
+              (selectedChange)="onSelectionChangeModalidad($event)" size="large">
+              <nb-option value="">---Todos---</nb-option>
+              <nb-option *ngFor="let item of lstModalidad" [value]="item.idMaeDuracion">{{ item.descrDuracion }}
+              </nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+        <div class="col-md-3 mb-3" *ngIf="flagConocimiento">
+          <nb-form-field>
+            <label>Exámen</label>
+            <input #inputExamen formControlName="desExamen" id="desExamen" nbInput type="text" fullWidth
+              placeholder="Indicar Examen" maxlength="120" (input)="onChangeExamen()" [nbAutocomplete]="autoExamen"
+              shape="semi-round" fieldSize="large" />
+            <nb-icon class="icon__search" nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+
+          <nb-autocomplete #autoExamen (selectedChange)="onSelectionChangeExamen($event)" formControlName="examenId"
+            ngDefaultControl>
+            <nb-option *ngFor="let option of filteredOptionsExamen$ | async" [value]="option.desExamen">
+              {{ option.desExamen }}
+            </nb-option>
+          </nb-autocomplete>
+        </div>
+
+        <div *ngIf="butonDisappear == false" class="col-md-3 mb-4">
+          <div class="w-100 h-100 btn_area">
+            <button nbButton shape="round" size="medium" status="primary" outline (click)="limpiar()">
+              Limpiar
+            </button>
+            <button nbButton shape="round" size="medium" status="primary" (click)="buscar()">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="butonDisappear" class="row mt-3">
+        <div class="col-md-3 mb-3">
+          <nb-form-field>
+            <label>N° de Documento</label>
+            <input formControlName="nroDocumento" id="dni" fullWidth nbInput type="text" shape="rectangle"
+              fieldSize="small" placeholder="Buscar" shape="semi-round" maxlength="9" fieldSize="large" />
+            <nb-icon class="icon__search" nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+        </div>
+        <div class="col-md-3 mb-3">
+          <nb-form-field>
+            <label>Nombres y/o Apellidos</label>
+            <input formControlName="nombres" id="nombre" fullWidth nbInput type="text" shape="rectangle"
+              fieldSize="small" placeholder="Buscar" shape="semi-round" maxlength="120" fieldSize="large" />
+            <nb-icon class="icon__search" nbSuffix icon="buscar"></nb-icon>
+          </nb-form-field>
+        </div>
+        <div class="col-md-3 mb-3">
+          <nb-form-field>
+            <label>Estado</label>
+            <nb-select formControlName="estado" placeholder="Seleccione el estado" fullWidth shape="rectangle"
+              size="large">
+              <nb-option value="">---Todos---</nb-option>
+              <nb-option value="0">No Califica</nb-option>
+              <nb-option value="1">Califica</nb-option>
+              <nb-option value="2">Descalificado</nb-option>
+              <nb-option value="3">No asistió</nb-option>
+            </nb-select>
+          </nb-form-field>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <div class="w-100 h-100 btn_area">
+            <button nbButton shape="round" size="medium" status="primary" outline (click)="limpiar()">
+              Limpiar
+            </button>
+            <button nbButton shape="round" size="medium" status="primary" (click)="buscar()">
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+<div class="bg-gray pb-4">
+  <div class="row p-0 m-0">
+    <div class="col-4 m-0 p-0 pl-3">
+      <div class="row list__calificado py-2">
+        <div class="list_form--aligncenter">
+          <div class="fs-12">Postulantes</div>
+          <img src="assets/images/icons/users.svg" height="12px" alt="users" />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ resultadoSize || '0' }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">Califican</div>
+          <img src="assets/images/icons/users-validacion_positiva.svg" alt="validacion-positiva" />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ califican || '0' }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">No califican</div>
+          <img src="assets/images/icons/users-validacion_negativa.svg" alt="validacion-negativa" />
+        </div>
+        <div class="list_form--point pl-2 fs-20 fw-500 align-self-center">
+          {{ noCalifican || '0' }}
+        </div>
+        <mat-divider [vertical]="true" class="px-2"></mat-divider>
+
+        <div class="list_form--aligncenter pl-2">
+          <div class="fs-12">No asistieron</div>
+          <img src="assets/images/icons/users-validacion_negativa.svg" alt="validacion-negativa" />
+        </div>
+        <div class="pl-2 fs-20 fw-500 align-self-center">
+          {{ noAsistio || '0' }}
+        </div>
+
+      </div>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-2 p-0">
+      <div class="w-100 h-100 flex-v-center-right justify-content-center" *ngIf="flagCondicion">
+      <!--<div class="w-100 h-100 btn_area" *ngIf="flagCondicion">-->
+        <!--<button nbButton shape="round" size="medium" status="primary" outline>
+          Confirmar condición
+        </button>-->
+        <button nbButton shape="round" size="medium" status="primary" (click)="subirCondicion()">
+          Subir condición
+        </button>
+      </div>
+
+      <div class="w-100 h-100 flex-v-center-right justify-content-center" *ngIf="flagMasivo">
+        <!--<div class="w-100 h-100 btn_area" *ngIf="flagMasivo">-->
+        <!--<button nbButton shape="round" size="medium" status="primary" outline>
+          Confirmar Notas
+        </button>-->
+        <button nbButton shape="round" size="medium" status="primary" (click)="subirNotas()">
+          &nbsp;&nbsp;&nbsp;&nbsp;Subir notas&nbsp;&nbsp;&nbsp;&nbsp;
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row mb-4 mt-4 container-table" *ngIf="viewTableOtros">
+    <div class="col-12">
+      <ng-container>
+        <serv-talento-tabla-gestion-notas
+          [tableColumns]="evaluacionesTableColumns"
+          [title]="'Listado de Resultados'"
+          [tableData]="this.lstEvaluaciones"
+          [acciones]='true'
+          [isFilterable]="false"
+          [isPageable]="true"
+          (sort)="sortData($event)"
+          [viewTitle]="'Revisar'"
+          (revisarAction)="viewDetailEvaluacion($event)"
+          [pdfTitle]="'Descargar PDF'"
+          (showpdfAction)="downloadPDF($event)"
+          [dataExport]="getDataExportEvaluacionesOtrosAll()"
+          [exportTitle]="'Ver Examen'"
+          fontSize="fs-14"
+          rowHeight="64px"
+        >
+        </serv-talento-tabla-gestion-notas>
+
+        <!--<div class="subtitle">Lista de Resultados</div>
+        <serv-talento-table [tableData]="this.lstEvaluaciones" [tableColumns]="evaluacionesTableColumns"
+          [dataExport]="getDataExportEvaluacionesOtrosAll()"
+          [isFilterable]="false"
+          [isPageable]="true"
+          [paginationSizes]="[5, 10, 15]"
+          [defaultPageSize]="10"
+          (sort)="sortData($event)"
+          [acciones]="true"
+          [title]="'Ver Examen'"
+
+          [btnShowPdf]="true"
+          (showpdfAction)="viewDetailEvaluacion($event)"
+          [btnPdfEnabled]=true
+          [pdfTitle]="'Descargar PDF'"
+          (pdfAction)="downloadPDF($event)"
+          fontSize="fs-14"
+          rowHeight="64px">
+        </serv-talento-table>-->
+      </ng-container>
+    </div>
+  </div>
+
+  <!--<div class="row mb-4 mt-4 container-table" *ngIf="viewTableAll">
+    <div class="col-12">
+      <ng-container>
+        <div class="subtitle">Lista de Resultados 1</div>
+        <serv-talento-table [tableData]="this.lstGeneral" [tableColumns]="evaluacionesTableColumnsAll"
+          [dataExport]="getDataExportEvaluacionesAll()"
+          [isFilterable]="true"
+          [isPageable]="true"
+          [paginationSizes]="[5, 10, 15]"
+          [defaultPageSize]="10"
+          (sort)="sortData($event)"
+          [fontSize]="'fs-14'"
+          rowHeight="64px">
+        </serv-talento-table>
+      </ng-container>
+    </div>
+  </div>-->
+
+  <div class="row mb-4 mt-4 container-table" *ngIf="viewTableOtrosAll">
+    <div class="col-12">
+      <ng-container>
+        <serv-talento-tabla-gestion-notas
+          [tableColumns]="evaluacionesTableColumnsOtroAll"
+          [title]="'Listado de Resultados'"
+          [tableData]="this.lstEvaluaciones"
+          [acciones]='true'
+          [isFilterable]="false"
+          [isPageable]="true"
+          (sort)="sortData($event)"
+          [viewTitle]="'Revisar'"
+          (revisarAction)="viewDetailEvaluacion($event)"
+          [pdfTitle]="'Descargar PDF'"
+          (showpdfAction)="downloadPDF($event)"
+          [dataExport]="getDataExportEvaluacionesOtrosAll()"
+          [exportTitle]="'Ver Examen'"
+          fontSize="fs-14"
+          rowHeight="64px"
+        >
+        </serv-talento-tabla-gestion-notas>
+        <!--<div class="subtitle">Lista de Resultados</div>
+        <serv-talento-table [tableData]="this.lstEvaluaciones" [tableColumns]="evaluacionesTableColumnsOtroAll"
+                            [dataExport]="getDataExportEvaluacionesOtrosAll()"
+                            [isFilterable]="false"
+                            [isPageable]="true"
+                            [paginationSizes]="[5, 10, 15]"
+                            [defaultPageSize]="10"
+                            (sort)="sortData($event)"
+                            [acciones]="true"
+                            [title]="'Ver Examen'"
+                            [btnShowPdf]="true"
+                            (showpdfAction)="viewDetailEvaluacion($event)"
+                            [btnPdfEnabled]="true"
+                            [pdfTitle]="'Descargar PDF'"
+                            (pdfAction)="downloadPDF($event)"
+                            fontSize="fs-14"
+                            rowHeight="64px">
+        </serv-talento-table>-->
+      </ng-container>
+    </div>
+  </div>
+
+</div>

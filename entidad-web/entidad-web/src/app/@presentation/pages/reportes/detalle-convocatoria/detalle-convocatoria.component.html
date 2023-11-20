@@ -1,0 +1,115 @@
+<div class="body">
+  <div>
+    <div class="row pb-3 pl-3">
+      <div class="col-9">
+
+        <h3 style="display: flex;" class="titlePage back-font-weight">
+          <div class="cursor-pointer" (click)="back()">
+            <mat-icon class="label__selected">navigate_before</mat-icon>
+          </div>
+          Convocatoria <span class="pl-2 text-secondary">|  {{detalleCronograma?.codigoConvocatoria}}</span>
+        </h3>
+
+        <div class="pl-4">
+          <div class="row">
+            <div class="col-sm">
+              <div class="row"><span class="text-secondary fs-13">Régimen:</span>&nbsp; <span class="font-weight-bold">{{this.detalleConvocatoria?.regimen}}</span></div>
+              <div class="row"><span class="text-secondary fs-13">Modalidad:</span>&nbsp; <span class="font-weight-bold">{{this.detalleConvocatoria?.modalidad}}</span></div>
+              <div class="row"><span class="text-secondary fs-13">Tipo:</span>&nbsp; <span class="font-weight-bold">{{this.detalleConvocatoria?.tipo}}</span></div>
+            </div>
+            <div class="col-sm">
+              <div class="row"><span class="text-secondary fs-13">Condición:</span>&nbsp; <span class="font-weight-bold">{{this.detalleConvocatoria?.regimenId == 4 ? 'Practicas' : 'Empleo'}}</span></div>
+              <div class="row"><span class="text-secondary fs-13">Gestor:</span>&nbsp; <span class="font-weight-bold">{{this.detalleConvocatoria?.nombreGestor}}</span></div>
+              <div class="row"><span class="text-secondary fs-13">Coordinador:</span>&nbsp; <span class="font-weight-bold">{{this.detalleConvocatoria?.nombreCoordinador}}</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card col-md-12">
+          <div class="row justify-content-center">
+            <img alt="ofimatica outline" src="../../../../../assets/images/icons/ofimatica_outline.svg">
+            <div class="fs-14 py-2 text-center">
+              Etapa
+            </div>
+          </div>
+          <div class="resumeninfo px-4 pb-2 text-info text-center">
+            <!--{{vacantes?.etapa}}-->
+            {{detalleConvocatoria?.etapaConvocatoria}}
+          </div>
+          <div class="row pt-2 border custom-footer-card pb-2">
+            <div class="col-6 px-0 text-center">Vacantes</div>
+            <div class="col-6 px-0 text-center">{{vacantes?.vacante}}</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <mat-divider></mat-divider>
+    <div clasS="row pl-4">
+      <img width="70px" alt="imagen bandeja" src="assets/images/icons/academico.svg" class="py-3" />
+      <h5 style="display: flex; align-items: center;" class="titlePage back-font-weight pl-1">Perfiles</h5>
+    </div>
+    <div class="row pb-3 pl-3">
+      <div class="col-7 row m-0">
+
+        <div class="table bg-gray justify-content-center px-3 m-0">
+          <ng-container>
+            <serv-talento-table-detalle-convocatoria
+              [title]="''"
+              [tableData]="lstDetallePerfiles"
+              (sort)="sortData($event)"
+              fontSize="fs-18"
+              rowHeight="64px"
+            >
+
+            </serv-talento-table-detalle-convocatoria>
+          </ng-container>
+        </div>
+
+      </div>
+
+      <div class="col-5 pt-1">
+        <div class="card px-3">
+            <div class="row p-2">
+              <div class="col-2 pr-0"><span class="material-icons">calendar_today</span></div>
+              <div class="col-4 px-0 fs-15 font-weight-bold"> Cronograma</div>
+              <div class="col-6">
+                <div class="text-info fs-12 text-right">De {{detalleCronograma?.fechaInicioConvocatoria}} </div>
+                <div class="text-info fs-12 text-right">hasta {{detalleCronograma?.fechaFinConvocatoria}}</div>
+              </div>
+            </div>
+
+            <div class="row pb-3 font-weight-bold">
+              <div class="col-4 fs-11 pl-2">ETAPA</div>
+              <div class="col-7 fs-11 text-center">PERIODOS</div>
+              <div class="col-1"></div>
+            </div>
+
+            <div class="row" *ngFor="let itemCronograma of detalleCronograma?.listaCronograma">
+              <div class="col-4 text-secondary fs-11 pl-2">{{itemCronograma?.desEtapa}}</div>
+              <div class="col-7 text-secondary fs-11 px-1 text-center">{{itemCronograma?.periodoInicio}} - {{itemCronograma?.periodoFin}}</div>
+              <div class="col-1 px-0 text-center"><span class="material-icons correct-style">check_circle_outline</span></div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <mat-divider></mat-divider>
+
+  <div id="foot" class="divbottom px-5 py-2 text-right"  >
+
+    <!--<button type="button" nbButton shape="round" status="primary" class="px-5" (click)="descargarPDF()">
+      Descargar PDF
+    </button>-->
+
+  </div>
+
+
+</div>

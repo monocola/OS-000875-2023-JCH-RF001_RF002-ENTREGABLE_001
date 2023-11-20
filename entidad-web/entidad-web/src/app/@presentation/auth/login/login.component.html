@@ -1,0 +1,172 @@
+<nb-card class="parent-card">
+  <nb-card-body class="body-card">
+    <div class="row justify-content-center">
+      <div class="col-6 text-center">
+        <img src="assets/images/logo.png" alt="" height="52px" />
+      </div>
+
+      <form class="row w-100 pt-1" [formGroup]="loginForm">
+        <div class="form-control-group w-100">
+          <label for="mail">N° de documento de identidad</label>
+          <nb-form-field class="w-100">
+            <nb-icon nbPrefix icon="usuario"></nb-icon>
+            <input
+              id="mail"
+              type="text"
+              nbInput
+              fullWidth
+              placeholder="12345678"
+              formControlName="documentNumber"
+              shape="semi-round"
+              fieldSize="large"
+              maxlength="12"
+              #document
+              [value]="this.document.value.toUpperCase()"
+              oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')"
+              [status]="
+                f.documentNumber.invalid && f.documentNumber.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+            />
+          </nb-form-field>
+          <div
+            *ngIf="f.documentNumber.invalid && f.documentNumber.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.documentNumber.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.documentNumber.errors.pattern">
+              Solo se aceptan números y letras
+            </span>
+            <span *ngIf="f.documentNumber.errors.minlength">
+              El texto introducido es muy corto
+            </span>
+            <span *ngIf="f.documentNumber.errors.maxlength">
+              El texto introducido es muy largo
+            </span>
+          </div>
+        </div>
+
+        <div class="form-control-group w-100">
+          <label for="pass">Contraseña</label>
+          <nb-form-field class="w-100">
+            <nb-icon nbPrefix icon="padlock"></nb-icon>
+            <input
+              id="pass"
+              [type]="showPassword ? 'text' : 'password'"
+              nbInput
+              fullWidth
+              placeholder="******"
+              formControlName="password"
+              (keydown.enter)="login()"
+              shape="semi-round"
+              fieldSize="large"
+              maxlength="20"
+              [status]="
+                f.password.invalid && f.password.touched ? 'danger' : 'basic'
+              "
+            />
+            <button
+              type="button"
+              nbSuffix
+              nbButton
+              ghost
+              (click)="toggleShowPassword()"
+            >
+              <nb-icon
+                [icon]="showPassword ? 'eyes-open' : 'eyes-close'"
+                [attr.aria-label]="
+                  showPassword ? 'hide password' : 'show password'
+                "
+              >
+              </nb-icon>
+            </button>
+          </nb-form-field>
+          <div
+            *ngIf="f.password.invalid && f.password.touched"
+            class="invalid-text flex-column"
+          >
+            <span *ngIf="f.password.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.password.errors.pattern">
+              Solo se aceptan números y letras
+            </span>
+            <span *ngIf="f.password.errors.minlength">
+              El texto introducido es muy corto
+            </span>
+            <span *ngIf="f.password.errors.maxlength">
+              El texto introducido es muy largo
+            </span>
+          </div>
+        </div>
+
+        <div class="row w-100 m-0 mt-4">
+          <span class="flex-spacer"></span>
+          <a [routerLink]="'/auth/forgot-password'">Olvidé mi contraseña</a>
+        </div>
+
+        <div class="row w-100 m-0 my-4" [style.place-content]="'center'">
+          <div class="captchaContent">
+            <input
+              type="text"
+              id="captchaLogin"
+              placeholder="Ingrese el código"
+              maxlength="5"
+              autocomplete="off"
+              nbInput
+              shape="semi-round"
+              fieldSize="large"
+              formControlName="inputCaptcha"
+              class="ml-3 captchaLogin"
+              oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')"
+              [status]="
+                f.inputCaptcha?.invalid && f.inputCaptcha?.touched
+                  ? 'danger'
+                  : 'basic'
+              "
+              (keyup.enter)="login()"
+            />
+          </div>
+          <div
+            *ngIf="f.inputCaptcha.invalid && f.inputCaptcha.touched"
+            class="invalid-text text-center w-100"
+          >
+            <span *ngIf="f.inputCaptcha.errors.required">
+              El campo es obligatorio
+            </span>
+            <span *ngIf="f.inputCaptcha.errors.minlength">
+              El texto debe tener 5 caracteres
+            </span>
+          </div>
+        </div>
+
+        <div class="row w-100 m-0 mt-2">
+          <button
+            nbButton
+            shape="round"
+            status="primary"
+            (click)="login()"
+            fullWidth
+            [disabled]="!this.loginForm.valid"
+          >
+            Iniciar Sesión
+          </button>
+          <button
+            class="mt-3"
+            nbButton
+            outline
+            shape="round"
+            status="primary"
+            fullWidth
+            [routerLink]="['/extra/register']"
+          >
+            Crear administrador de entidad
+          </button>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>
